@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Accueil - Forums' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-md-center mt-5">
+            {% for category in categories %}
+                <div class="col col-lg-12 col-md-12 col-sm-12">
+                    <div class="card bg-secondary mb-4">
+                        <div class="card-header"><a href="{{ path('forums.category', {'slug': category.slug}) }}">{{ category.title }}</a></div>
+
+                        {% for forum in category.forums %}
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-sm-5"></div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                                            <h5>SUJETS</h5>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                                            <h5>MESSAGES</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <h5>DERNIER MESSAGE</h5>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <h5 class="card-title"><a href="{{ path('forum.show', {'category_slug': forum.category.slug, 'id': forum.id, 'slug': forum.slug}) }}">{{ forum.title }}</a></h5>
+                                            <p class="card-text">{{ forum.description }}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                                    </div>
+                                </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forums : {{ forum.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-md-center mt-5">
+            <div class="col col-lg-12">
+
+                {% if forum.category is not null %} {# If forum doesn't contain sub-forums #}
+                    <a href="{{ path('forums') }}">Forums</a> > <a href="{{ path('forums.category', {'slug': forum.category.slug}) }}">{{ forum.category.title }}</a> > {{ forum.title }}
+                {% else %}
+                    <a href="{{ path('forums') }}">Forums</a> > Fil d'ariane complet...
+                {% endif %}
+
+                <div class="card bg-secondary mb-4">
+                    <div class="card-header">{{ forum.title }}</div>
+                    <div class="card-body">
+
+                        {% for subforum in forum.forums %}
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-5"></div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                                    <h5>SUJETS</h5>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                                    <h5>MESSAGES</h5>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <h5>DERNIER MESSAGE</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <h5 class="card-title">
+                                        {% if forum.category is not null %} {# If forum doesn't contain sub-forums #}
+                                            <a href="{{ path('forum.show', {'category_slug': forum.category.slug, 'id': subforum.id, 'slug': subforum.slug}) }}">{{ subforum.title }}</a>
+                                        {% else %}
+                                            <a href="{{ path('forum.show', {'category_slug': forum.parent.slug, 'id': subforum.id, 'slug': subforum.slug}) }}">{{ subforum.title }}</a>
+                                        {% endif %}
+                                    </h5>
+                                    <p class="card-text">{{ subforum.description }}</p>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="row mt-4">
+                            <div class="col-lg-5"></div>
+                            <div class="col-lg-2 text-center">
+                                <h5>PAR</h5>
+                            </div>
+                            <div class="col-lg-2 text-center">
+                                <h5>REPONSES</h5>
+                            </div>
+                            <div class="col-lg-3">
+                                <h5>DERNIER MESSAGE</h5>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-lg-5">
+                                <a href="#">Thread thread thread</a>
+                            </div>
+                            <div class="col-lg-2 text-center"><a href="#"><strong>Nicoo</strong></a></div>
+                            <div class="col-lg-2 text-center">X</div>
+                            <div class="col-lg-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-lg-5">
+                                <a href="#">Thread thread thread</a>
+                            </div>
+                            <div class="col-lg-2 text-center"><a href="#"><strong>Nicoo</strong></a></div>
+                            <div class="col-lg-2 text-center">X</div>
+                            <div class="col-lg-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-lg-5">
+                                <a href="#">Thread thread thread</a>
+                            </div>
+                            <div class="col-lg-2 text-center"><a href="#"><strong>Nicoo</strong></a></div>
+                            <div class="col-lg-2 text-center">X</div>
+                            <div class="col-lg-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
