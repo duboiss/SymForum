@@ -27,7 +27,8 @@
         "symfony/twig-bundle": "4.3.*",
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
