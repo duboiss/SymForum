@@ -83,6 +83,15 @@ class Forum
         }
     }
 
+    public function getRootCategory(): Category
+    {
+        if(($parent = $this->getParent()) !== null) {
+            return $parent->getRootCategory();
+        }
+
+        return $this->getCategory();
+    }
+
     public function getTotalThreads()
     {
         $totalThreads = $this->threads->count();

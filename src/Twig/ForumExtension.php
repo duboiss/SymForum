@@ -27,18 +27,8 @@ class ForumExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('root_category', [$this, 'getRootCategory']),
             new TwigFilter('breadcrumb', [$this, 'getBreadcrumbParts']),
         ];
-    }
-
-    public function getRootCategory(Forum $forum): Category
-    {
-        while (($parent = $forum->getParent()) !== null) {
-            return $this->getRootCategory($parent);
-        }
-
-        return $forum->getCategory();
     }
 
     public function getBreadcrumbParts($forumOrCategory, array &$parts = []): array
@@ -48,7 +38,7 @@ class ForumExtension extends AbstractExtension
             $title = $forumOrCategory->getTitle();
         } elseif ($forumOrCategory instanceof Forum) {
             $url = $this->urlGenerator->generate('forum.show', [
-                'category_slug' => $this->getRootCategory($forumOrCategory)->getSlug(),
+                'category_slug' => $forumOrCategory->getRootCategory()->getSlug(),
                 'id' => $forumOrCategory->getId(),
                 'slug' => $forumOrCategory->getSlug()
             ]);
