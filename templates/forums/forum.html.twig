@@ -15,7 +15,7 @@
                     <div class="card-header">{{ forum.title }}</div>
                     <div class="card-body">
 
-                        {% for subforum in forum.forums %}
+                        {% for subforum in subforums %}
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-sm-5"></div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 text-center">
@@ -35,7 +35,7 @@
                                     </h5>
                                     <p class="card-text">{{ subforum.description }}</p>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
                             </div>
@@ -53,30 +53,16 @@
                                 <h5>DERNIER MESSAGE</h5>
                             </div>
                         </div>
+                        {% for thread in threads %}
                         <div class="row mb-1">
                             <div class="col-lg-5">
-                                <a href="#">Thread thread thread</a>
+                                <a href="#">{{ thread.title }}</a>
                             </div>
-                            <div class="col-lg-2 text-center"><a href="#"><strong>Nicoo</strong></a></div>
+                            <div class="col-lg-2 text-center"><a href="#"><strong>{{ thread.author.pseudo }}</strong></a></div>
                             <div class="col-lg-2 text-center">X</div>
                             <div class="col-lg-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
                         </div>
-                        <div class="row mb-1">
-                            <div class="col-lg-5">
-                                <a href="#">Thread thread thread</a>
-                            </div>
-                            <div class="col-lg-2 text-center"><a href="#"><strong>Nicoo</strong></a></div>
-                            <div class="col-lg-2 text-center">X</div>
-                            <div class="col-lg-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-lg-5">
-                                <a href="#">Thread thread thread</a>
-                            </div>
-                            <div class="col-lg-2 text-center"><a href="#"><strong>Nicoo</strong></a></div>
-                            <div class="col-lg-2 text-center">X</div>
-                            <div class="col-lg-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

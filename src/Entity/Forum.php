@@ -53,20 +53,45 @@ class Forum
      */
     private $forums;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $position;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="forum", orphanRemoval=true)
+     */
+    private $threads;
+
+    private $totalThreads;
+
     public function __construct()
     {
         $this->forums = new ArrayCollection();
+        $this->threads = new ArrayCollection();
     }
 
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function initializeSlug() {
-        if(empty($this->slug)) {
+    public function initializeSlug()
+    {
+        if (empty($this->slug)) {
             $slugify = new Slugify();
             $this->slug = $slugify->slugify($this->title);
         }
+    }
+
+    public function getTotalThreads()
+    {
+        $totalThreads = $this->threads->count();
+
+        foreach ($this->forums as $forum) {
+            $totalThreads += $forum->getTotalThreads();
+        }
+
+        return $totalThreads;
     }
 
     public function getId(): ?int
@@ -158,6 +183,49 @@ class Forum
             // set the owning side to null (unless already changed)
             if ($forum->getParent() === $this) {
                 $forum->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Thread[]
+     */
+    public function getThreads(): Collection
+    {
+        return $this->threads;
+    }
+
+    public function addThread(Thread $thread): self
+    {
+        if (!$this->threads->contains($thread)) {
+            $this->threads[] = $thread;
+            $thread->setForum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThread(Thread $thread): self
+    {
+        if ($this->threads->contains($thread)) {
+            $this->threads->removeElement($thread);
+            // set the owning side to null (unless already changed)
+            if ($thread->getForum() === $this) {
+                $thread->setForum(null);
             }
         }
 

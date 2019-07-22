@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -39,6 +41,16 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $registrationDate;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="author")
+     */
+    private $threads;
+
+    public function __construct()
+    {
+        $this->threads = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -157,4 +169,35 @@ class User implements UserInterface
      * the plain-text password is stored on this object.
      */
     public function eraseCredentials() {}
+
+    /**
+     * @return Collection|Thread[]
+     */
+    public function getThreads(): Collection
+    {
+        return $this->threads;
+    }
+
+    public function addThread(Thread $thread): self
+    {
+        if (!$this->threads->contains($thread)) {
+            $this->threads[] = $thread;
+            $thread->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeThread(Thread $thread): self
+    {
+        if ($this->threads->contains($thread)) {
+            $this->threads->removeElement($thread);
+            // set the owning side to null (unless already changed)
+            if ($thread->getAuthor() === $this) {
+                $thread->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Forum;
+use App\Repository\ForumRepository;
+use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +18,19 @@ class ForumController extends AbstractController
      * @Entity("category", expr="repository.findOneBy({slug: category_slug})")
      * @param Category $category
      * @param Forum $forum
+     * @param ThreadRepository $threadsRepo
+     * @param ForumRepository $forumsRepo
      * @return Response
      */
-    public function forum(Category $category, Forum $forum)
+    public function forum(Category $category, Forum $forum, ThreadRepository $threadsRepo, ForumRepository $forumsRepo)
     {
+        $threads = $threadsRepo->findBy(['forum' => $forum], ['date' => 'DESC']);
+        $subforums = $forumsRepo->findBy(['parent' => $forum], ['position' => 'ASC']);
+
         return $this->render('forums/forum.html.twig', [
             'forum' => $forum,
+            'threads' => $threads,
+            'subforums' => $subforums
         ]);
     }
 }
