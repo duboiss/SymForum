@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\ForumRepository;
+use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,16 +17,16 @@ class CategoryController extends AbstractController
      * @Route("/forums", name="forums.index")
      * @param CategoryRepository $repo
      * @param UserRepository $usersRepo
-     * @param ForumRepository $forumsRepo
+     * @param ThreadRepository $threadsRepo
      * @return Response
      */
-    public function index(CategoryRepository $repo, UserRepository $usersRepo, ForumRepository $forumsRepo)
+    public function index(CategoryRepository $repo, UserRepository $usersRepo, ThreadRepository $threadsRepo)
     {
         $categories = $repo->findBy([], ['position' => 'ASC']);
 
         $lastRegistered = $usersRepo->findOneBy([], ['registrationDate' => 'DESC']);
         $nbUsers = $usersRepo->count([]);
-        $nbThreads = $forumsRepo->count([]);
+        $nbThreads = $threadsRepo->count([]);
 
         return $this->render('forums/index.html.twig', [
             'categories' => $categories,
