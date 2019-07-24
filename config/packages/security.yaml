@@ -9,7 +9,7 @@ security:
         in_database:
             entity:
                 class: App\Entity\User
-                property: email
+                property: pseudo
 
     firewalls:
         dev:
@@ -17,6 +17,25 @@ security:
             security: false
         main:
             anonymous: true
+
+            provider: in_database
+
+            form_login:
+                login_path: user.login
+                check_path: user.login
+                default_target_path: forums.index
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 172800 # 2 days in seconds
+                path:     /
+                secure: false
+
+
+            logout:
+                path: user.logout
+                target: forums.index
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -27,5 +46,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

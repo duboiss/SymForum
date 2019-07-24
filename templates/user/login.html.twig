@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Forums{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-md-center mt-5">
+        <h1>Connexion</h1>
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <form action="{{ path('user.login') }}" method="post">
+                {% if error %}
+                    <div class="alert alert-danger">Identifiants incorrects !</div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="pseudo">Pseudo</label>
+                    <input type="text" name="_username" class="form-control" id="pseudo" placeholder="Votre pseudo" value="{{ last_username }}">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" name="_password" class="form-control" id="password" placeholder="Votre de passe">
+                </div>
+               <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="_remember_me" name="_remember_me">
+                    <label class="form-check-label" for="_remember_me">Se souvenir de moi</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

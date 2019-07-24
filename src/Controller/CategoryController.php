@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/forums", name="forums")
+     * @Route("/forums", name="forums.index")
      * @param CategoryRepository $repo
      * @param UserRepository $usersRepo
      * @param ForumRepository $forumsRepo
