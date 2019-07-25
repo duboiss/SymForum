@@ -5,30 +5,35 @@
 {% block body %}
     <div class="container">
         <div class="row justify-content-md-center mt-5">
-            <div class="col col-lg-12">
+            <div class="col col-lg-12 col-md-12 col-sm-12">
 
+                <a href="{{ path('forums.index') }}">Forums</a>
                 {% for part in forum | breadcrumb %}
-                    > <a href="{{ part.url }}">{{ part.title }}</a>
+                    {% if loop.last %}
+                        > {{ part.title }}
+                    {% else %}
+                        > <a href="{{ part.url }}">{{ part.title }}</a>
+                    {% endif %}
                 {% endfor %}
 
                 <div class="card bg-secondary mb-4">
-                    <div class="card-header">{{ forum.title }}</div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-5">{{ forum.title }}</div>
+                            {% if subforums|length > 0 %}
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">SUJETS</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">MESSAGES</div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">DERNIER MESSAGE</div>
+                            {% else %}
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">PAR</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">REPONSES</div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">DERNIER MESSAGE</div>
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="card-body">
-
                         {% for subforum in subforums %}
-                            <div class="row">
-                                <div class="col-lg-5 col-md-5 col-sm-5"></div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">
-                                    <h5>SUJETS</h5>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">
-                                    <h5>MESSAGES</h5>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <h5>DERNIER MESSAGE</h5>
-                                </div>
-                            </div>
-                            <div class="row">
+                            {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
                                 <div class="col-lg-5 col-md-5 col-sm-5">
                                     <h5 class="card-title">
                                         <a href="{{ path('forum.show', {'category_slug': subforum.rootCategory.slug, 'id': subforum.id, 'slug': subforum.slug}) }}">{{ subforum.title }}</a>
@@ -41,7 +46,8 @@
                             </div>
                         {% endfor %}
 
-                        <div class="row mt-4">
+                        {% if subforums|length > 0 %}
+                        <div class="row mt-3">
                             <div class="col-lg-5"></div>
                             <div class="col-lg-2 text-center">
                                 <h5>PAR</h5>
@@ -53,6 +59,8 @@
                                 <h5>DERNIER MESSAGE</h5>
                             </div>
                         </div>
+                        {% endif %}
+
                         {% for thread in threads %}
                         <div class="row mb-1">
                             <div class="col-lg-5">

@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item{{ app.request.get('_route') == 'forums.index' ? ' active' }}">
-                <a class="nav-link" href="{{ path('forums.index') }}">Accueil <span class="sr-only">(actuel)</span></a>
+                <a class="nav-link" href="{{ path('forums.index') }}">Forums</a>
             </li>
 
             {% if app.user %}

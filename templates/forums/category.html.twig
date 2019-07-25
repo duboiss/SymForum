@@ -1,19 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forums : {{ category.title }}{% endblock %}
+{% block title %}Catégorie : {{ category.title }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12">
-                <a href="{{ path('forums.index') }}">Forums</a> > {{ category.title }}
                 <div class="card bg-secondary mb-4">
-                    <div class="card-header">{{ category.title }}</div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-5">{{ category.title }}</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 text-center">SUJETS</div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 text-center">MESSAGES</div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">DERNIER MESSAGE</div>
+                        </div>
+                    </div>
 
                     {% for forum in category.forums %}
                         <div class="card-body">
-                            <h4 class="card-title"><a href="{{ path('forum.show', {'category_slug': forum.category.slug, 'id': forum.id, 'slug': forum.slug}) }}">{{ forum.title }}</a></h4>
-                            <p class="card-text">{{ forum.description }}</p>
+                            <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <h5 class="card-title">
+                                        <a href="{{ path('forum.show', {'category_slug': forum.rootCategory.slug, 'id': forum.id, 'slug': forum.slug}) }}">{{ forum.title }}</a>
+                                    </h5>
+                                    <p class="card-text">{{ forum.description }}</p>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalThreads }}</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
