@@ -9,6 +9,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -47,7 +48,8 @@ class AppFixtures extends Fixture
         $demoUser = new User();
         $demoUser->setPseudo('demo')
                 ->setHash($this->encoder->encodePassword($demoUser, 'demo'))
-                ->setEmail('demo@demo.com');
+                ->setEmail('demo@demo.com')
+                ->setRegistrationIp('127.0.0.1');
 
         $manager->persist($demoUser);
 
@@ -55,7 +57,8 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setPseudo($this->faker->userName)
                 ->setHash($this->encoder->encodePassword($user, 'password'))
-                ->setEmail($this->faker->email);
+                ->setEmail($this->faker->email)
+                ->setRegistrationIp('127.0.0.1');
 
             $manager->persist($user);
             $this->users[] = $user;

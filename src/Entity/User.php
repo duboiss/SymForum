@@ -43,6 +43,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $hash;
 
     /**
@@ -59,7 +64,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private $registrationIp;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="author")
@@ -105,6 +110,11 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
     public function getHash(): ?string
     {
         return $this->hash;
@@ -141,9 +151,16 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getRegistrationIp(): ?string
     {
-        return $this->slug;
+        return $this->registrationIp;
+    }
+
+    public function setRegistrationIp(string $registrationIp): self
+    {
+        $this->registrationIp = $registrationIp;
+
+        return $this;
     }
 
     /**
