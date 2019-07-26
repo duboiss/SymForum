@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("pseudo")
  * @UniqueEntity("email")
  */
 class User implements UserInterface
@@ -23,7 +26,17 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Regex(
+     *     pattern="^[a-z0-9]+$/i",
+     *     message="Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres."
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 10,
+     *      minMessage = "Votre pseudo doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "Votre pseudo doit faire au plus {{ limit }} caractères."
+     * )
      */
     private $pseudo;
 
@@ -34,6 +47,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Email(message = "Veuillez saisir une adresse email valide.")
      */
     private $email;
 
@@ -43,6 +57,11 @@ class User implements UserInterface
     private $registrationDate;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="author")
      */
     private $threads;
@@ -50,6 +69,23 @@ class User implements UserInterface
     public function __construct()
     {
         $this->threads = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function initializeRegistrationDate() {
+        $this->registrationDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function initializeSlug()
+    {
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->pseudo);
     }
 
     public function getId(): ?int
@@ -93,15 +129,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function initializeRegistrationDate() {
-        if(empty($this->registrationDate)) {
-            $this->registrationDate = new \DateTime();
-        }
-    }
-
     public function getRegistrationDate(): ?\DateTimeInterface
     {
         return $this->registrationDate;
@@ -112,6 +139,11 @@ class User implements UserInterface
         $this->registrationDate = $registrationDate;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     /**

@@ -77,10 +77,8 @@ class Forum
      */
     public function initializeSlug()
     {
-        if (empty($this->slug)) {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->title);
-        }
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->title);
     }
 
     public function getRootCategory(): Category
@@ -123,12 +121,6 @@ class Forum
     public function getSlug(): ?string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-        return $this;
     }
 
     public function getDescription(): ?string

@@ -42,7 +42,11 @@
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">Statistiques</div>
                     <div class="card-body">
-                        {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est <a href="#">{{ lastRegistered.pseudo }}</a>.
+                        {% if lastRegistered is null %}
+                            {{ nbThreads }} sujets, {{ nbUsers }} membres.
+                        {% else %}
+                            {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est <a href="{{ path('user.profile', {'slug': lastRegistered.slug}) }}">{{ lastRegistered.pseudo }}</a>.
+                        {% endif %}
                     </div>
                 </div>
             </div>

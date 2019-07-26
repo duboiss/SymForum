@@ -6,10 +6,12 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("title")
  */
 class Category
 {
@@ -50,10 +52,8 @@ class Category
      * @ORM\PreUpdate()
      */
     public function initializeSlug() {
-        if(empty($this->slug)) {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->title);
-        }
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->title);
     }
 
     public function getId(): ?int
@@ -76,12 +76,6 @@ class Category
     public function getSlug(): ?string
     {
         return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-        return $this;
     }
 
     public function getPosition(): ?int

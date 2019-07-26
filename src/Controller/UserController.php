@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\ThreadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,4 +32,20 @@ class UserController extends AbstractController
      */
     public function logout()
     {}
+
+    /**
+     * @Route("/user/{slug}", name="user.profile")
+     * @param User $user
+     * @param ThreadRepository $threadsRepo
+     * @return Response
+     */
+    public function profile(User $user, ThreadRepository $threadsRepo)
+    {
+        $lastThreads = $threadsRepo->findBy(['author' => $user], ['date' => 'DESC'], 5);
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
+            'lastThreads' => $lastThreads
+        ]);
+    }
 }

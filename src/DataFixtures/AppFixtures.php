@@ -44,6 +44,13 @@ class AppFixtures extends Fixture
 
     public function loadUsers(ObjectManager $manager)
     {
+        $demoUser = new User();
+        $demoUser->setPseudo('demo')
+                ->setHash($this->encoder->encodePassword($demoUser, 'demo'))
+                ->setEmail('demo@demo.com');
+
+        $manager->persist($demoUser);
+
         for ($u = 1; $u <= 25; $u++) {
             $user = new User();
             $user->setPseudo($this->faker->userName)
