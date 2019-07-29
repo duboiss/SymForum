@@ -70,7 +70,7 @@
                                 {% if thread.author is null %}
                                     Compte supprimé
                                 {% else %}
-                                    <a href="{{ path('user.profile', {'slug': thread.author.slug}) }}">{{ thread.author.pseudo }}</a>
+                                    <a href="{{ user_profile_link(thread.author) }}">{{ thread.author.pseudo }}</a>
                                 {% endif %}
                             </div>
                             <div class="col-lg-2 text-center">X</div>

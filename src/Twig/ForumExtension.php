@@ -24,6 +24,9 @@ class ForumExtension extends AbstractExtension
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * @return array|TwigFilter[]
+     */
     public function getFilters()
     {
         return [
@@ -31,6 +34,11 @@ class ForumExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @param $forumOrCategory
+     * @param array $parts
+     * @return array
+     */
     public function getBreadcrumbParts($forumOrCategory, array &$parts = []): array
     {
         if ($forumOrCategory instanceof Category) {

@@ -45,14 +45,14 @@
                         {% if onlineUsers > 0 %}
                             Membres connectés :
                             {% for user in onlineUsers %}
-                                <a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user.pseudo }}</a>{{ not loop.last ? ','}}
+                                <a href="{{ user_profile_link(user) }}">{{ user.pseudo }}</a>{{ not loop.last ? ','}}
                             {% endfor %}
                         {% endif %}
                         <br>
                         {% if lastRegistered is null %}
                             {{ nbThreads }} sujets, {{ nbUsers }} membres.
                         {% else %}
-                            {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est <a href="{{ path('user.profile', {'slug': lastRegistered.slug}) }}">{{ lastRegistered.pseudo }}</a>.
+                            {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est <a href="{{ user_profile_link(lastRegistered) }}">{{ lastRegistered.pseudo }}</a>.
                         {% endif %}
                     </div>
                 </div>
