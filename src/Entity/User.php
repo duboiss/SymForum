@@ -67,6 +67,11 @@ class User implements UserInterface
     private $registrationIp;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastActivityAt;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="author")
      */
     private $threads;
@@ -91,6 +96,13 @@ class User implements UserInterface
     {
         $slugify = new Slugify();
         $this->slug = $slugify->slugify($this->pseudo);
+    }
+
+    public function isActiveNow(): bool
+    {
+        $delay = new \DateTime('5 minutes ago');
+
+        return ($this->getLastActivityAt() > $delay);
     }
 
     public function getId(): ?int
@@ -159,6 +171,18 @@ class User implements UserInterface
     public function setRegistrationIp(string $registrationIp): self
     {
         $this->registrationIp = $registrationIp;
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
 
         return $this;
     }

@@ -15,21 +15,23 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/forums", name="forums.index")
-     * @param CategoryRepository $repo
+     * @param CategoryRepository $categoriesRepo
      * @param UserRepository $usersRepo
      * @param ThreadRepository $threadsRepo
      * @return Response
      */
-    public function index(CategoryRepository $repo, UserRepository $usersRepo, ThreadRepository $threadsRepo)
+    public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, ThreadRepository $threadsRepo)
     {
-        $categories = $repo->findBy([], ['position' => 'ASC']);
+        $categories = $categoriesRepo->findBy([], ['position' => 'ASC']);
 
+        $onlineUsers = $usersRepo->findOnlineUsers();
         $lastRegistered = $usersRepo->findOneBy([], ['registrationDate' => 'DESC']);
         $nbUsers = $usersRepo->count([]);
         $nbThreads = $threadsRepo->count([]);
 
         return $this->render('forums/index.html.twig', [
             'categories' => $categories,
+            'onlineUsers' => $onlineUsers,
             'nbUsers' => $nbUsers,
             'lastRegistered' => $lastRegistered,
             'nbThreads' => $nbThreads

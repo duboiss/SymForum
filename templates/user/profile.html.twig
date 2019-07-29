@@ -9,6 +9,9 @@
                 <h3>{{ user.pseudo }}</h3>
                 <p>
                     Date d'inscription : {{ user.registrationDate|date("d/m/Y") }}
+                    {% if user.registrationDate is not null %}
+                        <br>Dernière activité : {{ user.lastActivityAt|date("d/m/Y à H:i") }}
+                    {% endif %}
                 </p>
             </div>
         </div>
