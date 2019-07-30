@@ -42,13 +42,13 @@
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">Statistiques</div>
                     <div class="card-body">
-                        {% if onlineUsers > 0 %}
+                        {% if onlineUsers|length > 0 %}
                             Membres connectés :
                             {% for user in onlineUsers %}
                                 <a href="{{ user_profile_link(user) }}">{{ user.pseudo }}</a>{{ not loop.last ? ','}}
                             {% endfor %}
+                            <br>
                         {% endif %}
-                        <br>
                         {% if lastRegistered is null %}
                             {{ nbThreads }} sujets, {{ nbUsers }} membres.
                         {% else %}
