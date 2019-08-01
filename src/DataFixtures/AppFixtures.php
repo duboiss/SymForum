@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Forum;
+use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -46,9 +47,9 @@ class AppFixtures extends Fixture
     {
         $demoUser = new User();
         $demoUser->setPseudo('demo')
-                ->setHash($this->encoder->encodePassword($demoUser, 'demo'))
-                ->setEmail('demo@demo.com')
-                ->setRegistrationIp('127.0.0.1');
+            ->setHash($this->encoder->encodePassword($demoUser, 'demo'))
+            ->setEmail('demo@demo.com')
+            ->setRegistrationIp('127.0.0.1');
 
         $manager->persist($demoUser);
 
@@ -84,7 +85,7 @@ class AppFixtures extends Fixture
                 $manager->persist($forum);
 
                 for ($tf = 1; $tf <= mt_rand(10, 20); $tf++) {
-                    $this->makeThreads($forum, $manager);
+                    $this->makeThread($forum, $manager);
                 }
 
                 // Sub-forums
@@ -100,7 +101,7 @@ class AppFixtures extends Fixture
                         $manager->persist($subForum);
 
                         for ($tsb = 1; $tsb <= mt_rand(10, 20); $tsb++) {
-                            $this->makeThreads($subForum, $manager);
+                            $this->makeThread($subForum, $manager);
                         }
                     }
                 }
@@ -108,15 +109,34 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function makeThreads(Forum $forum, ObjectManager $manager)
+    private function makeThread(Forum $forum, ObjectManager $manager)
     {
         $thread = new Thread();
-        $thread->setTitle($this->faker->words(rand(3, 6), true))
+        $thread->setTitle($this->faker->words(rand(4, 10), true))
             ->setAuthor($this->getRandomUser())
             ->setDate($this->faker->dateTimeBetween('-1 years'))
             ->setForum($forum);
 
+        for ($m = 0; $m <= mt_rand(1, 60); $m++) {
+            $this->makeMessage($thread, $manager);
+        }
+
         $manager->persist($thread);
+    }
+
+    private function makeMessage(Thread $thread, ObjectManager $manager)
+    {
+        $message = new Message();
+        $message->setAuthor($this->getRandomUser())
+            ->setDate($this->faker->dateTimeBetween($thread->getDate()))
+            ->setContent($this->faker->sentences(mt_rand(1, 15), true))
+            ->setThread($thread);
+
+        if($this->faker->boolean()) {
+            $message->setUpdatedAt($this->faker->dateTimeBetween($message->getDate()));
+        } else $message->setUpdatedAt(null);
+
+        $manager->persist($message);
     }
 
     private function getRandomUser(): User

@@ -63,8 +63,6 @@ class Forum
      */
     private $threads;
 
-    private $totalThreads;
-
     public function __construct()
     {
         $this->forums = new ArrayCollection();
@@ -83,22 +81,11 @@ class Forum
 
     public function getRootCategory(): Category
     {
-        if(($parent = $this->getParent()) !== null) {
+        if (($parent = $this->getParent()) !== null) {
             return $parent->getRootCategory();
         }
 
         return $this->getCategory();
-    }
-
-    public function getTotalThreads()
-    {
-        $totalThreads = $this->threads->count();
-
-        foreach ($this->forums as $forum) {
-            $totalThreads += $forum->getTotalThreads();
-        }
-
-        return $totalThreads;
     }
 
     public function getId(): ?int
@@ -208,6 +195,60 @@ class Forum
     public function getThreads(): Collection
     {
         return $this->threads;
+    }
+
+    public function getTotalThreads(): int
+    {
+        $totalThreads = $this->threads->count();
+
+        foreach ($this->forums as $forum) {
+            $totalThreads += $forum->getTotalThreads();
+        }
+
+        return $totalThreads;
+    }
+
+    public function getTotalMessages(): int
+    {
+        $totalMessages = 0;
+
+        foreach ($this->threads as $thread) {
+            $totalMessages += $thread->getTotalMessages();
+        }
+
+        foreach ($this->forums as $forum) {
+            foreach ($forum->threads as $thread) {
+                $totalMessages += $thread->getTotalMessages();
+            }
+        }
+
+        return $totalMessages;
+    }
+
+    public function getLastMessage(): Message
+    {
+        $date = new \DateTime();
+        $date->setDate(1970, 1, 1);
+
+        $lastMessage = null;
+
+        foreach ($this->threads as $thread) {
+            if($date < $thread->getLastMessage()->getDate()) {
+                $lastMessage = $thread->getLastMessage();
+                $date = $thread->getLastMessage()->getDate();
+            }
+        }
+
+        foreach ($this->forums as $forum) {
+            foreach ($forum->threads as $thread) {
+                if($date < $thread->getLastMessage()->getDate()) {
+                    $lastMessage = $thread->getLastMessage();
+                    $date = $thread->getLastMessage()->getDate();
+                }
+            }
+        }
+
+        return $lastMessage;
     }
 
     public function addThread(Thread $thread): self

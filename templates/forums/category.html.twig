@@ -26,8 +26,15 @@
                                     <p class="card-text">{{ forum.description }}</p>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalThreads }}</div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">X</div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">LE 09/07/2019 PAR <a href="#"><strong>COTON</strong></a></div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalMessages }}</div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    {% if forum.lastMessage.author is null %}
+                                        {{ forum.lastMessage.date|date('d/m/Y - H:i') }} par Compte supprimé
+                                    {% else %}
+                                        {{ forum.lastMessage.date|date('d/m/Y - H:i') }} par
+                                        <a href="{{ user_profile_link(forum.lastMessage.author) }}"><strong>{{ forum.lastMessage.author.pseudo }}</strong></a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     {% endfor %}

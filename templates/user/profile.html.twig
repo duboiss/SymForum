@@ -12,6 +12,7 @@
                     {% if user.lastActivityAt is not null %}
                         <br>Dernière activité : {{ user.lastActivityAt|date("d/m/Y à H:i") }}
                     {% endif %}
+                    <br> Nombre de messages : {{ user.messages|length }}
                 </p>
             </div>
         </div>
@@ -21,11 +22,24 @@
                 {% if lastThreads|length > 0 %}
                     <ul>
                         {% for thread in lastThreads %}
-                            <li>{{ thread.title }}</li>
+                            <li>{{ thread.title|slice(0, 50) }}{{ thread.title|length > 50 ? '...'}}</li>
                         {% endfor %}
                     </ul>
                 {% else %}
                     Cet utilisateur n'a pas encore crée de sujet
+                {% endif %}
+            </div>
+
+            <div class="col col-lg-6 col-md-6 col-sm-6">
+                <h4>Dernières participations</h4>
+                {% if lastMessages|length > 0 %}
+                    <ul>
+                        {% for message in lastMessages %}
+                            <li>{{ message.content|slice(0, 50) }}{{ message.content|length > 50 ? '...'}}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Cet utilisateur n'a pas encore posté de message
                 {% endif %}
             </div>
         </div>

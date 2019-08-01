@@ -76,9 +76,15 @@ class User implements UserInterface
      */
     private $threads;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="author")
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->threads = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -269,6 +275,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($thread->getAuthor() === $this) {
                 $thread->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getAuthor() === $this) {
+                $message->setAuthor(null);
             }
         }
 

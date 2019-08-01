@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,15 +38,18 @@ class UserController extends AbstractController
      * @Route("/user/{slug}", name="user.profile")
      * @param User $user
      * @param ThreadRepository $threadsRepo
+     * @param MessageRepository $messagesRepo
      * @return Response
      */
-    public function profile(User $user, ThreadRepository $threadsRepo)
+    public function profile(User $user, ThreadRepository $threadsRepo, MessageRepository $messagesRepo)
     {
         $lastThreads = $threadsRepo->findBy(['author' => $user], ['date' => 'DESC'], 5);
+        $lastMessages = $messagesRepo->findBy(['author' => $user], ['date' => 'DESC'], 5);
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,
-            'lastThreads' => $lastThreads
+            'lastThreads' => $lastThreads,
+            'lastMessages' => $lastMessages
         ]);
     }
 }
