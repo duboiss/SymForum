@@ -28,10 +28,10 @@
                                 <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalThreads }}</div>
                                 <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalMessages }}</div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
+                                    {{ forum.lastMessage.date|time_diff }} par
                                     {% if forum.lastMessage.author is null %}
-                                        {{ forum.lastMessage.date|date('d/m/Y - H:i') }} par Compte supprimé
+                                        Compte supprimé
                                     {% else %}
-                                        {{ forum.lastMessage.date|date('d/m/Y - H:i') }} par
                                         <a href="{{ user_profile_link(forum.lastMessage.author) }}"><strong>{{ forum.lastMessage.author.pseudo }}</strong></a>
                                     {% endif %}
                                 </div>

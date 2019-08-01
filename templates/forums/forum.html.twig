@@ -43,10 +43,10 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
+                                {{ subforum.lastMessage.date|time_diff }} par
                                 {% if subforum.lastMessage.author is null %}
-                                    {{ subforum.lastMessage.date|date('d/m/Y - H:i') }} par Compte supprimé
+                                    Compte supprimé
                                 {% else %}
-                                    {{ subforum.lastMessage.date|date('d/m/Y - H:i') }} par
                                     <a href="{{ user_profile_link(subforum.lastMessage.author) }}"><strong>{{ subforum.lastMessage.author.pseudo }}</strong></a>
                                 {% endif %}
                             </div>
@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-lg-2 text-center">{{ thread.totalMessages }}</div>
                             <div class="col-lg-4">
-                                {{ thread.lastMessage.date|date('d/m/Y - H:i') }} par
+                                {{ thread.lastMessage.date|time_diff }} par
                                 {% if thread.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
