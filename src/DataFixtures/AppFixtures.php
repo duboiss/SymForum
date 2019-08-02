@@ -114,7 +114,7 @@ class AppFixtures extends Fixture
         $thread = new Thread();
         $thread->setTitle($this->faker->words(rand(4, 10), true))
             ->setAuthor($this->getRandomUser())
-            ->setDate($this->faker->dateTimeBetween('-1 years'))
+            ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
             ->setForum($forum);
 
         for ($m = 0; $m <= mt_rand(1, 60); $m++) {
@@ -128,7 +128,7 @@ class AppFixtures extends Fixture
     {
         $message = new Message();
         $message->setAuthor($this->getRandomUser())
-            ->setDate($this->faker->dateTimeBetween($thread->getDate()))
+            ->setDate($this->faker->dateTimeBetween($thread->getCreatedAt()))
             ->setContent($this->faker->sentences(mt_rand(1, 15), true))
             ->setThread($thread);
 
