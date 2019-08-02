@@ -43,7 +43,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                {{ subforum.lastMessage.date|time_diff }} par
+                                {{ subforum.lastMessage.publishedAt|time_diff }} par
                                 {% if subforum.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-lg-2 text-center">{{ thread.totalMessages }}</div>
                             <div class="col-lg-4">
-                                {{ thread.lastMessage.date|time_diff }} par
+                                {{ thread.lastMessage.publishedAt|time_diff }} par
                                 {% if thread.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}

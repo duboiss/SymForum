@@ -24,7 +24,7 @@ class ForumController extends AbstractController
      */
     public function forum(Category $category, Forum $forum, ThreadRepository $threadsRepo, ForumRepository $forumsRepo)
     {
-        $threads = $threadsRepo->findBy(['forum' => $forum], ['date' => 'DESC']);
+        $threads = $threadsRepo->findBy(['forum' => $forum], ['createdAt' => 'DESC']);
         $subforums = $forumsRepo->findBy(['parent' => $forum], ['position' => 'ASC']);
 
         return $this->render('forums/forum.html.twig', [

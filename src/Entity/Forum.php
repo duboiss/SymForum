@@ -233,17 +233,17 @@ class Forum
         $lastMessage = null;
 
         foreach ($this->threads as $thread) {
-            if($date < $thread->getLastMessage()->getDate()) {
+            if($date < $thread->getLastMessage()->getPublishedAt()) {
                 $lastMessage = $thread->getLastMessage();
-                $date = $thread->getLastMessage()->getDate();
+                $date = $thread->getLastMessage()->getPublishedAt();
             }
         }
 
         foreach ($this->forums as $forum) {
             foreach ($forum->threads as $thread) {
-                if($date < $thread->getLastMessage()->getDate()) {
+                if($date < $thread->getLastMessage()->getPublishedAt()) {
                     $lastMessage = $thread->getLastMessage();
-                    $date = $thread->getLastMessage()->getDate();
+                    $date = $thread->getLastMessage()->getPublishedAt();
                 }
             }
         }

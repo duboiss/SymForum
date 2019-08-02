@@ -123,9 +123,9 @@ class Thread
         $lastMessage = null;
 
         foreach ($this->messages as $message) {
-            if ($date < $message->getDate()) {
+            if ($date < $message->getPublishedAt()) {
                 $lastMessage = $message;
-                $date = $message->getDate();
+                $date = $message->getPublishedAt();
             }
         }
 

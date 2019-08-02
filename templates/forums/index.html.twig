@@ -31,7 +31,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalThreads }}</div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalMessages }}</div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        {{ forum.lastMessage.date|time_diff }} par
+                                        {{ forum.lastMessage.publishedAt|time_diff }} par
                                         {% if forum.lastMessage.author is null %}
                                             Compte supprimé
                                         {% else %}
