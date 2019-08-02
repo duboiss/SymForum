@@ -128,12 +128,12 @@ class AppFixtures extends Fixture
     {
         $message = new Message();
         $message->setAuthor($this->getRandomUser())
-            ->setDate($this->faker->dateTimeBetween($thread->getCreatedAt()))
+            ->setPublishedAt($this->faker->dateTimeBetween($thread->getCreatedAt()))
             ->setContent($this->faker->sentences(mt_rand(1, 15), true))
             ->setThread($thread);
 
         if($this->faker->boolean()) {
-            $message->setUpdatedAt($this->faker->dateTimeBetween($message->getDate()));
+            $message->setUpdatedAt($this->faker->dateTimeBetween($message->getPublishedAt()));
         } else $message->setUpdatedAt(null);
 
         $manager->persist($message);

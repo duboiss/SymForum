@@ -24,7 +24,7 @@ class Message
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $publishedAt;
 
     /**
      * @ORM\Column(type="text")
@@ -59,14 +59,14 @@ class Message
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getPublishedAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->publishedAt;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
-        $this->date = $date;
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
