@@ -6,7 +6,7 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item{{ app.request.get('_route') == 'forums.index' ? ' active' }}">
+            <li class="nav-item{{ app.request.get('_route') starts with 'forum' ? ' active' }}">
                 <a class="nav-link" href="{{ path('forums.index') }}">Forums</a>
             </li>
 
