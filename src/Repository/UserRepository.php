@@ -37,6 +37,14 @@ class UserRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return User|null
+     */
+    public function findLastRegistered()
+    {
+        return $this->findOneBy([], ['registrationDate' => 'DESC']);
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

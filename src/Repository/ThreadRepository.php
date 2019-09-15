@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Forum;
 use App\Entity\Thread;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +19,25 @@ class ThreadRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Thread::class);
+    }
+
+    /**
+     * @param User $user
+     * @param $limit
+     * @return Thread[]
+     */
+    public function findLastThreadsByUser(User $user, $limit)
+    {
+        return $this->findBy(['author' => $user], ['createdAt' => 'DESC'], $limit);
+    }
+
+    /**
+     * @param Forum $forum
+     * @return Thread[]
+     */
+    public function findThreadsByForum(Forum $forum)
+    {
+        return $this->findBy(['forum' => $forum], ['createdAt' => 'DESC']);
     }
 
     // /**

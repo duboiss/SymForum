@@ -19,6 +19,11 @@ class ForumRepository extends ServiceEntityRepository
         parent::__construct($registry, Forum::class);
     }
 
+    public function findSubforumsByParent(Forum $forum)
+    {
+        return $this->findBy(['parent' => $forum], ['position' => 'ASC']);
+    }
+
     // /**
     //  * @return Forum[] Returns an array of Forum objects
     //  */

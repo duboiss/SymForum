@@ -19,6 +19,14 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    /**
+     * @return Category[]
+     */
+    public function findAllCategories()
+    {
+        return $this->findBy([], ['position' => 'ASC']);
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

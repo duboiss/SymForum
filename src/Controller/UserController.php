@@ -43,8 +43,8 @@ class UserController extends AbstractController
      */
     public function profile(User $user, ThreadRepository $threadsRepo, MessageRepository $messagesRepo)
     {
-        $lastThreads = $threadsRepo->findBy(['author' => $user], ['createdAt' => 'DESC'], 5);
-        $lastMessages = $messagesRepo->findBy(['author' => $user], ['publishedAt' => 'DESC'], 5);
+        $lastThreads = $threadsRepo->findLastThreadsByUser($user, 5);
+        $lastMessages = $messagesRepo->findLastMessagesByUser($user, 5);
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,

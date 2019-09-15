@@ -25,10 +25,10 @@ class CategoryController extends AbstractController
      */
     public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo)
     {
-        $categories = $categoriesRepo->findBy([], ['position' => 'ASC']);
+        $categories = $categoriesRepo->findAllCategories();
 
         $onlineUsers = $usersRepo->findOnlineUsers();
-        $lastRegistered = $usersRepo->findOneBy([], ['registrationDate' => 'DESC']);
+        $lastRegistered = $usersRepo->findLastRegistered();
         $nbUsers = $usersRepo->count([]);
         $nbMessages = $messagesRepo->count([]);
         $nbThreads = $threadsRepo->count([]);
