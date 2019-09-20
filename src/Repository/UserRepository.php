@@ -65,7 +65,7 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User|null
+     * @return User|null Return the last registered user (or null)
      */
     public function findLastRegistered()
     {
