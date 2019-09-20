@@ -52,14 +52,21 @@
                         {% if onlineUsers|length > 0 %}
                             Membres connectés :
                             {% for user in onlineUsers %}
-                                <a href="{{ user_profile_link(user) }}">{{ user.pseudo }}</a>{{ not loop.last ? ','}}
+                                <a href="{{ user_profile_link(user) }}">{{ user.pseudo }}</a>{{ not loop.last ? ',' }}
                             {% endfor %}
                             <br>
                         {% endif %}
+
+                        {% if maxOnlineUsersDate is not null %}
+                            Le record du nombre d'utilisateurs en ligne est de {{ maxOnlineUsers }} le {{ maxOnlineUsersDate }}.
+                            <br>
+                        {% endif %}
+
                         {% if lastRegistered is null %}
                             {{ nbThreads }} sujets, {{ nbUsers }} membres.
                         {% else %}
-                            {{ nbMessages }} messages, {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est <a href="{{ user_profile_link(lastRegistered) }}">{{ lastRegistered.pseudo }}</a>.
+                            {{ nbMessages }} messages, {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est
+                            <a href="{{ user_profile_link(lastRegistered) }}">{{ lastRegistered.pseudo }}</a>.
                         {% endif %}
                     </div>
                 </div>

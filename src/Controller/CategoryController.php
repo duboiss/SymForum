@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
-use App\Repository\ForumRepository;
 use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
+use App\Service\OptionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,22 +20,27 @@ class CategoryController extends AbstractController
      * @param UserRepository $usersRepo
      * @param MessageRepository $messagesRepo
      * @param ThreadRepository $threadsRepo
+     * @param OptionService $optionService
      * @return Response
      * @throws \Exception
      */
-    public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo)
+    public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo, OptionService $optionService)
     {
         $categories = $categoriesRepo->findAllCategories();
 
         $onlineUsers = $usersRepo->findOnlineUsers();
-        $lastRegistered = $usersRepo->findLastRegistered();
+        $maxOnlineUsers = $optionService->get("max_online_users", "0");
+        $maxOnlineUsersDate = $optionService->get("max_online_users_date");
         $nbUsers = $usersRepo->count([]);
+        $lastRegistered = $usersRepo->findLastRegistered();
         $nbMessages = $messagesRepo->count([]);
         $nbThreads = $threadsRepo->count([]);
 
         return $this->render('forums/index.html.twig', [
             'categories' => $categories,
             'onlineUsers' => $onlineUsers,
+            'maxOnlineUsers' => $maxOnlineUsers,
+            'maxOnlineUsersDate' => $maxOnlineUsersDate,
             'nbUsers' => $nbUsers,
             'lastRegistered' => $lastRegistered,
             'nbMessages' => $nbMessages,

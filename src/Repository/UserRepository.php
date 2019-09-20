@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\User;
 use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Exception;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -21,20 +23,45 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User[] Returns an array of User objects
-     * @throws \Exception
+     * @return QueryBuilder
+     * @throws Exception
      */
-    public function findOnlineUsers()
+    private function getOnlineUsers()
     {
         $currentDate = new \DateTime();
         $currentDate->sub(new DateInterval('PT15M'));
 
-        return $this->createQueryBuilder("u")
-                    ->where('u.lastActivityAt > :date')
-                    ->setParameter('date', $currentDate )
-                    ->getQuery()
-                    ->getResult()
+        return $this->createQueryBuilder('u')
+            ->where('u.lastActivityAt > :date')
+            ->setParameter('date', $currentDate);
+    }
+
+    /**
+     * @return User[] Returns an array of User objects
+     * @throws Exception
+     */
+    public function findOnlineUsers()
+    {
+        return $this->getOnlineUsers()
+            ->getQuery()
+            ->getResult()
             ;
+    }
+
+    /**
+     * @return int Number of online users
+     */
+    public function countOnlineUsers()
+    {
+        try {
+            return (int)$this->getOnlineUsers()
+                ->select('COUNT(u.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (Exception $e) {
+            return 0;
+        }
+
     }
 
     /**
