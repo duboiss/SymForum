@@ -118,18 +118,29 @@ class AppFixtures extends Fixture
             ->setForum($forum);
 
         for ($m = 0; $m <= mt_rand(1, 60); $m++) {
-            $this->makeMessage($thread, $manager);
+            if ($m === 0) {
+                $this->makeMessage($thread, $manager, true);
+            } else {
+                $this->makeMessage($thread, $manager);
+            }
         }
 
         $manager->persist($thread);
     }
 
-    private function makeMessage(Thread $thread, ObjectManager $manager)
+    private function makeMessage(Thread $thread, ObjectManager $manager, bool $firstMessage = false)
     {
         $message = new Message();
-        $message->setAuthor($this->getRandomUser())
-            ->setPublishedAt($this->faker->dateTimeBetween($thread->getCreatedAt()))
-            ->setContent($this->faker->sentences(mt_rand(1, 15), true))
+
+        if ($firstMessage) {
+            $message->setAuthor($thread->getAuthor())
+                ->setPublishedAt($thread->getCreatedAt());
+        } else {
+            $message->setAuthor($this->getRandomUser())
+                ->setPublishedAt($this->faker->dateTimeBetween($thread->getCreatedAt()));
+        }
+
+        $message->setContent($this->faker->sentences(mt_rand(1, 15), true))
             ->setThread($thread);
 
         if($this->faker->boolean()) {
