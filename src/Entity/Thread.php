@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Thread
 {
@@ -22,6 +24,11 @@ class Thread
      * @ORM\Column(type="string", length=255)
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     /**
      * @ORM\Column(type="datetime")
@@ -49,6 +56,16 @@ class Thread
         $this->messages = new ArrayCollection();
     }
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function initializeSlug()
+    {
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->title);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,6 +81,11 @@ class Thread
         $this->title = $title;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
