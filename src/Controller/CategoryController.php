@@ -49,7 +49,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/forums/{slug}", name="forums.category")
+     * @Route("/forums/{slug}", name="forums.category", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"})
      * @param Category $category
      * @return Response
      */

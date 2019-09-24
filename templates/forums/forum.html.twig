@@ -71,7 +71,7 @@
                     {% for thread in threads %}
                         <div class="row mb-1">
                             <div class="col-lg-4">
-                                <a href="#">{{ thread.title }}</a>
+                                <a href="{{ path('forums.thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
                             </div>
                             <div class="col-lg-2 text-center">
                                 {% if thread.author is null %}

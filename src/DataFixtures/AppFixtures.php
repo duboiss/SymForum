@@ -112,7 +112,7 @@ class AppFixtures extends Fixture
     private function makeThread(Forum $forum, ObjectManager $manager)
     {
         $thread = new Thread();
-        $thread->setTitle($this->faker->words(rand(4, 10), true))
+        $thread->setTitle($this->faker->words(rand(4, 8), true))
             ->setAuthor($this->getRandomUser())
             ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
             ->setForum($forum);

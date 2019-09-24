@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-sm-5">
                                     <h5 class="card-title">
-                                        <a href="{{ path('forum.show', {'category_slug': forum.rootCategory.slug, 'id': forum.id, 'slug': forum.slug}) }}">{{ forum.title }}</a>
+                                        <a href="{{ path('forum.show', {'id': forum.id, 'slug': forum.slug}) }}">{{ forum.title }}</a>
                                     </h5>
                                     <p class="card-text">{{ forum.description }}</p>
                                 </div>

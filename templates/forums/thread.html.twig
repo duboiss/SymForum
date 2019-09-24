@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujet : {{ thread.title }} par {{ thread.author.pseudo }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-md-center mt-5">
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+
+                {% for message in messages %}
+                    <div class="card bg-secondary mb-4 d-flex">
+                        <div class="card-header">{{ thread.title }}</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-2 text-center">
+                                    {% if message.author is null %}
+                                        Compte supprimé
+                                    {% else %}
+                                        <a href="{{ path('user.profile', {'slug': message.author.slug}) }}">{{ message.author.pseudo }}</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-lg-10">{{ message.content }}</div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col text-right">Posté à {{ message.publishedAt|date('d/m/Y H:i:s') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

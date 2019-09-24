@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Message;
+use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -28,6 +29,22 @@ class MessageRepository extends ServiceEntityRepository
     public function findLastMessagesByUser(User $user, $limit)
     {
         return $this->findBy(['author' => $user], ['publishedAt' => 'DESC'], $limit);
+    }
+
+    /**
+     * @param Thread $thread
+     * @return mixed
+     */
+    public function findMessagesByThreadWithAuthor(Thread $thread)
+    {
+        return $this->createQueryBuilder('m')
+            ->select('m', 'author')
+            ->leftJoin('m.author', 'author')
+            ->where('m.thread = :thread')
+            ->setParameter('thread', $thread)
+            ->orderBy('m.publishedAt', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
