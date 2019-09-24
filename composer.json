@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "cocur/slugify": "^3.2",
+      "friendsofsymfony/ckeditor-bundle": "^2.1",
         "fzaninotto/faker": "^1.8",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.3.*",
