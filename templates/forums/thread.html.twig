@@ -19,15 +19,27 @@
                                         <a href="{{ path('user.profile', {'slug': message.author.slug}) }}">{{ message.author.pseudo }}</a>
                                     {% endif %}
                                 </div>
-                                <div class="col-lg-10">{{ message.content }}</div>
+                                <div class="col-lg-10">{{ message.content|raw }}</div>
                             </div>
 
                             <div class="row mt-3">
-                                <div class="col text-right">Posté à {{ message.publishedAt|date('d/m/Y H:i:s') }}</div>
+                                <div class="col text-right">Posté
+                                    le {{ message.publishedAt|date('d/m/Y à H:i:s') }}</div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+                <div class="">
+                    {% if app.user %}
+                        <p class="text-center">Connecté en tant que {{ app.user.username }}, vous pouvez répondre :</p>
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <input type="submit" class="btn btn-primary" value="Envoyer"/>
+                        {{ form_end(form) }}
+                    {% else %}
+                        <p class="text-center">Vous devez être connecté pour pouvoir répondre.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
