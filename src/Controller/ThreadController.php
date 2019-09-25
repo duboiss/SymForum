@@ -43,7 +43,8 @@ class ThreadController extends AbstractController
 
             return $this->redirectToRoute('forums.thread', [
                 'id' => $thread->getId(),
-                'slug' => $thread->getSlug()
+                'slug' => $thread->getSlug(),
+                '_fragment' => $message->getId()
             ]);
         }
 
