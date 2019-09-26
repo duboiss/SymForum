@@ -37,7 +37,8 @@
                         <input type="submit" class="btn btn-primary" value="Envoyer"/>
                         {{ form_end(form) }}
                     {% else %}
-                        <p class="text-center">Vous devez être connecté pour pouvoir répondre.</p>
+                        <p class="text-center">Vous devez être <a href="{{ path('user.login') }}">connecté</a> pour
+                            pouvoir répondre.</p>
                     {% endif %}
                 </div>
             </div>

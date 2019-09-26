@@ -35,7 +35,6 @@ class ThreadController extends AbstractController
             $user = $this->getUser();
 
             $message->setAuthor($user);
-            $message->setPublishedAt(new \DateTime());
             $message->setThread($thread);
 
             $em->persist($message);

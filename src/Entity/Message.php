@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Message
 {
@@ -23,11 +25,19 @@ class Message
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
     private $publishedAt;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 255,
+     *      minMessage = "Votre message doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "Votre message doit faire au maximum {{ limit }} caractères."
+     * )
      */
     private $content;
 
@@ -39,8 +49,25 @@ class Message
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $updatedAt;
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function initializePublishedDate()
+    {
+        $this->publishedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function initializeUpdateDate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
