@@ -47,6 +47,11 @@ class Thread
     private $forum;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $locked;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="thread", orphanRemoval=true)
      */
     private $messages;
@@ -120,6 +125,18 @@ class Thread
     public function setForum(?Forum $forum): self
     {
         $this->forum = $forum;
+
+        return $this;
+    }
+
+    public function getLocked(): ?bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(?bool $locked): self
+    {
+        $this->locked = $locked;
 
         return $this;
     }

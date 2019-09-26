@@ -117,6 +117,8 @@ class AppFixtures extends Fixture
             ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
             ->setForum($forum);
 
+        if ($this->faker->boolean(40)) $thread->setLocked(true);
+
         for ($m = 0; $m <= mt_rand(1, 60); $m++) {
             if ($m === 0) {
                 $this->makeMessage($thread, $manager, true);

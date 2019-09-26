@@ -30,15 +30,22 @@
                     </div>
                 {% endfor %}
                 <div class="">
-                    {% if app.user %}
-                        <p class="text-center">Connecté en tant que {{ app.user.username }}, vous pouvez répondre :</p>
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-                        <input type="submit" class="btn btn-primary" value="Envoyer"/>
-                        {{ form_end(form) }}
+                    {% if not thread.locked %}
+                        {% if app.user %}
+                            <p class="text-center">Connecté en tant que {{ app.user.username }}, vous pouvez répondre
+                                :</p>
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <input type="submit" class="btn btn-primary" value="Envoyer"/>
+                            {{ form_end(form) }}
+                        {% else %}
+                            <p class="text-center"><a href="{{ path('user.login') }}">Connectez-vous pour répondre.</a>
+                            </p>
+                        {% endif %}
                     {% else %}
-                        <p class="text-center">Vous devez être <a href="{{ path('user.login') }}">connecté</a> pour
-                            pouvoir répondre.</p>
+                        {% if app.user %}
+                            <p class="text-center">Ce sujet est verrouillé, vous ne pouvez donc pas y répondre.</p>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

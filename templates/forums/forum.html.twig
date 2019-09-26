@@ -71,6 +71,7 @@
                     {% for thread in threads %}
                         <div class="row mb-1">
                             <div class="col-lg-4">
+                                {{ thread.locked ? '<i class="fas fa-lock"></i>' }}
                                 <a href="{{ path('forums.thread', {'id': thread.id, 'slug': thread.slug}) }}">{{ thread.title }}</a>
                             </div>
                             <div class="col-lg-2 text-center">
