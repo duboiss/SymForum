@@ -58,7 +58,9 @@ class Message
      */
     public function initializePublishedDate()
     {
-        $this->publishedAt = new \DateTime();
+        if (!$this->publishedAt) {
+            $this->publishedAt = new \DateTime();
+        }
     }
 
     /**
