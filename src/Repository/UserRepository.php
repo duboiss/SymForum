@@ -51,7 +51,7 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return int Number of online users
      */
-    public function countOnlineUsers()
+    public function countOnlineUsers(): int
     {
         try {
             return (int)$this->getOnlineUsers()

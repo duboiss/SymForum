@@ -33,7 +33,7 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param Thread $thread
-     * @return mixed
+     * @return Message[]
      */
     public function findMessagesByThreadWithAuthor(Thread $thread)
     {
