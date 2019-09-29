@@ -3,7 +3,11 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/public/bundles/
+
+/public/bundles/*
+!public/bundles/fosckeditor/
+!public/bundles/fosckeditor/*
+
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
