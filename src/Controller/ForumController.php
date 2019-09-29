@@ -20,14 +20,7 @@ class ForumController extends AbstractController
      */
     public function forum(Forum $forum, ThreadRepository $threadsRepo, ForumRepository $forumsRepo)
     {
-        $threads = array_map(function ($value) {
-            return [
-                'thread' => $value[0],
-                'lastMessage' => $value['lastMessage'],
-                'nbMessages' => $value['nbMessages']
-            ];
-        }, $threadsRepo->findThreadsByForum($forum));
-
+        $threads = $threadsRepo->findThreadsByForum($forum);
         $subforums = $forumsRepo->findSubforumsByParent($forum);
 
         return $this->render('forums/forum.html.twig', [

@@ -37,7 +37,7 @@ class ThreadRepository extends ServiceEntityRepository
      */
     public function findThreadsByForum(Forum $forum)
     {
-        return $this->createQueryBuilder('t')
+        $query = $this->createQueryBuilder('t')
             ->addSelect('t', 'author')
             ->addSelect('MAX(m.publishedAt) AS lastMessage')
             ->addSelect('COUNT(m.id) AS nbMessages')
@@ -49,6 +49,14 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('forum', $forum)
             ->getQuery()
             ->getResult();
+
+        return array_map(function ($value) {
+            return [
+                'thread' => $value[0],
+                'lastMessage' => $value['lastMessage'],
+                'nbMessages' => $value['nbMessages']
+            ];
+        }, $query);
     }
 
     // /**
