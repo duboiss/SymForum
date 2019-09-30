@@ -47,7 +47,7 @@
                                 {% if subforum.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
-                                    <a href="{{ user_profile_link(subforum.lastMessage.author) }}"><strong>{{ subforum.lastMessage.author.pseudo }}</strong></a>
+                                    {{ user_profile_link(subforum.lastMessage.author) }}
                                 {% endif %}
                             </div>
                     </div>
@@ -78,7 +78,7 @@
                                 {% if thread.thread.author is null %}
                                     Compte supprimé
                                 {% else %}
-                                    <a href="{{ user_profile_link(thread.thread.author) }}">{{ thread.thread.author.pseudo }}</a>
+                                    {{ user_profile_link(thread.thread.author) }}
                                 {% endif %}
                             </div>
                             <div class="col-lg-2 text-center">{{ thread.nbMessages }}</div>
@@ -87,7 +87,7 @@
                                 {% if thread.thread.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
-                                    <a href="{{ user_profile_link(thread.thread.lastMessage.author) }}"><strong>{{ thread.thread.lastMessage.author.pseudo }}</strong></a>
+                                    {{ user_profile_link(thread.thread.lastMessage.author) }}
                                 {% endif %}
                             </div>
                         </div>

@@ -16,7 +16,7 @@
                                     {% if message.author is null %}
                                         Compte supprimé
                                     {% else %}
-                                        <a href="{{ path('user.profile', {'slug': message.author.slug}) }}">{{ message.author.pseudo }}</a>
+                                        {{ user_profile_link(message.author) }}
                                     {% endif %}
                                 </div>
                                 <div class="col-lg-10">{{ message.content|raw }}</div>

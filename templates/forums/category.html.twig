@@ -32,7 +32,7 @@
                                     {% if forum.lastMessage.author is null %}
                                         Compte supprimé
                                     {% else %}
-                                        <a href="{{ user_profile_link(forum.lastMessage.author) }}"><strong>{{ forum.lastMessage.author.pseudo }}</strong></a>
+                                        {{ user_profile_link(forum.lastMessage.author) }}
                                     {% endif %}
                                 </div>
                             </div>

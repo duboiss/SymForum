@@ -12,7 +12,8 @@
 
             {% if app.user %}
                 <li class="nav-item">
-                    <a class="nav-link{{ app.request.get('_route') == 'user.profile' and app.user.username in app.request.get('_route_params') ? ' active' }}" href="{{ user_profile_link(app.user) }}">Mon profil</a>
+                    <a class="nav-link{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}"
+                       href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user.logout') }}">Déconnexion</a>

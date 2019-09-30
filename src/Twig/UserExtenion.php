@@ -28,16 +28,21 @@ class UserExtenion extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('user_profile_link', [$this, 'userProfileLink']),
+            new TwigFunction('user_profile_link', [$this, 'userProfileLink'], ['is_safe' => ['html']])
         ];
     }
 
     /**
      * @param User $user
+     * @param string|null $text
+     * @param string|null $class
      * @return string
      */
-    public function userProfileLink(User $user): string
+    public function userProfileLink(User $user, string $text = null, string $class = null): string
     {
-        return $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);
+        $route = $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);
+        $classAttr = $class ? ' class="' . $class . '"' : '';
+
+        return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
     }
 }

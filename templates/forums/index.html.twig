@@ -35,7 +35,7 @@
                                         {% if forum.lastMessage.author is null %}
                                             Compte supprimé
                                         {% else %}
-                                            <a href="{{ user_profile_link(forum.lastMessage.author) }}"><strong>{{ forum.lastMessage.author.pseudo }}</strong></a>
+                                            {{ user_profile_link(forum.lastMessage.author) }}
                                         {% endif %}
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                         {% if onlineUsers|length > 0 %}
                             Membres connectés :
                             {% for user in onlineUsers %}
-                                <a href="{{ user_profile_link(user) }}">{{ user.pseudo }}</a>{{ not loop.last ? ',' }}
+                                {{ user_profile_link(user) }}{{ not loop.last ? ',' }}
                             {% endfor %}
                             <br>
                         {% endif %}
@@ -66,7 +66,7 @@
                             {{ nbThreads }} sujets, {{ nbUsers }} membres.
                         {% else %}
                             {{ nbMessages }} messages, {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est
-                            <a href="{{ user_profile_link(lastRegistered) }}">{{ lastRegistered.pseudo }}</a>.
+                            {{ user_profile_link(lastRegistered) }}.
                         {% endif %}
                     </div>
                 </div>
