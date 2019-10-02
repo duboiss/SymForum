@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo, OptionService $optionService)
+    public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo, OptionService $optionService): Response
     {
         $categories = $categoriesRepo->findAllCategories();
 
@@ -53,7 +53,7 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @return Response
      */
-    public function category(Category $category)
+    public function category(Category $category): Response
     {
         return $this->render('forums/category.html.twig', [
             'category' => $category,

@@ -18,7 +18,7 @@ class ForumController extends AbstractController
      * @param ForumRepository $forumsRepo
      * @return Response
      */
-    public function forum(Forum $forum, ThreadRepository $threadsRepo, ForumRepository $forumsRepo)
+    public function forum(Forum $forum, ThreadRepository $threadsRepo, ForumRepository $forumsRepo): Response
     {
         $threads = $threadsRepo->findThreadsByForum($forum);
         $subforums = $forumsRepo->findSubforumsByParent($forum);

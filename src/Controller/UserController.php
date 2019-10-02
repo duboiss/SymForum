@@ -17,7 +17,7 @@ class UserController extends AbstractController
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -41,7 +41,7 @@ class UserController extends AbstractController
      * @param MessageRepository $messagesRepo
      * @return Response
      */
-    public function profile(User $user, ThreadRepository $threadsRepo, MessageRepository $messagesRepo)
+    public function profile(User $user, ThreadRepository $threadsRepo, MessageRepository $messagesRepo): Response
     {
         $lastThreads = $threadsRepo->findLastThreadsByUser($user, 5);
         $lastMessages = $messagesRepo->findLastMessagesByUser($user, 5);

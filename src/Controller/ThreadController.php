@@ -21,7 +21,7 @@ class ThreadController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function index(Thread $thread, MessageRepository $repo, Request $request)
+    public function index(Thread $thread, MessageRepository $repo, Request $request): Response
     {
         $messages = $repo->findMessagesByThreadWithAuthor($thread);
 
