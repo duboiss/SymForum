@@ -19,7 +19,7 @@
                                         {{ user_profile_link(message.author) }}
                                     {% endif %}
                                 </div>
-                                <div class="col-lg-10">{{ message.content|raw }}</div>
+                                <div class="col-lg-10">{{ message.content|purify }}</div>
                             </div>
 
                             <div class="row mt-3">

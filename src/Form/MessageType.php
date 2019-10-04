@@ -14,6 +14,7 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('content', CKEditorType::class, [
+                'purify_html' => true,
                 'label' => false,
                 'config_name' => 'forums_config'
             ]);
