@@ -33,8 +33,8 @@ class Message
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Length(
-     *      min = 3,
-     *      max = 255,
+     *      min = 6,
+     *      max = 6000,
      *      minMessage = "Votre message doit faire au moins {{ limit }} caractères.",
      *      maxMessage = "Votre message doit faire au maximum {{ limit }} caractères."
      * )

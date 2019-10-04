@@ -23,8 +23,12 @@
                             </div>
 
                             <div class="row mt-3">
-                                <div class="col text-right">Posté
-                                    le {{ message.publishedAt|date('d/m/Y à H:i:s') }}</div>
+                                <div class="col text-right">
+                                    Posté le {{ message.publishedAt|date('d/m/Y à H:i:s') }}
+                                    {% if (message.author == app.user) and (message.thread.locked) is null %}
+                                        - <a href="{{ path('forums.message.edit', {'id': message.id}) }}">Editer</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -33,8 +37,9 @@
                 {% if not thread.locked %}
                     {% if app.user %}
                         <div class="mb-3">
-                            <p class="text-center">Connecté en tant que {{ app.user.username }}, vous pouvez répondre
-                                :</p>
+                            <p class="text-center">
+                                Connecté en tant que {{ app.user.username }}, vous pouvez répondre :
+                            </p>
                             {% include 'forums/_form_message.html.twig' %}
                         </div>
                     {% else %}
