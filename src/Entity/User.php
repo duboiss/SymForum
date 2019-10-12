@@ -239,7 +239,7 @@ class User implements UserInterface
      * @return string The username
      */
     public function getUsername() {
-        return $this->pseudo;
+        return $this->email;
     }
 
     /**

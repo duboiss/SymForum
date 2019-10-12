@@ -9,7 +9,7 @@ security:
         in_database:
             entity:
                 class: App\Entity\User
-                property: pseudo
+                property: email
 
     firewalls:
         dev:
@@ -27,10 +27,9 @@ security:
 
             remember_me:
                 secret:   '%kernel.secret%'
-                lifetime: 172800 # 2 days in seconds
+                lifetime: 604800 # 7 days in seconds
                 path:     /
                 secure: false
-
 
             logout:
                 path: user.logout
