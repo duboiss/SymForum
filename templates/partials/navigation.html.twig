@@ -19,7 +19,7 @@
                     <a class="nav-link" href="{{ path('security.logout') }}">Déconnexion</a>
                 </li>
             {% else %}
-                <li class="nav-item{{ app.request.get('_route') == 'user.login' ? ' active' }}">
+                <li class="nav-item{{ app.request.get('_route') == 'security.login' ? ' active' }}">
                     <a class="nav-link" href="{{ path('security.login') }}">Connexion</a>
                 </li>
             {% endif %}
