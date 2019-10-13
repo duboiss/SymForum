@@ -21,8 +21,8 @@ security:
             provider: in_database
 
             form_login:
-                login_path: user.login
-                check_path: user.login
+                login_path: security.login
+                check_path: security.login
                 default_target_path: forums.index
 
             remember_me:
