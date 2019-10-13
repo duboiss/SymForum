@@ -32,7 +32,7 @@ security:
                 secure: false
 
             logout:
-                path: user.logout
+                path: security.logout
                 target: forums.index
 
 
