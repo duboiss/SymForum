@@ -57,6 +57,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $registrationDate;
@@ -208,8 +213,17 @@ class User implements UserInterface
      * @return (Role|string)[] The user roles
      */
     public function getRoles() {
+        $roles = $this->roles;
         $roles[] = 'ROLE_USER';
-        return $roles;
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**

@@ -35,12 +35,14 @@ security:
                 path: security.logout
                 target: forums.index
 
-
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_MODERATOR
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

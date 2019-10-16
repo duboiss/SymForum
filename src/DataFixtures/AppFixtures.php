@@ -58,14 +58,24 @@ class AppFixtures extends Fixture
             ->setEmail('demo@demo.com')
             ->setRegistrationIp('127.0.0.1');
 
-        $manager->persist($demoUser);
+        $adminUser = new User();
+        $adminUser->setPseudo('admin')
+            ->setHash($this->encoder->encodePassword($demoUser, 'admin'))
+            ->setEmail('admin@admin.com')
+            ->setRegistrationIp('127.0.0.1')
+            ->setRoles(['ROLE_ADMIN']);
 
-        for ($u = 1; $u <= 25; $u++) {
+        $manager->persist($demoUser);
+        $manager->persist($adminUser);
+
+        for ($u = 1; $u <= mt_rand(20, 70); $u++) {
             $user = new User();
             $user->setPseudo($this->faker->userName)
                 ->setHash($this->encoder->encodePassword($user, 'password'))
                 ->setEmail($this->faker->email)
                 ->setRegistrationIp('127.0.0.1');
+
+            if ($this->faker->boolean(5)) $user->setRoles(['ROLE_MODERATOR']);
 
             $manager->persist($user);
             $this->users[] = $user;
