@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ThreadController extends AbstractController
 {
     /**
-     * @Route("/forums/threads/{id}-{slug}", name="forums.thread")
+     * @Route("/forums/threads/{id}-{slug}", name="thread.show")
      * @param Thread $thread
      * @param MessageRepository $repo
      * @param Request $request
@@ -41,7 +41,7 @@ class ThreadController extends AbstractController
             $em->persist($message);
             $em->flush();
 
-            return $this->redirectToRoute('forums.thread', [
+            return $this->redirectToRoute('thread.show', [
                 'id' => $thread->getId(),
                 'slug' => $thread->getSlug(),
                 '_fragment' => $message->getId()
@@ -65,7 +65,7 @@ class ThreadController extends AbstractController
     {
         $thread = $message->getThread();
 
-        $redirectionRoute = $this->redirectToRoute('forums.thread', [
+        $redirectionRoute = $this->redirectToRoute('thread.show', [
             'id' => $thread->getId(),
             'slug' => $thread->getSlug(),
             '_fragment' => $message->getId()

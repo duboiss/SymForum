@@ -42,7 +42,7 @@ class ForumExtension extends AbstractExtension
     public function getBreadcrumbParts($forumOrCategory, array &$parts = []): array
     {
         if ($forumOrCategory instanceof Category) {
-            $url = $this->urlGenerator->generate('forums.category', ['slug' => $forumOrCategory->getSlug()]);
+            $url = $this->urlGenerator->generate('category.show', ['slug' => $forumOrCategory->getSlug()]);
             $title = $forumOrCategory->getTitle();
         } elseif ($forumOrCategory instanceof Forum) {
             $url = $this->urlGenerator->generate('forum.show', [
