@@ -10,10 +10,13 @@
                 <a class="nav-link" href="{{ path('forums.index') }}">Forums</a>
             </li>
 
+            <li class="nav-item{{ app.request.get('_route') == 'page.members' ? ' active' }}">
+                <a class="nav-link" href="{{ path('page.members') }}">Liste des membres</a>
+            </li>
+
             {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}"
-                       href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
+                <li class="nav-item{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}">
+                    <a class="nav-link" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('security.logout') }}">Déconnexion</a>

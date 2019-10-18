@@ -72,6 +72,19 @@ class UserRepository extends ServiceEntityRepository
         return $this->findOneBy([], ['registrationDate' => 'DESC']);
     }
 
+    /**
+     * @param $role
+     * @return User[]
+     */
+    public function findByRole($role)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%"' . $role . '"%')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

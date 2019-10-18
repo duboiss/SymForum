@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ app.user.pseudo in app.request.get('_route_params') ? 'Mon profil' : 'Profil de ' ~ user.pseudo }}
+    {{ app.user.pseudo == user.pseudo ? 'Mon profil' : 'Profil de ' ~ user.pseudo }}
 {% endblock %}
 
 {% block body %}
