@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil de {{ user.pseudo }}{% endblock %}
+{% block title %}
+    {{ app.user.pseudo in app.request.get('_route_params') ? 'Mon profil' : 'Profil de ' ~ user.pseudo }}
+{% endblock %}
 
 {% block body %}
     <div class="container">
