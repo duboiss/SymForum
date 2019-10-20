@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-md-center mt-5">
+            <div class="col col-lg-12 col-md-12 col-sm-12">
+                <h1>Bienvenue, {{ app.user.pseudo }}</h1>
+
+                <div class="row mt-3">
+                    <div class="col col-lg-6 col-md-6 col-sm-6">
+                        <div class="list-group">
+
+                            <a href="#" class="list-group-item list-group-item-action disabled">Signalements</a>
+                            <a href="#" class="list-group-item list-group-item-action disabled">Utilisateurs</a>
+
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="#" class="list-group-item list-group-item-action disabled">Catégories</a>
+                                <a href="#" class="list-group-item list-group-item-action disabled">Forums</a>
+                                <a href="#" class="list-group-item list-group-item-action disabled">Groupes</a>
+                                <a href="#" class="list-group-item list-group-item-action disabled">Paramètres</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

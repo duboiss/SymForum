@@ -18,6 +18,11 @@
                 <li class="nav-item{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}">
                     <a class="nav-link" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                 </li>
+                {% if is_granted('ROLE_MODERATOR') %}
+                    <li class="nav-item{{ app.request.get('_route') == 'page.panel' ? ' active' }}">
+                        <a class="nav-link" href="{{ path('page.panel') }}">Panel</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('security.logout') }}">Déconnexion</a>
                 </li>

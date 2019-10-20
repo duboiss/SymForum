@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,5 +38,14 @@ class PageController extends AbstractController
             'administrators' => $administrators,
             'moderators' => $moderators
         ]);
+    }
+
+    /**
+     * @Route("/panel", name="page.panel")
+     * @IsGranted("ROLE_MODERATOR")
+     */
+    public function panel()
+    {
+        return $this->render('pages/panel.html.twig');
     }
 }
