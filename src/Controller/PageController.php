@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ReportRepository;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,7 @@ class PageController extends AbstractController
      * @param UserRepository $repo
      * @return Response
      */
-    public function members(UserRepository $repo)
+    public function members(UserRepository $repo): Response
     {
         $members = $repo->findAll();
 
@@ -29,7 +30,7 @@ class PageController extends AbstractController
      * @param UserRepository $repo
      * @return Response
      */
-    public function team(UserRepository $repo)
+    public function team(UserRepository $repo): Response
     {
         $administrators = $repo->findByRole('ROLE_ADMIN');
         $moderators = $repo->findByRole('ROLE_MODERATOR');
@@ -43,9 +44,14 @@ class PageController extends AbstractController
     /**
      * @Route("/panel", name="page.panel")
      * @IsGranted("ROLE_MODERATOR")
+     * @param ReportRepository $repo
+     * @return Response
      */
-    public function panel()
+    public function panel(ReportRepository $repo): Response
     {
-        return $this->render('pages/panel.html.twig');
+        $nbUntreatedReports = $repo->countUntreatedReports();
+        return $this->render('pages/panel.html.twig', [
+            'nbUntreatedReports' => $nbUntreatedReports
+        ]);
     }
 }
