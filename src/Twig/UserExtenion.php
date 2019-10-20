@@ -9,6 +9,11 @@ use Twig\TwigFunction;
 
 class UserExtenion extends AbstractExtension
 {
+    const ROLES = [
+        'ROLE_ADMIN' => 'Administrateur',
+        'ROLE_MODERATOR' => 'Modérateur'
+    ];
+
     /**
      * @var UrlGeneratorInterface
      */
@@ -28,7 +33,8 @@ class UserExtenion extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('user_profile_link', [$this, 'userProfileLink'], ['is_safe' => ['html']])
+            new TwigFunction('user_profile_link', [$this, 'userProfileLink'], ['is_safe' => ['html']]),
+            new TwigFunction('user_profile_role', [$this, 'userProfileRole'])
         ];
     }
 
@@ -44,5 +50,16 @@ class UserExtenion extends AbstractExtension
         $classAttr = $class ? ' class="' . $class . '"' : '';
 
         return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
+    }
+
+    public function userProfileRole(User $user): ?string
+    {
+        $roles = $user->getRoles();
+
+        foreach (self::ROLES as $k => $role) {
+            if (in_array($k, $roles)) return $role;
+        }
+
+        return null;
     }
 }
