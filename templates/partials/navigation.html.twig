@@ -10,28 +10,21 @@
                 <a class="nav-link" href="{{ path('forums.index') }}">Forums</a>
             </li>
 
-            <li class="nav-item{{ app.request.get('_route') == 'page.members' ? ' active' }}">
-                <a class="nav-link" href="{{ path('page.members') }}">Liste des membres</a>
-            </li>
+            {{ include('partials/_nav_item.html.twig', {route: 'page.members', text: 'Liste des membres'}) }}
 
             {% if app.user %}
                 <li class="nav-item{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}">
                     <a class="nav-link" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                 </li>
                 {% if is_granted('ROLE_MODERATOR') %}
-                    <li class="nav-item{{ app.request.get('_route') == 'page.panel' ? ' active' }}">
-                        <a class="nav-link" href="{{ path('page.panel') }}">Panel</a>
-                    </li>
+                    {{ include('partials/_nav_item.html.twig', {route: 'page.panel', text: 'Panel'}) }}
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('security.logout') }}">Déconnexion</a>
-                </li>
+                {{ include('partials/_nav_item.html.twig', {route: 'security.logout', text: 'Déconnexion'}) }}
             {% else %}
-                <li class="nav-item{{ app.request.get('_route') == 'security.login' ? ' active' }}">
-                    <a class="nav-link" href="{{ path('security.login') }}">Connexion</a>
-                </li>
+                {{ include('partials/_nav_item.html.twig', {route: 'security.login', text: 'Connexion'}) }}
             {% endif %}
         </ul>
+
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Recherche">
             <button class="btn btn-secondary btn-sm my-2 my-sm-0" type="submit">Rechercher</button>
