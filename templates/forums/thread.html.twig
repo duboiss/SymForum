@@ -13,10 +13,14 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-2 text-center">
-                                    {% if message.author is null %}
+                                    {% set author = message.author %}
+                                    {% if author is null %}
                                         Compte supprimé
                                     {% else %}
                                         {{ user_profile_link(message.author) }}
+
+                                        {% set role = user_profile_role(author) %}
+                                        {{ role ? role }}
                                     {% endif %}
                                 </div>
                                 <div class="col-lg-10">{{ message.content|purify }}</div>

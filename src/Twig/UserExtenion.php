@@ -14,6 +14,8 @@ class UserExtenion extends AbstractExtension
         'ROLE_MODERATOR' => 'Modérateur'
     ];
 
+    // TODO Store a color for each role
+
     /**
      * @var UrlGeneratorInterface
      */
@@ -49,6 +51,7 @@ class UserExtenion extends AbstractExtension
         $route = $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);
         $classAttr = $class ? ' class="' . $class . '"' : '';
 
+        // TODO Return with color role in class
         return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
     }
 
