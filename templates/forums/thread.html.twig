@@ -47,13 +47,15 @@
                             {% include 'forums/_form_message.html.twig' %}
                         </div>
                     {% else %}
-                        <p class="text-center">
+                        <div class="alert alert-info text-center">
                             <a href="{{ path('security.login') }}">Connectez-vous pour répondre.</a>
-                        </p>
+                        </div>
                     {% endif %}
                 {% else %}
                     {% if app.user %}
-                        <p class="text-center">Ce sujet est verrouillé, vous ne pouvez donc pas y répondre.</p>
+                        <div class="alert alert-warning text-center">Ce sujet est verrouillé, vous ne pouvez donc pas y
+                            répondre.
+                        </div>
                     {% endif %}
                 {% endif %}
             </div>
