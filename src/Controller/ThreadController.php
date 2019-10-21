@@ -7,7 +7,6 @@ use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +20,7 @@ class ThreadController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function index(Thread $thread, MessageRepository $repo, Request $request): Response
+    public function show(Thread $thread, MessageRepository $repo, Request $request): Response
     {
         $messages = $repo->findMessagesByThreadWithAuthor($thread);
 
@@ -52,39 +51,5 @@ class ThreadController extends AbstractController
             'messages' => $messages,
             'form' => $form->createView()
         ]);
-    }
-
-    /**
-     * @Route("/forums/messages/{id}/edit", name="forums.message.edit")
-     * @param Message $message
-     * @param Request $request
-     * @return RedirectResponse|Response
-     */
-    public function editMessage(Message $message, Request $request): Response
-    {
-        $thread = $message->getThread();
-
-        $redirectionRoute = $this->redirectToRoute('thread.show', [
-            'id' => $thread->getId(),
-            'slug' => $thread->getSlug(),
-            '_fragment' => $message->getId()
-        ]);
-
-        if ($this->getUser() === $message->getAuthor() && $thread->getLocked() === null) {
-            $form = $this->createForm(MessageType::class, $message);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-                return $redirectionRoute;
-            }
-
-            return $this->render('forums/message_edit.html.twig', [
-                'message' => $message,
-                'form' => $form->createView(),
-            ]);
-        }
-
-        return $redirectionRoute;
     }
 }

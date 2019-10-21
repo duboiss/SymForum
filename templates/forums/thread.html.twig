@@ -30,7 +30,7 @@
                                 <div class="col text-right">
                                     Posté le {{ message.publishedAt|date('d/m/Y à H:i:s') }}
                                     {% if (message.author == app.user) and (message.thread.locked) is null %}
-                                        - <a href="{{ path('forums.message.edit', {'id': message.id}) }}">Editer</a>
+                                        - <a href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
                                     {% endif %}
                                 </div>
                             </div>
