@@ -60,7 +60,7 @@ class ThreadController extends AbstractController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function editMessage(Message $message, Request $request)
+    public function editMessage(Message $message, Request $request): Response
     {
         $thread = $message->getThread();
 

@@ -42,6 +42,15 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param Thread $thread
+     * @return Message|null
+     */
+    public function findLastMessageByThread(Thread $thread): ?Message
+    {
+        return $this->findOneBy(['thread' => $thread], ['publishedAt' => 'DESC']);
+    }
+
+    /**
+     * @param Thread $thread
      * @return Message[]
      */
     public function findMessagesByThreadWithAuthor(Thread $thread)
