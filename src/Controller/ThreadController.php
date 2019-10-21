@@ -20,7 +20,6 @@ class ThreadController extends AbstractController
      * @param MessageRepository $repo
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
     public function index(Thread $thread, MessageRepository $repo, Request $request): Response
     {

@@ -23,10 +23,19 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
-     * @param $limit
+     * @return Message
+     */
+    public function findLastMessageByUser(User $user): Message
+    {
+        return $this->findOneBy(['author' => $user], ['publishedAt' => 'DESC']);
+    }
+
+    /**
+     * @param User $user
+     * @param int $limit
      * @return Message[]
      */
-    public function findLastMessagesByUser(User $user, $limit)
+    public function findLastMessagesByUser(User $user, int $limit): array
     {
         return $this->findBy(['author' => $user], ['publishedAt' => 'DESC'], $limit);
     }
