@@ -20,7 +20,7 @@
                         <tbody>
                         {% for member in members %}
                             <tr>
-                                <th>{{ user_profile_link(member) }}</th>
+                                <td>{{ user_profile_link(member) }}</td>
                                 <td>{{ member.registrationDate|date('d/m/Y') }}</td>
                                 <td>{{ member.lastActivityAt ? member.lastActivityAt|date('d/m/Y') : 'Jamais' }}</td>
                             </tr>

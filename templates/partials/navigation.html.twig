@@ -19,7 +19,9 @@
                     <a class="nav-link" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                 </li>
                 {% if is_granted('ROLE_MODERATOR') %}
-                    {{ include('partials/_nav_item.html.twig', {route: 'page.panel', text: 'Panel'}) }}
+                    <li class="nav-item{{ currentRoute starts with 'panel' ? ' active' }}">
+                        <a class="nav-link" href="{{ path('panel.homepage') }}">Panel</a>
+                    </li>
                 {% endif %}
                 {{ include('partials/_nav_item.html.twig', {route: 'security.logout', text: 'Déconnexion'}) }}
             {% else %}

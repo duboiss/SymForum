@@ -21,7 +21,7 @@
                         <tbody>
                         {% for administrator in administrators %}
                             <tr>
-                                <th>{{ user_profile_link(administrator) }}</th>
+                                <td>{{ user_profile_link(administrator) }}</td>
                                 <td>{{ administrator.registrationDate|date('d/m/Y') }}</td>
                                 <td>{{ administrator.lastActivityAt ? administrator.lastActivityAt|date('d/m/Y') : 'Jamais' }}</td>
                             </tr>
