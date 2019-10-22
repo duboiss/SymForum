@@ -3,14 +3,18 @@
 namespace App\Controller;
 
 use App\Repository\ReportRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/panel")
+ */
 class PanelController extends AbstractController
 {
     /**
-     * @Route("/panel", name="panel.homepage")
+     * @Route("", name="panel.homepage")
      * @param ReportRepository $repo
      * @return Response
      */
@@ -23,7 +27,7 @@ class PanelController extends AbstractController
     }
 
     /**
-     * @Route("/panel/reports", name="panel.reports")
+     * @Route("/reports", name="panel.reports")
      * @param ReportRepository $repo
      * @return Response
      */
@@ -35,6 +39,20 @@ class PanelController extends AbstractController
         return $this->render('panel/reports.html.twig', [
             'reports' => $reports,
             'nbUntreatedReports' => $nbUntreatedReports
+        ]);
+    }
+
+    /**
+     * @Route("/users", name="panel.users")
+     * @param UserRepository $repo
+     * @return Response
+     */
+    public function users(UserRepository $repo): Response
+    {
+        $users = $repo->findAll();
+
+        return $this->render('panel/users.html.twig', [
+            'users' => $users
         ]);
     }
 }
