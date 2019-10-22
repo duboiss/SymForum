@@ -15,6 +15,7 @@
                             <th>#</th>
                             <th>Message de</th>
                             <th>Reporté le</th>
+                            <th>Par</th>
                             <th>Motif</th>
                             <th>Actions</th>
                         </tr>
@@ -25,7 +26,8 @@
                                 <td>{{ report.id }}</td>
                                 <td>{{ user_profile_link(report.message.author) }}</td>
                                 <td>{{ report.reportedAt|date('d/m/Y à H:i:s') }}</td>
-                                <td>{{ report.reason }}</td>
+                                <td>{{ user_profile_link(report.reportedBy) }}</td>
+                                <td>{{ report.reason|slice(0, 50) }}{{ report.reason|length > 50 ? '...' }}</td>
                                 <td><a href="#">Détails</a></td>
                             </tr>
                         {% endfor %}

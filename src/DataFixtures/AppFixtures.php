@@ -134,7 +134,8 @@ class AppFixtures extends Fixture
 
             $report->setMessage($reportedMessage)
                 ->setReason($this->faker->sentence)
-                ->setReportedAt($this->faker->dateTimeBetween($reportedMessage->getPublishedAt()));
+                ->setReportedAt($this->faker->dateTimeBetween($reportedMessage->getPublishedAt()))
+                ->setReportedBy($this->getRandom($this->users));
 
             if ($this->faker->boolean(65)) {
                 $report->setStatus(true)

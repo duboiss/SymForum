@@ -33,6 +33,11 @@ class Report
     private $reportedAt;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     */
+    private $reportedBy;
+
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $status;
@@ -84,6 +89,18 @@ class Report
     public function setReportedAt(\DateTimeInterface $reportedAt): self
     {
         $this->reportedAt = $reportedAt;
+
+        return $this;
+    }
+
+    public function getReportedBy(): ?User
+    {
+        return $this->reportedBy;
+    }
+
+    public function setReportedBy($reportedBy): self
+    {
+        $this->reportedBy = $reportedBy;
 
         return $this;
     }
