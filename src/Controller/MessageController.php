@@ -40,7 +40,7 @@ class MessageController extends BaseController
                 return $route;
             }
 
-            return $this->render('forums/message_edit.html.twig', [
+            return $this->render('message/edition.html.twig', [
                 'message' => $message,
                 'form' => $form->createView(),
             ]);

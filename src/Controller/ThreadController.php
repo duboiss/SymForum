@@ -56,7 +56,7 @@ class ThreadController extends BaseController
 
         }
 
-        return $this->render('forums/thread.html.twig', [
+        return $this->render('thread/thread.html.twig', [
             'thread' => $thread,
             'messages' => $messages,
             'form' => $form->createView()
