@@ -24,7 +24,7 @@ class MessageController extends BaseController
     {
         $thread = $message->getThread();
 
-        $redirectionRoute = $this->redirectToRoute('thread.show', [
+        $route = $this->redirectToRoute('thread.show', [
             'id' => $thread->getId(),
             'slug' => $thread->getSlug(),
             '_fragment' => $message->getId()
@@ -37,7 +37,7 @@ class MessageController extends BaseController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
                 $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
-                return $redirectionRoute;
+                return $route;
             }
 
             return $this->render('forums/message_edit.html.twig', [
@@ -47,6 +47,6 @@ class MessageController extends BaseController
         }
 
         $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas modifier votre message, le sujet est verrouillé !');
-        return $redirectionRoute;
+        return $route;
     }
 }

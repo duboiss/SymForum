@@ -23,28 +23,37 @@ class ThreadController extends BaseController
     {
         $messages = $repo->findMessagesByThreadWithAuthor($thread);
 
-
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $user = $this->getUser();
 
-            $message->setAuthor($user);
-            $message->setThread($thread);
+            if ($thread->getLocked() === null) {
+                $em = $this->getDoctrine()->getManager();
+                $user = $this->getUser();
 
-            $em->persist($message);
-            $em->flush();
+                $message->setAuthor($user);
+                $message->setThread($thread);
 
-            $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+                $em->persist($message);
+                $em->flush();
 
+                $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+
+                return $this->redirectToRoute('thread.show', [
+                    'id' => $thread->getId(),
+                    'slug' => $thread->getSlug(),
+                    '_fragment' => $message->getId()
+                ]);
+            }
+
+            $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
             return $this->redirectToRoute('thread.show', [
                 'id' => $thread->getId(),
-                'slug' => $thread->getSlug(),
-                '_fragment' => $message->getId()
+                'slug' => $thread->getSlug()
             ]);
+
         }
 
         return $this->render('forums/thread.html.twig', [
