@@ -38,6 +38,8 @@ class ThreadController extends BaseController
             $em->persist($message);
             $em->flush();
 
+            $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+
             return $this->redirectToRoute('thread.show', [
                 'id' => $thread->getId(),
                 'slug' => $thread->getSlug(),

@@ -36,6 +36,7 @@ class MessageController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
+                $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
                 return $redirectionRoute;
             }
 
@@ -45,6 +46,7 @@ class MessageController extends BaseController
             ]);
         }
 
+        $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas modifier votre message, le sujet est verrouillé !');
         return $redirectionRoute;
     }
 }
