@@ -8,11 +8,10 @@ use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
 use App\Service\OptionService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategoryController extends AbstractController
+class CategoryController extends BaseController
 {
     /**
      * @Route("/forums", name="forums.index")

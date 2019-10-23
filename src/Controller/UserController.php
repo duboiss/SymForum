@@ -5,11 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends AbstractController
+class UserController extends BaseController
 {
     /**
      * @Route("/user/{slug}", name="user.profile")

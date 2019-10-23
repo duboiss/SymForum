@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Repository\ReportRepository;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/panel")
  */
-class PanelController extends AbstractController
+class PanelController extends BaseController
 {
     /**
      * @Route("", name="panel.homepage")

@@ -5,11 +5,10 @@ namespace App\Controller;
 use App\Entity\Forum;
 use App\Repository\ForumRepository;
 use App\Repository\ThreadRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ForumController extends AbstractController
+class ForumController extends BaseController
 {
     /**
      * @Route("/forums/{id}-{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"})

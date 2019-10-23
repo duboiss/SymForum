@@ -6,12 +6,11 @@ use App\Entity\Message;
 use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ThreadController extends AbstractController
+class ThreadController extends BaseController
 {
     /**
      * @Route("/forums/threads/{id}-{slug}", name="thread.show")
