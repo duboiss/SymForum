@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
+use App\Service\AntispamService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,9 +18,10 @@ class ThreadController extends BaseController
      * @param Thread $thread
      * @param MessageRepository $repo
      * @param Request $request
+     * @param AntispamService $antispam
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $repo, Request $request): Response
+    public function show(Thread $thread, MessageRepository $repo, Request $request, AntispamService $antispam): Response
     {
         $messages = $repo->findMessagesByThreadWithAuthor($thread);
 
@@ -30,8 +32,18 @@ class ThreadController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($thread->getLocked() === null) {
-                $em = $this->getDoctrine()->getManager();
                 $user = $this->getUser();
+
+                if (!$antispam->canPostMessage($user)) {
+                    $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
+
+                    return $this->redirectToRoute('thread.show', [
+                        'id' => $thread->getId(),
+                        'slug' => $thread->getSlug()
+                    ]);
+                }
+
+                $em = $this->getDoctrine()->getManager();
 
                 $message->setAuthor($user);
                 $message->setThread($thread);

@@ -23,9 +23,9 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
-     * @return Message
+     * @return Message|null
      */
-    public function findLastMessageByUser(User $user): Message
+    public function findLastMessageByUser(User $user): ?Message
     {
         return $this->findOneBy(['author' => $user], ['publishedAt' => 'DESC']);
     }
