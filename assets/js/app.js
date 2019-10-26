@@ -10,9 +10,5 @@ import '../css/app.css';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import $ from 'jquery';
 import 'bootstrap';
-
-$(document).ready(function () {
-    for (let el of $('*[id^="toast-"]')) $("#" + el.id).toast('show');
-});
+import './components/toast';
