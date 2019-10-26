@@ -4,7 +4,7 @@
     'warning': 'exclamation-circle'
 } %}
 
-<div style="position: fixed; top: 130px; right: 30px; min-width: 300px;">
+<div class="toast-notification">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="toast" id="toast-{{ label }}-{{ loop.index }}" role="alert" aria-live="assertive"
