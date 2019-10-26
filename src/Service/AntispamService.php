@@ -38,12 +38,10 @@ class AntispamService
 
     public function canPostMessage(User $user): bool
     {
-        if ($this->security->isGranted('ROLE_MODERATOR')) return true;
-
         $lastMessage = $this->messagesRepo->findLastMessageByUser($user);
-        $currentDate = new DateTime();
 
-        if ($lastMessage) {
+        if ($lastMessage && !$this->security->isGranted('ROLE_MODERATOR')) {
+            $currentDate = new DateTime();
             return $currentDate > $lastMessage->getPublishedAt()->modify('+' . self::DELAY_MESSAGE . ' seconds');
         }
 
