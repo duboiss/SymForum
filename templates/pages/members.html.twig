@@ -22,7 +22,7 @@
                             <tr>
                                 <td>{{ user_profile_link(member) }}</td>
                                 <td>{{ member.registrationDate|date('d/m/Y') }}</td>
-                                <td>{{ member.lastActivityAt ? member.lastActivityAt|date('d/m/Y') : 'Jamais' }}</td>
+                                <td>{{ member.lastActivityAt ? member.lastActivityAt|ago : 'Jamais' }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

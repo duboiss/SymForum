@@ -9,6 +9,7 @@
       "exercise/htmlpurifier-bundle": "^2.0",
       "friendsofsymfony/ckeditor-bundle": "^2.1",
         "fzaninotto/faker": "^1.8",
+      "knplabs/knp-time-bundle": "^1.9",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.3.*",
         "symfony/console": "4.3.*",

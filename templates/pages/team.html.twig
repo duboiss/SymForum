@@ -23,7 +23,7 @@
                             <tr>
                                 <td>{{ user_profile_link(administrator) }}</td>
                                 <td>{{ administrator.registrationDate|date('d/m/Y') }}</td>
-                                <td>{{ administrator.lastActivityAt ? administrator.lastActivityAt|date('d/m/Y') : 'Jamais' }}</td>
+                                <td>{{ administrator.lastActivityAt ? administrator.lastActivityAt|ago : 'Jamais' }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
