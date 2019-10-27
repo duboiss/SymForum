@@ -2,7 +2,27 @@
 
 {% block title %}{{ thread.title }} par {{ thread.author.pseudo }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_link_tags('modnav') }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="mod_nav">
+            <ul>
+                {% if thread.locked %}
+                    <li><a href="#"><i class="fas fa-lock-open"></i></a></li>
+                {% else %}
+                    <li><a href="#"><i class="fas fa-lock"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
