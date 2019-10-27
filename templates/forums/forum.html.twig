@@ -56,7 +56,7 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                {{ subforum.lastMessage.publishedAt|time_diff }} par
+                                {{ subforum.lastMessage.publishedAt|ago }} par
                                 {% if subforum.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-lg-2 text-center">{{ thread.nbMessages }}</div>
                             <div class="col-lg-4">
-                                {{ thread.thread.lastMessage.publishedAt|time_diff }} par
+                                {{ thread.thread.lastMessage.publishedAt|ago }} par
                                 {% if thread.thread.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
