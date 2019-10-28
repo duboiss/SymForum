@@ -15,9 +15,11 @@
         <div class="mod_nav">
             <ul>
                 {% if thread.locked %}
-                    <li><a href="#"><i class="fas fa-lock-open"></i></a></li>
+                    <li><a href="{{ path('thread.unlock', {'id': thread.id}) }}" title="Ouvrir le sujet"><i
+                                    class="fas fa-lock-open"></i></a></li>
                 {% else %}
-                    <li><a href="#"><i class="fas fa-lock"></i></a></li>
+                    <li><a href="{{ path('thread.lock', {'id': thread.id}) }}" title="Fermer le sujet"><i
+                                    class="fas fa-lock"></i></a></li>
                 {% endif %}
             </ul>
         </div>
