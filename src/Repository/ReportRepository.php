@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Message;
 use App\Entity\Report;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -31,6 +32,19 @@ class ReportRepository extends ServiceEntityRepository
         } catch (Exception $e) {
             return 0;
         }
+    }
+
+    /**
+     * @param Message $message
+     * @return Message[]|null
+     */
+    public function findByMessage(Message $message): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.message = :message')
+            ->setParameter('message', $message)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
