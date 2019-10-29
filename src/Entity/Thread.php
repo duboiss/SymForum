@@ -47,7 +47,7 @@ class Thread
     private $forum;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $locked;
 
@@ -129,12 +129,12 @@ class Thread
         return $this;
     }
 
-    public function getLocked(): ?bool
+    public function getLocked(): bool
     {
         return $this->locked;
     }
 
-    public function setLocked(?bool $locked): self
+    public function setLocked(bool $locked): self
     {
         $this->locked = $locked;
 

@@ -33,7 +33,7 @@ class ThreadController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($thread->getLocked() === null) {
+            if (!$thread->getLocked()) {
                 $user = $this->getUser();
 
                 if (!$antispam->canPostMessage($user)) {
@@ -63,6 +63,7 @@ class ThreadController extends BaseController
             }
 
             $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
+
             return $this->redirectToRoute('thread.show', [
                 'id' => $thread->getId(),
                 'slug' => $thread->getSlug()

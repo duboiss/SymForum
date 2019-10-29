@@ -155,7 +155,7 @@ class AppFixtures extends Fixture
             ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
             ->setForum($forum);
 
-        if ($this->faker->boolean(40)) $thread->setLocked(true);
+        $this->faker->boolean(40) ? $thread->setLocked(true) : $thread->setLocked(false);
 
         for ($m = 0; $m <= mt_rand(1, 60); $m++) {
             if ($m === 0) {
