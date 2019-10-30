@@ -34,7 +34,7 @@ class MessageController extends BaseController
             '_fragment' => $message->getId()
         ]);
 
-        if ($thread->getLocked() === null) {
+        if (!$thread->getLocked()) {
             $form = $this->createForm(MessageType::class, $message);
             $form->handleRequest($request);
 
