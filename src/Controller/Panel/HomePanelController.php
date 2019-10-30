@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Panel;
 
+use App\Controller\BaseController;
 use App\Repository\ReportRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/panel")
  */
-class PanelController extends BaseController
+class HomePanelController extends BaseController
 {
     /**
      * @Route("", name="panel.homepage")
