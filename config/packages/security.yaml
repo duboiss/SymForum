@@ -30,7 +30,7 @@ security:
 
             logout:
                 path: security.logout
-                target: forums.index
+                target: security.logged.out
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
