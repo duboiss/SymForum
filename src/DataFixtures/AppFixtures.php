@@ -11,6 +11,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Faker\Generator;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -22,7 +23,7 @@ class AppFixtures extends Fixture
     private $encoder;
 
     /**
-     * @var \Faker\Generator
+     * @var Generator
      */
     private $faker;
 
@@ -130,17 +131,17 @@ class AppFixtures extends Fixture
     {
         for ($i = 0; $i <= 30; $i++) {
             $report = new Report();
-            $reportedMessage = $this->getRandom($this->messages);
+            $reportedMessage = $this->faker->randomElement($this->messages);
 
             $report->setMessage($reportedMessage)
                 ->setReason($this->faker->sentence)
                 ->setReportedAt($this->faker->dateTimeBetween($reportedMessage->getPublishedAt()))
-                ->setReportedBy($this->getRandom($this->users));
+                ->setReportedBy($this->faker->randomElement($this->users));
 
             if ($this->faker->boolean(65)) {
                 $report->setStatus(true)
                     ->setTreatedAt($this->faker->dateTimeBetween($report->getReportedAt()))
-                    ->setTreatedBy($this->getRandom($this->users));
+                    ->setTreatedBy($this->faker->randomElement($this->users));
             }
 
             $manager->persist($report);
@@ -151,7 +152,7 @@ class AppFixtures extends Fixture
     {
         $thread = new Thread();
         $thread->setTitle($this->faker->words(rand(4, 8), true))
-            ->setAuthor($this->getRandom($this->users))
+            ->setAuthor($this->faker->randomElement($this->users))
             ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
             ->setForum($forum);
 
@@ -176,7 +177,7 @@ class AppFixtures extends Fixture
             $message->setAuthor($thread->getAuthor())
                 ->setPublishedAt($thread->getCreatedAt());
         } else {
-            $message->setAuthor($this->getRandom($this->users))
+            $message->setAuthor($this->faker->randomElement($this->users))
                 ->setPublishedAt($this->faker->dateTimeBetween($thread->getCreatedAt()));
         }
 
@@ -189,10 +190,5 @@ class AppFixtures extends Fixture
 
         $this->messages[] = $message;
         $manager->persist($message);
-    }
-
-    private function getRandom(array $array)
-    {
-        return $array[rand(0, count($array) - 1)];
     }
 }
