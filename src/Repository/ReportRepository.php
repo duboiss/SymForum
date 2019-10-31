@@ -21,10 +21,13 @@ class ReportRepository extends ServiceEntityRepository
         parent::__construct($registry, Report::class);
     }
 
+    /**
+     * @return int Number of untreated reports
+     */
     public function countUntreatedReports(): int
     {
         try {
-            return $this->createQueryBuilder('r')
+            return (int)$this->createQueryBuilder('r')
                 ->select('COUNT(r.id)')
                 ->where('r.status is null')
                 ->getQuery()
@@ -36,9 +39,9 @@ class ReportRepository extends ServiceEntityRepository
 
     /**
      * @param Message $message
-     * @return Message[]|null
+     * @return Message[]
      */
-    public function findByMessage(Message $message): ?array
+    public function findByMessage(Message $message): array
     {
         return $this->createQueryBuilder('r')
             ->where('r.message = :message')
@@ -46,33 +49,4 @@ class ReportRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // /**
-    //  * @return Report[] Returns an array of Report objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Report
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

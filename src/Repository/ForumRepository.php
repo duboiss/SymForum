@@ -23,37 +23,8 @@ class ForumRepository extends ServiceEntityRepository
      * @param Forum $forum
      * @return Forum[]
      */
-    public function findSubforumsByParent(Forum $forum)
+    public function findSubforumsByParent(Forum $forum): array
     {
         return $this->findBy(['parent' => $forum], ['position' => 'ASC']);
     }
-
-    // /**
-    //  * @return Forum[] Returns an array of Forum objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Forum
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

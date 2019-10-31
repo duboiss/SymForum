@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use DateInterval;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
@@ -26,9 +27,9 @@ class UserRepository extends ServiceEntityRepository
      * @return QueryBuilder
      * @throws Exception
      */
-    private function getOnlineUsers()
+    private function getOnlineUsers(): QueryBuilder
     {
-        $currentDate = new \DateTime();
+        $currentDate = new DateTime();
         $currentDate->sub(new DateInterval('PT15M'));
 
         return $this->createQueryBuilder('u')
@@ -37,10 +38,10 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User[] Returns an array of User objects
+     * @return User[] Array of online users
      * @throws Exception
      */
-    public function findOnlineUsers()
+    public function findOnlineUsers(): array
     {
         return $this->getOnlineUsers()
             ->getQuery()
@@ -65,9 +66,9 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User|null Return the last registered user (or null)
+     * @return User|null Return the last registered user or null if there is none
      */
-    public function findLastRegistered()
+    public function findLastRegistered(): ?User
     {
         return $this->findOneBy([], ['registrationDate' => 'DESC']);
     }
@@ -76,7 +77,7 @@ class UserRepository extends ServiceEntityRepository
      * @param $role
      * @return User[]
      */
-    public function findByRole($role)
+    public function findByRole($role): array
     {
         return $this->createQueryBuilder('u')
             ->where('u.roles LIKE :role')
@@ -84,33 +85,4 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

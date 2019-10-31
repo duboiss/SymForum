@@ -26,16 +26,16 @@ class ThreadRepository extends ServiceEntityRepository
      * @param $limit
      * @return Thread[]
      */
-    public function findLastThreadsByUser(User $user, $limit)
+    public function findLastThreadsByUser(User $user, int $limit): array
     {
         return $this->findBy(['author' => $user], ['createdAt' => 'DESC'], $limit);
     }
 
     /**
      * @param Forum $forum
-     * @return mixed
+     * @return array
      */
-    public function findThreadsByForum(Forum $forum)
+    public function findThreadsByForum(Forum $forum): array
     {
         $query = $this->createQueryBuilder('t')
             ->addSelect('t', 'author')
@@ -58,33 +58,4 @@ class ThreadRepository extends ServiceEntityRepository
             ];
         }, $query);
     }
-
-    // /**
-    //  * @return Thread[] Returns an array of Thread objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Thread
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
