@@ -38,9 +38,9 @@ class Report
     private $reportedBy;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $status;
+    private $status = false;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
