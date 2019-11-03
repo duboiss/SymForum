@@ -6,7 +6,6 @@ use App\Entity\Message;
 use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
-use App\Service\AntispamService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,56 +19,15 @@ class ThreadController extends BaseController
      * @param Thread $thread
      * @param MessageRepository $repo
      * @param Request $request
-     * @param AntispamService $antispam
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $repo, Request $request, AntispamService $antispam): Response
+    public function show(Thread $thread, MessageRepository $repo, Request $request): Response
     {
         $messages = $repo->findMessagesByThreadWithAuthor($thread);
 
-        $message = new Message();
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if (!$thread->getLocked()) {
-                $user = $this->getUser();
-
-                if (!$antispam->canPostMessage($user)) {
-                    $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
-
-                    return $this->redirectToRoute('thread.show', [
-                        'id' => $thread->getId(),
-                        'slug' => $thread->getSlug()
-                    ]);
-                }
-
-                $em = $this->getDoctrine()->getManager();
-
-                $message->setAuthor($user);
-                $message->setThread($thread);
-
-                $em->persist($message);
-                $em->flush();
-
-                $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
-
-                return $this->redirectToRoute('thread.show', [
-                    'id' => $thread->getId(),
-                    'slug' => $thread->getSlug(),
-                    '_fragment' => $message->getId()
-                ]);
-            }
-
-            $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
-
-            return $this->redirectToRoute('thread.show', [
-                'id' => $thread->getId(),
-                'slug' => $thread->getSlug()
-            ]);
-
-        }
+        $form = $this->createForm(MessageType::class, new Message(), [
+            'action' => $this->generateUrl('message.add', ['id' => $thread->getId()])
+        ]);
 
         return $this->render('thread/thread.html.twig', [
             'thread' => $thread,

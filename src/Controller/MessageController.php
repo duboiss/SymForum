@@ -4,8 +4,10 @@ namespace App\Controller;
 
 
 use App\Entity\Message;
+use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
+use App\Service\AntispamService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,6 +18,65 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends BaseController
 {
+    /**
+     * @Route("/forums/messages/add/{id}", name="message.add", methods={"POST"})
+     * @param Thread $thread
+     * @param Request $request
+     * @param AntispamService $antispam
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function add(Thread $thread, Request $request, AntispamService $antispam, ObjectManager $manager): Response
+    {
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if (!$thread->getLocked()) {
+                $user = $this->getUser();
+
+                if (!$antispam->canPostMessage($user)) {
+                    $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
+
+                    return $this->redirectToRoute('thread.show', [
+                        'id' => $thread->getId(),
+                        'slug' => $thread->getSlug()
+                    ]);
+                }
+
+                $message->setAuthor($user);
+                $message->setThread($thread);
+
+                $manager->persist($message);
+                $manager->flush();
+
+                $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+
+                return $this->redirectToRoute('thread.show', [
+                    'id' => $thread->getId(),
+                    'slug' => $thread->getSlug(),
+                    '_fragment' => $message->getId()
+                ]);
+            }
+
+            $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
+
+            // TODO Redirect to the last message
+            return $this->redirectToRoute('thread.show', [
+                'id' => $thread->getId(),
+                'slug' => $thread->getSlug()
+            ]);
+
+        }
+
+        return $this->redirectToRoute('thread.show', [
+            'id' => $thread->getId(),
+            'slug' => $thread->getSlug()
+        ]);
+    }
+
     /**
      * @Route("/forums/messages/{id}/edit", name="message.edit")
      * @Security("is_granted('ROLE_USER') and user === message.getAuthor()", message="Vous ne pouvez pas éditer le message d'un autre utilisateur !")
