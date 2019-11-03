@@ -125,4 +125,26 @@ class ThreadController extends BaseController
             'slug' => $thread->getSlug()
         ]);
     }
+
+    /**
+     * @Route("/forums/threads/{id}/delete", name="thread.delete")
+     * @IsGranted("ROLE_MODERATOR")
+     * @param Thread $thread
+     * @param ObjectManager $manager
+     * @return Response
+     */
+    public function delete(Thread $thread, ObjectManager $manager): Response
+    {
+        $forum = $thread->getForum();
+
+        $manager->remove($thread);
+        $manager->flush();
+
+        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
+
+        return $this->redirectToRoute('forum.show', [
+            'id' => $forum->getId(),
+            'slug' => $forum->getSlug()
+        ]);
+    }
 }

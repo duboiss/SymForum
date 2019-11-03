@@ -29,6 +29,12 @@
                         </a>
                     </li>
                 {% endif %}
+                <li>
+                    <a href="{{ path('thread.delete', {'id': thread.id}) }}" data-toggle="tooltip"
+                       title="Supprimer le sujet">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     {% endif %}
