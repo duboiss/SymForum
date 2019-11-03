@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
-use App\Repository\ReportRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -60,19 +59,13 @@ class MessageController extends BaseController
      * @param Message $message
      * @param ObjectManager $manager
      * @param MessageRepository $messageRepository
-     * @param ReportRepository $reportRepository
      * @return Response
      */
-    public function delete(Message $message, ObjectManager $manager, MessageRepository $messageRepository, ReportRepository $reportRepository): Response
+    public function delete(Message $message, ObjectManager $manager, MessageRepository $messageRepository): Response
     {
         // TODO Add custom flash if message doesn't exists
 
         $thread = $message->getThread();
-        $reports = $reportRepository->findByMessage($message);
-
-        foreach ($reports as $report) {
-            $manager->remove($report);
-        }
 
         $manager->remove($message);
         $manager->flush();

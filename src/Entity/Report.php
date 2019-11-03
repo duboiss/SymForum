@@ -17,7 +17,7 @@ class Report
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Message")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="reports")
      * @ORM\JoinColumn(nullable=false)
      */
     private $message;
