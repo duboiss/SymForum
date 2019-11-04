@@ -225,7 +225,7 @@ class Forum
         return $totalMessages;
     }
 
-    public function getLastMessage(): Message
+    public function getLastMessage(): ?Message
     {
         $date = new \DateTime();
         $date->setDate(1970, 1, 1);
