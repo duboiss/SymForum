@@ -29,7 +29,7 @@ class ReportRepository extends ServiceEntityRepository
         try {
             return (int)$this->createQueryBuilder('r')
                 ->select('COUNT(r.id)')
-                ->where('r.status is null')
+                ->where('r.status = false')
                 ->getQuery()
                 ->getSingleScalarResult();
         } catch (Exception $e) {
