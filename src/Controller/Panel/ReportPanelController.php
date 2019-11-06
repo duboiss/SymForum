@@ -19,7 +19,7 @@ class ReportPanelController extends BaseController
      */
     public function reports(ReportRepository $repo): Response
     {
-        $reports = $repo->findAll();
+        $reports = $repo->findAllReports();
         $nbUntreatedReports = $repo->countUntreatedReports();
 
         return $this->render('panel/reports.html.twig', [

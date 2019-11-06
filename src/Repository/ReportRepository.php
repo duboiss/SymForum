@@ -38,6 +38,23 @@ class ReportRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Message[]
+     */
+    public function findAllReports(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->addSelect('r', 'reportedBy')
+            ->addSelect('r', 'message')
+            ->join('r.reportedBy', 'reportedBy')
+            ->join('r.message', 'message')
+            ->orderBy('r.reportedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    /**
      * @param Message $message
      * @return Message[]
      */
