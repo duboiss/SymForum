@@ -44,9 +44,11 @@ class ReportRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->addSelect('r', 'reportedBy')
-            ->addSelect('r', 'message')
+            ->addSelect('r', 'm')
+            ->addSelect('r', 'messageAuthor')
             ->join('r.reportedBy', 'reportedBy')
-            ->join('r.message', 'message')
+            ->join('r.message', 'm')
+            ->join('m.author', 'messageAuthor')
             ->orderBy('r.reportedAt', 'DESC')
             ->getQuery()
             ->getResult();
