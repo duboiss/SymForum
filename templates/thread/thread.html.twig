@@ -18,21 +18,21 @@
                     <li>
                         <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-toggle="tooltip"
                            title="Ouvrir le sujet">
-                            <i class="fas fa-lock-open"></i>
+                            <i class="fas fa-lock-open rotate"></i>
                         </a>
                     </li>
                 {% else %}
                     <li>
                         <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-toggle="tooltip"
                            title="Fermer le sujet">
-                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-lock rotate"></i>
                         </a>
                     </li>
                 {% endif %}
                 <li>
                     <a href="{{ path('thread.delete', {'id': thread.id}) }}" data-toggle="tooltip"
                        title="Supprimer le sujet">
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-trash-alt rotate"></i>
                     </a>
                 </li>
             </ul>

@@ -7,4 +7,8 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip({
         placement: 'right'
     });
+
+    $(".rotate").on('click', function () {
+        $(this).addClass("fa-spin");
+    });
 });
