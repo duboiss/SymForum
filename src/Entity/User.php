@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use Cocur\Slugify\Slugify;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,6 +43,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"pseudo"})
      */
     private $slug;
 
@@ -99,16 +101,6 @@ class User implements UserInterface
         $this->registrationDate = new \DateTime();
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function initializeSlug()
-    {
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($this->pseudo);
-    }
-
     public function isActiveNow(): bool
     {
         $delay = new \DateTime('5 minutes ago');
@@ -162,12 +154,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRegistrationDate(): ?\DateTimeInterface
+    public function getRegistrationDate(): ?DateTimeInterface
     {
         return $this->registrationDate;
     }
 
-    public function setRegistrationDate(\DateTimeInterface $registrationDate): self
+    public function setRegistrationDate(DateTimeInterface $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
 
@@ -186,12 +178,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastActivityAt(): ?\DateTimeInterface
+    public function getLastActivityAt(): ?DateTimeInterface
     {
         return $this->lastActivityAt;
     }
 
-    public function setLastActivityAt(\DateTimeInterface $lastActivityAt): self
+    public function setLastActivityAt(DateTimeInterface $lastActivityAt): self
     {
         $this->lastActivityAt = $lastActivityAt;
 

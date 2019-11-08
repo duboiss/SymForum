@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ForumRepository")
- * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("title")
  */
 class Forum
@@ -29,6 +28,7 @@ class Forum
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 
@@ -67,16 +67,6 @@ class Forum
     {
         $this->forums = new ArrayCollection();
         $this->threads = new ArrayCollection();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function initializeSlug()
-    {
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($this->title);
     }
 
     public function getRootCategory(): Category

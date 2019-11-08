@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use Cocur\Slugify\Slugify;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Thread
 {
@@ -27,6 +27,7 @@ class Thread
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 
@@ -61,16 +62,6 @@ class Thread
         $this->messages = new ArrayCollection();
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function initializeSlug()
-    {
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($this->title);
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -93,12 +84,12 @@ class Thread
         return $this->slug;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
