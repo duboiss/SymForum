@@ -85,7 +85,7 @@
                         <div class="row mb-1">
                             <div class="col-lg-4">
                                 {{ thread.thread.locked ? '<i class="fas fa-lock"></i>' }}
-                                <a href="{{ path('thread.show', {'id': thread.thread.id, 'slug': thread.thread.slug}) }}">{{ thread.thread.title }}</a>
+                                <a href="{{ path('thread.show', {'slug': thread.thread.slug}) }}">{{ thread.thread.title }}</a>
                             </div>
                             <div class="col-lg-2 text-center">
                                 {% if thread.thread.author is null %}

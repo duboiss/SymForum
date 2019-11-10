@@ -41,7 +41,6 @@ class MessageController extends BaseController
                     $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
 
                     return $this->redirectToRoute('thread.show', [
-                        'id' => $thread->getId(),
                         'slug' => $thread->getSlug()
                     ]);
                 }
@@ -55,7 +54,6 @@ class MessageController extends BaseController
                 $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
 
                 return $this->redirectToRoute('thread.show', [
-                    'id' => $thread->getId(),
                     'slug' => $thread->getSlug(),
                     '_fragment' => $message->getId()
                 ]);
@@ -65,14 +63,12 @@ class MessageController extends BaseController
 
             // TODO Redirect to the last message
             return $this->redirectToRoute('thread.show', [
-                'id' => $thread->getId(),
                 'slug' => $thread->getSlug()
             ]);
 
         }
 
         return $this->redirectToRoute('thread.show', [
-            'id' => $thread->getId(),
             'slug' => $thread->getSlug()
         ]);
     }
@@ -89,7 +85,6 @@ class MessageController extends BaseController
         $thread = $message->getThread();
 
         $route = $this->redirectToRoute('thread.show', [
-            'id' => $thread->getId(),
             'slug' => $thread->getSlug(),
             '_fragment' => $message->getId()
         ]);
@@ -148,7 +143,6 @@ class MessageController extends BaseController
         $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');
 
         return $this->redirectToRoute('thread.show', [
-            'id' => $thread->getId(),
             'slug' => $thread->getSlug(),
             '_fragment' => $lastMessage->getId()
         ]);

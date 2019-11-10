@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ThreadController extends BaseController
 {
     /**
-     * @Route("/forums/threads/{id}-{slug}", name="thread.show")
+     * @Route("/forums/threads/{slug}", name="thread.show")
      * @param Thread $thread
      * @param MessageRepository $repo
      * @param Request $request
@@ -55,7 +55,6 @@ class ThreadController extends BaseController
         }
 
         return $this->redirectToRoute('thread.show', [
-            'id' => $thread->getId(),
             'slug' => $thread->getSlug()
         ]);
     }
@@ -79,7 +78,6 @@ class ThreadController extends BaseController
         }
 
         return $this->redirectToRoute('thread.show', [
-            'id' => $thread->getId(),
             'slug' => $thread->getSlug()
         ]);
     }
