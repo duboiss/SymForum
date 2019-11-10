@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ForumRepository")
- * @UniqueEntity("title")
+ * @UniqueEntity("slug")
  */
 class Forum
 {
@@ -27,7 +27,7 @@ class Forum
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Gedmo\Slug(fields={"title"})
      */
     private $slug;

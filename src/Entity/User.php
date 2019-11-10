@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("pseudo")
  * @UniqueEntity("email")
+ * @UniqueEntity("slug")
  */
 class User implements UserInterface
 {
@@ -42,7 +44,7 @@ class User implements UserInterface
     private $pseudo;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Gedmo\Slug(fields={"pseudo"})
      */
     private $slug;
@@ -98,12 +100,12 @@ class User implements UserInterface
      * @ORM\PrePersist()
      */
     public function initializeRegistrationDate() {
-        $this->registrationDate = new \DateTime();
+        $this->registrationDate = new DateTime();
     }
 
     public function isActiveNow(): bool
     {
-        $delay = new \DateTime('5 minutes ago');
+        $delay = new DateTime('5 minutes ago');
 
         return ($this->getLastActivityAt() > $delay);
     }
