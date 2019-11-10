@@ -50,6 +50,7 @@ class Forum
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="parent")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $forums;
 
