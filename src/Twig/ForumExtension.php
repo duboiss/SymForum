@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Entity\Category;
 use App\Entity\Forum;
+use InvalidArgumentException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -46,13 +47,12 @@ class ForumExtension extends AbstractExtension
             $title = $forumOrCategory->getTitle();
         } elseif ($forumOrCategory instanceof Forum) {
             $url = $this->urlGenerator->generate('forum.show', [
-                'category_slug' => $forumOrCategory->getRootCategory()->getSlug(),
                 'id' => $forumOrCategory->getId(),
                 'slug' => $forumOrCategory->getSlug()
             ]);
             $title = $forumOrCategory->getTitle();
         } else {
-            throw new \InvalidArgumentException('Filtered object must be an instance of Forum or Category.');
+            throw new InvalidArgumentException('Filtered object must be an instance of Forum or Category.');
         }
 
         array_unshift($parts, ['url' => $url, 'title' => $title]);
