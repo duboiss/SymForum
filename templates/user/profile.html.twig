@@ -30,7 +30,7 @@
                 {% if lastThreads|length > 0 %}
                     <ul>
                         {% for thread in lastThreads %}
-                            <li>{{ thread.title|slice(0, 50) }}{{ thread.title|length > 50 ? '...'}}</li>
+                            <li>{{ thread.title|truncate(50, true) }}</li>
                         {% endfor %}
                     </ul>
                 {% else %}
@@ -43,7 +43,7 @@
                 {% if lastMessages|length > 0 %}
                     <ul>
                         {% for message in lastMessages %}
-                            <li>{{ message.content|slice(0, 50) }}{{ message.content|length > 50 ? '...'}}</li>
+                            <li>{{ message.content|truncate(50, true) }}</li>
                         {% endfor %}
                     </ul>
                 {% else %}
