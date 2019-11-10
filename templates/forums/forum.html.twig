@@ -56,11 +56,15 @@
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
                             <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                {{ subforum.lastMessage.publishedAt|ago }} par
-                                {% if subforum.lastMessage.author is null %}
-                                    Compte supprimé
+                                {% if subforum.lastMessage %}
+                                    {{ subforum.lastMessage.publishedAt|ago }} par
+                                    {% if subforum.lastMessage.author is null %}
+                                        Compte supprimé
+                                    {% else %}
+                                        {{ user_profile_link(forum.lastMessage.author) }}
+                                    {% endif %}
                                 {% else %}
-                                    {{ user_profile_link(subforum.lastMessage.author) }}
+                                    Aucun message
                                 {% endif %}
                             </div>
                     </div>
