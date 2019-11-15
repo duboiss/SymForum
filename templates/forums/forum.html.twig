@@ -9,9 +9,35 @@
             padding: 0.16rem;
         }
     </style>
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_link_tags('modnav') }}
+    {% endif %}
 {% endblock %}
 
 {% block body %}
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="mod_nav">
+            <ul>
+                {% if forum.locked %}
+                    <li>
+                        <a href="{{ path('forum.unlock', {'id': forum.id, 'slug': forum.slug}) }}" data-toggle="tooltip"
+                           title="Ouvrir le forum">
+                            <i class="fas fa-lock-open rotate"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path('forum.lock', {'id': forum.id, 'slug': forum.slug}) }}" data-toggle="tooltip"
+                           title="Fermer le forum">
+                            <i class="fas fa-lock rotate"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
@@ -115,4 +141,12 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('modnav') }}
+    {% endif %}
 {% endblock %}

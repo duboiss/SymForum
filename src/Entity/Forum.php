@@ -60,6 +60,11 @@ class Forum
     private $position;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $locked = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="forum", orphanRemoval=true)
      */
     private $threads;
@@ -176,6 +181,18 @@ class Forum
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getLocked(): bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): self
+    {
+        $this->locked = $locked;
 
         return $this;
     }

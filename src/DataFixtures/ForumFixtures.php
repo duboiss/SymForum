@@ -17,6 +17,8 @@ class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setCategory($this->getRandomReference(Category::class))
                 ->setParent(NULL)
                 ->setPosition($count);
+
+            $this->faker->boolean(20) ? $forum->setLocked(true) : $forum->setLocked(false);
         });
 
         $manager->flush();
