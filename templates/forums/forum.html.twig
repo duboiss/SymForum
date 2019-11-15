@@ -75,7 +75,7 @@
                             {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <h5 class="card-title">
-                                    <a href="{{ path('forum.show', {'id': subforum.id, 'slug': subforum.slug}) }}">{{ subforum.title }}</a>
+                                    <a href="{{ path('forum.show', {'slug': subforum.slug}) }}">{{ subforum.title }}</a>
                                 </h5>
                                 <p class="card-text">{{ subforum.description }}</p>
                             </div>

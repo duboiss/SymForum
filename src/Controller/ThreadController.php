@@ -99,7 +99,6 @@ class ThreadController extends BaseController
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
 
         return $this->redirectToRoute('forum.show', [
-            'id' => $forum->getId(),
             'slug' => $forum->getSlug()
         ]);
     }

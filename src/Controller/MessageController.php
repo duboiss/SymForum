@@ -135,7 +135,6 @@ class MessageController extends BaseController
             $this->addCustomFlash('success', 'Message', 'Le message ainsi que le thread ont été supprimé !');
 
             return $this->redirectToRoute('forum.show', [
-                'id' => $thread->getForum()->getId(),
                 'slug' => $thread->getForum()->getSlug()
             ]);
         }

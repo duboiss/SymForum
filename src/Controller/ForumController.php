@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumController extends BaseController
 {
     /**
-     * @Route("/forums/{id}-{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"})
+     * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"})
      * @param Forum $forum
      * @param ThreadRepository $threadsRepo
      * @return Response
@@ -46,7 +46,6 @@ class ForumController extends BaseController
         }
 
         return $this->redirectToRoute('forum.show', [
-            'id' => $forum->getId(),
             'slug' => $forum->getSlug()
         ]);
     }
@@ -70,7 +69,6 @@ class ForumController extends BaseController
         }
 
         return $this->redirectToRoute('forum.show', [
-            'id' => $forum->getId(),
             'slug' => $forum->getSlug()
         ]);
     }

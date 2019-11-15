@@ -48,7 +48,7 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/forums/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"})
+     * @Route("/forums/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"})
      * @param Category $category
      * @return Response
      */

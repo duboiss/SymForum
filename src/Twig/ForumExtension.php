@@ -47,7 +47,6 @@ class ForumExtension extends AbstractExtension
             $title = $forumOrCategory->getTitle();
         } elseif ($forumOrCategory instanceof Forum) {
             $url = $this->urlGenerator->generate('forum.show', [
-                'id' => $forumOrCategory->getId(),
                 'slug' => $forumOrCategory->getSlug()
             ]);
             $title = $forumOrCategory->getTitle();
