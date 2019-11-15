@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Message
 {
@@ -29,6 +28,7 @@ class Message
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      * @Assert\DateTime()
      */
     private $publishedAt;
@@ -53,6 +53,7 @@ class Message
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="change", field={"content"})
      * @Assert\DateTime()
      */
     private $updatedAt;
@@ -65,24 +66,6 @@ class Message
     public function __construct()
     {
         $this->reports = new ArrayCollection();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function initializePublishedDate()
-    {
-        if (!$this->publishedAt) {
-            $this->publishedAt = new DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function initializeUpdateDate()
-    {
-        $this->updatedAt = new DateTime();
     }
 
     public function getId(): ?int

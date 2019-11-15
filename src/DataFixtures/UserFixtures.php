@@ -40,6 +40,7 @@ class UserFixtures extends BaseFixtures
             $user->setPseudo($this->faker->userName)
                 ->setHash($this->encoder->encodePassword($user, 'password'))
                 ->setEmail($this->faker->email)
+                ->setRegistrationDate($this->faker->dateTimeBetween('-1 years'))
                 ->setRegistrationIp('127.0.0.1');
 
             if ($this->faker->boolean(7)) $user->setRoles(['ROLE_MODERATOR']);

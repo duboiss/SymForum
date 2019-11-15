@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,6 +36,7 @@ class Thread
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
 
@@ -149,7 +151,7 @@ class Thread
 
     public function getLastMessage(): Message
     {
-        $date = new \DateTime();
+        $date = new DateTime();
         $date->setDate(1970, 1, 1);
 
         $lastMessage = null;

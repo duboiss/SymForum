@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReportRepository")
@@ -29,6 +31,7 @@ class Report
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     private $reportedAt;
 
@@ -81,12 +84,12 @@ class Report
         return $this;
     }
 
-    public function getReportedAt(): ?\DateTimeInterface
+    public function getReportedAt(): ?DateTimeInterface
     {
         return $this->reportedAt;
     }
 
-    public function setReportedAt(\DateTimeInterface $reportedAt): self
+    public function setReportedAt(DateTimeInterface $reportedAt): self
     {
         $this->reportedAt = $reportedAt;
 
@@ -117,12 +120,12 @@ class Report
         return $this;
     }
 
-    public function getTreatedAt(): ?\DateTimeInterface
+    public function getTreatedAt(): ?DateTimeInterface
     {
         return $this->treatedAt;
     }
 
-    public function setTreatedAt(?\DateTimeInterface $treatedAt): self
+    public function setTreatedAt(?DateTimeInterface $treatedAt): self
     {
         $this->treatedAt = $treatedAt;
 

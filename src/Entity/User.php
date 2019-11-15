@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("pseudo")
  * @UniqueEntity("email")
  * @UniqueEntity("slug")
@@ -67,6 +66,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      */
     private $registrationDate;
 
@@ -94,13 +94,6 @@ class User implements UserInterface
     {
         $this->threads = new ArrayCollection();
         $this->messages = new ArrayCollection();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function initializeRegistrationDate() {
-        $this->registrationDate = new DateTime();
     }
 
     public function isActiveNow(): bool
