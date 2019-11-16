@@ -54,7 +54,7 @@ class CategoryController extends BaseController
      */
     public function category(Category $category): Response
     {
-        return $this->render('category/category.html.twig', [
+        return $this->render('forums/category.html.twig', [
             'category' => $category,
         ]);
     }
