@@ -1,44 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'modnav.html.twig' %}
 
 {% block title %}{{ thread.title }} par {{ thread.author.pseudo }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    {% if is_granted('ROLE_MODERATOR') %}
-        {{ encore_entry_link_tags('modnav') }}
+{% block modnav_elements %}
+    {% if thread.locked %}
+        <li>
+            <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-toggle="tooltip"
+               title="Ouvrir le sujet">
+                <i class="fas fa-lock-open rotate"></i>
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-toggle="tooltip"
+               title="Fermer le sujet">
+                <i class="fas fa-lock rotate"></i>
+            </a>
+        </li>
     {% endif %}
+    <li>
+        <a href="{{ path('thread.delete', {'id': thread.id}) }}" data-toggle="tooltip"
+           title="Supprimer le sujet">
+            <i class="fas fa-trash-alt rotate"></i>
+        </a>
+    </li>
 {% endblock %}
 
 {% block body %}
-    {% if is_granted('ROLE_MODERATOR') %}
-        <div class="mod_nav">
-            <ul>
-                {% if thread.locked %}
-                    <li>
-                        <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-toggle="tooltip"
-                           title="Ouvrir le sujet">
-                            <i class="fas fa-lock-open rotate"></i>
-                        </a>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-toggle="tooltip"
-                           title="Fermer le sujet">
-                            <i class="fas fa-lock rotate"></i>
-                        </a>
-                    </li>
-                {% endif %}
-                <li>
-                    <a href="{{ path('thread.delete', {'id': thread.id}) }}" data-toggle="tooltip"
-                       title="Supprimer le sujet">
-                        <i class="fas fa-trash-alt rotate"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    {% endif %}
-
+    {{ parent() }}
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
@@ -100,12 +89,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% if is_granted('ROLE_MODERATOR') %}
-        {{ encore_entry_script_tags('modnav') }}
-    {% endif %}
 {% endblock %}

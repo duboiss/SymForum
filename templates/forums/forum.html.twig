@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'modnav.html.twig' %}
 
 {% block title %}{{ forum.title }}{% endblock %}
 
@@ -9,35 +9,28 @@
             padding: 0.16rem;
         }
     </style>
+{% endblock %}
 
-    {% if is_granted('ROLE_MODERATOR') %}
-        {{ encore_entry_link_tags('modnav') }}
+{% block modnav_elements %}
+    {% if forum.locked %}
+        <li>
+            <a href="{{ path('forum.unlock', {'id': forum.id, 'slug': forum.slug}) }}" data-toggle="tooltip"
+               title="Ouvrir le forum">
+                <i class="fas fa-lock-open rotate"></i>
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path('forum.lock', {'id': forum.id, 'slug': forum.slug}) }}" data-toggle="tooltip"
+               title="Fermer le forum">
+                <i class="fas fa-lock rotate"></i>
+            </a>
+        </li>
     {% endif %}
 {% endblock %}
 
 {% block body %}
-    {% if is_granted('ROLE_MODERATOR') %}
-        <div class="mod_nav">
-            <ul>
-                {% if forum.locked %}
-                    <li>
-                        <a href="{{ path('forum.unlock', {'id': forum.id, 'slug': forum.slug}) }}" data-toggle="tooltip"
-                           title="Ouvrir le forum">
-                            <i class="fas fa-lock-open rotate"></i>
-                        </a>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{{ path('forum.lock', {'id': forum.id, 'slug': forum.slug}) }}" data-toggle="tooltip"
-                           title="Fermer le forum">
-                            <i class="fas fa-lock rotate"></i>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    {% endif %}
-
+    {{ parent() }}
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
@@ -72,27 +65,27 @@
                     </div>
                     <div class="card-body">
                         {% for subforum in forum.forums %}
-                            {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <h5 class="card-title">
-                                    <a href="{{ path('forum.show', {'slug': subforum.slug}) }}">{{ subforum.title }}</a>
-                                </h5>
-                                <p class="card-text">{{ subforum.description }}</p>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                {% if subforum.lastMessage %}
-                                    {{ subforum.lastMessage.publishedAt|ago }} par
-                                    {% if subforum.lastMessage.author is null %}
-                                        Compte supprimé
-                                    {% else %}
-                                        {{ user_profile_link(forum.lastMessage.author) }}
-                                    {% endif %}
+                        {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <h5 class="card-title">
+                                <a href="{{ path('forum.show', {'slug': subforum.slug}) }}">{{ subforum.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ subforum.description }}</p>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            {% if subforum.lastMessage %}
+                                {{ subforum.lastMessage.publishedAt|ago }} par
+                                {% if subforum.lastMessage.author is null %}
+                                    Compte supprimé
                                 {% else %}
-                                    Aucun message
+                                    {{ user_profile_link(forum.lastMessage.author) }}
                                 {% endif %}
-                            </div>
+                            {% else %}
+                                Aucun message
+                            {% endif %}
+                        </div>
                     </div>
                     {% endfor %}
 
@@ -141,12 +134,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% if is_granted('ROLE_MODERATOR') %}
-        {{ encore_entry_script_tags('modnav') }}
-    {% endif %}
 {% endblock %}
