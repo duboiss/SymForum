@@ -15,7 +15,7 @@ class PageController extends BaseController
      */
     public function members(UserRepository $repo): Response
     {
-        $members = $repo->findAll();
+        $members = $repo->findAllMembers();
 
         return $this->render('pages/members.html.twig', [
             'members' => $members

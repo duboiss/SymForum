@@ -80,8 +80,22 @@ class UserRepository extends ServiceEntityRepository
     public function findByRole($role): array
     {
         return $this->createQueryBuilder('u')
+            ->addSelect('m')
+            ->innerJoin('u.messages', 'm')
             ->where('u.roles LIKE :role')
             ->setParameter('role', '%"' . $role . '"%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return User[]
+     */
+    public function findAllMembers()
+    {
+        return $this->createQueryBuilder('u')
+            ->addSelect('m')
+            ->innerJoin('u.messages', 'm')
             ->getQuery()
             ->getResult();
     }

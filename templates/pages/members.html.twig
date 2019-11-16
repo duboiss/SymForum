@@ -13,6 +13,7 @@
                         <thead>
                         <tr>
                             <th>Pseudo</th>
+                            <th>Nombre de messages</th>
                             <th>Inscription</th>
                             <th>Dernière activité</th>
                         </tr>
@@ -21,6 +22,7 @@
                         {% for member in members %}
                             <tr>
                                 <td>{{ user_profile_link(member) }}</td>
+                                <td>{{ member.messages|length }}</td>
                                 <td>{{ member.registrationDate|date('d/m/Y') }}</td>
                                 <td>{{ member.lastActivityAt ? member.lastActivityAt|ago : 'Jamais' }}</td>
                             </tr>

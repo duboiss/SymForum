@@ -14,6 +14,7 @@
                         <thead>
                         <tr>
                             <th style="width: 45%">Pseudo</th>
+                            <th>Nombre de messages</th>
                             <th>Inscription</th>
                             <th>Dernière activité</th>
                         </tr>
@@ -22,6 +23,7 @@
                         {% for administrator in administrators %}
                             <tr>
                                 <td>{{ user_profile_link(administrator) }}</td>
+                                <td>{{ administrator.messages|length }}</td>
                                 <td>{{ administrator.registrationDate|date('d/m/Y') }}</td>
                                 <td>{{ administrator.lastActivityAt ? administrator.lastActivityAt|ago : 'Jamais' }}</td>
                             </tr>
@@ -34,6 +36,7 @@
                         <thead>
                         <tr>
                             <th style="width: 45%">Pseudo</th>
+                            <th>Nombre de messages</th>
                             <th>Inscription</th>
                             <th>Dernière activité</th>
                         </tr>
@@ -42,6 +45,7 @@
                         {% for moderator in moderators %}
                             <tr>
                                 <th>{{ user_profile_link(moderator) }}</th>
+                                <td>{{ moderator.messages|length }}</td>
                                 <td>{{ moderator.registrationDate|date('d/m/Y') }}</td>
                                 <td>{{ moderator.lastActivityAt ? moderator.lastActivityAt|date('d/m/Y') : 'Jamais' }}</td>
                             </tr>
