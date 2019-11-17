@@ -44,7 +44,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/panel, roles: ROLE_MODERATOR }
+        - { path: ^/panel, allow_if: "is_granted('ROLE_MODERATOR') and is_fully_authenticated()" }
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/user, roles: IS_AUTHENTICATED_REMEMBERED }
         # - { path: ^/admin, roles: ROLE_ADMIN }
