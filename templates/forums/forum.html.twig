@@ -119,7 +119,8 @@
                             </div>
                             <div class="col-lg-2 text-center">{{ thread.totalMessages }}</div>
                             <div class="col-lg-4">
-                                {{ thread.lastMessage.publishedAt|ago }} par
+                                <a href="{{ path('thread.show', {'slug': thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
+                                par
                                 {% if thread.lastMessage.author is null %}
                                     Compte supprimé
                                 {% else %}
