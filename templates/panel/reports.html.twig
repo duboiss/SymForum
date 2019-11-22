@@ -24,9 +24,9 @@
                         {% for report in reports %}
                             <tr{{ not report.status ? ' class="table-warning"' }}>
                                 <td>{{ report.id }}</td>
-                                <td>{{ user_profile_link(report.message.author) }}</td>
+                                <td>{{ report.message.author is null ? 'Compte supprimé' : user_profile_link(report.message.author) }}</td>
                                 <td>{{ report.reportedAt|date('d/m/Y à H:i:s') }}</td>
-                                <td>{{ user_profile_link(report.reportedBy) }}</td>
+                                <td>{{ report.reportedBy is null ? 'Compte supprimé' : user_profile_link(report.reportedBy) }}</td>
                                 <td>{{ report.reason|slice(0, 50) }}{{ report.reason|length > 50 ? '...' }}</td>
                                 <td><a href="#">Détails</a></td>
                             </tr>

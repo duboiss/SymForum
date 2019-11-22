@@ -46,9 +46,9 @@ class ReportRepository extends ServiceEntityRepository
             ->addSelect('r', 'reportedBy')
             ->addSelect('r', 'm')
             ->addSelect('r', 'messageAuthor')
-            ->join('r.reportedBy', 'reportedBy')
+            ->leftJoin('r.reportedBy', 'reportedBy')
             ->join('r.message', 'm')
-            ->join('m.author', 'messageAuthor')
+            ->leftJoin('m.author', 'messageAuthor')
             ->orderBy('r.reportedAt', 'DESC')
             ->getQuery()
             ->getResult();
