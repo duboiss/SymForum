@@ -87,14 +87,36 @@ class ThreadController extends BaseController
      * @IsGranted("ROLE_MODERATOR")
      * @param Thread $thread
      * @param ObjectManager $manager
+     * @param MessageRepository $messageRepository
      * @return Response
      */
-    public function delete(Thread $thread, ObjectManager $manager): Response
+    public function delete(Thread $thread, ObjectManager $manager, MessageRepository $messageRepository): Response
     {
+        // TODO Add custom flash if thread doesn't exists
+
         $forum = $thread->getForum();
+        $lastMessage = $thread->getLastMessage();
+
+        if ($forum->getLastMessage() === $lastMessage) {
+            $forum->setLastMessage(null);
+        }
+
+        $thread->setLastMessage(null);
+        $manager->remove($lastMessage);
+
+        foreach ($thread->getMessages() as $message) {
+            $manager->remove($message);
+        }
+
+        $manager->flush();
 
         $manager->remove($thread);
         $manager->flush();
+
+        if (!$forum->getLastMessage()) {
+            $forum->setLastMessage($messageRepository->findLastMessageByForum($forum));
+            $manager->flush();
+        }
 
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
 

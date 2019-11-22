@@ -47,8 +47,11 @@ class MessageController extends BaseController
 
                 $message->setAuthor($user);
                 $message->setThread($thread);
-
                 $manager->persist($message);
+
+                $thread->setLastMessage($message);
+                $thread->getForum()->setLastMessage($message);
+
                 $manager->flush();
 
                 $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
@@ -122,9 +125,22 @@ class MessageController extends BaseController
         // TODO Add custom flash if message doesn't exists
 
         $thread = $message->getThread();
+        $forum = $thread->getForum();
+
+        if ($thread->getLastMessage() === $message) {
+            $thread->setLastMessage(null);
+        }
+
+        if ($forum->getLastMessage() === $message) {
+            $forum->setLastMessage(null);
+        }
 
         $manager->remove($message);
         $manager->flush();
+
+        if(!$forum->getLastMessage()) {
+            $forum->setLastMessage($messageRepository->findLastMessageByForum($forum));
+        }
 
         $lastMessage = $messageRepository->findLastMessageByThread($thread);
 
@@ -135,9 +151,12 @@ class MessageController extends BaseController
             $this->addCustomFlash('success', 'Message', 'Le message ainsi que le thread ont été supprimé !');
 
             return $this->redirectToRoute('forum.show', [
-                'slug' => $thread->getForum()->getSlug()
+                'slug' => $forum->getSlug()
             ]);
         }
+
+        $thread->setLastMessage($lastMessage);
+        $manager->flush();
 
         $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');
 

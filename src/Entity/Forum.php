@@ -65,6 +65,11 @@ class Forum
     private $locked = false;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Message", cascade={"persist", "remove"})
+     */
+    private $lastMessage;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="forum", orphanRemoval=true)
      */
     private $threads;
@@ -197,6 +202,18 @@ class Forum
         return $this;
     }
 
+    public function getLastMessage(): ?Message
+    {
+        return $this->lastMessage;
+    }
+
+    public function setLastMessage(?Message $lastMessage): self
+    {
+        $this->lastMessage = $lastMessage;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Thread[]
      */
@@ -231,32 +248,6 @@ class Forum
         }
 
         return $totalMessages;
-    }
-
-    public function getLastMessage(): ?Message
-    {
-        $date = new \DateTime();
-        $date->setDate(1970, 1, 1);
-
-        $lastMessage = null;
-
-        foreach ($this->threads as $thread) {
-            if($date < $thread->getLastMessage()->getPublishedAt()) {
-                $lastMessage = $thread->getLastMessage();
-                $date = $thread->getLastMessage()->getPublishedAt();
-            }
-        }
-
-        foreach ($this->forums as $forum) {
-            foreach ($forum->threads as $thread) {
-                if($date < $thread->getLastMessage()->getPublishedAt()) {
-                    $lastMessage = $thread->getLastMessage();
-                    $date = $thread->getLastMessage()->getPublishedAt();
-                }
-            }
-        }
-
-        return $lastMessage;
     }
 
     public function addThread(Thread $thread): self

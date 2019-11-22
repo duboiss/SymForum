@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Forum;
 use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
@@ -21,6 +22,15 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setThread($thread);
 
             $this->faker->boolean() ? $message->setUpdatedAt($this->faker->dateTimeBetween($message->getPublishedAt())) : $message->setUpdatedAt(null);
+
+            if ($thread->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $thread->setLastMessage($message);
+
+            /**
+             * @var Forum $forum
+             */
+            $forum = $thread->getForum();
+
+            if (!$forum->getLastMessage() || $forum->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $forum->setLastMessage($message);
         });
 
         $manager->flush();

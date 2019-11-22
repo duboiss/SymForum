@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Forum;
 use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -63,5 +65,26 @@ class MessageRepository extends ServiceEntityRepository
             ->orderBy('m.publishedAt', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param Forum $forum
+     * @return Message|null
+     */
+    public function findLastMessageByForum(Forum $forum): ?Message
+    {
+        try {
+            return $this->createQueryBuilder('m')
+                ->addSelect('m', 'thread')
+                ->join('m.thread', 'thread')
+                ->where('thread.forum = :forum')
+                ->setParameter(':forum', $forum)
+                ->orderBy('m.publishedAt', 'DESC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
     }
 }

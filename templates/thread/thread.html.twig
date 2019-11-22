@@ -1,6 +1,6 @@
 {% extends 'modnav.html.twig' %}
 
-{% block title %}{{ thread.title }} par {{ thread.author.pseudo }}{% endblock %}
+{% block title %}{{ thread.title }} par {{ thread.author is not null ? thread.author.pseudo : 'Compte supprimé'}}{% endblock %}
 
 {% block modnav_elements %}
     {% if thread.locked %}

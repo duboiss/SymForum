@@ -11,6 +11,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 {
+    /**
+     * @var Thread[] $threads
+     */
+    private $threads = [];
+
     public function loadData(ObjectManager $manager)
     {
         $this->createMany(Thread::class, 150, function (Thread $thread) use ($manager) {
@@ -21,16 +26,22 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 
             $this->faker->boolean(40) ? $thread->setLocked(true) : $thread->setLocked(false);
 
-            $message = new Message();
-            $message->setAuthor($thread->getAuthor())
+            $this->threads[] = $thread;
+        });
+
+        foreach($this->threads as $thread) {
+            $firstMessage = new Message();
+            $firstMessage->setAuthor($thread->getAuthor())
                 ->setPublishedAt($thread->getCreatedAt())
                 ->setContent($this->faker->sentences(mt_rand(1, 15), true))
                 ->setThread($thread);
 
-            $this->faker->boolean() ? $message->setUpdatedAt($this->faker->dateTimeBetween($message->getPublishedAt())) : $message->setUpdatedAt(null);
+            $this->faker->boolean() ? $firstMessage->setUpdatedAt($this->faker->dateTimeBetween($firstMessage->getPublishedAt())) : $firstMessage->setUpdatedAt(null);
 
-            $manager->persist($message);
-        });
+            $manager->persist($firstMessage);
+
+            $thread->setLastMessage($firstMessage);
+        }
 
         $manager->flush();
     }

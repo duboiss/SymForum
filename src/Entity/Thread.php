@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -55,6 +54,11 @@ class Thread
      * @ORM\Column(type="boolean")
      */
     private $locked;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Message", cascade={"persist", "remove"})
+     */
+    private $lastMessage;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="thread", orphanRemoval=true)
@@ -136,6 +140,18 @@ class Thread
         return $this;
     }
 
+    public function getLastMessage(): ?Message
+    {
+        return $this->lastMessage;
+    }
+
+    public function setLastMessage(?Message $lastMessage): self
+    {
+        $this->lastMessage = $lastMessage;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Message[]
      */
@@ -147,23 +163,6 @@ class Thread
     public function getTotalMessages(): int
     {
         return $this->messages->count();
-    }
-
-    public function getLastMessage(): Message
-    {
-        $date = new DateTime();
-        $date->setDate(1970, 1, 1);
-
-        $lastMessage = null;
-
-        foreach ($this->messages as $message) {
-            if ($date < $message->getPublishedAt()) {
-                $lastMessage = $message;
-                $date = $message->getPublishedAt();
-            }
-        }
-
-        return $lastMessage;
     }
 
     public function addMessage(Message $message): self

@@ -37,25 +37,17 @@ class ThreadRepository extends ServiceEntityRepository
      */
     public function findThreadsByForum(Forum $forum): array
     {
-        $query = $this->createQueryBuilder('t')
+        return $this->createQueryBuilder('t')
             ->addSelect('t', 'author')
-            ->addSelect('MAX(m.publishedAt) AS lastMessage')
-            ->addSelect('COUNT(m.id) AS nbMessages')
+            ->addSelect('t', 'lm')
+            ->addSelect('t', 'lmAuthor')
             ->leftJoin('t.author', 'author')
-            ->join('t.messages', 'm')
+            ->join('t.lastMessage', 'lm')
+            ->leftJoin('lm.author', 'lmAuthor')
             ->where('t.forum = :forum')
-            ->groupBy('t.id')
-            ->orderBy('lastMessage', 'DESC')
+            ->orderBy('lm.publishedAt', 'DESC')
             ->setParameter('forum', $forum)
             ->getQuery()
             ->getResult();
-
-        return array_map(function ($value) {
-            return [
-                'thread' => $value[0],
-                'lastMessage' => $value['lastMessage'],
-                'nbMessages' => $value['nbMessages']
-            ];
-        }, $query);
     }
 }
