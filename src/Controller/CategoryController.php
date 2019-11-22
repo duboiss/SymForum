@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\ForumRepository;
 use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
 use App\Service\OptionService;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +23,7 @@ class CategoryController extends BaseController
      * @param ThreadRepository $threadsRepo
      * @param OptionService $optionService
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo, OptionService $optionService): Response
     {
@@ -50,12 +52,16 @@ class CategoryController extends BaseController
     /**
      * @Route("/forums/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"})
      * @param Category $category
+     * @param ForumRepository $forumRepository
      * @return Response
      */
-    public function category(Category $category): Response
+    public function category(Category $category, ForumRepository $forumRepository): Response
     {
+        $forums = $forumRepository->findForumsByCategory($category);
+
         return $this->render('forums/category.html.twig', [
             'category' => $category,
+            'forums' => $forums,
         ]);
     }
 }
