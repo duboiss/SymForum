@@ -12,11 +12,7 @@
         <div class="col-lg-3 col-md-3 col-sm-3">
             {% if forum.lastMessage %}
                 <a href="{{ path('thread.show', {'slug': forum.lastMessage.thread.slug, '_fragment': forum.lastMessage.id}) }}">{{ forum.lastMessage.publishedAt|ago }}</a> par
-                {% if forum.lastMessage.author is null %}
-                    Compte supprimé
-                {% else %}
-                    {{ user_profile_link(forum.lastMessage.author) }}
-                {% endif %}
+                {{ user_profile_link(forum.lastMessage.author) }}
             {% else %}
                 Aucun message
             {% endif %}

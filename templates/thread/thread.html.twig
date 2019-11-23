@@ -1,6 +1,6 @@
 {% extends 'modnav.html.twig' %}
 
-{% block title %}{{ thread.title }} par {{ thread.author is not null ? thread.author.pseudo : 'Compte supprimé'}}{% endblock %}
+{% block title %}{{ thread.title }} par {{ thread.author is not null ? thread.author.pseudo : 'Compte supprimé' }}{% endblock %}
 
 {% block modnav_elements %}
     {% if thread.locked %}
@@ -39,11 +39,9 @@
                             <div class="row">
                                 <div class="col-lg-2 text-center">
                                     {% set author = message.author %}
-                                    {% if author is null %}
-                                        Compte supprimé
-                                    {% else %}
-                                        {{ user_profile_link(message.author) }}
+                                    {{ user_profile_link(author) }}
 
+                                    {% if author is not null %}
                                         {% set role = user_profile_role(author) %}
                                         {{ role ? role }}
                                     {% endif %}

@@ -76,12 +76,7 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             {% if subforum.lastMessage %}
-                                {{ subforum.lastMessage.publishedAt|ago }} par
-                                {% if subforum.lastMessage.author is null %}
-                                    Compte supprimé
-                                {% else %}
-                                    {{ user_profile_link(forum.lastMessage.author) }}
-                                {% endif %}
+                                {{ subforum.lastMessage.publishedAt|ago }} par {{ user_profile_link(subforum.lastMessage.author) }}
                             {% else %}
                                 Aucun message
                             {% endif %}
@@ -111,21 +106,12 @@
                                 <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a>
                             </div>
                             <div class="col-lg-2 text-center">
-                                {% if thread.author is null %}
-                                    Compte supprimé
-                                {% else %}
-                                    {{ user_profile_link(thread.author) }}
-                                {% endif %}
+                                {{ user_profile_link(thread.author) }}
                             </div>
                             <div class="col-lg-2 text-center">{{ thread.totalMessages }}</div>
                             <div class="col-lg-4">
                                 <a href="{{ path('thread.show', {'slug': thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
-                                par
-                                {% if thread.lastMessage.author is null %}
-                                    Compte supprimé
-                                {% else %}
-                                    {{ user_profile_link(thread.lastMessage.author) }}
-                                {% endif %}
+                                par {{ user_profile_link(thread.lastMessage.author) }}
                             </div>
                         </div>
                     {% else %}
