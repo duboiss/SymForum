@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
-                <h1>Utilisateurs ({{ users|length }})</h1>
+                <h1>Utilisateurs ({{ pagination.getTotalItemCount }})</h1>
 
                 <div class="mt-3">
                     <table class="table table-sm">
@@ -21,7 +21,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for user in users %}
+                        {% for user in pagination %}
                             <tr>
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.registrationDate|date('d/m/Y à H:i:s') }}</td>
@@ -33,6 +33,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>

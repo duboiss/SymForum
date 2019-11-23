@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Entity\Report;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 use Exception;
 
 /**
@@ -38,9 +39,9 @@ class ReportRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Message[]
+     * @return QueryBuilder
      */
-    public function findAllReports(): array
+    public function findAllReportsQb(): QueryBuilder
     {
         return $this->createQueryBuilder('r')
             ->addSelect('r', 'reportedBy')
@@ -49,9 +50,7 @@ class ReportRepository extends ServiceEntityRepository
             ->leftJoin('r.reportedBy', 'reportedBy')
             ->join('r.message', 'm')
             ->leftJoin('m.author', 'messageAuthor')
-            ->orderBy('r.reportedAt', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('r.reportedAt', 'DESC');
     }
 
 

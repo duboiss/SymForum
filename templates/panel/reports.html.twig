@@ -21,7 +21,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for report in reports %}
+                        {% for report in pagination %}
                             <tr{{ not report.status ? ' class="table-warning"' }}>
                                 <td>{{ report.id }}</td>
                                 <td>{{ report.message.author is null ? 'Compte supprimé' : user_profile_link(report.message.author) }}</td>
@@ -33,6 +33,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>
