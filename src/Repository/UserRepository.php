@@ -89,14 +89,13 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User[]
+     * @return QueryBuilder
      */
-    public function findAllMembers()
+    public function findAllMembersQb(): QueryBuilder
     {
         return $this->createQueryBuilder('u')
             ->addSelect('m')
             ->innerJoin('u.messages', 'm')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('u.pseudo');
     }
 }

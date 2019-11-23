@@ -19,7 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for member in members %}
+                        {% for member in pagination %}
                             <tr>
                                 <td>{{ user_profile_link(member) }}</td>
                                 <td>{{ member.messages|length }}</td>
@@ -29,6 +29,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>

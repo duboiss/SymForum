@@ -8,6 +8,8 @@ use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
 use App\Service\OptionService;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,14 +52,22 @@ class PageController extends BaseController
     /**
      * @Route("/members", name="page.members")
      * @param UserRepository $repo
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function members(UserRepository $repo): Response
+    public function members(UserRepository $repo, Request $request, PaginatorInterface $paginator): Response
     {
-        $members = $repo->findAllMembers();
+        $membersQb = $repo->findAllMembersQb();
+
+        $pagination = $paginator->paginate(
+            $membersQb,
+            $request->query->getInt('page', 1),
+            25
+        );
 
         return $this->render('pages/members.html.twig', [
-            'members' => $members
+            'pagination' => $pagination
         ]);
     }
 
