@@ -55,6 +55,10 @@ class UserExtenion extends AbstractExtension
         return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
     }
 
+    /**
+     * @param User $user
+     * @return string|null
+     */
     public function userProfileRole(User $user): ?string
     {
         $roles = $user->getRoles();
