@@ -24,9 +24,9 @@
                                placeholder="Votre mot de passe">
                     </div>
 
-                    <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="_remember_me" name="_remember_me">
-                        <label class="form-check-label" for="_remember_me">Se souvenir de moi</label>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" id="_remember_me" name="_remember_me">
+                        <label class="custom-control-label" for="_remember_me">Se souvenir de moi</label>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
