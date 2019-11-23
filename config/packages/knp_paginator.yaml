@@ -1,3 +1,3 @@
 knp_paginator:
     template:
-        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
+        pagination: 'partials/_pagination.html.twig'
