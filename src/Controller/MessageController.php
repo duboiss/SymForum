@@ -8,9 +8,9 @@ use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\AntispamService;
+use App\Service\MessageService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +23,10 @@ class MessageController extends BaseController
      * @param Thread $thread
      * @param Request $request
      * @param AntispamService $antispam
-     * @param ObjectManager $manager
+     * @param MessageService $messageService
      * @return Response
      */
-    public function add(Thread $thread, Request $request, AntispamService $antispam, ObjectManager $manager): Response
+    public function add(Thread $thread, Request $request, AntispamService $antispam, MessageService $messageService): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -45,14 +45,7 @@ class MessageController extends BaseController
                     ]);
                 }
 
-                $message->setAuthor($user);
-                $message->setThread($thread);
-                $manager->persist($message);
-
-                $thread->setLastMessage($message);
-                $thread->getForum()->setLastMessage($message);
-
-                $manager->flush();
+                $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
 
                 $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
 
