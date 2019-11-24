@@ -95,7 +95,7 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->addSelect('m')
-            ->innerJoin('u.messages', 'm')
+            ->leftJoin('u.messages', 'm')
             ->orderBy('u.pseudo');
     }
 }
