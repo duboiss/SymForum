@@ -41,7 +41,8 @@ class MessageController extends BaseController
                     $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
 
                     return $this->redirectToRoute('thread.show', [
-                        'slug' => $thread->getSlug()
+                        'slug' => $thread->getSlug(),
+                        '_fragment' => $thread->getLastMessage()->getId()
                     ]);
                 }
 
