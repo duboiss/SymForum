@@ -78,7 +78,7 @@ class MessageController extends BaseController
 
     /**
      * @Route("/forums/messages/{id}/edit", name="message.edit")
-     * @Security("is_granted('ROLE_USER') and user === message.getAuthor()", message="Vous ne pouvez pas éditer le message d'un autre utilisateur !")
+     * @IsGranted("EDIT", subject="message")
      * @param Message $message
      * @param Request $request
      * @return RedirectResponse|Response

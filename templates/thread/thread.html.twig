@@ -52,7 +52,7 @@
                             <div class="row mt-3">
                                 <div class="col text-right">
                                     Posté le {{ message.publishedAt|date('d/m/Y à H:i:s') }}
-                                    {% if (message.author == app.user) and (message.thread.locked == false) %}
+                                    {% if is_granted('EDIT', message) and (message.thread.locked == false) %}
                                         - <a href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
                                     {% endif %}
                                     {% if is_granted('ROLE_MODERATOR') %}
