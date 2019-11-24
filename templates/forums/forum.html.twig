@@ -119,6 +119,9 @@
                     {% endfor %}
                 </div>
             </div>
+            {% if forum.locked == false %}
+                <a class="btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">Nouveau sujet</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

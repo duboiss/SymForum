@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
@@ -24,6 +25,13 @@ class Thread
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 50,
+     *      minMessage = "Le titre doit faire au moins {{ limit }} caractères.",
+     *      maxMessage = "Le titre doit faire au maximum {{ limit }} caractères."
+     * )
      */
     private $title;
 

@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Forum;
 use App\Entity\Message;
 use App\Entity\Thread;
 use App\Form\MessageType;
+use App\Form\ThreadType;
 use App\Repository\MessageRepository;
+use App\Service\MessageService;
+use App\Service\ThreadService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +36,48 @@ class ThreadController extends BaseController
         return $this->render('thread/thread.html.twig', [
             'thread' => $thread,
             'messages' => $messages,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/forums/{slug}/new-thread", name="thread.new")
+     * @param Forum $forum
+     * @param Request $request
+     * @param ThreadService $threadService
+     * @param MessageService $messageService
+     * @return Response
+     */
+    public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
+    {
+
+        $form = $this->createForm(ThreadType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$forum->getLocked()) {
+                $user = $this->getUser();
+
+                $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
+                $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
+
+                $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
+
+                return $this->redirectToRoute('thread.show', [
+                    'slug' => $thread->getSlug(),
+                    '_fragment' => $message->getId()
+                ]);
+            }
+
+            $this->addCustomFlash('error', 'Sujet', 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !');
+
+            return $this->redirectToRoute('forum.show', [
+                'slug' => $forum->getSlug()
+            ]);
+        }
+
+        return $this->render('thread/new.html.twig', [
+            'forum' => $forum,
             'form' => $form->createView()
         ]);
     }
