@@ -55,7 +55,7 @@
                                     {% if is_granted('EDIT', message) and (message.thread.locked == false) %}
                                         - <a href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
                                     {% endif %}
-                                    {% if is_granted('ROLE_MODERATOR') %}
+                                    {% if is_granted('DELETE', message) %}
                                         - <a href="{{ path('message.delete', {'id': message.id}) }}">Supprimer</a>
                                     {% endif %}
                                 </div>

@@ -114,7 +114,7 @@ class MessageController extends BaseController
 
     /**
      * @Route("/forums/messages/{id}/delete", name="message.delete")
-     * @IsGranted("ROLE_MODERATOR")
+     * @IsGranted("DELETE", subject="message")
      * @param Message $message
      * @param ObjectManager $manager
      * @param MessageRepository $messageRepository
@@ -138,7 +138,7 @@ class MessageController extends BaseController
         $manager->remove($message);
         $manager->flush();
 
-        if(!$forum->getLastMessage()) {
+        if (!$forum->getLastMessage()) {
             $forum->setLastMessage($messageRepository->findLastMessageByForum($forum));
         }
 
