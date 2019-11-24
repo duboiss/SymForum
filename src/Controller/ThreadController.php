@@ -8,6 +8,7 @@ use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Form\ThreadType;
 use App\Repository\MessageRepository;
+use App\Service\AntispamService;
 use App\Service\MessageService;
 use App\Service\ThreadService;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -44,11 +45,12 @@ class ThreadController extends BaseController
      * @Route("/forums/{slug}/new-thread", name="thread.new")
      * @param Forum $forum
      * @param Request $request
+     * @param AntispamService $antispam
      * @param ThreadService $threadService
      * @param MessageService $messageService
      * @return Response
      */
-    public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
+    public function new(Forum $forum, Request $request, AntispamService $antispam, ThreadService $threadService, MessageService $messageService): Response
     {
 
         $form = $this->createForm(ThreadType::class);
@@ -57,6 +59,14 @@ class ThreadController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$forum->getLocked()) {
                 $user = $this->getUser();
+
+                if (!$antispam->canPostThread($user)) {
+                    $this->addCustomFlash('error', 'Sujet', 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !');
+
+                    return $this->redirectToRoute('forum.show', [
+                        'slug' => $forum->getSlug()
+                    ]);
+                }
 
                 $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
                 $message = $messageService->createMessage($form['message']->getData(), $thread, $user);

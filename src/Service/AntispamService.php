@@ -12,6 +12,7 @@ class AntispamService
 {
     // TODO Replace constant(s) by CoreOption objects
     const DELAY_MESSAGE = 60;
+    const DELAY_THREAD = 90;
 
     /**
      * @var ThreadRepository
@@ -36,6 +37,18 @@ class AntispamService
         $this->security = $security;
     }
 
+    public function canPostThread(User $user): bool
+    {
+        $lastThread = $this->threadsRepo->findLastThreadByUser($user);
+
+        if ($lastThread && !$this->security->isGranted('ROLE_MODERATOR')) {
+            $currentDate = new DateTime();
+            return $currentDate > $lastThread->getCreatedAt()->modify('+' . self::DELAY_THREAD . ' seconds');
+        }
+
+        return true;
+    }
+
     public function canPostMessage(User $user): bool
     {
         $lastMessage = $this->messagesRepo->findLastMessageByUser($user);
@@ -47,6 +60,4 @@ class AntispamService
 
         return true;
     }
-
-    // TODO canPostThread(User $user): bool
 }

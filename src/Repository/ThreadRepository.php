@@ -23,6 +23,15 @@ class ThreadRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
+     * @return Thread|null
+     */
+    public function findLastThreadByUser(User $user): ?Thread
+    {
+        return $this->findOneBy(['author' => $user], ['createdAt' => 'DESC']);
+    }
+
+    /**
+     * @param User $user
      * @param $limit
      * @return Thread[]
      */
