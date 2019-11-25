@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Forum;
 use App\Entity\Thread;
 use App\Entity\User;
+use App\Repository\MessageRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class ThreadService
@@ -14,9 +15,15 @@ class ThreadService
      */
     private $manager;
 
-    public function __construct(ObjectManager $manager)
+    /**
+     * @var MessageRepository
+     */
+    private $messageRepository;
+
+    public function __construct(ObjectManager $manager, MessageRepository $messageRepository)
     {
         $this->manager = $manager;
+        $this->messageRepository = $messageRepository;
     }
 
     /**
@@ -38,5 +45,36 @@ class ThreadService
         $this->manager->flush();
 
         return $thread;
+    }
+
+    /**
+     * @param Thread $thread
+     * @return void
+     */
+    public function deleteThread(Thread $thread): void
+    {
+        $forum = $thread->getForum();
+        $lastMessage = $thread->getLastMessage();
+
+        if ($forum->getLastMessage() === $lastMessage) {
+            $forum->setLastMessage(null);
+        }
+
+        $thread->setLastMessage(null);
+        $this->manager->remove($lastMessage);
+
+        foreach ($thread->getMessages() as $message) {
+            $this->manager->remove($message);
+        }
+
+        $this->manager->flush();
+
+        $this->manager->remove($thread);
+        $this->manager->flush();
+
+        if (!$forum->getLastMessage()) {
+            $forum->setLastMessage($this->messageRepository->findLastMessageByForum($forum));
+            $this->manager->flush();
+        }
     }
 }
