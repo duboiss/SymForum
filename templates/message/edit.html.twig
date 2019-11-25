@@ -7,9 +7,8 @@
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
                 <div class="mb-3">
-                    <p class="text-center">
-                        Edition de votre message dans le sujet {{ message.thread.title }}
-                    </p>
+                    <h2 class="text-center">Edition de votre message</h2>
+                    <p class="text-center">Sujet {{ message.thread.title }}</p>
                     {{ include('message/_form_message.html.twig', {button_label: 'Modifier'}) }}
                 </div>
             </div>

@@ -58,7 +58,6 @@ class MessageController extends BaseController
 
             $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
 
-            // TODO Redirect to the last message
             return $this->redirectToRoute('thread.show', [
                 'slug' => $thread->getSlug()
             ]);
