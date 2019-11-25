@@ -44,7 +44,7 @@ class MessageVoter extends Voter
             case 'EDIT':
                 return $this->canEdit($message, $user);
             CASE 'DELETE':
-                return $this->canDelete($message, $user);
+                return $this->canDelete();
         }
 
         return false;
@@ -61,11 +61,9 @@ class MessageVoter extends Voter
     }
 
     /**
-     * @param Message $message
-     * @param User $user
      * @return bool
      */
-    private function canDelete(Message $message, User $user): bool
+    private function canDelete(): bool
     {
         return $this->security->isGranted('ROLE_MODERATOR');
     }
