@@ -110,32 +110,17 @@ class MessageController extends BaseController
      * @IsGranted("DELETE", subject="message")
      * @param Message $message
      * @param ObjectManager $manager
-     * @param MessageRepository $messageRepository
+     * @param MessageService $messageService
      * @return Response
      */
-    public function delete(Message $message, ObjectManager $manager, MessageRepository $messageRepository): Response
+    public function delete(Message $message, ObjectManager $manager, MessageService $messageService): Response
     {
         // TODO Add custom flash if message doesn't exists
 
         $thread = $message->getThread();
         $forum = $thread->getForum();
 
-        if ($thread->getLastMessage() === $message) {
-            $thread->setLastMessage(null);
-        }
-
-        if ($forum->getLastMessage() === $message) {
-            $forum->setLastMessage(null);
-        }
-
-        $manager->remove($message);
-        $manager->flush();
-
-        if (!$forum->getLastMessage()) {
-            $forum->setLastMessage($messageRepository->findLastMessageByForum($forum));
-        }
-
-        $lastMessage = $messageRepository->findLastMessageByThread($thread);
+        $lastMessage = $messageService->deleteMessage($message);
 
         if (!$lastMessage) {
             $manager->remove($thread);
