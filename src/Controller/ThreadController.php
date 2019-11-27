@@ -43,6 +43,7 @@ class ThreadController extends BaseController
 
     /**
      * @Route("/forums/{slug}/new-thread", name="thread.new")
+     * @IsGranted("ROLE_USER")
      * @param Forum $forum
      * @param Request $request
      * @param AntispamService $antispam
