@@ -8,7 +8,7 @@
             <div class="col col-lg-12 col-md-12 col-sm-12">
                 <h1>
                     <span>Forums</span>
-                    <button class="pull-right btn btn-primary disabled">Ajouter</button>
+                    <button class="pull-right btn btn-primary disabled"><i class="fas fa-plus"></i></button>
                 </h1>
                 <div class="mt-3">
                     <table class="table table-sm">
@@ -27,8 +27,8 @@
                                 <td class="col-5">{{ forum.title }}</td>
                                 <td class="col-3">{{ forum.category.title }}</td>
                                 <td class="col-3">
-                                    <button class="btn btn-primary btn-sm disabled">Modifier</button> -
-                                    <button class="btn btn-danger btn-sm disabled">Supprimer</button>
+                                    <button class="btn btn-primary btn-sm disabled"><i class="fas fa-edit"></i></button> -
+                                    <button class="btn btn-danger btn-sm disabled"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         {% endfor %}
