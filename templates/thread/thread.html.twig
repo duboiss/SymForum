@@ -18,12 +18,14 @@
             </a>
         </li>
     {% endif %}
-    <li>
-        <a href="#" data-toggle="modal" data-target="#deleteModal" data-tooltip="tooltip"
-           title="Supprimer le sujet">
-            <i class="fas fa-trash-alt rotate"></i>
-        </a>
-    </li>
+    {% if is_granted('DELETE', thread) %}
+        <li>
+            <a href="#" data-toggle="modal" data-target="#deleteModal" data-tooltip="tooltip"
+               title="Supprimer le sujet">
+                <i class="fas fa-trash-alt rotate"></i>
+            </a>
+        </li>
+    {% endif %}
 {% endblock %}
 
 {% block body %}

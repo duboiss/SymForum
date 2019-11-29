@@ -96,7 +96,7 @@ class ThreadController extends BaseController
 
     /**
      * @Route("/forums/threads/{id}/delete", name="thread.delete", methods={"POST"})
-     * @IsGranted("ROLE_MODERATOR")
+     * @IsGranted("DELETE", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
      * @param Request $request
