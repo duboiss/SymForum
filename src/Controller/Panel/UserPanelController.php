@@ -21,7 +21,7 @@ class UserPanelController extends BaseController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function users(UserRepository $repo, Request $request, PaginatorInterface $paginator): Response
+    public function index(UserRepository $repo, Request $request, PaginatorInterface $paginator): Response
     {
         $usersQb = $repo->findAllMembersQb();
 

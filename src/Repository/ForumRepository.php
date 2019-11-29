@@ -39,4 +39,17 @@ class ForumRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Forum[]
+     */
+    public function findForumsWithCategories(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->addSelect('f', 'category')
+            ->join('f.category', 'category')
+            ->orderBy('f.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

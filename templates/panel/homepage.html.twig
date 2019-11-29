@@ -18,8 +18,8 @@
                             <a href="{{ path('panel.users') }}" class="list-group-item list-group-item-action">Utilisateurs</a>
 
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a href="#" class="list-group-item list-group-item-action disabled">Catégories</a>
-                                <a href="#" class="list-group-item list-group-item-action disabled">Forums</a>
+                                <a href="{{ path('panel.categories') }}" class="list-group-item list-group-item-action">Catégories</a>
+                                <a href="{{ path('panel.forums') }}" class="list-group-item list-group-item-action">Forums</a>
                                 <a href="#" class="list-group-item list-group-item-action disabled">Groupes</a>
                                 <a href="#" class="list-group-item list-group-item-action disabled">Paramètres</a>
                             {% endif %}

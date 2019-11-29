@@ -21,7 +21,7 @@ class ReportPanelController extends BaseController
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function reports(ReportRepository $repo, Request $request, PaginatorInterface $paginator): Response
+    public function index(ReportRepository $repo, Request $request, PaginatorInterface $paginator): Response
     {
         $reports = $repo->findAllReportsQb();
         $nbUntreatedReports = $repo->countUntreatedReports();
