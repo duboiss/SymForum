@@ -5,21 +5,21 @@
 {% block modnav_elements %}
     {% if thread.locked %}
         <li>
-            <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-toggle="tooltip"
+            <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-tooltip="tooltip"
                title="Ouvrir le sujet">
                 <i class="fas fa-lock-open rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
-            <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-toggle="tooltip"
+            <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-tooltip="tooltip"
                title="Fermer le sujet">
                 <i class="fas fa-lock rotate"></i>
             </a>
         </li>
     {% endif %}
     <li>
-        <a href="{{ path('thread.delete', {'id': thread.id}) }}" data-toggle="tooltip"
+        <a href="#" data-toggle="modal" data-target="#deleteModal" data-tooltip="tooltip"
            title="Supprimer le sujet">
             <i class="fas fa-trash-alt rotate"></i>
         </a>
@@ -28,6 +28,30 @@
 
 {% block body %}
     {{ parent() }}
+
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation de suppression</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous certain de vouloir supprimer ce sujet ?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('thread.delete', {'id': thread.id}) }}" method="POST">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-thread') }}"/>
+                        <button type="submit" class="btn btn-primary">Confirmer</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">

@@ -12,6 +12,7 @@ use App\Service\AntispamService;
 use App\Service\MessageService;
 use App\Service\ThreadService;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,6 +95,35 @@ class ThreadController extends BaseController
     }
 
     /**
+     * @Route("/forums/threads/{id}/delete", name="thread.delete", methods={"POST"})
+     * @IsGranted("ROLE_MODERATOR")
+     * @param Thread $thread
+     * @param ThreadService $threadService
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
+    public function delete(Thread $thread, ThreadService $threadService, Request $request): Response
+    {
+        // TODO Add custom flash if thread doesn't exists
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('delete-thread', $submittedToken)) {
+            $forum = $thread->getForum();
+            $threadService->deleteThread($thread);
+
+            $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
+
+            return $this->redirectToRoute('forum.show', [
+                'slug' => $forum->getSlug()
+            ]);
+        } else {
+            throw new Exception("Jeton CSRF invalide !");
+        }
+    }
+
+    /**
      * @Route("/forums/threads/{id}/lock", name="thread.lock")
      * @IsGranted("ROLE_MODERATOR")
      * @param Thread $thread
@@ -136,27 +166,6 @@ class ThreadController extends BaseController
 
         return $this->redirectToRoute('thread.show', [
             'slug' => $thread->getSlug()
-        ]);
-    }
-
-    /**
-     * @Route("/forums/threads/{id}/delete", name="thread.delete")
-     * @IsGranted("ROLE_MODERATOR")
-     * @param Thread $thread
-     * @param ThreadService $threadService
-     * @return Response
-     */
-    public function delete(Thread $thread, ThreadService $threadService): Response
-    {
-        // TODO Add custom flash if thread doesn't exists
-
-        $forum = $thread->getForum();
-        $threadService->deleteThread($thread);
-
-        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
-
-        return $this->redirectToRoute('forum.show', [
-            'slug' => $forum->getSlug()
         ]);
     }
 }
