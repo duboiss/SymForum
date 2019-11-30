@@ -87,4 +87,25 @@ class MessageRepository extends ServiceEntityRepository
             return null;
         }
     }
+
+    /**
+     * @param Message $message
+     * @return Message|null
+     */
+    public function findNextMessageInThread(Message $message): ?Message
+    {
+        try {
+            return $this->createQueryBuilder('m')
+                ->andWhere('m.thread = :thread')
+                ->andWhere('m.publishedAt > :message')
+                ->setParameter(':thread', $message->getThread())
+                ->setParameter(':message', $message->getPublishedAt())
+                ->orderBy('m.publishedAt', 'ASC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+        } catch (NonUniqueResultException $e) {
+            return null;
+        }
+    }
 }

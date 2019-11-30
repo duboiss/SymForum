@@ -111,12 +111,11 @@ class MessageController extends BaseController
      * @param Message $message
      * @param ObjectManager $manager
      * @param MessageService $messageService
+     * @param MessageRepository $repo
      * @return Response
      */
-    public function delete(Message $message, ObjectManager $manager, MessageService $messageService): Response
+    public function delete(Message $message, ObjectManager $manager, MessageService $messageService, MessageRepository $repo): Response
     {
-        // TODO Add custom flash if message doesn't exists
-
         $thread = $message->getThread();
         $forum = $thread->getForum();
 
@@ -136,11 +135,14 @@ class MessageController extends BaseController
         $thread->setLastMessage($lastMessage);
         $manager->flush();
 
+        $nextMessage = $repo->findNextMessageInThread($message);
+        $fragment = $nextMessage ? $nextMessage->getId() : $lastMessage->getId();
+
         $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');
 
         return $this->redirectToRoute('thread.show', [
             'slug' => $thread->getSlug(),
-            '_fragment' => $lastMessage->getId()
+            '_fragment' => $fragment
         ]);
     }
 }
