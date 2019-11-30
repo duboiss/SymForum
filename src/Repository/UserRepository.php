@@ -81,7 +81,7 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->addSelect('m')
-            ->innerJoin('u.messages', 'm')
+            ->leftJoin('u.messages', 'm')
             ->where('u.roles LIKE :role')
             ->setParameter('role', '%"' . $role . '"%')
             ->getQuery()
