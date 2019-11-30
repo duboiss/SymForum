@@ -27,25 +27,15 @@ class PageController extends BaseController
      */
     public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo, OptionService $optionService): Response
     {
-        $categories = $categoriesRepo->findAllCategories();
-
-        $onlineUsers = $usersRepo->findOnlineUsers();
-        $maxOnlineUsers = $optionService->get("max_online_users", "0");
-        $maxOnlineUsersDate = $optionService->get("max_online_users_date");
-        $nbUsers = $usersRepo->count([]);
-        $lastRegistered = $usersRepo->findLastRegistered();
-        $nbMessages = $messagesRepo->count([]);
-        $nbThreads = $threadsRepo->count([]);
-
         return $this->render('forums/index.html.twig', [
-            'categories' => $categories,
-            'onlineUsers' => $onlineUsers,
-            'maxOnlineUsers' => $maxOnlineUsers,
-            'maxOnlineUsersDate' => $maxOnlineUsersDate,
-            'nbUsers' => $nbUsers,
-            'lastRegistered' => $lastRegistered,
-            'nbMessages' => $nbMessages,
-            'nbThreads' => $nbThreads
+            'categories' => $categoriesRepo->findAllCategories(),
+            'onlineUsers' => $usersRepo->findOnlineUsers(),
+            'maxOnlineUsers' => $optionService->get("max_online_users", "0"),
+            'maxOnlineUsersDate' => $optionService->get("max_online_users_date"),
+            'nbUsers' => $usersRepo->count([]),
+            'lastRegistered' => $usersRepo->findLastRegistered(),
+            'nbMessages' => $messagesRepo->count([]),
+            'nbThreads' => $threadsRepo->count([])
         ]);
     }
 
