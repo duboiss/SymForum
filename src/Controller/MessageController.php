@@ -9,7 +9,7 @@ use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\AntispamService;
 use App\Service\MessageService;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,12 +109,12 @@ class MessageController extends BaseController
      * @Route("/forums/messages/{id}/delete", name="message.delete")
      * @IsGranted("DELETE", subject="message")
      * @param Message $message
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $em
      * @param MessageService $messageService
      * @param MessageRepository $repo
      * @return Response
      */
-    public function delete(Message $message, ObjectManager $manager, MessageService $messageService, MessageRepository $repo): Response
+    public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $repo): Response
     {
         $thread = $message->getThread();
         $forum = $thread->getForum();
@@ -122,8 +122,8 @@ class MessageController extends BaseController
         $lastMessage = $messageService->deleteMessage($message);
 
         if (!$lastMessage) {
-            $manager->remove($thread);
-            $manager->flush();
+            $em->remove($thread);
+            $em->flush();
 
             $this->addCustomFlash('success', 'Message', 'Le message ainsi que le thread ont été supprimé !');
 
@@ -133,7 +133,7 @@ class MessageController extends BaseController
         }
 
         $thread->setLastMessage($lastMessage);
-        $manager->flush();
+        $em->flush();
 
         $nextMessage = $repo->findNextMessageInThread($message);
         $fragment = $nextMessage ? $nextMessage->getId() : $lastMessage->getId();

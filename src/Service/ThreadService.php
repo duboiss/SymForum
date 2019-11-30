@@ -6,23 +6,23 @@ use App\Entity\Forum;
 use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ThreadService
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
-    private $manager;
+    private $em;
 
     /**
      * @var MessageRepository
      */
     private $messageRepository;
 
-    public function __construct(ObjectManager $manager, MessageRepository $messageRepository)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository)
     {
-        $this->manager = $manager;
+        $this->em = $em;
         $this->messageRepository = $messageRepository;
     }
 
@@ -41,8 +41,8 @@ class ThreadService
             ->setForum($forum)
             ->setLocked(false);
 
-        $this->manager->persist($thread);
-        $this->manager->flush();
+        $this->em->persist($thread);
+        $this->em->flush();
 
         return $thread;
     }
@@ -61,20 +61,20 @@ class ThreadService
         }
 
         $thread->setLastMessage(null);
-        $this->manager->remove($lastMessage);
+        $this->em->remove($lastMessage);
 
         foreach ($thread->getMessages() as $message) {
-            $this->manager->remove($message);
+            $this->em->remove($message);
         }
 
-        $this->manager->flush();
+        $this->em->flush();
 
-        $this->manager->remove($thread);
-        $this->manager->flush();
+        $this->em->remove($thread);
+        $this->em->flush();
 
         if (!$forum->getLastMessage()) {
             $forum->setLastMessage($this->messageRepository->findLastMessageByForum($forum));
-            $this->manager->flush();
+            $this->em->flush();
         }
     }
 }

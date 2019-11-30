@@ -11,7 +11,7 @@ use App\Repository\MessageRepository;
 use App\Service\AntispamService;
 use App\Service\MessageService;
 use App\Service\ThreadService;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,16 +127,16 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{id}/lock", name="thread.lock")
      * @IsGranted("ROLE_MODERATOR")
      * @param Thread $thread
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function lock(Thread $thread, ObjectManager $manager): Response
+    public function lock(Thread $thread, EntityManagerInterface $em): Response
     {
         if ($thread->getLocked()) {
             $this->addCustomFlash('error', 'Sujet', 'Ce sujet est déjà fermé !');
         } else {
             $thread->setLocked(true);
-            $manager->flush();
+            $em->flush();
 
             $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
         }
@@ -150,16 +150,16 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{id}/unlock", name="thread.unlock")
      * @IsGranted("ROLE_MODERATOR")
      * @param Thread $thread
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $em
      * @return Response
      */
-    public function unlock(Thread $thread, ObjectManager $manager): Response
+    public function unlock(Thread $thread, EntityManagerInterface $em): Response
     {
         if (!$thread->getLocked()) {
             $this->addCustomFlash('error', 'Sujet', 'Ce sujet est déjà ouvert !');
         } else {
             $thread->setLocked(false);
-            $manager->flush();
+            $em->flush();
 
             $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
         }

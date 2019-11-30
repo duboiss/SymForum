@@ -6,12 +6,12 @@ use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MessageService
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $manager;
 
@@ -20,9 +20,9 @@ class MessageService
      */
     private $messageRepository;
 
-    public function __construct(ObjectManager $manager, MessageRepository $messageRepository)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository)
     {
-        $this->manager = $manager;
+        $this->manager = $em;
         $this->messageRepository = $messageRepository;
     }
 
