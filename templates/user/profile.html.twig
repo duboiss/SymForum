@@ -30,7 +30,9 @@
                 {% if lastThreads|length > 0 %}
                     <ul>
                         {% for thread in lastThreads %}
-                            <li>{{ thread.title|truncate(50, true) }}</li>
+                            <li>
+                                <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title|truncate(50, true) }}</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 {% else %}
@@ -43,7 +45,9 @@
                 {% if lastMessages|length > 0 %}
                     <ul>
                         {% for message in lastMessages %}
-                            <li>{{ message.content|truncate(50, true) }}</li>
+                            <li>
+                                <a href="{{ path('thread.show', {'slug': message.thread.slug, '_fragment': message.id}) }}">{{ message.content|striptags|truncate(50, true) }}
+                            </li>
                         {% endfor %}
                     </ul>
                 {% else %}
