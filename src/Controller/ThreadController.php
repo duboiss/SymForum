@@ -58,33 +58,33 @@ class ThreadController extends BaseController
         $form = $this->createForm(ThreadType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (!$forum->getLocked()) {
-                $user = $this->getUser();
-
-                if (!$antispam->canPostThread($user)) {
-                    $this->addCustomFlash('error', 'Sujet', 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !');
-
-                    return $this->redirectToRoute('forum.show', [
-                        'slug' => $forum->getSlug()
-                    ]);
-                }
-
-                $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
-                $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
-
-                $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
-
-                return $this->redirectToRoute('thread.show', [
-                    'slug' => $thread->getSlug(),
-                    '_fragment' => $message->getId()
-                ]);
-            }
-
+        if ($forum->getLocked()) {
             $this->addCustomFlash('error', 'Sujet', 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !');
 
             return $this->redirectToRoute('forum.show', [
                 'slug' => $forum->getSlug()
+            ]);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+
+            if (!$antispam->canPostThread($user)) {
+                $this->addCustomFlash('error', 'Sujet', 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !');
+
+                return $this->redirectToRoute('forum.show', [
+                    'slug' => $forum->getSlug()
+                ]);
+            }
+
+            $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
+            $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
+
+            $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
+
+            return $this->redirectToRoute('thread.show', [
+                'slug' => $thread->getSlug(),
+                '_fragment' => $message->getId()
             ]);
         }
 

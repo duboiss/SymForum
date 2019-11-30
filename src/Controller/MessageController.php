@@ -26,42 +26,40 @@ class MessageController extends BaseController
      * @param MessageService $messageService
      * @return Response
      */
-    public function add(Thread $thread, Request $request, AntispamService $antispam, MessageService $messageService): Response
+    public function new(Thread $thread, Request $request, AntispamService $antispam, MessageService $messageService): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if (!$thread->getLocked()) {
-                $user = $this->getUser();
-
-                if (!$antispam->canPostMessage($user)) {
-                    $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
-
-                    return $this->redirectToRoute('thread.show', [
-                        'slug' => $thread->getSlug(),
-                        '_fragment' => $thread->getLastMessage()->getId()
-                    ]);
-                }
-
-                $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
-
-                $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
-
-                return $this->redirectToRoute('thread.show', [
-                    'slug' => $thread->getSlug(),
-                    '_fragment' => $message->getId()
-                ]);
-            }
-
+        if ($thread->getLocked()) {
             $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
 
             return $this->redirectToRoute('thread.show', [
                 'slug' => $thread->getSlug()
             ]);
+        }
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+
+            if (!$antispam->canPostMessage($user)) {
+                $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
+
+                return $this->redirectToRoute('thread.show', [
+                    'slug' => $thread->getSlug(),
+                    '_fragment' => $thread->getLastMessage()->getId()
+                ]);
+            }
+
+            $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
+
+            $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+
+            return $this->redirectToRoute('thread.show', [
+                'slug' => $thread->getSlug(),
+                '_fragment' => $message->getId()
+            ]);
         }
 
         return $this->redirectToRoute('thread.show', [
@@ -85,24 +83,24 @@ class MessageController extends BaseController
             '_fragment' => $message->getId()
         ]);
 
-        if (!$thread->getLocked()) {
-            $form = $this->createForm(MessageType::class, $message);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-                $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
-                return $route;
-            }
-
-            return $this->render('message/edit.html.twig', [
-                'message' => $message,
-                'form' => $form->createView(),
-            ]);
+        if ($thread->getLocked()) {
+            $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas modifier votre message, le sujet est verrouillé !');
+            return $route;
         }
 
-        $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas modifier votre message, le sujet est verrouillé !');
-        return $route;
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
+            return $route;
+        }
+
+        return $this->render('message/edit.html.twig', [
+            'message' => $message,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
