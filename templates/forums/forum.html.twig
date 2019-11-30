@@ -2,15 +2,6 @@
 
 {% block title %}{{ forum.title }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .breadcrumb {
-            padding: 0.16rem;
-        }
-    </style>
-{% endblock %}
-
 {% block modnav_elements %}
     {% if forum.locked %}
         <li>

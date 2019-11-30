@@ -17,7 +17,7 @@ class ForumController extends BaseController
      * @param ThreadRepository $threadsRepo
      * @return Response
      */
-    public function forum(Forum $forum, ThreadRepository $threadsRepo): Response
+    public function show(Forum $forum, ThreadRepository $threadsRepo): Response
     {
         $threads = $threadsRepo->findThreadsByForum($forum);
 
