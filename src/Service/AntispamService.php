@@ -43,7 +43,7 @@ class AntispamService
 
         if ($lastThread && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
-            return $currentDate > $lastThread->getCreatedAt()->modify('+' . self::DELAY_THREAD . ' seconds');
+            return $currentDate->modify('-' . self::DELAY_THREAD . ' seconds') > $lastThread->getCreatedAt();
         }
 
         return true;
@@ -55,7 +55,7 @@ class AntispamService
 
         if ($lastMessage && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
-            return $currentDate > $lastMessage->getPublishedAt()->modify('+' . self::DELAY_MESSAGE . ' seconds');
+            return $currentDate->modify('-' . self::DELAY_MESSAGE . ' seconds') > $lastMessage->getPublishedAt();
         }
 
         return true;
