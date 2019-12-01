@@ -9,19 +9,13 @@ use Faker\Generator;
 
 abstract class BaseFixtures extends Fixture
 {
-    /**
-     * @var Generator
-     */
+    /** @var Generator */
     protected $faker;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $manager;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $referencesIndex = [];
 
     public function load(ObjectManager $manager)

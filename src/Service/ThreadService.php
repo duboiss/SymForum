@@ -10,14 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ThreadService
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var MessageRepository
-     */
+    /** @var MessageRepository */
     private $messageRepository;
 
     public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository)

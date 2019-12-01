@@ -11,9 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ThreadVoter extends Voter
 {
-    /**
-     * @var Security
-     */
+    /** @var Security */
     private $security;
 
     public function __construct(Security $security)
@@ -29,9 +27,7 @@ class ThreadVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        /**
-         * @var User $user
-         */
+        /** @var User $user */
         $user = $token->getUser();
 
         $thread = $subject;

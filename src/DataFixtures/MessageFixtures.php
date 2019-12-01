@@ -25,9 +25,7 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 
             if ($thread->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $thread->setLastMessage($message);
 
-            /**
-             * @var Forum $forum
-             */
+            /** @var Forum $forum */
             $forum = $thread->getForum();
 
             if (!$forum->getLastMessage() || $forum->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $forum->setLastMessage($message);

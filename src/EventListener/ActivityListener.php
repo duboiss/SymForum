@@ -13,24 +13,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ActivityListener implements EventSubscriberInterface
 {
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var TokenStorageInterface
-     */
+    /** @var TokenStorageInterface */
     private $tokenStorage;
 
-    /**
-     * @var OptionService
-     */
+    /** @var OptionService */
     private $optionService;
 
-    /**
-     * @var UserRepository
-     */
+    /** @var UserRepository */
     private $repo;
 
     public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, OptionService $optionService, UserRepository $repo)

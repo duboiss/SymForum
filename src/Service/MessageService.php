@@ -10,14 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MessageService
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $manager;
 
-    /**
-     * @var MessageRepository
-     */
+    /** @var MessageRepository */
     private $messageRepository;
 
     public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository)

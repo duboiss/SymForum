@@ -14,19 +14,13 @@ class AntispamService
     const DELAY_MESSAGE = 60;
     const DELAY_THREAD = 90;
 
-    /**
-     * @var ThreadRepository
-     */
+    /** @var ThreadRepository */
     private $threadsRepo;
 
-    /**
-     * @var MessageRepository
-     */
+    /** @var MessageRepository */
     private $messagesRepo;
 
-    /**
-     * @var Security
-     */
+    /** @var Security */
     private $security;
 
     public function __construct(ThreadRepository $threadsRepo, MessageRepository $messagesRepo, Security $security)

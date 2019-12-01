@@ -9,9 +9,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class BaseController extends AbstractController
 {
-    /**
-     * @var Session
-     */
+    /** @var Session */
     private $session;
 
     public function __construct(SessionInterface $session)

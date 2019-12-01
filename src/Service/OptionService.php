@@ -8,19 +8,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class OptionService
 {
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $em;
 
-    /**
-     * @var CoreOptionRepository
-     */
+    /** @var CoreOptionRepository */
     private $repo;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $cache = [];
 
     public function __construct(EntityManagerInterface $em, CoreOptionRepository $repo)

@@ -11,13 +11,10 @@ use Twig\TwigFilter;
 
 class ForumExtension extends AbstractExtension
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
+    /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
     /**
-     * ForumExtension constructor.
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(UrlGeneratorInterface $urlGenerator)

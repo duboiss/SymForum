@@ -16,9 +16,7 @@ class UserExtenion extends AbstractExtension
 
     // TODO Store a color for each role
 
-    /**
-     * @var UrlGeneratorInterface
-     */
+    /** @var UrlGeneratorInterface */
     private $generator;
 
     /**
