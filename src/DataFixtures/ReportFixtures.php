@@ -21,8 +21,7 @@ class ReportFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setReportedBy($this->getRandomReference(User::class));
 
             if ($this->faker->boolean(65)) {
-                $report->setStatus(true)
-                    ->setTreatedAt($this->faker->dateTimeBetween($report->getReportedAt()))
+                $report->setTreatedAt($this->faker->dateTimeBetween($report->getReportedAt()))
                     ->setTreatedBy($this->getRandomReference(User::class));
             }
         });

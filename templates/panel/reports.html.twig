@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                         {% for report in pagination %}
-                            <tr{{ not report.status ? ' class="table-warning"' }}>
+                            <tr{{ not report.isTreated ? ' class="table-warning"' }}>
                                 <td>{{ report.id }}</td>
                                 <td>{{ user_profile_link(report.message.author) }}</td>
                                 <td>{{ report.reportedAt|date('d/m/Y à H:i:s') }}</td>

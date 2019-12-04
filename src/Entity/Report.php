@@ -41,11 +41,6 @@ class Report
     private $reportedBy;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $status = false;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $treatedAt;
@@ -108,18 +103,6 @@ class Report
         return $this;
     }
 
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getTreatedAt(): ?DateTimeInterface
     {
         return $this->treatedAt;
@@ -142,5 +125,10 @@ class Report
         $this->treatedBy = $treatedBy;
 
         return $this;
+    }
+
+    public function isTreated(): bool
+    {
+        return $this->treatedAt !== null;
     }
 }
