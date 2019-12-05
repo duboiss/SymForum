@@ -1,39 +1,34 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/full-width.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <div class="row justify-content-md-center mt-5">
-            <h1>Connexion</h1>
-            <div class="col col-lg-12 col-md-12 col-sm-12">
-                <form action="{{ path('security.login') }}" method="post">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+{% block content %}
+    <h1 class="text-center">Connexion</h1>
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Votre email"
-                               value="{{ last_username }}" autofocus>
-                    </div>
+    <form action="{{ path('security.login') }}" method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-                    <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" name="password" class="form-control" id="password"
-                               placeholder="Votre mot de passe">
-                    </div>
-
-                    <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input" id="_remember_me" name="_remember_me">
-                        <label class="custom-control-label" for="_remember_me">Se souvenir de moi</label>
-                    </div>
-
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                    <button type="submit" class="btn btn-primary btn-block">Connexion</button>
-                </form>
-            </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Votre email"
+                   value="{{ last_username }}" autofocus>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" class="form-control" id="password"
+                   placeholder="Votre mot de passe">
+        </div>
+
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" id="_remember_me" name="_remember_me">
+            <label class="custom-control-label" for="_remember_me">Se souvenir de moi</label>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button type="submit" class="btn btn-primary btn-block">Connexion</button>
+    </form>
 {% endblock %}

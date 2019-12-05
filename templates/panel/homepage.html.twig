@@ -1,31 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/full-width.html.twig' %}
 
 {% block title %}Administration{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <div class="row justify-content-md-center mt-5">
-            <div class="col col-lg-12 col-md-12 col-sm-12">
-                <h1>Bienvenue, {{ app.user.pseudo }}</h1>
+{% block content %}
+    <h1>Bienvenue, {{ app.user.pseudo }}</h1>
 
-                <div class="row mt-3">
-                    <div class="col col-lg-6 col-md-6 col-sm-6">
-                        <div class="list-group">
+    <div class="row mt-3">
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <div class="list-group">
 
-                            <a href="{{ path('panel.reports') }}"
-                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Signalements
-                                <span class="badge badge-primary badge-pill">{{ nbUntreatedReports }}</span></a>
-                            <a href="{{ path('panel.users') }}" class="list-group-item list-group-item-action">Utilisateurs</a>
+                <a href="{{ path('panel.reports') }}"
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Signalements
+                    <span class="badge badge-primary badge-pill">{{ nbUntreatedReports }}</span></a>
+                <a href="{{ path('panel.users') }}" class="list-group-item list-group-item-action">Utilisateurs</a>
 
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('panel.categories') }}" class="list-group-item list-group-item-action">Catégories</a>
-                                <a href="{{ path('panel.forums') }}" class="list-group-item list-group-item-action">Forums</a>
-                                <a href="#" class="list-group-item list-group-item-action disabled">Groupes</a>
-                                <a href="#" class="list-group-item list-group-item-action disabled">Paramètres</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('panel.categories') }}"
+                       class="list-group-item list-group-item-action">Catégories</a>
+                    <a href="{{ path('panel.forums') }}" class="list-group-item list-group-item-action">Forums</a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">Groupes</a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">Paramètres</a>
+                {% endif %}
             </div>
         </div>
     </div>
