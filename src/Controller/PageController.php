@@ -27,7 +27,7 @@ class PageController extends BaseController
      */
     public function index(CategoryRepository $categoriesRepo, UserRepository $usersRepo, MessageRepository $messagesRepo, ThreadRepository $threadsRepo, OptionService $optionService): Response
     {
-        return $this->render('forums/index.html.twig', [
+        return $this->render('pages/index.html.twig', [
             'categories' => $categoriesRepo->findAllCategories(),
             'onlineUsers' => $usersRepo->findOnlineUsers(),
             'maxOnlineUsers' => $optionService->get("max_online_users", "0"),
