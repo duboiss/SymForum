@@ -20,6 +20,7 @@ class MessageController extends BaseController
 {
     /**
      * @Route("/forums/messages/add/{id}", name="message.add", methods={"POST"})
+     * @IsGranted("ROLE_USER")
      * @param Thread $thread
      * @param Request $request
      * @param AntispamService $antispam
