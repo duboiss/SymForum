@@ -80,6 +80,7 @@
                                     {{ user_profile_link(author) }}
 
                                     {% if author is not null %}
+                                        <br>
                                         {% set role = user_profile_role(author) %}
                                         {{ role ? role }}
                                     {% endif %}
