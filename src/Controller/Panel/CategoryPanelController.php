@@ -14,12 +14,12 @@ class CategoryPanelController extends BaseController
 {
     /**
      * @Route("/categories", name="panel.categories")
-     * @param CategoryRepository $repo
+     * @param CategoryRepository $categoryRepository
      * @return Response
      */
-    public function index(CategoryRepository $repo): Response
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        $categories = $repo->findAllCategories();
+        $categories = $categoryRepository->findAllCategories();
 
         return $this->render('panel/categories.html.twig', [
             'categories' => $categories

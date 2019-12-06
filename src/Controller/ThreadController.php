@@ -23,13 +23,13 @@ class ThreadController extends BaseController
     /**
      * @Route("/forums/threads/{slug}", name="thread.show")
      * @param Thread $thread
-     * @param MessageRepository $repo
+     * @param MessageRepository $messageRepository
      * @param Request $request
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $repo, Request $request): Response
+    public function show(Thread $thread, MessageRepository $messageRepository, Request $request): Response
     {
-        $messages = $repo->findMessagesByThreadWithAuthor($thread);
+        $messages = $messageRepository->findMessagesByThreadWithAuthor($thread);
 
         $form = $this->createForm(MessageType::class, new Message(), [
             'action' => $this->generateUrl('message.add', ['id' => $thread->getId()])
@@ -47,12 +47,12 @@ class ThreadController extends BaseController
      * @IsGranted("ROLE_USER")
      * @param Forum $forum
      * @param Request $request
-     * @param AntispamService $antispam
+     * @param AntispamService $antispamService
      * @param ThreadService $threadService
      * @param MessageService $messageService
      * @return Response
      */
-    public function new(Forum $forum, Request $request, AntispamService $antispam, ThreadService $threadService, MessageService $messageService): Response
+    public function new(Forum $forum, Request $request, AntispamService $antispamService, ThreadService $threadService, MessageService $messageService): Response
     {
 
         $form = $this->createForm(ThreadType::class);
@@ -69,7 +69,7 @@ class ThreadController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
 
-            if (!$antispam->canPostThread($user)) {
+            if (!$antispamService->canPostThread($user)) {
                 $this->addCustomFlash('error', 'Sujet', 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !');
 
                 return $this->redirectToRoute('forum.show', [
@@ -103,7 +103,7 @@ class ThreadController extends BaseController
      * @return Response
      * @throws Exception
      */
-    public function delete(Thread $thread, ThreadService $threadService, Request $request): Response
+    public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
     {
         // TODO Add custom flash if thread doesn't exists
 

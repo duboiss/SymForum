@@ -14,12 +14,12 @@ class HomePanelController extends BaseController
 {
     /**
      * @Route("", name="panel.homepage")
-     * @param ReportRepository $repo
+     * @param ReportRepository $reportRepository
      * @return Response
      */
-    public function homepage(ReportRepository $repo): Response
+    public function homepage(ReportRepository $reportRepository): Response
     {
-        $nbUntreatedReports = $repo->countUntreatedReports();
+        $nbUntreatedReports = $reportRepository->countUntreatedReports();
 
         return $this->render('panel/homepage.html.twig', [
             'nbUntreatedReports' => $nbUntreatedReports

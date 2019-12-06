@@ -14,12 +14,12 @@ class ForumPanelController extends BaseController
 {
     /**
      * @Route("/forums", name="panel.forums")
-     * @param ForumRepository $repo
+     * @param ForumRepository $forumRepository
      * @return Response
      */
-    public function index(ForumRepository $repo): Response
+    public function index(ForumRepository $forumRepository): Response
     {
-        $forums = $repo->findForumsWithCategories();
+        $forums = $forumRepository->findForumsWithCategories();
 
         return $this->render('panel/forums.html.twig', [
             'forums' => $forums

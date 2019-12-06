@@ -23,14 +23,14 @@ class ActivityListener implements EventSubscriberInterface
     private $optionService;
 
     /** @var UserRepository */
-    private $repo;
+    private $userRepository;
 
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, OptionService $optionService, UserRepository $repo)
+    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, OptionService $optionService, UserRepository $userRepository)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->optionService = $optionService;
-        $this->repo = $repo;
+        $this->userRepository = $userRepository;
     }
 
     public function onTerminate()
@@ -43,7 +43,7 @@ class ActivityListener implements EventSubscriberInterface
                 $this->em->flush();
 
                 $maxOnlineUsers = (int)$this->optionService->get("max_online_users", "0");
-                $nbOnlineUsers = $this->repo->countOnlineUsers();
+                $nbOnlineUsers = $this->userRepository->countOnlineUsers();
 
                 if ($nbOnlineUsers > $maxOnlineUsers) {
                     $currentDate = date("d-m-Y à H:i:s");

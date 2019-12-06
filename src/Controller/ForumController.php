@@ -14,12 +14,12 @@ class ForumController extends BaseController
     /**
      * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"})
      * @param Forum $forum
-     * @param ThreadRepository $threadsRepo
+     * @param ThreadRepository $threadRepository
      * @return Response
      */
-    public function show(Forum $forum, ThreadRepository $threadsRepo): Response
+    public function show(Forum $forum, ThreadRepository $threadRepository): Response
     {
-        $threads = $threadsRepo->findThreadsByForum($forum);
+        $threads = $threadRepository->findThreadsByForum($forum);
 
         return $this->render('forums/forum.html.twig', [
             'forum' => $forum,

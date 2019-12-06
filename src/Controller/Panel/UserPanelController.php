@@ -16,14 +16,14 @@ class UserPanelController extends BaseController
 {
     /**
      * @Route("/users", name="panel.users")
-     * @param UserRepository $repo
+     * @param UserRepository $userRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(UserRepository $repo, Request $request, PaginatorInterface $paginator): Response
+    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $usersQb = $repo->findAllMembersQb();
+        $usersQb = $userRepository->findAllMembersQb();
 
         $pagination = $paginator->paginate(
             $usersQb,

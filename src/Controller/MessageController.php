@@ -23,11 +23,11 @@ class MessageController extends BaseController
      * @IsGranted("ROLE_USER")
      * @param Thread $thread
      * @param Request $request
-     * @param AntispamService $antispam
+     * @param AntispamService $antispamService
      * @param MessageService $messageService
      * @return Response
      */
-    public function new(Thread $thread, Request $request, AntispamService $antispam, MessageService $messageService): Response
+    public function new(Thread $thread, Request $request, AntispamService $antispamService, MessageService $messageService): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -44,7 +44,7 @@ class MessageController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
 
-            if (!$antispam->canPostMessage($user)) {
+            if (!$antispamService->canPostMessage($user)) {
                 $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
 
                 return $this->redirectToRoute('thread.show', [
@@ -110,10 +110,10 @@ class MessageController extends BaseController
      * @param Message $message
      * @param EntityManagerInterface $em
      * @param MessageService $messageService
-     * @param MessageRepository $repo
+     * @param MessageRepository $messageRepository
      * @return Response
      */
-    public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $repo): Response
+    public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
     {
         $thread = $message->getThread();
         $forum = $thread->getForum();
@@ -134,7 +134,7 @@ class MessageController extends BaseController
         $thread->setLastMessage($lastMessage);
         $em->flush();
 
-        $nextMessage = $repo->findNextMessageInThread($message);
+        $nextMessage = $messageRepository->findNextMessageInThread($message);
         $fragment = $nextMessage ? $nextMessage->getId() : $lastMessage->getId();
 
         $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');

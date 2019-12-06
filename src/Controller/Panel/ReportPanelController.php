@@ -16,15 +16,15 @@ class ReportPanelController extends BaseController
 {
     /**
      * @Route("/reports", name="panel.reports")
-     * @param ReportRepository $repo
+     * @param ReportRepository $reportRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(ReportRepository $repo, Request $request, PaginatorInterface $paginator): Response
+    public function index(ReportRepository $reportRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $reports = $repo->findAllReportsQb();
-        $nbUntreatedReports = $repo->countUntreatedReports();
+        $reports = $reportRepository->findAllReportsQb();
+        $nbUntreatedReports = $reportRepository->countUntreatedReports();
 
         $pagination = $paginator->paginate(
             $reports,

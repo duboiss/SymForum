@@ -13,14 +13,14 @@ class UserController extends BaseController
     /**
      * @Route("/user/{slug}", name="user.profile")
      * @param User $user
-     * @param ThreadRepository $threadsRepo
-     * @param MessageRepository $messagesRepo
+     * @param ThreadRepository $threadRepository
+     * @param MessageRepository $messageRepository
      * @return Response
      */
-    public function profile(User $user, ThreadRepository $threadsRepo, MessageRepository $messagesRepo): Response
+    public function profile(User $user, ThreadRepository $threadRepository, MessageRepository $messageRepository): Response
     {
-        $lastThreads = $threadsRepo->findLastThreadsByUser($user, 5);
-        $lastMessages = $messagesRepo->findLastMessagesByUser($user, 5);
+        $lastThreads = $threadRepository->findLastThreadsByUser($user, 5);
+        $lastMessages = $messageRepository->findLastMessagesByUser($user, 5);
 
         return $this->render('user/profile.html.twig', [
             'user' => $user,

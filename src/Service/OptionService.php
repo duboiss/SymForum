@@ -12,15 +12,15 @@ class OptionService
     private $em;
 
     /** @var CoreOptionRepository */
-    private $repo;
+    private $coreOptionRepository;
 
     /** @var array */
     private $cache = [];
 
-    public function __construct(EntityManagerInterface $em, CoreOptionRepository $repo)
+    public function __construct(EntityManagerInterface $em, CoreOptionRepository $coreOptionRepository)
     {
         $this->em = $em;
-        $this->repo = $repo;
+        $this->coreOptionRepository = $coreOptionRepository;
     }
 
 
@@ -64,7 +64,7 @@ class OptionService
     private function getEntity(string $optionName): ?CoreOption
     {
         if(!isset($this->cache[$optionName])) {
-            $this->cache[$optionName] = $this->repo->findOneBy(['name' => $optionName]);
+            $this->cache[$optionName] = $this->coreOptionRepository->findOneBy(['name' => $optionName]);
         }
 
         return $this->cache[$optionName];

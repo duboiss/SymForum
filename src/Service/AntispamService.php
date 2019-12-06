@@ -15,25 +15,25 @@ class AntispamService
     const DELAY_THREAD = 90;
 
     /** @var ThreadRepository */
-    private $threadsRepo;
+    private $threadRepository;
 
     /** @var MessageRepository */
-    private $messagesRepo;
+    private $messageRepository;
 
     /** @var Security */
     private $security;
 
-    public function __construct(ThreadRepository $threadsRepo, MessageRepository $messagesRepo, Security $security)
+    public function __construct(ThreadRepository $threadRepository, MessageRepository $messageRepository, Security $security)
     {
 
-        $this->threadsRepo = $threadsRepo;
-        $this->messagesRepo = $messagesRepo;
+        $this->threadRepository = $threadRepository;
+        $this->messageRepository = $messageRepository;
         $this->security = $security;
     }
 
     public function canPostThread(User $user): bool
     {
-        $lastThread = $this->threadsRepo->findLastThreadByUser($user);
+        $lastThread = $this->threadRepository->findLastThreadByUser($user);
 
         if ($lastThread && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
@@ -45,7 +45,7 @@ class AntispamService
 
     public function canPostMessage(User $user): bool
     {
-        $lastMessage = $this->messagesRepo->findLastMessageByUser($user);
+        $lastMessage = $this->messageRepository->findLastMessageByUser($user);
 
         if ($lastMessage && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
