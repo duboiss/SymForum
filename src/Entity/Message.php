@@ -39,7 +39,7 @@ class Message
      * @Assert\Length(
      *      min = 10,
      *      max = 6000,
-     *      minMessage = "Votre message doit faire au moins {{ limit }} caractères.",
+     *      minMessage = "Votre message doit faire au moins 3 caractères.",
      *      maxMessage = "Votre message doit faire au maximum {{ limit }} caractères."
      * )
      */
