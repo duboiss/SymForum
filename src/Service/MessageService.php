@@ -37,8 +37,11 @@ class MessageService
             ->setThread($thread);
 
         $this->manager->persist($message);
+
         $thread->setLastMessage($message);
         $thread->getForum()->setLastMessage($message);
+        $thread->setTotalMessages($thread->getTotalMessages() + 1);
+
         $this->manager->flush();
 
         return $message;
@@ -62,6 +65,7 @@ class MessageService
         }
 
         $this->manager->remove($message);
+        $thread->setTotalMessages($thread->getTotalMessages() - 1);
         $this->manager->flush();
 
         if (!$forum->getLastMessage()) {

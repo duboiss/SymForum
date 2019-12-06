@@ -73,6 +73,11 @@ class Thread
      */
     private $messages;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $totalMessages = 0;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -168,11 +173,6 @@ class Thread
         return $this->messages;
     }
 
-    public function getTotalMessages(): int
-    {
-        return $this->messages->count();
-    }
-
     public function addMessage(Message $message): self
     {
         if (!$this->messages->contains($message)) {
@@ -192,6 +192,18 @@ class Thread
                 $message->setThread(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotalMessages(): ?int
+    {
+        return $this->totalMessages;
+    }
+
+    public function setTotalMessages(int $totalMessages): self
+    {
+        $this->totalMessages = $totalMessages;
 
         return $this;
     }
