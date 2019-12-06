@@ -29,8 +29,7 @@ class MessageController extends BaseController
      */
     public function new(Thread $thread, Request $request, AntispamService $antispamService, MessageService $messageService): Response
     {
-        $message = new Message();
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
 
         if ($thread->getLocked()) {
