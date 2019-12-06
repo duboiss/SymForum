@@ -39,6 +39,7 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="category")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $forums;
 
