@@ -52,7 +52,7 @@ class ThreadController extends BaseController
      * @param MessageService $messageService
      * @return Response
      */
-    public function new(Forum $forum, Request $request, AntispamService $antispamService, ThreadService $threadService, MessageService $messageService): Response
+    public function create(Forum $forum, Request $request, AntispamService $antispamService, ThreadService $threadService, MessageService $messageService): Response
     {
 
         $form = $this->createForm(ThreadType::class);

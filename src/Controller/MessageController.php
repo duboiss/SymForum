@@ -27,7 +27,7 @@ class MessageController extends BaseController
      * @param MessageService $messageService
      * @return Response
      */
-    public function new(Thread $thread, Request $request, AntispamService $antispamService, MessageService $messageService): Response
+    public function respond(Thread $thread, Request $request, AntispamService $antispamService, MessageService $messageService): Response
     {
         $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
