@@ -36,14 +36,10 @@ class ForumController extends BaseController
      */
     public function lock(Forum $forum, EntityManagerInterface $em): Response
     {
-        if ($forum->getLocked()) {
-            $this->addCustomFlash('error', 'Forum', 'Ce forum est déjà fermé !');
-        } else {
-            $forum->setLocked(true);
-            $em->flush();
+        $forum->setLocked(true);
+        $em->flush();
 
-            $this->addCustomFlash('success', 'Forum', 'Le forum a été fermé !');
-        }
+        $this->addCustomFlash('success', 'Forum', 'Le forum a été fermé !');
 
         return $this->redirectToRoute('forum.show', [
             'slug' => $forum->getSlug()
@@ -59,14 +55,10 @@ class ForumController extends BaseController
      */
     public function unlock(Forum $forum, EntityManagerInterface $em): Response
     {
-        if (!$forum->getLocked()) {
-            $this->addCustomFlash('error', 'Forum', 'Ce forum est déjà ouvert !');
-        } else {
-            $forum->setLocked(false);
-            $em->flush();
+        $forum->setLocked(false);
+        $em->flush();
 
-            $this->addCustomFlash('success', 'Forum', 'Le forum a été ouvert !');
-        }
+        $this->addCustomFlash('success', 'Forum', 'Le forum a été ouvert !');
 
         return $this->redirectToRoute('forum.show', [
             'slug' => $forum->getSlug()

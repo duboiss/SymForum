@@ -132,14 +132,10 @@ class ThreadController extends BaseController
      */
     public function lock(Thread $thread, EntityManagerInterface $em): Response
     {
-        if ($thread->getLocked()) {
-            $this->addCustomFlash('error', 'Sujet', 'Ce sujet est déjà fermé !');
-        } else {
-            $thread->setLocked(true);
-            $em->flush();
+        $thread->setLocked(true);
+        $em->flush();
 
-            $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
-        }
+        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
 
         return $this->redirectToRoute('thread.show', [
             'slug' => $thread->getSlug()
@@ -155,14 +151,10 @@ class ThreadController extends BaseController
      */
     public function unlock(Thread $thread, EntityManagerInterface $em): Response
     {
-        if (!$thread->getLocked()) {
-            $this->addCustomFlash('error', 'Sujet', 'Ce sujet est déjà ouvert !');
-        } else {
-            $thread->setLocked(false);
-            $em->flush();
+        $thread->setLocked(false);
+        $em->flush();
 
-            $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
-        }
+        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
 
         return $this->redirectToRoute('thread.show', [
             'slug' => $thread->getSlug()
