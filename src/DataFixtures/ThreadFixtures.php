@@ -40,6 +40,7 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 
             $manager->persist($firstMessage);
 
+            $thread->setTotalMessages($thread->getTotalMessages() + 1);
             $thread->setLastMessage($firstMessage);
         }
 
