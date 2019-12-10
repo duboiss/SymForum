@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Message;
 use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
-use App\Service\AntispamService;
 use App\Service\MessageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -23,35 +21,24 @@ class MessageController extends BaseController
      * @IsGranted("ROLE_USER")
      * @param Thread $thread
      * @param Request $request
-     * @param AntispamService $antispamService
      * @param MessageService $messageService
      * @return Response
      */
-    public function respond(Thread $thread, Request $request, AntispamService $antispamService, MessageService $messageService): Response
+    public function respond(Thread $thread, Request $request, MessageService $messageService): Response
     {
-        $form = $this->createForm(MessageType::class);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($thread->getLocked()) {
-            $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !');
-
+        if (!$messageService->canPostMessage($thread, $user)) {
             return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug()
+                'slug' => $thread->getSlug(),
+                '_fragment' => $thread->getLastMessage()->getId()
             ]);
         }
 
+        $form = $this->createForm(MessageType::class);
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-
-            if (!$antispamService->canPostMessage($user)) {
-                $this->addCustomFlash('error', 'Message', 'Vous devez encore attendre un peu avant de pouvoir poster un message !');
-
-                return $this->redirectToRoute('thread.show', [
-                    'slug' => $thread->getSlug(),
-                    '_fragment' => $thread->getLastMessage()->getId()
-                ]);
-            }
-
             $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
 
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');

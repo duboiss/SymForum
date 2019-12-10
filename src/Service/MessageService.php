@@ -7,19 +7,46 @@ use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MessageService
 {
     /** @var EntityManagerInterface */
-    private $manager;
+    private $em;
 
     /** @var MessageRepository */
     private $messageRepository;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository)
+    /** @var SessionInterface */
+    private $session;
+
+    /** @var AntispamService */
+    private $antispamService;
+
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService)
     {
-        $this->manager = $em;
+        $this->em = $em;
         $this->messageRepository = $messageRepository;
+        $this->session = $session;
+        $this->antispamService = $antispamService;
+    }
+
+    /**
+     * @param Thread $thread
+     * @param User $user
+     * @return bool
+     */
+    public function canPostMessage(Thread $thread, User $user): bool
+    {
+        if ($thread->getLocked()) {
+            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
+            return false;
+        } elseif (!$this->antispamService->canPostMessage($user)) {
+            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous devez encore attendre un peu avant de pouvoir poster un message !']);
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -36,13 +63,13 @@ class MessageService
             ->setContent($content)
             ->setThread($thread);
 
-        $this->manager->persist($message);
+        $this->em->persist($message);
 
         $thread->setLastMessage($message);
         $thread->getForum()->setLastMessage($message);
         $thread->setTotalMessages($thread->getTotalMessages() + 1);
 
-        $this->manager->flush();
+        $this->em->flush();
 
         return $message;
     }
@@ -64,9 +91,9 @@ class MessageService
             $forum->setLastMessage(null);
         }
 
-        $this->manager->remove($message);
+        $this->em->remove($message);
         $thread->setTotalMessages($thread->getTotalMessages() - 1);
-        $this->manager->flush();
+        $this->em->flush();
 
         if (!$forum->getLastMessage()) {
             $forum->setLastMessage($this->messageRepository->findLastMessageByForum($forum));

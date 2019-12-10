@@ -7,6 +7,7 @@ use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ThreadService
 {
@@ -16,10 +17,36 @@ class ThreadService
     /** @var MessageRepository */
     private $messageRepository;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository)
+    /** @var SessionInterface */
+    private $session;
+
+    /** @var AntispamService */
+    private $antispamService;
+
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
+        $this->session = $session;
+        $this->antispamService = $antispamService;
+    }
+
+    /**
+     * @param Forum $forum
+     * @param User $user
+     * @return bool
+     */
+    public function canPostThread(Forum $forum, User $user): bool
+    {
+        if ($forum->getLocked()) {
+            $this->session->getFlashBag()->add('error', ['title' => 'Sujet', 'content' => 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !']);
+            return false;
+        } elseif (!$this->antispamService->canPostThread($user)) {
+            $this->session->getFlashBag()->add('error', ['title' => 'Sujet', 'content' => 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !']);
+            return false;
+        }
+
+        return true;
     }
 
     /**

@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Forum;
-use App\Entity\Message;
 use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Form\ThreadType;
 use App\Repository\MessageRepository;
-use App\Service\AntispamService;
 use App\Service\MessageService;
 use App\Service\ThreadService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,14 +22,13 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{slug}", name="thread.show")
      * @param Thread $thread
      * @param MessageRepository $messageRepository
-     * @param Request $request
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $messageRepository, Request $request): Response
+    public function show(Thread $thread, MessageRepository $messageRepository): Response
     {
         $messages = $messageRepository->findMessagesByThreadWithAuthor($thread);
 
-        $form = $this->createForm(MessageType::class, new Message(), [
+        $form = $this->createForm(MessageType::class, null, [
             'action' => $this->generateUrl('message.add', ['id' => $thread->getId()])
         ]);
 
@@ -47,36 +44,24 @@ class ThreadController extends BaseController
      * @IsGranted("ROLE_USER")
      * @param Forum $forum
      * @param Request $request
-     * @param AntispamService $antispamService
      * @param ThreadService $threadService
      * @param MessageService $messageService
      * @return Response
      */
-    public function create(Forum $forum, Request $request, AntispamService $antispamService, ThreadService $threadService, MessageService $messageService): Response
+    public function create(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
     {
+        $user = $this->getUser();
 
-        $form = $this->createForm(ThreadType::class);
-        $form->handleRequest($request);
-
-        if ($forum->getLocked()) {
-            $this->addCustomFlash('error', 'Sujet', 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !');
-
+        if (!$threadService->canPostThread($forum, $user)) {
             return $this->redirectToRoute('forum.show', [
                 'slug' => $forum->getSlug()
             ]);
         }
 
+        $form = $this->createForm(ThreadType::class);
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-
-            if (!$antispamService->canPostThread($user)) {
-                $this->addCustomFlash('error', 'Sujet', 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !');
-
-                return $this->redirectToRoute('forum.show', [
-                    'slug' => $forum->getSlug()
-                ]);
-            }
-
             $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
             $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
 
@@ -105,8 +90,6 @@ class ThreadController extends BaseController
      */
     public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
     {
-        // TODO Add custom flash if thread doesn't exists
-
         $submittedToken = $request->request->get('token');
 
         if ($this->isCsrfTokenValid('delete-thread', $submittedToken)) {

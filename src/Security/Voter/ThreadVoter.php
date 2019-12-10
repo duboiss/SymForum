@@ -21,7 +21,7 @@ class ThreadVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['POST', 'DELETE'])
+        return in_array($attribute, ['DELETE'])
             && $subject instanceof Thread;
     }
 
