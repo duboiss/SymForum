@@ -3,7 +3,11 @@
 namespace App\Controller\Panel;
 
 use App\Controller\BaseController;
+use App\Entity\Category;
+use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,10 +23,79 @@ class CategoryPanelController extends BaseController
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAllCategories();
+        $categories = $categoryRepository->findAll();
 
-        return $this->render('panel/categories.html.twig', [
+        return $this->render('panel/categories/index.html.twig', [
             'categories' => $categories
         ]);
+    }
+
+    /**
+     * @Route("/categories/add", name="panel.category.add")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function add(Request $request, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(CategoryType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $form->getData();
+            $em->persist($category);
+            $em->flush();
+
+            $this->addCustomFlash('success', 'Catégorie', 'La catégorie a été ajoutée !');
+            return $this->redirectToRoute('panel.categories');
+        }
+
+        return $this->render('panel/categories/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/categories/{id}/edit", name="panel.category.edit")
+     * @param Category $category
+     * @param Request $request
+     * @return Response
+     */
+    public function edit(Category $category, Request $request): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été modifiée !');
+            return $this->redirectToRoute('panel.categories');
+        }
+
+        return $this->render('panel/categories/edit.html.twig', [
+            'category' => $category,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/categories/{id}/delete", name="panel.category.delete")
+     * @param Category $category
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function delete(Category $category, EntityManagerInterface $em): Response
+    {
+        if (count($category->getForums()) > 0) {
+                $this->addCustomFlash('error', 'Catégorie', 'Vous ne pouvez pas supprimer une catégorie comportant des forums !');
+        } else {
+            $em->remove($category);
+            $em->flush();
+
+            $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été supprimée !');
+        }
+
+        return $this->redirectToRoute('panel.categories');
     }
 }
