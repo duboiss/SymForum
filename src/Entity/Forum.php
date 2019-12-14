@@ -242,9 +242,7 @@ class Forum
         }
 
         foreach ($this->forums as $forum) {
-            foreach ($forum->threads as $thread) {
-                $totalMessages += $thread->getTotalMessages();
-            }
+            $totalMessages += $forum->getTotalMessages();
         }
 
         return $totalMessages;
