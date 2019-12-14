@@ -6,6 +6,6 @@
     <div class="mb-3">
         <h2 class="text-center">Edition de votre message</h2>
         <p class="text-center">Sujet {{ message.thread.title }}</p>
-        {{ include('message/_form_message.html.twig', {button_label: 'Modifier'}) }}
+        {{ include('partials/_simple_form.twig', {button_label: 'Modifier'}) }}
     </div>
 {% endblock %}

@@ -109,7 +109,7 @@
                             <p class="text-center">
                                 Connecté en tant que {{ app.user.pseudo }}, vous pouvez répondre :
                             </p>
-                            {{ include ('message/_form_message.html.twig') }}
+                            {{ include('partials/_simple_form.twig', {button_label: 'Envoyer'}) }}
                         </div>
                     {% else %}
                         <div class="alert alert-info text-center">
