@@ -39,7 +39,7 @@ class MessageVoter extends Voter
         switch ($attribute) {
             case 'EDIT':
                 return $this->canEdit($message, $user);
-            CASE 'DELETE':
+            case 'DELETE':
                 return $this->canDelete();
         }
 
