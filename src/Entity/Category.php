@@ -37,6 +37,7 @@ class Category
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
+     * @Assert\Positive(message="La position doit correspondre à un nombre positif.")
      */
     private $position;
 
