@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Security;
 
 class MessageService
 {
@@ -23,12 +24,16 @@ class MessageService
     /** @var AntispamService */
     private $antispamService;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService)
+    /** @var Security */
+    private $security;
+
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService, Security $security)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
         $this->session = $session;
         $this->antispamService = $antispamService;
+        $this->security = $security;
     }
 
     /**
@@ -55,7 +60,12 @@ class MessageService
      */
     public function canEditMessage(Message $message): bool
     {
+        if($this->security->isGranted('ROLE_MODERATOR')) {
+            return true;
+        }
+
         $thread = $message->getThread();
+
         if ($thread->getLocked()) {
             $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
             return false;

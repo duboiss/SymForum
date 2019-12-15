@@ -53,6 +53,9 @@ class MessageVoter extends Voter
      */
     private function canEdit(Message $message, User $user): bool
     {
+        if($this->security->isGranted('ROLE_MODERATOR')) {
+            return true;
+        }
         return $user === $message->getAuthor();
     }
 
