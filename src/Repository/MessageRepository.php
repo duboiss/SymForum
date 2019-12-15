@@ -9,6 +9,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\UnexpectedResultException;
 
 /**
  * @method Message|null find($id, $lockMode = null, $lockVersion = null)
@@ -85,6 +86,26 @@ class MessageRepository extends ServiceEntityRepository
                 ->getOneOrNullResult();
         } catch (NonUniqueResultException $e) {
             return null;
+        }
+    }
+
+    /**
+     * @param Thread $thread
+     * @return Message
+     * @throws UnexpectedResultException
+     */
+    public function findFirstMessageInThread(Thread $thread): Message
+    {
+        try {
+            return $this->createQueryBuilder('m')
+                ->where('m.thread = :thread')
+                ->setParameter(':thread', $thread)
+                ->orderBy('m.publishedAt', 'ASC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getSingleResult();
+        } catch (UnexpectedResultException $e) {
+            throw $e;
         }
     }
 

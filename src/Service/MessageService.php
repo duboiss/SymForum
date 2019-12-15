@@ -50,6 +50,24 @@ class MessageService
     }
 
     /**
+     * @param Message $message
+     * @return bool
+     */
+    public function canDeleteMessage(Message $message): bool
+    {
+        $thread = $message->getThread();
+        $firstMessageInThread = $this->messageRepository->findFirstMessageInThread($thread);
+
+        if ($message === $firstMessageInThread && $thread->getTotalMessages() > 1) {
+            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Le premier message ne peut pas être supprimé car le sujet contient des réponses !']);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $content
      * @param Thread $thread
      * @param User $user

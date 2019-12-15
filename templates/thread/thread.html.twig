@@ -91,11 +91,15 @@
                             <div class="row mt-3">
                                 <div class="col text-right">
                                     Posté le {{ message.publishedAt|date('d/m/Y à H:i:s') }}
+
                                     {% if is_granted('EDIT', message) and (message.thread.locked == false) %}
-                                        - <a href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
+                                        - <a class="btn btn-dark btn-sm" href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
                                     {% endif %}
-                                    {% if is_granted('DELETE', message) %}
-                                        - <a href="{{ path('message.delete', {'id': message.id}) }}">Supprimer</a>
+
+                                    {% if not loop.first %}
+                                        {% if is_granted('DELETE', message) %}
+                                            <a class="btn btn-danger btn-sm" href="{{ path('message.delete', {'id': message.id}) }}">Supprimer</a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

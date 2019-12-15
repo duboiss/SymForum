@@ -104,6 +104,12 @@ class MessageController extends BaseController
         $thread = $message->getThread();
         $forum = $thread->getForum();
 
+        if (!$messageService->canDeleteMessage($message)) {
+            return $this->redirectToRoute('thread.show', [
+                'slug' => $thread->getSlug()
+            ]);
+        }
+
         $lastMessage = $messageService->deleteMessage($message);
 
         if (!$lastMessage) {
