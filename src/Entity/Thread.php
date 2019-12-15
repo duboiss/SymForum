@@ -199,4 +199,9 @@ class Thread
 
         return $this;
     }
+
+    public function getTotalAnswers(): ?int
+    {
+        return $this->totalMessages - 1;
+    }
 }

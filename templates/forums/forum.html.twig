@@ -49,7 +49,7 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">DERNIER MESSAGE</div>
                             {% else %}
                                 <div class="col-lg-2 col-md-2 col-sm-2 text-center">PAR</div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">MESSAGES</div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">REPONSES</div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">DERNIER MESSAGE</div>
                             {% endif %}
                         </div>
@@ -82,7 +82,7 @@
                                 <h5>PAR</h5>
                             </div>
                             <div class="col-lg-2 text-center">
-                                <h5>MESSAGES</h5>
+                                <h5>REPONSES</h5>
                             </div>
                             <div class="col-lg-4">
                                 <h5>DERNIER MESSAGE</h5>
@@ -99,7 +99,7 @@
                             <div class="col-lg-2 text-center">
                                 {{ user_profile_link(thread.author) }}
                             </div>
-                            <div class="col-lg-2 text-center">{{ thread.totalMessages }}</div>
+                            <div class="col-lg-2 text-center">{{ thread.getTotalAnswers }}</div>
                             <div class="col-lg-4">
                                 <a href="{{ path('thread.show', {'slug': thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
                                 par {{ user_profile_link(thread.lastMessage.author) }}
