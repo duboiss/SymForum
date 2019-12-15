@@ -53,6 +53,21 @@ class MessageService
      * @param Message $message
      * @return bool
      */
+    public function canEditMessage(Message $message): bool
+    {
+        $thread = $message->getThread();
+        if ($thread->getLocked()) {
+            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param Message $message
+     * @return bool
+     */
     public function canDeleteMessage(Message $message): bool
     {
         $thread = $message->getThread();

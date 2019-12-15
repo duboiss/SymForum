@@ -59,9 +59,10 @@ class MessageController extends BaseController
      * @IsGranted("EDIT", subject="message")
      * @param Message $message
      * @param Request $request
+     * @param MessageService $messageService
      * @return RedirectResponse|Response
      */
-    public function edit(Message $message, Request $request): Response
+    public function edit(Message $message, Request $request, MessageService $messageService): Response
     {
         $thread = $message->getThread();
 
@@ -70,8 +71,7 @@ class MessageController extends BaseController
             '_fragment' => $message->getId()
         ]);
 
-        if ($thread->getLocked()) {
-            $this->addCustomFlash('error', 'Message', 'Vous ne pouvez pas modifier votre message, le sujet est verrouillé !');
+        if (!$messageService->canEditMessage($message)) {
             return $route;
         }
 
