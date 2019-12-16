@@ -72,9 +72,14 @@
 
                 {% for message in messages %}
                     <div class="card bg-secondary mb-4 d-flex" id="{{ message.id }}">
-                        <div class="card-header">{{ thread.title }}</div>
+                        <div class="card-header">
+                            {{ thread.title }}
+                            <div class="float-right">
+                                <i class="far fa-clock"></i> {{ message.publishedAt|date('d-m-Y à H:i:s') }}
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-lg-2 text-center">
                                     {% set author = message.author %}
                                     {{ user_profile_link(author) }}
@@ -88,12 +93,10 @@
                                 <div class="col-lg-10">{{ message.content|purify }}</div>
                             </div>
 
-                            <div class="row mt-3">
+                            <div class="row">
                                 <div class="col text-right">
-                                    Posté le {{ message.publishedAt|date('d/m/Y à H:i:s') }}
-
                                     {% if is_granted('EDIT', message) and (is_granted('ROLE_MODERATOR') or (thread.locked == false)) %}
-                                        - <a class="btn btn-dark btn-sm" href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
+                                        <a class="btn btn-dark btn-sm" href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
                                     {% endif %}
 
                                     {% if not loop.first %}
