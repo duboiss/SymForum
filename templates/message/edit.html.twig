@@ -3,6 +3,19 @@
 {% block title %}Edition de votre message{% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('forums.index') }}">Forums</a></li>
+            <li class="breadcrumb-item"><a
+                        href="{{ path('forum.show', {'slug': message.thread.forum.slug}) }}">{{ message.thread.forum.slug }}</a>
+            </li>
+            <li class="breadcrumb-item"><a
+                        href="{{ path('thread.show', {'slug': message.thread.slug}) }}">{{ message.thread.title }}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Edition de votre message</li>
+        </ol>
+    </nav>
+
     <div class="mb-3">
         <h2 class="text-center">Edition de votre message</h2>
         <p class="text-center">Sujet {{ message.thread.title }}</p>

@@ -1,17 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/full-width.html.twig' %}
 
 {% block title %}Nouveau sujet{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <div class="row justify-content-md-center mt-5">
-            <div class="col col-lg-12 col-md-12 col-sm-12">
-                <div class="mb-3">
-                    <h2 class="text-center">Nouveau sujet</h2>
-                    <p class="text-center">Forum {{ forum.title }} </p>
-                    {{ include ('partials/_simple_form.twig', {button_label: 'Nouveau sujet'}) }}
-                </div>
-            </div>
-        </div>
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('forums.index') }}">Forums</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('forum.show', {'slug': forum.slug}) }}">{{ forum.title }}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Nouveau sujet</li>
+        </ol>
+    </nav>
+
+    <div class="mb-3">
+        <h2 class="text-center">Nouveau sujet</h2>
+        {{ include ('partials/_simple_form.twig', {button_label: 'Nouveau sujet'}) }}
     </div>
 {% endblock %}
