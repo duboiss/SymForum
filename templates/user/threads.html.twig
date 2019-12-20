@@ -1,0 +1,49 @@
+{% extends 'layouts/full-width.html.twig' %}
+
+{% block title %}
+    {{ app.user.pseudo == user.pseudo ? 'Mes sujets' : 'Profil de ' ~ user.pseudo ~ ' : sujets' }}
+{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('page.members') }}">Membres</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user.pseudo }}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Sujets créés</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <h3>{{ user.pseudo }}
+                - {{ user.threads|length }} {{ user.threads|length <= 1 ? 'sujet crée' : 'sujets créés' }}</h3>
+
+            {% if pagination.getTotalItemCount > 0 %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Sujet</th>
+                        <th scope="col">Nombre de réponses</th>
+                        <th scope="col">Dernier message</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for thread in pagination %}
+                        <tr>
+                            <td><a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a></td>
+                            <td>{{ thread.totalAnswers }}</td>
+                            <td>
+                                <a href="{{ path('thread.show', {'slug': thread.lastMessage.thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
+                                par {{ user_profile_link(thread.lastMessage.author) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {{ knp_pagination_render(pagination) }}
+            {% else %}
+                Cet utilisateur n'a pas encore créé de sujet
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

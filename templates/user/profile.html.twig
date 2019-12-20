@@ -7,51 +7,54 @@
 {% set role = user_profile_role(user) %}
 
 {% block content %}
-        <div class="row">
-            <div class="col col-lg-12 col-md-12 col-sm-12">
-                <h3>{{ user.pseudo }}</h3>
-                <p>
-                    {% if role %}
-                        <strong class="text-danger">{{ role }}</strong><br>
-                    {% endif %}
-
-                    Date d'inscription : {{ user.registrationDate|date("d/m/Y") }}
-                    {% if user.lastActivityAt %}
-                        <br>Dernière activité : {{ user.lastActivityAt|date("d/m/Y à H:i") }}
-                    {% endif %}
-                    <br> Nombre de messages : {{ user.messages|length }}
-                </p>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col col-lg-6 col-md-6 col-sm-6">
-                <h4>Derniers sujets créés</h4>
-                {% if lastThreads|length > 0 %}
-                    <ul>
-                        {% for thread in lastThreads %}
-                            <li>
-                                <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title|truncate(50, true) }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    Cet utilisateur n'a pas encore crée de sujet
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <h3>{{ user.pseudo }}</h3>
+            <p>
+                {% if role %}
+                    <strong class="text-danger">{{ role }}</strong><br>
                 {% endif %}
-            </div>
 
-            <div class="col col-lg-6 col-md-6 col-sm-6">
-                <h4>Dernières participations</h4>
-                {% if lastMessages|length > 0 %}
-                    <ul>
-                        {% for message in lastMessages %}
-                            <li>
-                                <a href="{{ path('thread.show', {'slug': message.thread.slug, '_fragment': message.id}) }}">{{ message.content|striptags|truncate(50, true) }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    Cet utilisateur n'a pas encore posté de message
+                Date d'inscription : {{ user.registrationDate|date("d/m/Y") }}
+                {% if user.lastActivityAt %}
+                    <br>Dernière activité : {{ user.lastActivityAt|date("d/m/Y à H:i") }}
                 {% endif %}
-            </div>
+                <br> Nombre de messages : {{ user.messages|length }}
+            </p>
         </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <h4>Derniers sujets créés</h4>
+            {% if lastThreads|length > 0 %}
+                <ul>
+                    {% for thread in lastThreads %}
+                        <li>
+                            <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title|truncate(50, true) }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('user.threads', {'slug': user.slug}) }}">{{ app.user.pseudo == user.pseudo ? 'Voir mes sujets' : 'Voir tous les sujets crées par ' ~ user.pseudo }}</a>
+            {% else %}
+                Cet utilisateur n'a pas encore crée de sujet
+            {% endif %}
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <h4>Dernières participations</h4>
+            {% if lastMessages|length > 0 %}
+                <ul>
+                    {% for message in lastMessages %}
+                        <li>
+                            <a href="{{ path('thread.show', {'slug': message.thread.slug, '_fragment': message.id}) }}">{{ message.content|striptags|truncate(50, true) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('user.messages', {'slug': user.slug}) }}">{{ app.user.pseudo == user.pseudo ? 'Voir mes participations' : 'Voir toutes les participations de ' ~ user.pseudo }}</a>
+            {% else %}
+                Cet utilisateur n'a pas encore publié de message
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

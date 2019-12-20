@@ -1,0 +1,51 @@
+{% extends 'layouts/full-width.html.twig' %}
+
+{% block title %}
+    {{ app.user.pseudo == user.pseudo ? 'Mes messages' : 'Profil de ' ~ user.pseudo ~ ' : messages' }}
+{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('page.members') }}">Membres</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user.pseudo }}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Messages publiés</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <h3>{{ user.pseudo }}
+                - {{ user.messages|length }} {{ user.messages|length <= 1 ? 'message publié' : 'messages publiés' }}</h3>
+
+            {% if pagination.getTotalItemCount > 0 %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: 20%">Publié</th>
+                        <th scope="col" style="width: 35%">Contenu</th>
+                        <th scope="col" style="width: 45%">Sujet</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for message in pagination %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('thread.show', {'slug': message.thread.slug, '_fragment': message.id}) }}">{{ message.publishedAt|ago }}</a>
+                            </td>
+                            <td>{{ message.content|striptags|truncate(10, true) }}</td>
+                            <td>
+                                <a href="{{ path('thread.show', {'slug': message.thread.slug}) }}">{{ message.thread.title }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {{ knp_pagination_render(pagination) }}
+            {% else %}
+                Cet utilisateur n'a pas encore créé de message
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

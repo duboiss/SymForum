@@ -9,6 +9,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\UnexpectedResultException;
 
 /**
@@ -128,5 +129,19 @@ class MessageRepository extends ServiceEntityRepository
         } catch (NonUniqueResultException $e) {
             return null;
         }
+    }
+
+    /**
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function findMessagesByUserQb(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('m')
+            ->addSelect('m', 'thread')
+            ->join('m.thread', 'thread')
+            ->where('m.author = :user')
+            ->orderBy('m.publishedAt', 'DESC')
+            ->setParameter('user', $user);
     }
 }

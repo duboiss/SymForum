@@ -7,6 +7,7 @@ use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Thread|null find($id, $lockMode = null, $lockVersion = null)
@@ -58,5 +59,21 @@ class ThreadRepository extends ServiceEntityRepository
             ->setParameter('forum', $forum)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function findThreadsByUserQb(User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('t', 'lm')
+            ->addSelect('t', 'lmAuthor')
+            ->join('t.lastMessage', 'lm')
+            ->leftJoin('lm.author', 'lmAuthor')
+            ->where('t.author = :user')
+            ->orderBy('t.createdAt', 'DESC')
+            ->setParameter('user', $user);
     }
 }

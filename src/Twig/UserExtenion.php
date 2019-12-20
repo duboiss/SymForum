@@ -44,7 +44,7 @@ class UserExtenion extends AbstractExtension
      * @param string|null $class
      * @return string
      */
-    public function userProfileLink($user, string $text = null, string $class = null): string
+    public function userProfileLink(User $user, string $text = null, string $class = null): string
     {
         if ($user) {
             $route = $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);

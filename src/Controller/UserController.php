@@ -5,13 +5,18 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/user/")
+ */
 class UserController extends BaseController
 {
     /**
-     * @Route("/user/{slug}", name="user.profile")
+     * @Route("{slug}", name="user.profile")
      * @param User $user
      * @param ThreadRepository $threadRepository
      * @param MessageRepository $messageRepository
@@ -26,6 +31,54 @@ class UserController extends BaseController
             'user' => $user,
             'lastThreads' => $lastThreads,
             'lastMessages' => $lastMessages
+        ]);
+    }
+
+    /**
+     * @Route("{slug}/threads", name="user.threads")
+     * @param User $user
+     * @param ThreadRepository $threadRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function threads(User $user, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $threads = $threadRepository->findThreadsByUserQb($user);
+
+        $pagination = $paginator->paginate(
+            $threads,
+            $request->query->getInt('page', 1),
+            25
+        );
+
+        return $this->render('user/threads.html.twig', [
+            'user' => $user,
+            'pagination' => $pagination
+        ]);
+    }
+
+    /**
+     * @Route("{slug}/messages", name="user.messages")
+     * @param User $user
+     * @param MessageRepository $messageRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function messages(User $user, MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+        $messages = $messageRepository->findMessagesByUserQb($user);
+
+        $pagination = $paginator->paginate(
+            $messages,
+            $request->query->getInt('page', 1),
+            25
+        );
+
+        return $this->render('user/messages.html.twig', [
+            'user' => $user,
+            'pagination' => $pagination
         ]);
     }
 }
