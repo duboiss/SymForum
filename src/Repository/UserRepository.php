@@ -79,9 +79,7 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findByRole($role): array
     {
-        return $this->createQueryBuilder('u')
-            ->addSelect('m')
-            ->leftJoin('u.messages', 'm')
+        return $this->addMessagesQb()
             ->where('u.roles LIKE :role')
             ->setParameter('role', '%"' . $role . '"%')
             ->getQuery()
@@ -93,9 +91,27 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findAllMembersQb(): QueryBuilder
     {
-        return $this->createQueryBuilder('u')
-            ->addSelect('m')
-            ->leftJoin('u.messages', 'm')
+        return $this->addMessagesQb()
             ->orderBy('u.pseudo');
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    public function addMessagesQb(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQb($qb)
+            ->addSelect('m')
+            ->leftJoin('u.messages', 'm');
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    private function getOrCreateQb(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?: $this->createQueryBuilder('u');
     }
 }

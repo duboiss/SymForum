@@ -59,11 +59,9 @@ class MessageRepository extends ServiceEntityRepository
      */
     public function findMessagesByThreadWithAuthor(Thread $thread): array
     {
-        return $this->createQueryBuilder('m')
+        return $this->addWhereThreadQb($thread)
             ->select('m', 'author')
             ->leftJoin('m.author', 'author')
-            ->where('m.thread = :thread')
-            ->setParameter('thread', $thread)
             ->orderBy('m.publishedAt', 'ASC')
             ->getQuery()
             ->getResult();
@@ -76,9 +74,7 @@ class MessageRepository extends ServiceEntityRepository
     public function findLastMessageByForum(Forum $forum): ?Message
     {
         try {
-            return $this->createQueryBuilder('m')
-                ->addSelect('m', 'thread')
-                ->join('m.thread', 'thread')
+            return $this->addThreadQb()
                 ->where('thread.forum = :forum')
                 ->setParameter(':forum', $forum)
                 ->orderBy('m.publishedAt', 'DESC')
@@ -98,9 +94,7 @@ class MessageRepository extends ServiceEntityRepository
     public function findFirstMessageInThread(Thread $thread): Message
     {
         try {
-            return $this->createQueryBuilder('m')
-                ->where('m.thread = :thread')
-                ->setParameter(':thread', $thread)
+            return $this->addWhereThreadQb($thread)
                 ->orderBy('m.publishedAt', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
@@ -117,10 +111,8 @@ class MessageRepository extends ServiceEntityRepository
     public function findNextMessageInThread(Message $message): ?Message
     {
         try {
-            return $this->createQueryBuilder('m')
-                ->andWhere('m.thread = :thread')
+            return $this->addWhereThreadQb($message->getThread())
                 ->andWhere('m.publishedAt > :message')
-                ->setParameter(':thread', $message->getThread())
                 ->setParameter(':message', $message->getPublishedAt())
                 ->orderBy('m.publishedAt', 'ASC')
                 ->setMaxResults(1)
@@ -137,11 +129,41 @@ class MessageRepository extends ServiceEntityRepository
      */
     public function findMessagesByUserQb(User $user): QueryBuilder
     {
-        return $this->createQueryBuilder('m')
-            ->addSelect('m', 'thread')
-            ->join('m.thread', 'thread')
+        return $this->addThreadQb()
             ->where('m.author = :user')
             ->orderBy('m.publishedAt', 'DESC')
             ->setParameter('user', $user);
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    public function addThreadQb(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQb($qb)
+            ->addSelect('m', 'thread')
+            ->join('m.thread', 'thread');
+    }
+
+    /**
+     * @param Thread $thread
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    public function addWhereThreadQb(Thread $thread, QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQb($qb)
+            ->andWhere('m.thread = :thread')
+            ->setParameter(':thread', $thread);
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    private function getOrCreateQb(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?: $this->createQueryBuilder('m');
     }
 }

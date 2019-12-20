@@ -47,13 +47,9 @@ class ThreadRepository extends ServiceEntityRepository
      */
     public function findThreadsByForum(Forum $forum): array
     {
-        return $this->createQueryBuilder('t')
+        return $this->addLastMessageQb()
             ->addSelect('t', 'author')
-            ->addSelect('t', 'lm')
-            ->addSelect('t', 'lmAuthor')
             ->leftJoin('t.author', 'author')
-            ->join('t.lastMessage', 'lm')
-            ->leftJoin('lm.author', 'lmAuthor')
             ->where('t.forum = :forum')
             ->orderBy('lm.publishedAt', 'DESC')
             ->setParameter('forum', $forum)
@@ -67,13 +63,31 @@ class ThreadRepository extends ServiceEntityRepository
      */
     public function findThreadsByUserQb(User $user): QueryBuilder
     {
-        return $this->createQueryBuilder('t')
-            ->addSelect('t', 'lm')
-            ->addSelect('t', 'lmAuthor')
-            ->join('t.lastMessage', 'lm')
-            ->leftJoin('lm.author', 'lmAuthor')
+        return $this->addLastMessageQb()
             ->where('t.author = :user')
             ->orderBy('t.createdAt', 'DESC')
             ->setParameter('user', $user);
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    public function addLastMessageQb(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQb($qb)
+            ->addSelect('t', 'lm')
+            ->addSelect('t', 'lmAuthor')
+            ->join('t.lastMessage', 'lm')
+            ->leftJoin('lm.author', 'lmAuthor');
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    private function getOrCreateQb(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?: $this->createQueryBuilder('t');
     }
 }
