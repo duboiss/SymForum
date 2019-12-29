@@ -54,16 +54,23 @@ class ReportRepository extends ServiceEntityRepository
     }
 
 
-
     /**
      * @param Message $message
+     * @param int $excepted
      * @return Message[]
      */
-    public function findByMessage(Message $message): array
+    public function findByMessage(Message $message, int $excepted = null): array
     {
-        return $this->createQueryBuilder('r')
+        $qb = $this->createQueryBuilder('r')
             ->where('r.message = :message')
-            ->setParameter('message', $message)
+            ->setParameter('message', $message);
+
+        if ($excepted) {
+            $qb->andWhere('r.id != :excepted')
+                ->setParameter('excepted', $excepted);
+        }
+
+        return $qb->orderBy('r.reportedAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

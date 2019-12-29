@@ -1,0 +1,75 @@
+{% extends 'layouts/full-width.html.twig' %}
+
+{% block title %}Signalement de {{ report.reportedBy.pseudo }}{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('panel.reports') }}">Signalements</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Signalement de {{ report.reportedBy.pseudo }}</li>
+        </ol>
+    </nav>
+
+    <h1><span>Signalement de {{ report.reportedBy.pseudo }}</span>
+        {% if not report.isTreated %}
+            <a class="btn btn-primary btn-sm" href="{{ path('panel.report.close', {'id': report.id}) }}"><i
+                        class="fas fa-check"></i> Clôturer</a>
+        {% endif %}
+        <a class="btn btn-danger btn-sm" href="{{ path('panel.report.delete', {'id': report.id}) }}"><i
+                    class="fas fa-trash"></i> Supprimer</a>
+    </h1>
+
+    <div class="row mt-3">
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <h4>Signalement</h4>
+            <p>
+                Statut
+                : {{ report.isTreated ? 'Traité par ' ~ report.reportedBy.pseudo ~ ' le ' ~ report.reportedAt|date('d/m/Y à H:i:s') : 'En attente de traitement' }}
+                <br>
+                Date : {{ report.reportedAt|date('d/m/Y à H:i:s') }}<br>
+                Signalé par : {{ user_profile_link(report.reportedBy) }}<br>
+                Raison : {{ report.reason }}
+            </p>
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <h4>Message</h4>
+            <p>Auteur : {{ user_profile_link(report.message.author) }}<br>
+                Date de publication : {{ report.message.publishedAt|date('d/m/y à H:i:s') }}<br>
+                Sujet : <a
+                        href="{{ path('thread.show', {'slug': report.message.thread.slug}) }}">{{ report.message.thread.title }}</a><br>
+                Contenu : <a
+                        href="{{ path('thread.show', {'slug': report.message.thread.slug, '_fragment': report.message.id}) }}">{{ report.message.content|truncate(50, true) }}</a>
+            </p>
+        </div>
+    </div>
+
+    {% if report.message.reports|length > 1 %}
+        <h4 class="mt-3">D'autres signalements sur le même message...</h4>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Message de</th>
+                <th>Reporté le</th>
+                <th>Par</th>
+                <th>Motif</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for report in messageReports %}
+                <tr{{ not report.isTreated ? ' class="table-warning"' }}>
+                    <td>{{ report.id }}</td>
+                    <td>{{ user_profile_link(report.message.author) }}</td>
+                    <td>{{ report.reportedAt|date('d/m/Y à H:i:s') }}</td>
+                    <td>{{ user_profile_link(report.reportedBy) }}</td>
+                    <td>{{ report.reason|slice(0, 50) }}{{ report.reason|length > 50 ? '...' }}</td>
+                    <td><a href="{{ path('panel.report.show', {'id': report.id}) }}">Détails</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
