@@ -3,6 +3,13 @@
 {% block title %}Catégories{% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Catégories</li>
+        </ol>
+    </nav>
+
     <h1>
         <span>Catégories</span>
         <a class="btn btn-primary btn-sm" href="{{ path('panel.category.add') }}"><i class="fas fa-plus"></i></a>

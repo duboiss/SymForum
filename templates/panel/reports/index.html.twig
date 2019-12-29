@@ -3,6 +3,13 @@
 {% block title %}Signalements{% endblock %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Signalements</li>
+        </ol>
+    </nav>
+
     <h1>Signalements ({{ nbUntreatedReports }} en attente)</h1>
 
     <div class="mt-3">
