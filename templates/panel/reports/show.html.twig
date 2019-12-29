@@ -40,7 +40,7 @@
                 Sujet : <a
                         href="{{ path('thread.show', {'slug': report.message.thread.slug}) }}">{{ report.message.thread.title }}</a><br>
                 Contenu : <a
-                        href="{{ path('thread.show', {'slug': report.message.thread.slug, '_fragment': report.message.id}) }}">{{ report.message.content|truncate(50, true) }}</a>
+                        href="{{ path('thread.show', {'slug': report.message.thread.slug, '_fragment': report.message.id}) }}">{{ report.message.content|u.truncate(50, '...') }}</a>
             </p>
         </div>
     </div>

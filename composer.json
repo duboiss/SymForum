@@ -33,7 +33,8 @@
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "4.3.*",
-        "twig/extensions": "^1.5"
+        "twig/extra-bundle": "^3.0",
+        "twig/string-extra": "^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",

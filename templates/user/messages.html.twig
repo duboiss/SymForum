@@ -34,7 +34,7 @@
                             <td>
                                 <a href="{{ path('thread.show', {'slug': message.thread.slug, '_fragment': message.id}) }}">{{ message.publishedAt|ago }}</a>
                             </td>
-                            <td>{{ message.content|striptags|truncate(10, true) }}</td>
+                            <td>{{ message.content|striptags|u.truncate(45, '...') }}</td>
                             <td>
                                 <a href="{{ path('thread.show', {'slug': message.thread.slug}) }}">{{ message.thread.title }}</a>
                             </td>
