@@ -32,7 +32,7 @@
                     <td>{{ user_profile_link(user) }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.lastActivityAt ? user.lastActivityAt|date('d/m/Y à H:i:s') : 'Jamais' }}</td>
-                    <td><a href="#">Détails</a></td>
+                    <td><a href="{{ path('panel.user.details', {'slug': user.slug}) }}">Détails</a></td>
                 </tr>
             {% endfor %}
             </tbody>

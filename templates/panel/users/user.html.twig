@@ -1,0 +1,40 @@
+{% extends 'layouts/full-width.html.twig' %}
+
+{% block title %}Détails sur {{ user.pseudo }}{% endblock %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('panel.users') }}">Utilisateurs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ user.pseudo }}</li>
+        </ol>
+    </nav>
+
+    <h1>
+        <span>{{ user.pseudo }}</span>
+        <a class="btn btn-danger btn-sm disabled" href="#"><i class="fas fa-trash"></i> Supprimer</a>
+    </h1>
+
+    <div class="row mt-3">
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <h4>Général</h4>
+            <p>
+                {{ user.isActiveNow ? 'En ligne' : 'Hors ligne' }} <br>
+                Email : {{ user.email }}<br>
+                Inscription : {{ user.registrationDate|date('d/m/Y à H:i:s') }}<br>
+                Dernière activité : {{ user.lastActivityAt ? user.lastActivityAt|date('d/m/Y à H:i:s') : 'Jamais' }}
+            </p>
+
+        </div>
+
+        <div class="col col-lg-6 col-md-6 col-sm-6">
+            <h4>Statistiques</h4>
+            <p>
+                {{ user.messages|length }} message{{ user.messages|length > 1 ? 's' }}<br>
+                {{ user.threads|length }} sujet{{ user.threads|length > 1 ? 's' }}<br>
+                {{ user.reports|length }} signalement{{ user.reports|length > 1 ? 's' }}<br>
+            </p>
+        </div>
+    </div>
+{% endblock %}

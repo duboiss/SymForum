@@ -3,6 +3,7 @@
 namespace App\Controller\Panel;
 
 use App\Controller\BaseController;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +32,20 @@ class UserPanelController extends BaseController
             30
         );
 
-        return $this->render('panel/users.html.twig', [
+        return $this->render('panel/users/index.html.twig', [
             'pagination' => $pagination
+        ]);
+    }
+
+    /**
+     * @Route("/users/{slug}", name="panel.user.details")
+     * @param User $user
+     * @return Response
+     */
+    public function details(User $user): Response
+    {
+        return $this->render('panel/users/user.html.twig', [
+            'user' => $user
         ]);
     }
 }

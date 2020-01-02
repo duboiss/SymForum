@@ -36,7 +36,7 @@ class Report
     private $reportedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports")
      */
     private $reportedBy;
 
