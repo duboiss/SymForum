@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Message;
-use App\Entity\Thread;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\MessageService;
@@ -16,44 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends BaseController
 {
-    /**
-     * @Route("/forums/messages/add/{id}", name="message.add", methods={"POST"})
-     * @IsGranted("ROLE_USER")
-     * @param Thread $thread
-     * @param Request $request
-     * @param MessageService $messageService
-     * @return Response
-     */
-    public function respond(Thread $thread, Request $request, MessageService $messageService): Response
-    {
-        $user = $this->getUser();
-
-        if (!$messageService->canPostMessage($thread, $user)) {
-            return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug(),
-                '_fragment' => $thread->getLastMessage()->getId()
-            ]);
-        }
-
-        $form = $this->createForm(MessageType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
-
-            $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
-
-            return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug(),
-                '_fragment' => $message->getId()
-            ]);
-        }
-
-        return $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug()
-        ]);
-    }
-
     /**
      * @Route("/forums/messages/{id}/edit", name="message.edit")
      * @IsGranted("EDIT", subject="message")

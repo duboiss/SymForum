@@ -35,7 +35,7 @@ class Message
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Votre message ne peut pas être vide.")
      * @Assert\Length(
      *      min = 10,
      *      max = 6000,

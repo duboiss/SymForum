@@ -22,15 +22,36 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{slug}", name="thread.show")
      * @param Thread $thread
      * @param MessageRepository $messageRepository
+     * @param Request $request
+     * @param MessageService $messageService
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $messageRepository): Response
+    public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService): Response
     {
         $messages = $messageRepository->findMessagesByThreadWithAuthor($thread);
 
-        $form = $this->createForm(MessageType::class, null, [
-            'action' => $this->generateUrl('message.add', ['id' => $thread->getId()])
-        ]);
+        $form = $this->createForm(MessageType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+
+            if (!$messageService->canPostMessage($thread, $user)) {
+                return $this->redirectToRoute('thread.show', [
+                    'slug' => $thread->getSlug(),
+                    '_fragment' => $thread->getLastMessage()->getId()
+                ]);
+            }
+
+            $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
+
+            $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+
+            return $this->redirectToRoute('thread.show', [
+                'slug' => $thread->getSlug(),
+                '_fragment' => $message->getId()
+            ]);
+        }
 
         return $this->render('thread/thread.html.twig', [
             'thread' => $thread,
