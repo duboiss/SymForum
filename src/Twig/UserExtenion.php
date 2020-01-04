@@ -44,13 +44,12 @@ class UserExtenion extends AbstractExtension
      * @param string|null $class
      * @return string
      */
-    public function userProfileLink(User $user, string $text = null, string $class = null): string
+    public function userProfileLink(?User $user, string $text = null, string $class = null): string
     {
         if ($user) {
             $route = $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);
             $classAttr = $class ? ' class="' . $class . '"' : '';
 
-            // TODO Return with color role in class
             return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
         } else {
             return 'Compte supprimé';
