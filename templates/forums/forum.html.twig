@@ -111,7 +111,7 @@
                 </div>
             </div>
             {% if forum.locked == false and is_granted('ROLE_USER') %}
-                <a class="btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">Nouveau sujet</a>
+                <a class="mb-3 btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">Nouveau sujet</a>
             {% endif %}
         </div>
     </div>
