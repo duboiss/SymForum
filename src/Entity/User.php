@@ -90,6 +90,11 @@ class User implements UserInterface
      */
     private $reports;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="treatedBy")
+     */
+    private $treatedReports;
+
     public function __construct()
     {
         $this->threads = new ArrayCollection();
@@ -307,5 +312,13 @@ class User implements UserInterface
     public function getReports(): Collection
     {
         return $this->reports;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getTreatedReports(): Collection
+    {
+        return $this->treatedReports;
     }
 }

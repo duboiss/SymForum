@@ -144,4 +144,31 @@ class MessageService
 
         return $this->messageRepository->findLastMessageByThread($thread);
     }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function deleteMessagesByUser(User $user): void
+    {
+        foreach ($user->getMessages() as $message) {
+            $this->deleteMessage($message);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function setAuthorNullByUser(User $user): void
+    {
+        if (count($user->getMessages()) > 0) {
+            foreach ($user->getMessages() as $message) {
+                $message->setAuthor(null);
+                $message->setContent('supprimé');
+            }
+
+            $this->em->flush();
+        }
+    }
 }

@@ -100,4 +100,30 @@ class ThreadService
             $this->em->flush();
         }
     }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function deleteThreadsByUser(User $user): void
+    {
+        foreach ($user->getThreads() as $thread) {
+            $this->deleteThread($thread);
+        }
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    public function setAuthorNullByUser(User $user): void
+    {
+        if (count($user->getThreads()) > 0) {
+            foreach ($user->getThreads() as $thread) {
+                $thread->setAuthor(null);
+            }
+
+            $this->em->flush();
+        }
+    }
 }

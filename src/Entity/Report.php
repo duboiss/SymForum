@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReportRepository")
@@ -26,6 +27,13 @@ class Report
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez indiquer un motif.")
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "Votre message doit faire au moins 10 caractères.",
+     *      maxMessage = "Votre message doit faire au maximum 255 caractères."
+     * )
      */
     private $reason;
 
@@ -46,7 +54,7 @@ class Report
     private $treatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="treatedReports")
      */
     private $treatedBy;
 
