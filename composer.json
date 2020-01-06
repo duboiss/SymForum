@@ -28,12 +28,11 @@
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "4.3.*",
-        "symfony/twig-bundle": "4.3.*",
+        "symfony/twig-pack": "*",
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "4.3.*",
-        "twig/extra-bundle": "^3.0",
         "twig/string-extra": "^3.0"
     },
     "require-dev": {
