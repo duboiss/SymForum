@@ -135,9 +135,6 @@
     "ezyang/htmlpurifier": {
         "version": "v4.11.0"
     },
-    "fig/link-util": {
-        "version": "1.0.0"
-    },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
         "recipe": {
@@ -279,6 +276,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.3.2"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.2"
     },
     "symfony/event-dispatcher": {
         "version": "v4.3.2"
