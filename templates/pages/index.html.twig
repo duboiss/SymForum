@@ -4,8 +4,8 @@
 
 {% block body %}
     <div class="container">
-        <div class="row justify-content-md-center mt-5">
-            {% for category in categories %}
+        {% for category in categories %}
+            <div class="row{{ loop.first ? ' mt-5' }}">
                 <div class="col col-lg-12 col-md-12 col-sm-12">
                     <div class="card bg-secondary mb-4">
                         <div class="card-header">
@@ -24,8 +24,10 @@
                         {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
 
+        <div class="row">
             <div class="col col-lg-12 col-md-12 col-sm-12">
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">Statistiques</div>
