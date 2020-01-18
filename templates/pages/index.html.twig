@@ -27,7 +27,7 @@
             </div>
         {% endfor %}
 
-        <div class="row">
+        <div class="row{{ categories|length == 0 ? ' mt-5' }}">
             <div class="col col-lg-12 col-md-12 col-sm-12">
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">Statistiques</div>
