@@ -10,7 +10,6 @@ use Symfony\Component\Security\Core\Security;
 
 class AntispamService
 {
-    // TODO Replace constant(s) by CoreOption objects
     const DELAY_MESSAGE = 60;
     const DELAY_THREAD = 90;
 
@@ -37,7 +36,7 @@ class AntispamService
 
         if ($lastThread && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
-            return $currentDate->modify('-' . self::DELAY_THREAD . ' seconds') > $lastThread->getCreatedAt();
+            return $currentDate->modify(sprintf('-%s seconds', self::DELAY_THREAD)) > $lastThread->getCreatedAt();
         }
 
         return true;
@@ -49,7 +48,7 @@ class AntispamService
 
         if ($lastMessage && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
-            return $currentDate->modify('-' . self::DELAY_MESSAGE . ' seconds') > $lastMessage->getPublishedAt();
+            return $currentDate->modify(sprintf('-%s seconds', self::DELAY_MESSAGE)) > $lastMessage->getPublishedAt();
         }
 
         return true;
