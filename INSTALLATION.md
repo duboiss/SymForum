@@ -18,7 +18,7 @@ Configure database informations in .env file (or .env.local if you plan to contr
 Create database, execute the migrations and launch fixtures if you wish :
 ```sh
 $ php bin/console doctrine:database:create --if-not-exists
-$ php bin/console doctrine:migrations:migrate --no-interaction
+$ php bin/console doctrine:schema:update --force
 $ php bin/console doctrine:fixtures:load --no-interaction
 ```
 
