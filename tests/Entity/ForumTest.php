@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ForumTest extends WebTestCase
 {
-    use FixturesTrait;
+    use FixturesTrait, TestUtilsTrait;
 
     public function getEntity(): Forum
     {
@@ -16,24 +16,6 @@ class ForumTest extends WebTestCase
             ->setTitle("Forum title")
             ->setDescription("Forum description")
             ->setPosition(1);
-    }
-
-    public function assertHasErrors(Forum $forum, int $number = 0)
-    {
-        self::bootKernel();
-        $errors = self::$container->get('validator')->validate($forum);
-        $messages = [];
-
-        foreach ($errors as $error) {
-            $messages[] = $error->getPropertyPath() . ' : ' . $error->getMessage();
-        }
-
-        $this->assertCount($number, $errors, implode(', ', $messages));
-    }
-
-    public function testValidEntity()
-    {
-        $this->assertHasErrors($this->getEntity(), 0);
     }
 
     public function testInvalidBlankTitleEntity()

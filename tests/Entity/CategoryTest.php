@@ -8,31 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {
-    use FixturesTrait;
+    use FixturesTrait, TestUtilsTrait;
 
     public function getEntity(): Category
     {
         return (new Category())
             ->setTitle("Category name")
             ->setPosition(1);
-    }
-
-    public function assertHasErrors(Category $category, int $number = 0)
-    {
-        self::bootKernel();
-        $errors = self::$container->get('validator')->validate($category);
-        $messages = [];
-
-        foreach ($errors as $error) {
-            $messages[] = $error->getPropertyPath() . ' : ' . $error->getMessage();
-        }
-
-        $this->assertCount($number, $errors, implode(', ', $messages));
-    }
-
-    public function testValidEntity()
-    {
-        $this->assertHasErrors($this->getEntity(), 0);
     }
 
     public function testInvalidBlankTitleEntity()
