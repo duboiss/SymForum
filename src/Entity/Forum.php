@@ -24,6 +24,7 @@ class Forum
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -35,6 +36,7 @@ class Forum
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $description;
 
@@ -112,6 +114,12 @@ class Forum
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
+        return $this;
     }
 
     public function getDescription(): ?string
