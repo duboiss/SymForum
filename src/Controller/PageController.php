@@ -16,6 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends BaseController
 {
     /**
+     * @Route("/")
+     */
+    public function index(): Response
+    {
+        return $this->redirectToRoute('forums.index');
+    }
+
+    /**
      * @Route("/forums", name="forums.index")
      * @param CategoryRepository $categoriesRepo
      * @param UserRepository $userRepository
@@ -25,7 +33,7 @@ class PageController extends BaseController
      * @return Response
      * @throws Exception
      */
-    public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
+    public function forums(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
         return $this->render('pages/index.html.twig', [
             'categories' => $categoriesRepo->findAllCategories(),
