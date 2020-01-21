@@ -32,6 +32,13 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installation
 All steps are detailed in [INSTALLATION.md](INSTALLATION.md)
 
+
+## Running the tests
+Use the following command to run tests :
+```sh
+$ php bin/phpunit
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
