@@ -6,6 +6,7 @@
     -webkit-box-shadow: 2px 2px 3px #999;
     -moz-box-shadow: 2px 2px 3px #999;
     box-shadow: 2px 2px 3px #999;
+    z-index: 1;
 }
 
 .mod_nav ul {
