@@ -89,7 +89,6 @@ class MessageRepository extends ServiceEntityRepository
     /**
      * @param Thread $thread
      * @return Message
-     * @throws UnexpectedResultException
      */
     public function findFirstMessageInThread(Thread $thread): Message
     {
@@ -100,7 +99,7 @@ class MessageRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getSingleResult();
         } catch (UnexpectedResultException $e) {
-            throw $e;
+            throw new $e;
         }
     }
 
