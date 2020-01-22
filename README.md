@@ -34,6 +34,10 @@ All steps are detailed in [INSTALLATION.md](INSTALLATION.md)
 
 
 ## Running the tests
+Create the SQLite database (located in /var folder) :
+```sh
+$ php bin/console doctrine:database:create --env=test
+```
 Use the following command to run tests :
 ```sh
 $ php bin/phpunit
