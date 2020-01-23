@@ -24,12 +24,6 @@ class ForumTest extends WebTestCase
         $this->assertHasErrors($invalidCategory, 1);
     }
 
-    public function testInvalidBlankDescriptionEntity()
-    {
-        $invalidCategory = $this->getEntity()->setDescription("");
-        $this->assertHasErrors($invalidCategory, 1);
-    }
-
     public function testInvalidPositivePositionEntity()
     {
         $invalidCategory = $this->getEntity()->setPosition(-1);
