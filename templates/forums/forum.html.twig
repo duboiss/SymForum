@@ -42,30 +42,30 @@
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4">{{ forum.title }}</div>
+                            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">{{ forum.title }}</div>
                             {% if forum.forums|length > 0 %}
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">SUJETS</div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">MESSAGES</div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">DERNIER MESSAGE</div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">SUJETS</div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">MESSAGES</div>
+                                <div class="col-lg-3 d-none d-lg-block">DERNIER MESSAGE</div>
                             {% else %}
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">PAR</div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 text-center">REPONSES</div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">DERNIER MESSAGE</div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">PAR</div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">REPONSES</div>
+                                <div class="col-lg-4 d-none d-lg-block">DERNIER MESSAGE</div>
                             {% endif %}
                         </div>
                     </div>
                     <div class="card-body">
                         {% for subforum in forum.forums %}
                         {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
-                        <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
                             <h5 class="card-title">
                                 <a href="{{ path('forum.show', {'slug': subforum.slug}) }}">{{ subforum.title }}</a>
                             </h5>
                             <p class="card-text">{{ subforum.description }}</p>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalThreads }}</div>
-                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ subforum.totalMessages }}</div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">{{ subforum.totalThreads }}</div>
+                        <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ subforum.totalMessages }}</div>
+                        <div class="col-lg-4 d-none d-lg-block">
                             {% if subforum.lastMessage %}
                                 {{ subforum.lastMessage.publishedAt|ago }} par {{ user_profile_link(subforum.lastMessage.author) }}
                             {% else %}
@@ -77,14 +77,14 @@
 
                     {% if forum.forums|length > 0 %}
                         <div class="row mt-3">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-2 text-center">
+                            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12"></div>
+                            <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">
                                 <h5>PAR</h5>
                             </div>
-                            <div class="col-lg-2 text-center">
+                            <div class="col-lg-2 col-md-3 d-none d-md-block text-center">
                                 <h5>REPONSES</h5>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 d-none d-lg-block">
                                 <h5>DERNIER MESSAGE</h5>
                             </div>
                         </div>
@@ -92,15 +92,15 @@
 
                     {% for thread in threads %}
                         <div class="row mb-1">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
                                 {{ thread.locked ? '<i class="fas fa-lock"></i>' }}
                                 <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a>
                             </div>
-                            <div class="col-lg-2 text-center">
+                            <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">
                                 {{ user_profile_link(thread.author) }}
                             </div>
-                            <div class="col-lg-2 text-center">{{ thread.getTotalAnswers }}</div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ thread.getTotalAnswers }}</div>
+                            <div class="col-lg-4 d-none d-lg-block">
                                 <a href="{{ path('thread.show', {'slug': thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
                                 par {{ user_profile_link(thread.lastMessage.author) }}
                             </div>

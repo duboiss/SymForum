@@ -1,15 +1,15 @@
 <div class="card-body">
     <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5">
+        <div class="col-lg-5 col-md-6 col-sm-8">
             <h5 class="card-title">
                 {{ forum.locked ? '<i class="fas fa-lock"></i>' }}
                 <a href="{{ path('forum.show', {'slug': forum.slug}) }}">{{ forum.title }}</a>
             </h5>
             <p class="card-text">{{ forum.description }}</p>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalThreads }}</div>
-        <div class="col-lg-2 col-md-2 col-sm-2 text-center">{{ forum.totalMessages }}</div>
-        <div class="col-lg-3 col-md-3 col-sm-3">
+        <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">{{ forum.totalThreads }}</div>
+        <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ forum.totalMessages }}</div>
+        <div class="col-lg-3 d-none d-lg-block">
             {% if forum.lastMessage %}
                 <a href="{{ path('thread.show', {'slug': forum.lastMessage.thread.slug, '_fragment': forum.lastMessage.id}) }}">{{ forum.lastMessage.publishedAt|ago }}</a> par
                 {{ user_profile_link(forum.lastMessage.author) }}
