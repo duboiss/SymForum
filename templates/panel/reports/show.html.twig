@@ -1,24 +1,27 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Signalement de {{ report.reportedBy ? report.reportedBy.pseudo : 'Compte supprimé' }}{% endblock %}
+{% set reportedByPseudo = report.reportedBy.pseudo ?? 'Compte supprimé' %}
+
+{% block title %}Signalement de {{ reportedByPseudo }}{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
             <li class="breadcrumb-item"><a href="{{ path('panel.reports') }}">Signalements</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Signalement
-                de {{ report.reportedBy ? report.reportedBy.pseudo : 'Compte supprimé' }}</li>
+            <li class="breadcrumb-item active" aria-current="page">Signalement de {{ reportedByPseudo }}</li>
         </ol>
     </nav>
 
-    <h1><span>Signalement de {{ report.reportedBy ? report.reportedBy.pseudo : 'Compte supprimé' }}</span>
+    <h1><span>Signalement de {{ reportedByPseudo }}</span>
         {% if not report.isTreated %}
-            <a class="btn btn-primary btn-sm" href="{{ path('panel.report.close', {'id': report.id}) }}"><i
-                        class="fas fa-check"></i> Clôturer</a>
+            <a class="btn btn-primary btn-sm" href="{{ path('panel.report.close', {'id': report.id}) }}">
+                <i class="fas fa-check"></i> Clôturer
+            </a>
         {% endif %}
-        <a class="btn btn-danger btn-sm" href="{{ path('panel.report.delete', {'id': report.id}) }}"><i
-                    class="fas fa-trash"></i> Supprimer</a>
+        <a class="btn btn-danger btn-sm" href="{{ path('panel.report.delete', {'id': report.id}) }}">
+            <i class="fas fa-trash"></i> Supprimer
+        </a>
     </h1>
 
     <div class="row mt-3">
