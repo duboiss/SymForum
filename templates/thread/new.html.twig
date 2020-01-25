@@ -2,6 +2,11 @@
 
 {% block title %}Nouveau sujet{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('ckeditor') }}
+{% endblock %}
+
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -16,4 +21,9 @@
         <h2 class="text-center">Nouveau sujet</h2>
         {{ include ('partials/_simple_form.twig', {button_label: 'Nouveau sujet'}) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('ckeditor') }}
 {% endblock %}

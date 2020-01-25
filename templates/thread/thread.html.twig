@@ -2,6 +2,11 @@
 
 {% block title %}{{ thread.title }} par {{ thread.author.pseudo ?? 'Compte supprimé' }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('ckeditor') }}
+{% endblock %}
+
 {% block modnav_elements %}
     {% if thread.locked %}
         <li>
@@ -97,4 +102,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('ckeditor') }}
 {% endblock %}
