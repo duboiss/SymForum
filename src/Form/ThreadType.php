@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
+use App\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
@@ -29,13 +29,7 @@ class ThreadType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('message', TextareaType::class, [
-                'purify_html' => true,
-                'label' => 'Contenu du message',
-                'attr' => [
-                    'class' => 'editor',
-                ],
-                'required' => false,
+            ->add('message', CKEditorType::class, [
                 'constraints' => [
                     new NotBlank(['message' => "Vous devez saisir un message"]),
                     new Length([
