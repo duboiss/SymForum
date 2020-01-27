@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
 use DateTime;
+use Exception;
 use Symfony\Component\Security\Core\Security;
 
 class AntispamService
@@ -30,6 +31,11 @@ class AntispamService
         $this->security = $security;
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     * @throws Exception
+     */
     public function canPostThread(User $user): bool
     {
         $lastThread = $this->threadRepository->findLastThreadByUser($user);
@@ -42,6 +48,11 @@ class AntispamService
         return true;
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     * @throws Exception
+     */
     public function canPostMessage(User $user): bool
     {
         $lastMessage = $this->messageRepository->findLastMessageByUser($user);
