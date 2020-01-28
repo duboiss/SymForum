@@ -23,13 +23,24 @@
         {% if displayActions|default(false) == true %}
             <div class="row">
                 <div class="col text-right">
-                    {% if is_granted('EDIT', message) and (is_granted('ROLE_MODERATOR') or (thread.locked == false)) %}
-                        <a class="btn btn-dark btn-sm" href="{{ path('message.edit', {'id': message.id}) }}">Editer</a>
+                    {% if is_granted('REPORT', message) %}
+                        <a style="text-decoration: none;" data-toggle="modal" data-target="#reportModal"
+                           data-author="{{ message.author.pseudo }}" data-message={{ message.id }} href="#" title="Signaler">
+                            <i class="far fa-flag"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if is_granted('EDIT', message) %}
+                        <a style="text-decoration: none;" href="{{ path('message.edit', {'id': message.id}) }}" title="Editer">
+                            <i class="far fa-edit"></i>
+                        </a>
                     {% endif %}
 
                     {% if not loop.first %}
                         {% if is_granted('DELETE', message) %}
-                            <a class="btn btn-danger btn-sm" href="{{ path('message.delete', {'id': message.id}) }}">Supprimer</a>
+                            <a style="text-decoration: none;" href="{{ path('message.delete', {'id': message.id}) }}" title="Supprimer">
+                                <i class="far fa-trash-alt"></i>
+                            </a>
                         {% endif %}
                     {% endif %}
                 </div>

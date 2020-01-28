@@ -4,7 +4,9 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('ckeditor') }}
+    {% if app.user %}
+        {{ encore_entry_link_tags('ckeditor') }}
+    {% endif %}
 {% endblock %}
 
 {% block modnav_elements %}
@@ -61,6 +63,36 @@
         </div>
     {% endif %}
 
+    {% if app.user %}
+        <div class="modal fade" id="reportModal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Signalement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ path('report.message', {'id': 1}) }}" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <p class="reportText"></p>
+                                <label for="message-text" class="col-form-label">Motif :</label>
+                                <textarea class="form-control" id="message-text" name="reason"
+                                          placeholder="Décrivez ici les raisons qui vous amènent à signaler l'auteur de ce message..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="token-report" value="{{ csrf_token('report-message') }}"/>
+                            <button type="submit" class="btn btn-primary">Signaler</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
@@ -106,5 +138,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('ckeditor') }}
+    {% if app.user %}
+        {{ encore_entry_script_tags('ckeditor') }}
+        {{ encore_entry_script_tags('report') }}
+    {% endif %}
 {% endblock %}
