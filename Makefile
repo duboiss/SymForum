@@ -69,9 +69,11 @@ vendor: composer.lock ## Install dependencies in /vendor folder
 
 ##
 ## Project
-.PHONY: install update cache-clear cache-warmup clean reset
+.PHONY: install start update cache-clear cache-warmup clean reset
 
-install: db assets tests serve ## Install project dependencies
+install: db assets ## Install project dependencies
+
+start: install serve ## Install project dependencies and launch symfony web server
 
 update: install ## Update project dependencies
 	$(COMPOSER) update
@@ -108,7 +110,7 @@ security: vendor ## Check packages vulnerabilities (using composer.lock)
 ## Tests
 .PHONY: tests
 
-tests: vendor
+tests: vendor ## Run tests
 	@$(PHPUNIT)
 
 
