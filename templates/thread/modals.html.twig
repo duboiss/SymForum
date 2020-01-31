@@ -1,0 +1,55 @@
+{% if is_granted('DELETE', thread) %}
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation de suppression</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous certain de vouloir supprimer ce sujet ?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('thread.delete', {'id': thread.id}) }}" method="POST">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-thread') }}"/>
+                        <button type="submit" class="btn btn-primary">Confirmer</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if app.user %}
+    <div class="modal fade" id="reportModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Signalement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ path('report.message', {'id': 1}) }}" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <p class="reportText"></p>
+                            <label for="message-text" class="col-form-label">Motif :</label>
+                            <textarea class="form-control" id="message-text" name="reason"
+                                      placeholder="Décrivez ici les raisons qui vous amènent à signaler l'auteur de ce message..."
+                                      required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="token-report" value="{{ csrf_token('report-message') }}"/>
+                        <button type="submit" class="btn btn-primary">Signaler</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
