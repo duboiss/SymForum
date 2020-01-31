@@ -14,6 +14,7 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
     public function loadData(ObjectManager $manager)
     {
         $this->createMany(Message::class, 500, function (Message $message) {
+            /** @var Thread $thread */
             $thread = $this->getRandomReference(Thread::class);
 
             $message->setAuthor($this->getRandomReference(User::class))
@@ -30,7 +31,8 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 
             if (!$forum->getLastMessage() || $forum->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $forum->setLastMessage($message);
 
-            $thread->setTotalMessages($thread->getTotalMessages() + 1);
+            $thread->incrementTotalMessages();
+            $forum->incrementTotalMessages();
         });
 
         $manager->flush();

@@ -88,6 +88,7 @@ class ThreadService
 
         foreach ($thread->getMessages() as $message) {
             $this->em->remove($message);
+            $forum->decrementTotalMessages();
         }
 
         $this->em->flush();

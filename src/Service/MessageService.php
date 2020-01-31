@@ -110,7 +110,10 @@ class MessageService
 
         $thread->setLastMessage($message);
         $thread->getForum()->setLastMessage($message);
-        $thread->setTotalMessages($thread->getTotalMessages() + 1);
+        $thread->incrementTotalMessages();
+
+        $forum = $thread->getForum();
+        $forum->incrementTotalMessages();
 
         $this->em->flush();
 
@@ -135,7 +138,11 @@ class MessageService
         }
 
         $this->em->remove($message);
-        $thread->setTotalMessages($thread->getTotalMessages() - 1);
+        $thread->decrementTotalMessages();
+
+        $forum = $thread->getForum();
+        $forum->decrementTotalMessages();
+
         $this->em->flush();
 
         if (!$forum->getLastMessage()) {

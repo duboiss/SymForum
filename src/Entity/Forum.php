@@ -78,6 +78,11 @@ class Forum
      */
     private $threads;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $totalMessages = 0;
+
     public function __construct()
     {
         $this->forums = new ArrayCollection();
@@ -245,17 +250,27 @@ class Forum
 
     public function getTotalMessages(): int
     {
-        $totalMessages = 0;
-
-        foreach ($this->threads as $thread) {
-            $totalMessages += $thread->getTotalMessages();
-        }
+        $totalMessages = $this->totalMessages;
 
         foreach ($this->forums as $forum) {
             $totalMessages += $forum->getTotalMessages();
         }
 
         return $totalMessages;
+    }
+
+    public function incrementTotalMessages(): self
+    {
+        $this->totalMessages++;
+
+        return $this;
+    }
+
+    public function decrementTotalMessages(): self
+    {
+        $this->totalMessages--;
+
+        return $this;
     }
 
     public function addThread(Thread $thread): self

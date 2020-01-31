@@ -193,9 +193,16 @@ class Thread
         return $this->totalMessages;
     }
 
-    public function setTotalMessages(int $totalMessages): self
+    public function incrementTotalMessages(): self
     {
-        $this->totalMessages = $totalMessages;
+        $this->totalMessages++;
+
+        return $this;
+    }
+
+    public function decrementTotalMessages(): self
+    {
+        $this->totalMessages--;
 
         return $this;
     }
