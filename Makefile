@@ -86,10 +86,10 @@ cache-warmup: cache-clear
 	@$(SYMFONY) cache:warmup
 
 clean: purge ## Delete all dependencies
-	@rm -rf .env.local vendor node_modules purge
+	@rm -rf .env.local node_modules var vendor
 	@echo -e "Vendor and node_modules folder have been deleted !"
 
-reset: clean install
+reset: unserve clean install
 
 
 ##
