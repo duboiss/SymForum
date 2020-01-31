@@ -21,7 +21,7 @@ class ThreadVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['DELETE'])
+        return in_array($attribute, ['LOCK', 'DELETE'])
             && $subject instanceof Thread;
     }
 
@@ -37,6 +37,8 @@ class ThreadVoter extends Voter
         }
 
         switch ($attribute) {
+            case 'LOCK':
+                return $this->canLock();
             case 'DELETE':
                 return $this->canDelete();
         }
@@ -44,6 +46,13 @@ class ThreadVoter extends Voter
         return false;
     }
 
+    /**
+     * @return bool
+     */
+    private function canLock(): bool
+    {
+        return $this->security->isGranted('ROLE_MODERATOR');
+    }
 
     /**
      * @return bool

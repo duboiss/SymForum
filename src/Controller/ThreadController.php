@@ -129,7 +129,7 @@ class ThreadController extends BaseController
 
     /**
      * @Route("/forums/threads/{id}/lock", name="thread.lock")
-     * @IsGranted("ROLE_MODERATOR")
+     * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
      * @param EntityManagerInterface $em
      * @return Response
@@ -148,7 +148,7 @@ class ThreadController extends BaseController
 
     /**
      * @Route("/forums/threads/{id}/unlock", name="thread.unlock")
-     * @IsGranted("ROLE_MODERATOR")
+     * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
      * @param EntityManagerInterface $em
      * @return Response
