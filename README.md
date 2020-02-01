@@ -22,7 +22,7 @@ The goal is to eventually make a bundle allowing any symfony developer to add a 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-- PHP 7.1.3 or higher and [composer](https://getcomposer.org/)
+- PHP 7.3 or higher and [composer](https://getcomposer.org/)
 - MySQL 5.7
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/lang/en/)
