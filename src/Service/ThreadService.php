@@ -53,15 +53,17 @@ class ThreadService
      * @param string $title
      * @param Forum $forum
      * @param User $user
+     * @param bool $lock
      * @return Thread
      */
-    public function createThread(string $title, Forum $forum, User $user): Thread
+    public function createThread(string $title, Forum $forum, User $user, $lock = false): Thread
     {
         $thread = (new Thread())
             ->setTitle($title)
             ->setAuthor($user)
-            ->setForum($forum)
-            ->setLocked(false);
+            ->setForum($forum);
+
+        $lock ? $thread->setLocked(true) : $thread->setLocked(false);
 
         $thread->getForum()->incrementTotalThreads();
 

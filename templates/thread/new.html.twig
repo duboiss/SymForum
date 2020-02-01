@@ -19,7 +19,19 @@
 
     <div class="mb-3">
         <h2 class="text-center">Nouveau sujet</h2>
-        {{ include ('partials/_simple_form.twig', {button_label: 'Nouveau sujet'}) }}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {% if is_granted('ROLE_MODERATOR') %}
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" name="lock" id="lock">
+                    <label class="custom-control-label" for="lock">Verrouiller ce sujet</label>
+                </div>
+            </div>
+        {% endif %}
+        <button class="btn btn-primary">Nouveau sujet</button>
+        {{ form_end(form) }}
+
     </div>
 {% endblock %}
 

@@ -83,7 +83,12 @@ class ThreadController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
+            if ($request->request->get('lock')) {
+                $thread = $threadService->createThread($form['title']->getData(), $forum, $user, true);
+            } else {
+                $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
+            }
+
             $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
 
             $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
