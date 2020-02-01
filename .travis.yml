@@ -1,0 +1,21 @@
+language: php
+
+sudo: false
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+        - $HOME/symfony-bridge/.phpunit
+
+php:
+  - '7.3'
+  - '7.4'
+
+install:
+  - composer install
+
+before_script:
+  - php bin/console doctrine:database:create --env=test
+
+script:
+  - ./vendor/bin/simple-phpunit
