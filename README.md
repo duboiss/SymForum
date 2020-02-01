@@ -1,7 +1,8 @@
 # SymForum
 <p align="center">
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
-  <a href="#"><img src="https://img.shields.io/badge/php-%5E7.1.3-blue" alt="PHP Version"></a>
+<a href="https://opensource.org/licenses/MIT"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+<img alt="Travis (.org) branch" src="https://img.shields.io/travis/DuboisS/SymForum/master">
+<img alt="PHP from Travis config" src="https://img.shields.io/travis/php-v/DuboisS/SymForum">
 </p>
 
 SymForum is a simple PHP forum built with the [Symfony 4](https://symfony.com/) framework.
