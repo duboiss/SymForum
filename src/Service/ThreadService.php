@@ -57,12 +57,13 @@ class ThreadService
      */
     public function createThread(string $title, Forum $forum, User $user): Thread
     {
-        $thread = new Thread();
-
-        $thread->setTitle($title)
+        $thread = (new Thread())
+            ->setTitle($title)
             ->setAuthor($user)
             ->setForum($forum)
             ->setLocked(false);
+
+        $thread->getForum()->incrementTotalThreads();
 
         $this->em->persist($thread);
         $this->em->flush();
@@ -92,6 +93,8 @@ class ThreadService
         }
 
         $this->em->flush();
+
+        $forum->decrementTotalThreads();
 
         $this->em->remove($thread);
         $this->em->flush();

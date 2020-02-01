@@ -81,6 +81,11 @@ class Forum
     /**
      * @ORM\Column(type="smallint")
      */
+    private $totalThreads = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
     private $totalMessages = 0;
 
     public function __construct()
@@ -239,13 +244,27 @@ class Forum
 
     public function getTotalThreads(): int
     {
-        $totalThreads = $this->threads->count();
+        $totalThreads = $this->totalThreads;
 
         foreach ($this->forums as $forum) {
             $totalThreads += $forum->getTotalThreads();
         }
 
         return $totalThreads;
+    }
+
+    public function incrementTotalThreads(): self
+    {
+        $this->totalThreads++;
+
+        return $this;
+    }
+
+    public function decrementTotalThreads(): self
+    {
+        $this->totalThreads--;
+
+        return $this;
     }
 
     public function getTotalMessages(): int
