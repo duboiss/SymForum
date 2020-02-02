@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Message;
+use App\Entity\Thread;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MessageTest extends WebTestCase
@@ -11,8 +12,11 @@ class MessageTest extends WebTestCase
 
     public function getEntity(): Message
     {
+        $thread = new Thread();
+
         return (new Message())
-            ->setContent("Message content");
+            ->setContent("Message content")
+            ->setThread($thread);
     }
 
     public function testInvalidMinLengthContentEntity()
