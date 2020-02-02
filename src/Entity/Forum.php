@@ -65,6 +65,7 @@ class Forum
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
      */
     private $locked = false;
 

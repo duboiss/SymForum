@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
@@ -24,6 +25,7 @@ class Thread
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -47,11 +49,13 @@ class Thread
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Forum", inversedBy="threads")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $forum;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
      */
     private $locked;
 
@@ -95,6 +99,13 @@ class Thread
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 
     public function getCreatedAt(): ?DateTimeInterface

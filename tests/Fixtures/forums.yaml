@@ -1,5 +1,5 @@
 App\Entity\Forum:
-    category:
+    forum1:
         title: Forum title
         description: Forum long description...
         position: 1

@@ -1,4 +1,4 @@
 App\Entity\CoreOption:
-    option:
+    option1:
         name: max_online_users
         value: 50

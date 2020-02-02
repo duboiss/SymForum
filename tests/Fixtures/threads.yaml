@@ -1,0 +1,12 @@
+App\Entity\Forum:
+  forum1:
+    title: Forum title
+    description: Forum long description...
+    position: 1
+
+App\Entity\Thread:
+  thread1:
+    title: Thread title
+    slug: first-thread
+    locked: false
+    forum: '@forum1'

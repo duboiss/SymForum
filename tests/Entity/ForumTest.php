@@ -20,17 +20,17 @@ class ForumTest extends WebTestCase
 
     public function testInvalidBlankTitleEntity()
     {
-        $invalidCategory = $this->getEntity()->setTitle("");
-        $this->assertHasErrors($invalidCategory, 1);
+        $invalidForum = $this->getEntity()->setTitle("");
+        $this->assertHasErrors($invalidForum, 1);
     }
 
     public function testInvalidPositivePositionEntity()
     {
-        $invalidCategory = $this->getEntity()->setPosition(-1);
-        $this->assertHasErrors($invalidCategory, 1);
+        $invalidForum = $this->getEntity()->setPosition(-1);
+        $this->assertHasErrors($invalidForum, 1);
 
-        $invalidCategory = $this->getEntity()->setPosition(0);
-        $this->assertHasErrors($invalidCategory, 1);
+        $invalidForum = $this->getEntity()->setPosition(0);
+        $this->assertHasErrors($invalidForum, 1);
     }
 
     public function testInvalidUsedSlug()
