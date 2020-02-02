@@ -9,22 +9,23 @@ YARN = yarn
 
 ##
 ## Database
-.PHONY: db db-cache fixtures
+.PHONY: db db-reset db-cache fixtures
 
-db: vendor ## Reset database and load fixtures
+db: vendor db-reset fixtures ## Reset database and load fixtures
+
+db-reset: ## Reset database
 	@$(EXEC_PHP) php -r 'echo "Wait database...\n"; set_time_limit(30); require __DIR__."/config/bootstrap.php"; $$u = parse_url($$_ENV["DATABASE_URL"]); for(;;) { if(@fsockopen($$u["host"].":".($$u["port"] ?? 3306))) { break; }}'
 	@-$(SYMFONY) doctrine:database:drop --if-exists --force
 	@-$(SYMFONY) doctrine:database:create --if-not-exists
 	@$(SYMFONY) doctrine:schema:update --force
-	@$(SYMFONY) doctrine:fixtures:load --no-interaction
 
-db-cache: ## Clear doctrine database cache
+db-cache: vendor ## Clear doctrine database cache
 	@$(SYMFONY) doctrine:cache:clear-metadata
 	@$(SYMFONY) doctrine:cache:clear-query
 	@$(SYMFONY) doctrine:cache:clear-result
 	@echo "Cleared doctrine cache"
 
-fixtures: ## Load fixtures
+fixtures: vendor ## Load fixtures - requires database with tables
 	@$(SYMFONY) d:f:l --no-interaction
 
 
