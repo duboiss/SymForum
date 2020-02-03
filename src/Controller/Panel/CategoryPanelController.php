@@ -80,7 +80,7 @@ class CategoryPanelController extends BaseController
     }
 
     /**
-     * @Route("/categories/{id}/delete", name="panel.category.delete")
+     * @Route("/categories/{id}/delete", name="panel.category.delete", methods={"DELETE"})
      * @param Category $category
      * @param EntityManagerInterface $em
      * @return Response
@@ -88,14 +88,16 @@ class CategoryPanelController extends BaseController
     public function delete(Category $category, EntityManagerInterface $em): Response
     {
         if (count($category->getForums()) > 0) {
-                $this->addCustomFlash('error', 'Catégorie', 'Vous ne pouvez pas supprimer une catégorie comportant des forums !');
-        } else {
-            $em->remove($category);
-            $em->flush();
-
-            $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été supprimée !');
+            return $this->json([
+                'message' => 'Impossible de supprimer la catégorie, elle contient des forums !'
+            ], 403);
         }
 
-        return $this->redirectToRoute('panel.categories');
+        $em->remove($category);
+        $em->flush();
+
+        return $this->json([
+            'message' => 'La catégorie a bien été supprimée !'
+        ], 200);
     }
 }
