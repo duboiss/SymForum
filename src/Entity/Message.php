@@ -48,7 +48,6 @@ class Message
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Thread", inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
      */
     private $thread;
 
