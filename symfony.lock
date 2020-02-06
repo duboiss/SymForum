@@ -247,6 +247,9 @@
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"
     },
+    "symfony-bundles/json-request-bundle": {
+        "version": "v3.0.0"
+    },
     "symfony/asset": {
         "version": "v4.3.2"
     },
