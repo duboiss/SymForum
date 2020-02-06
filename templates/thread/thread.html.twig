@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% if app.user %}
+    {% if app.user and not thread.locked %}
         {{ encore_entry_link_tags('ckeditor') }}
     {% endif %}
 {% endblock %}
@@ -88,7 +88,9 @@
 {% block javascripts %}
     {{ parent() }}
     {% if app.user %}
-        {{ encore_entry_script_tags('ckeditor') }}
         {{ encore_entry_script_tags('report') }}
+        {% if not thread.locked %}
+            {{ encore_entry_script_tags('ckeditor') }}
+        {% endif %}
     {% endif %}
 {% endblock %}
