@@ -1,12 +1,9 @@
-App\Entity\Forum:
-  forum1:
-    title: Forum title
-    description: Forum long description...
-    position: 1
+include:
+    - forums.yaml
 
 App\Entity\Thread:
-  thread1:
-    title: Thread title
-    slug: first-thread
-    locked: false
-    forum: '@forum1'
+    thread1:
+        title: Thread title
+        slug: first-thread
+        locked: false
+        forum: '@forum1'

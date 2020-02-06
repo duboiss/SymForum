@@ -1,5 +1,16 @@
+include:
+    - categories.yaml
+
 App\Entity\Forum:
     forum1:
         title: Forum title
         description: Forum long description...
         position: 1
+        category: '@category1'
+
+    subforum1:
+        title: Subforum title
+        description: Forum long description...
+        position: 1
+        parent: '@forum1'
+        category: null
