@@ -42,6 +42,23 @@
 
     {{ include ('thread/modals.html.twig') }}
 
+    {% if app.user %}
+        <div class="toast-notification">
+            <div class="toast" id="toastHide-report" role="alert" aria-live="assertive" aria-atomic="true"
+                 data-delay="3200">
+                <div class="toast-header">
+                    <strong class="mr-auto">
+                        <i class="fas fa-check-circle"></i> Signalement
+                    </strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body"></div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="container">
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">

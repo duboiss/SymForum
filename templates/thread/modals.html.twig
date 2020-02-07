@@ -40,12 +40,12 @@
                             <label for="message-text" class="col-form-label">Motif :</label>
                             <textarea class="form-control" id="message-text" name="reason"
                                       placeholder="Décrivez ici les raisons qui vous amènent à signaler l'auteur de ce message..."
-                                      required></textarea>
+                                      required></textarea><br>
+                            <p class="error-message" style="color: red;"></p>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" name="token-report" value="{{ csrf_token('report-message') }}"/>
-                        <button type="submit" class="btn btn-primary">Signaler</button>
+                        <button type="submit" id="js-report-button" class="btn btn-primary">Signaler</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     </div>
                 </form>

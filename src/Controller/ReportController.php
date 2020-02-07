@@ -21,37 +21,31 @@ class ReportController extends BaseController
      * @param EntityManagerInterface $em
      * @param Request $request
      * @return JsonResponse
-     * @throws Exception
      */
     public function message(Message $message, EntityManagerInterface $em, Request $request): Response
     {
-        $submittedToken = $request->request->get('token-report');
+        $reason = $request->request->get('reason');
 
-        if ($this->isCsrfTokenValid('report-message', $submittedToken)) {
-
-            if (!$request->request->get('reason')) {
-                $this->addCustomFlash('error', 'Signalement', 'Vous devez indiquer un motif !');
-                return $this->redirectToRoute('thread.show', [
-                    'slug' => $message->getThread()->getSlug(),
-                    '_fragment' => $message->getId()
-                ]);
-            }
-
-            $report = (new Report())
-                ->setMessage($message)
-                ->setReason($request->request->get('reason'))
-                ->setReportedBy($this->getUser());
-
-            $em->persist($report);
-            $em->flush();
-
-            $this->addCustomFlash('success', 'Signalement', 'Le message a été signalé, merci !');
-
-            return $this->redirectToRoute('thread.show', [
-                'slug' => $message->getThread()->getSlug()
-            ]);
-        } else {
-            throw new Exception("Jeton CSRF invalide !");
+        if (!$reason) {
+            return $this->json([
+                'message' => 'Vous devez indiquer un motif !'
+            ], 403);
+        } elseif (strlen($reason) < 8) {
+            return $this->json([
+                'message' => 'Merci d\'apporter plus de précisions..'
+            ], 403);
         }
+
+        $report = (new Report())
+            ->setMessage($message)
+            ->setReason($reason)
+            ->setReportedBy($this->getUser());
+
+        $em->persist($report);
+        $em->flush();
+
+        return $this->json([
+            'message' => 'Le message a été signalé, merci !'
+        ], 200);
     }
 }
