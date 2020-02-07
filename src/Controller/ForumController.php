@@ -29,7 +29,7 @@ class ForumController extends BaseController
 
     /**
      * @Route("/forums/{id}-{slug}/lock", name="forum.lock")
-     * @IsGranted("ROLE_MODERATOR")
+     * @IsGranted("LOCK", subject="forum")
      * @param Forum $forum
      * @param EntityManagerInterface $em
      * @return Response
@@ -48,7 +48,7 @@ class ForumController extends BaseController
 
     /**
      * @Route("/forums/{id}-{slug}/unlock", name="forum.unlock")
-     * @IsGranted("ROLE_MODERATOR")
+     * @IsGranted("LOCK", subject="forum")
      * @param Forum $forum
      * @param EntityManagerInterface $em
      * @return Response
