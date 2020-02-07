@@ -76,9 +76,9 @@ install: db assets ## Install project dependencies
 
 start: install serve ## Install project dependencies and launch symfony web server
 
-update: install ## Update project dependencies
-	$(COMPOSER) update
-	$(YARN) upgrade
+update: vendor node_modules ## Update project dependencies
+	@$(COMPOSER) update
+	@$(YARN) upgrade
 
 cache-clear: vendor ## Clear cache for current environment
 	@$(SYMFONY) cache:clear --no-warmup
