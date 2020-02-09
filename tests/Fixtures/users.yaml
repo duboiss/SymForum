@@ -3,7 +3,7 @@ App\Entity\User:
         pseudo: "demo"
         email: "demo\\@demo.com"
         hash: "\\$argon2id\\$v=19\\$m=65536,t=4,p=1\\$RXlnQkRWdU5BUy8yLmNEaw\\$69kVqfGhA7Zaq693Hhm73aZPSjnls5MZX55FQBcWt4Q"
-        roles: "[]"
+        roles: []
         registrationDate: '<dateTimeBetween("-200 days", "now")>'
 
     user_admin:
