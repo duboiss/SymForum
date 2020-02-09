@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-    public function loadData(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Forum::class, 10, function (Forum $forum, $count) {
             $forum->setTitle($this->faker->words(4, true))

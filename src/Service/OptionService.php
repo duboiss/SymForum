@@ -27,7 +27,7 @@ class OptionService
     /**
      * @param string $optionName
      * @param string $default
-     * @return CoreOption|string
+     * @return string|null
      */
     public function get(string $optionName, ?string $default = null): ?string
     {

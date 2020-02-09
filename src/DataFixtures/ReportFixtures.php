@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class ReportFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-    public function loadData(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Report::class, 30, function (Report $report) {
             $reportedMessage = $this->getRandomReference(Message::class);

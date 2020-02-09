@@ -4,22 +4,19 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
+/**
+ * @method User getUser()
+ */
 abstract class BaseController extends AbstractController
 {
-    /** @var Session */
-    private $session;
+    /** @var FlashBagInterface */
+    private $flashBag;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(FlashBagInterface $flashBag)
     {
-        $this->session = $session;
-    }
-
-    protected function getUser(): User
-    {
-        return parent::getUser();
+        $this->flashBag = $flashBag;
     }
 
     /**
@@ -29,6 +26,6 @@ abstract class BaseController extends AbstractController
      */
     protected function addCustomFlash(string $type, string $title, string $content)
     {
-        $this->session->getFlashBag()->add($type, ['title' => $title, 'content' => $content]);
+        $this->flashBag->add($type, ['title' => $title, 'content' => $content]);
     }
 }

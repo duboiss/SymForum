@@ -16,7 +16,7 @@ class UserFixtures extends BaseFixtures
         $this->encoder = $encoder;
     }
 
-    protected function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager): void
     {
         $demoUser = new User();
         $demoUser->setPseudo('demo')

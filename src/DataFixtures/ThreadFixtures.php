@@ -16,9 +16,9 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
      */
     private $threads = [];
 
-    public function loadData(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Thread::class, 150, function (Thread $thread) use ($manager) {
+        $this->createMany(Thread::class, 150, function (Thread $thread) {
             /** @var Forum $forum */
             $forum = $this->getRandomReference(Forum::class);
 

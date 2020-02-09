@@ -2,8 +2,10 @@
 
 namespace App\EventListener;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\OptionService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -36,18 +38,19 @@ class ActivityListener implements EventSubscriberInterface
     public function onTerminate()
     {
         if ($this->tokenStorage->getToken()) {
+            /** @var User $user */
             $user = $this->tokenStorage->getToken()->getUser();
 
             if ($user instanceof UserInterface) {
-                $user->setLastActivityAt(new \DateTime());
+                $user->setLastActivityAt(new DateTime());
                 $this->em->flush();
 
-                $maxOnlineUsers = (int)$this->optionService->get("max_online_users", "0");
+                $maxOnlineUsers = (int) $this->optionService->get("max_online_users", "0");
                 $nbOnlineUsers = $this->userRepository->countOnlineUsers();
 
                 if ($nbOnlineUsers > $maxOnlineUsers) {
                     $currentDate = date("d-m-Y à H:i:s");
-                    $this->optionService->set("max_online_users", $nbOnlineUsers);
+                    $this->optionService->set("max_online_users", (string) $nbOnlineUsers);
                     $this->optionService->set("max_online_users_date", $currentDate);
                 }
             }

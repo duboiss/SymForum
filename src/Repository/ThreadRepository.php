@@ -33,7 +33,7 @@ class ThreadRepository extends ServiceEntityRepository
 
     /**
      * @param User $user
-     * @param $limit
+     * @param int $limit
      * @return Thread[]
      */
     public function findLastThreadsByUser(User $user, int $limit): array

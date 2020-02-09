@@ -7,7 +7,7 @@ use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
 
 class MessageService
@@ -18,8 +18,8 @@ class MessageService
     /** @var MessageRepository */
     private $messageRepository;
 
-    /** @var SessionInterface */
-    private $session;
+    /** @var FlashBagInterface */
+    private $flashBag;
 
     /** @var AntispamService */
     private $antispamService;
@@ -27,11 +27,11 @@ class MessageService
     /** @var Security */
     private $security;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService, Security $security)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, Security $security)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
-        $this->session = $session;
+        $this->flashBag = $flashBag;
         $this->antispamService = $antispamService;
         $this->security = $security;
     }
@@ -44,10 +44,10 @@ class MessageService
     public function canPostMessage(Thread $thread, User $user): bool
     {
         if ($thread->getLocked()) {
-            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
+            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
             return false;
         } elseif (!$this->antispamService->canPostMessage($user)) {
-            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous devez encore attendre un peu avant de pouvoir poster un message !']);
+            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous devez encore attendre un peu avant de pouvoir poster un message !']);
             return false;
         }
 
@@ -67,7 +67,7 @@ class MessageService
         $thread = $message->getThread();
 
         if ($thread->getLocked()) {
-            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
+            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
             return false;
         }
 
@@ -84,7 +84,7 @@ class MessageService
         $firstMessageInThread = $this->messageRepository->findFirstMessageInThread($thread);
 
         if ($message === $firstMessageInThread && $thread->getTotalMessages() > 1) {
-            $this->session->getFlashBag()->add('error', ['title' => 'Message', 'content' => 'Le premier message ne peut pas être supprimé car le sujet contient des réponses !']);
+            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Le premier message ne peut pas être supprimé car le sujet contient des réponses !']);
 
             return false;
         }

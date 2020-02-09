@@ -33,7 +33,7 @@ class ForumExtension extends AbstractExtension
     }
 
     /**
-     * @param $forumOrCategory
+     * @param Category|Forum $forumOrCategory
      * @param array $parts
      * @return array
      */

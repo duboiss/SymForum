@@ -74,10 +74,10 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $role
+     * @param string $role
      * @return User[]
      */
-    public function findByRole($role): array
+    public function findByRole(string $role): array
     {
         return $this->addMessagesQb()
             ->where('u.roles LIKE :role')

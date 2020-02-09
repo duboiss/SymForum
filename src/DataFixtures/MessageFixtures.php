@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-    public function loadData(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Message::class, 500, function (Message $message) {
             /** @var Thread $thread */

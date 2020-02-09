@@ -70,7 +70,7 @@ class MessageVoter extends Voter
     }
 
     /**
-     * @param $message
+     * @param Message $message
      * @param User $user
      * @return bool
      */

@@ -5,7 +5,7 @@ namespace App\Security;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -36,16 +36,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     /** @var UserPasswordEncoderInterface */
     private $passwordEncoder;
 
-    /** @var Session */
+    /** @var SessionInterface */
     private $session;
 
-    public function __construct(UserRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, SessionInterface $session)
+    /** @var FlashBagInterface */
+    private $flashBag;
+
+    public function __construct(UserRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, SessionInterface $session, FlashBagInterface $flashBag)
     {
         $this->userRepository = $userRepository;
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->session = $session;
+        $this->flashBag = $flashBag;
     }
 
     public function supports(Request $request)
@@ -93,7 +97,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $this->session->getFlashBag()->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
+        $this->flashBag->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class CategoryFixtures extends BaseFixtures
 {
-    public function loadData(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Category::class, 3, function (Category $category, $count) {
             $category->setTitle($this->faker->words(4, true))
