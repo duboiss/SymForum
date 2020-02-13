@@ -2,24 +2,27 @@ import $ from 'jquery';
 import axios from 'axios';
 
 $(document).ready(function () {
-    let btn = $('.js-delete-button');
+    let $btn = $('.js-delete-button');
 
-    btn.click(function (event) {
-        if(!confirm('Etes-vous certain de vouloir faire cela ?')) return;
+    $btn.on('click', function () {
+        if (!confirm('Etes-vous certain de vouloir faire cela ?')) return;
 
-        let url = $(this).attr('data-delete-url');
         let alert, type, message;
+        let url = $(this).data('delete-url');
+        let $row = $(this).closest('tr');
 
         axios.delete(url).then(function (response) {
             type = 'success';
             message = response.data.message;
-            event.target.closest('tr').remove();
+            $row.fadeOut('normal', function () {
+                $(this).closest('tr').remove();
+            });
         }).catch(function (error) {
             type = 'danger';
             message = error.response.data.message;
         }).then(function () {
             alert = '<div class="alert alert-dismissible alert-' + type + '"><button type="button" class="close" data-dismiss="alert">&times;</button>' + message + '</div>';
-            $('.messages').append(alert);
+            $('.messages').append(alert).hide().fadeIn('normal');
         });
     })
 });

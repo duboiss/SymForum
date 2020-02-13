@@ -42,7 +42,6 @@ $(document).ready(function () {
             reason: reason
         }).then(function (response) {
             responseMessage = response.data.message;
-            console.log(responseMessage);
             toastReport.find('.toast-body').text(responseMessage);
 
             toastReport.toast('show');
