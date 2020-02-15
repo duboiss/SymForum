@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\Report;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +24,7 @@ class ReportController extends BaseController
     public function message(Message $message, EntityManagerInterface $em, Request $request): Response
     {
         $reason = $request->request->get('reason');
+        $author = $this->getUser();
 
         if (!$reason) {
             return $this->json([
@@ -34,12 +34,16 @@ class ReportController extends BaseController
             return $this->json([
                 'message' => 'Merci d\'apporter plus de précisions..'
             ], 403);
+        } elseif ($author === $message->getAuthor()) {
+            return $this->json([
+                'message' => 'Vous ne pouvez pas vous signaler vous-même !'
+            ], 403);
         }
 
         $report = (new Report())
             ->setMessage($message)
             ->setReason($reason)
-            ->setReportedBy($this->getUser());
+            ->setReportedBy($author);
 
         $em->persist($report);
         $em->flush();
