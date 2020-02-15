@@ -25,7 +25,7 @@
                 <div class="col text-right">
                     {% if is_granted('REPORT', message) %}
                         <a style="text-decoration: none;" data-toggle="modal" data-target="#reportModal"
-                           data-author="{{ message.author ? message.author.pseudo : 'compte supprimé' }}"
+                           data-author="{{ message.author.pseudo ?? 'compte supprimé' }}"
                            data-message="{{ message.id }}" href="#" title="Signaler">
                             <i class="far fa-flag"></i>
                         </a>
