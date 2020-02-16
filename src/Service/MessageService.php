@@ -100,9 +100,8 @@ class MessageService
      */
     public function createMessage(string $content, Thread $thread, User $user): Message
     {
-        $message = new Message();
-
-        $message->setAuthor($user)
+        $message = (new Message())
+            ->setAuthor($user)
             ->setContent($content)
             ->setThread($thread);
 
