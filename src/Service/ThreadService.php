@@ -56,14 +56,13 @@ class ThreadService
      * @param bool $lock
      * @return Thread
      */
-    public function createThread(string $title, Forum $forum, User $user, $lock = false): Thread
+    public function createThread(string $title, Forum $forum, User $user, bool $lock = false): Thread
     {
         $thread = (new Thread())
             ->setTitle($title)
             ->setAuthor($user)
-            ->setForum($forum);
-
-        $lock ? $thread->setLocked(true) : $thread->setLocked(false);
+            ->setForum($forum)
+            ->setLocked($lock);
 
         $thread->getForum()->incrementTotalThreads();
 
@@ -87,7 +86,6 @@ class ThreadService
         }
 
         $thread->setLastMessage(null);
-        $this->em->remove($lastMessage);
 
         foreach ($thread->getMessages() as $message) {
             $this->em->remove($message);
