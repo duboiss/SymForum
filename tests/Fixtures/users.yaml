@@ -12,3 +12,10 @@ App\Entity\User:
         hash: "\\$argon2id\\$v=19\\$m=65536,t=4,p=1\\$MnBBNkc1LldPeWEwUjFuTA\\$5C0Y1Vp21Fwb5xQTQcXO3GmayUwlXKexT1Yv55kQPks"
         roles: ["ROLE_ADMIN"]
         registrationDate: '<dateTimeBetween("-200 days", "now")>'
+
+    user_moderator:
+        pseudo: "moderator"
+        email: "moderator\\@moderator.com"
+        hash: "\\$argon2id\\$v=19\\$m=65536,t=4,p=1\\$RXlnQkRWdU5BUy8yLmNEaw\\$69kVqfGhA7Zaq693Hhm73aZPSjnls5MZX55FQBcWt4Q"
+        roles: ["ROLE_MODERATOR"]
+        registrationDate: '<dateTimeBetween("-200 days", "now")>'
