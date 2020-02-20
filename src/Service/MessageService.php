@@ -43,7 +43,7 @@ class MessageService
      */
     public function canPostMessage(Thread $thread, User $user): bool
     {
-        if ($thread->getLocked()) {
+        if ($thread->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
             return false;
         } elseif (!$this->antispamService->canPostMessage($user)) {
@@ -66,7 +66,7 @@ class MessageService
 
         $thread = $message->getThread();
 
-        if ($thread->getLocked()) {
+        if ($thread->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
             return false;
         }

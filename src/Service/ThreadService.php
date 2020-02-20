@@ -38,7 +38,7 @@ class ThreadService
      */
     public function canPostThread(Forum $forum, User $user): bool
     {
-        if ($forum->getLocked()) {
+        if ($forum->isLock()) {
             $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !']);
             return false;
         } elseif (!$this->antispamService->canPostThread($user)) {
@@ -54,15 +54,17 @@ class ThreadService
      * @param Forum $forum
      * @param User $user
      * @param bool $lock
+     * @param bool $pin
      * @return Thread
      */
-    public function createThread(string $title, Forum $forum, User $user, bool $lock = false): Thread
+    public function createThread(string $title, Forum $forum, User $user, bool $lock = false, bool $pin = false): Thread
     {
         $thread = (new Thread())
             ->setTitle($title)
             ->setAuthor($user)
             ->setForum($forum)
-            ->setLocked($lock);
+            ->setIsLock($lock)
+            ->setIsPin($pin);
 
         $thread->getForum()->incrementTotalThreads();
 

@@ -36,7 +36,7 @@ class ForumController extends BaseController
      */
     public function lock(Forum $forum, EntityManagerInterface $em): Response
     {
-        $forum->setLocked(true);
+        $forum->setIsLock(true);
         $em->flush();
 
         $this->addCustomFlash('success', 'Forum', 'Le forum a été fermé !');
@@ -55,7 +55,7 @@ class ForumController extends BaseController
      */
     public function unlock(Forum $forum, EntityManagerInterface $em): Response
     {
-        $forum->setLocked(false);
+        $forum->setIsLock(false);
         $em->flush();
 
         $this->addCustomFlash('success', 'Forum', 'Le forum a été ouvert !');

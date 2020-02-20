@@ -67,7 +67,7 @@ class Forum
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
-    private $locked = false;
+    private $isLock = false;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Message", cascade={"persist", "remove"})
@@ -211,14 +211,14 @@ class Forum
         return $this;
     }
 
-    public function getLocked(): bool
+    public function isLock(): bool
     {
-        return $this->locked;
+        return $this->isLock;
     }
 
-    public function setLocked(bool $locked): self
+    public function setIsLock(bool $isLock): self
     {
-        $this->locked = $locked;
+        $this->isLock = $isLock;
 
         return $this;
     }

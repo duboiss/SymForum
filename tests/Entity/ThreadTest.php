@@ -18,7 +18,8 @@ class ThreadTest extends WebTestCase
         return (new Thread())
             ->setTitle("Thread title")
             ->setForum($forum)
-            ->setLocked(false);
+            ->setIsLock(false)
+            ->setIsPin(false);
     }
 
     public function testInvalidBlankTitleEntity()
@@ -32,6 +33,7 @@ class ThreadTest extends WebTestCase
         $invalidThread = $this->getEntity()->setForum(null);
         $this->assertHasErrors($invalidThread, 1);
     }
+
 
     public function testInvalidUsedSlug()
     {

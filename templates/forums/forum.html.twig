@@ -3,7 +3,7 @@
 {% block title %}{{ forum.title }}{% endblock %}
 
 {% block modnav_elements %}
-    {% if forum.locked %}
+    {% if forum.lock %}
         <li>
             <a href="{{ path('forum.unlock', {'id': forum.id, 'slug': forum.slug}) }}" data-tooltip="tooltip"
                title="Ouvrir le forum">
@@ -93,7 +93,8 @@
                     {% for thread in threads %}
                         <div class="row mb-1">
                             <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
-                                {{ thread.locked ? '<i class="fas fa-lock"></i>' }}
+                                {{ thread.pin ? '<i class="fas fa-thumbtack"></i>' }}
+                                {{ thread.lock ? '<i class="fas fa-lock"></i>' }}
                                 <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a>
                             </div>
                             <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">
@@ -110,7 +111,7 @@
                     {% endfor %}
                 </div>
             </div>
-            {% if forum.locked == false and is_granted('ROLE_USER') %}
+            {% if forum.lock == false and is_granted('ROLE_USER') %}
                 <a class="mb-3 btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">Nouveau sujet</a>
             {% endif %}
         </div>

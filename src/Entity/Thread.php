@@ -57,7 +57,13 @@ class Thread
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
-    private $locked;
+    private $isLock = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isPin = false;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Message", cascade={"persist", "remove"})
@@ -144,14 +150,26 @@ class Thread
         return $this;
     }
 
-    public function getLocked(): bool
+    public function isLock(): bool
     {
-        return $this->locked;
+        return $this->isLock;
     }
 
-    public function setLocked(bool $locked): self
+    public function setIsLock(bool $isLock): self
     {
-        $this->locked = $locked;
+        $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    public function isPin()
+    {
+        return $this->isPin;
+    }
+
+    public function setIsPin($isPin): self
+    {
+        $this->isPin = $isPin;
 
         return $this;
     }

@@ -29,6 +29,14 @@
                 </div>
             </div>
         {% endif %}
+        {% if is_granted('ROLE_MODERATOR') %}
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" name="pin" id="pin">
+                    <label class="custom-control-label" for="pin">Épingler ce sujet</label>
+                </div>
+            </div>
+        {% endif %}
         <button class="btn btn-primary">Nouveau sujet</button>
         {{ form_end(form) }}
 

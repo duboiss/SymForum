@@ -4,14 +4,31 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% if app.user and not thread.locked %}
+    {% if app.user and not thread.lock %}
         {{ encore_entry_link_tags('ckeditor') }}
     {% endif %}
 {% endblock %}
 
 {% block modnav_elements %}
+    {% if is_granted('PIN', thread) %}
+        {% if thread.pin %}
+            <li>
+                <a href="{{ path('thread.unpin', {'id': thread.id}) }}" data-tooltip="tooltip"
+                   title="Détacher le sujet">
+                    <i class="fas fa-thumbtack rotate"></i>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path('thread.pin', {'id': thread.id}) }}" data-tooltip="tooltip"
+                   title="Épingler le sujet">
+                    <i class="fas fa-thumbtack rotate"></i>
+                </a>
+            </li>
+        {% endif %}
+    {% endif %}
     {% if is_granted('LOCK', thread) %}
-        {% if thread.locked %}
+        {% if thread.lock %}
             <li>
                 <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-tooltip="tooltip"
                    title="Ouvrir le sujet">
@@ -77,7 +94,7 @@
                     {{ include ('message/_message_card.html.twig', {displayActions: true}) }}
                 {% endfor %}
 
-                {% if not thread.locked %}
+                {% if not thread.lock %}
                     {% if app.user %}
                         <div class="mb-3">
                             <p class="text-center">
@@ -106,7 +123,7 @@
     {{ parent() }}
     {% if app.user %}
         {{ encore_entry_script_tags('report') }}
-        {% if not thread.locked %}
+        {% if not thread.lock %}
             {{ encore_entry_script_tags('ckeditor') }}
         {% endif %}
     {% endif %}

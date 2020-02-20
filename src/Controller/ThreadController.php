@@ -83,11 +83,10 @@ class ThreadController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($request->request->get('lock')) {
-                $thread = $threadService->createThread($form['title']->getData(), $forum, $user, true);
-            } else {
-                $thread = $threadService->createThread($form['title']->getData(), $forum, $user);
-            }
+            $lock = (bool) $request->request->get('lock');
+            $pin = (bool) $request->request->get('pin');
+
+            $thread = $threadService->createThread($form['title']->getData(), $forum, $user, $lock, $pin);
 
             $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
 
@@ -141,7 +140,7 @@ class ThreadController extends BaseController
      */
     public function lock(Thread $thread, EntityManagerInterface $em): Response
     {
-        $thread->setLocked(true);
+        $thread->setIsLock(true);
         $em->flush();
 
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
@@ -160,10 +159,48 @@ class ThreadController extends BaseController
      */
     public function unlock(Thread $thread, EntityManagerInterface $em): Response
     {
-        $thread->setLocked(false);
+        $thread->setIsLock(false);
         $em->flush();
 
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
+
+        return $this->redirectToRoute('thread.show', [
+            'slug' => $thread->getSlug()
+        ]);
+    }
+
+    /**
+     * @Route("/forums/threads/{id}/pin", name="thread.pin")
+     * @IsGranted("PIN", subject="thread")
+     * @param Thread $thread
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function pin(Thread $thread, EntityManagerInterface $em): Response
+    {
+        $thread->setIsPin(true);
+        $em->flush();
+
+        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été épinglé !');
+
+        return $this->redirectToRoute('thread.show', [
+            'slug' => $thread->getSlug()
+        ]);
+    }
+
+    /**
+     * @Route("/forums/threads/{id}/unpin", name="thread.unpin")
+     * @IsGranted("PIN", subject="thread")
+     * @param Thread $thread
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function unpin(Thread $thread, EntityManagerInterface $em): Response
+    {
+        $thread->setIsPin(false);
+        $em->flush();
+
+        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été détaché !');
 
         return $this->redirectToRoute('thread.show', [
             'slug' => $thread->getSlug()

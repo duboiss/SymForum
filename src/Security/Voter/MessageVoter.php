@@ -58,7 +58,7 @@ class MessageVoter extends Voter
         if($this->security->isGranted('ROLE_MODERATOR')) {
             return true;
         }
-        return $user === $message->getAuthor() && !$message->getThread()->getLocked();
+        return $user === $message->getAuthor() && !$message->getThread()->isLock();
     }
 
     /**

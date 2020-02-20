@@ -22,12 +22,16 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
             /** @var Forum $forum */
             $forum = $this->getRandomReference(Forum::class);
 
+            /** @var User $author */
+            $author = $this->getRandomReference(User::class);
+
             $thread->setTitle($this->faker->words(rand(4, 8), true))
-                ->setAuthor($this->getRandomReference(User::class))
+                ->setAuthor($author)
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
                 ->setForum($forum);
 
-            $this->faker->boolean(40) ? $thread->setLocked(true) : $thread->setLocked(false);
+            $this->faker->boolean(40) ? $thread->setIsLock(true) : $thread->setIsLock(false);
+            $this->faker->boolean(10) ? $thread->setIsPin(true) : $thread->setIsLock(false);
 
             $forum->incrementTotalThreads();
             $this->threads[] = $thread;

@@ -51,7 +51,8 @@ class ThreadRepository extends ServiceEntityRepository
             ->addSelect('t', 'author')
             ->leftJoin('t.author', 'author')
             ->where('t.forum = :forum')
-            ->orderBy('lm.publishedAt', 'DESC')
+            ->orderBy('t.isPin', 'DESC')
+            ->addOrderBy('lm.publishedAt', 'DESC')
             ->setParameter('forum', $forum)
             ->getQuery()
             ->getResult();
