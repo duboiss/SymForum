@@ -9,7 +9,6 @@ use App\Form\ThreadType;
 use App\Repository\MessageRepository;
 use App\Service\MessageService;
 use App\Service\ThreadService;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -135,14 +134,12 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{id}/lock", name="thread.lock")
      * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
-     * @param EntityManagerInterface $em
+     * @param ThreadService $threadService
      * @return Response
      */
-    public function lock(Thread $thread, EntityManagerInterface $em): Response
+    public function lock(Thread $thread, ThreadService $threadService): Response
     {
-        $thread->setIsLock(true);
-        $em->flush();
-
+        $threadService->lock($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
 
         return $this->redirectToRoute('thread.show', [
@@ -154,14 +151,12 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{id}/unlock", name="thread.unlock")
      * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
-     * @param EntityManagerInterface $em
+     * @param ThreadService $threadService
      * @return Response
      */
-    public function unlock(Thread $thread, EntityManagerInterface $em): Response
+    public function unlock(Thread $thread, ThreadService $threadService): Response
     {
-        $thread->setIsLock(false);
-        $em->flush();
-
+        $threadService->unlock($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
 
         return $this->redirectToRoute('thread.show', [
@@ -173,14 +168,12 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{id}/pin", name="thread.pin")
      * @IsGranted("PIN", subject="thread")
      * @param Thread $thread
-     * @param EntityManagerInterface $em
+     * @param ThreadService $threadService
      * @return Response
      */
-    public function pin(Thread $thread, EntityManagerInterface $em): Response
+    public function pin(Thread $thread, ThreadService $threadService): Response
     {
-        $thread->setIsPin(true);
-        $em->flush();
-
+        $threadService->pin($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été épinglé !');
 
         return $this->redirectToRoute('thread.show', [
@@ -192,14 +185,12 @@ class ThreadController extends BaseController
      * @Route("/forums/threads/{id}/unpin", name="thread.unpin")
      * @IsGranted("PIN", subject="thread")
      * @param Thread $thread
-     * @param EntityManagerInterface $em
+     * @param ThreadService $threadService
      * @return Response
      */
-    public function unpin(Thread $thread, EntityManagerInterface $em): Response
+    public function unpin(Thread $thread, ThreadService $threadService): Response
     {
-        $thread->setIsPin(false);
-        $em->flush();
-
+        $threadService->unpin($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été détaché !');
 
         return $this->redirectToRoute('thread.show', [

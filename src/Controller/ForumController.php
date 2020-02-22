@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Forum;
 use App\Repository\ThreadRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\ForumService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,14 +31,12 @@ class ForumController extends BaseController
      * @Route("/forums/{id}-{slug}/lock", name="forum.lock")
      * @IsGranted("LOCK", subject="forum")
      * @param Forum $forum
-     * @param EntityManagerInterface $em
+     * @param ForumService $forumService
      * @return Response
      */
-    public function lock(Forum $forum, EntityManagerInterface $em): Response
+    public function lock(Forum $forum, ForumService $forumService): Response
     {
-        $forum->setIsLock(true);
-        $em->flush();
-
+        $forumService->lock($forum);
         $this->addCustomFlash('success', 'Forum', 'Le forum a été fermé !');
 
         return $this->redirectToRoute('forum.show', [
@@ -50,14 +48,12 @@ class ForumController extends BaseController
      * @Route("/forums/{id}-{slug}/unlock", name="forum.unlock")
      * @IsGranted("LOCK", subject="forum")
      * @param Forum $forum
-     * @param EntityManagerInterface $em
+     * @param ForumService $forumService
      * @return Response
      */
-    public function unlock(Forum $forum, EntityManagerInterface $em): Response
+    public function unlock(Forum $forum, ForumService $forumService): Response
     {
-        $forum->setIsLock(false);
-        $em->flush();
-
+        $forumService->unlock($forum);
         $this->addCustomFlash('success', 'Forum', 'Le forum a été ouvert !');
 
         return $this->redirectToRoute('forum.show', [

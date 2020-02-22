@@ -108,8 +108,43 @@ class ThreadService
     }
 
     /**
+     * @param Thread $thread
+     */
+    public function lock(Thread $thread): void
+    {
+        $thread->setIsLock(true);
+        $this->em->flush();
+    }
+
+    /**
+     * @param Thread $thread
+     */
+    public function unlock(Thread $thread): void
+    {
+        $thread->setIsLock(false);
+        $this->em->flush();
+    }
+
+    /**
+     * @param Thread $thread
+     */
+    public function pin(Thread $thread): void
+    {
+        $thread->setIsPin(true);
+        $this->em->flush();
+    }
+
+    /**
+     * @param Thread $thread
+     */
+    public function unpin(Thread $thread): void
+    {
+        $thread->setIsPin(false);
+        $this->em->flush();
+    }
+
+    /**
      * @param User $user
-     * @return void
      */
     public function deleteThreadsByUser(User $user): void
     {
@@ -120,7 +155,6 @@ class ThreadService
 
     /**
      * @param User $user
-     * @return void
      */
     public function setAuthorNullByUser(User $user): void
     {
