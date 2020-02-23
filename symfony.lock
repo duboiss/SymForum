@@ -153,6 +153,12 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.38"
     },
+    "gitonomy/gitlib": {
+        "version": "v1.2.0"
+    },
+    "jakub-onderka/php-parallel-lint": {
+        "version": "v1.0.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -208,6 +214,9 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpro/grumphp": {
+        "version": "v0.17.2"
+    },
     "phpstan/phpstan": {
         "version": "0.12.9"
     },
@@ -234,6 +243,9 @@
     },
     "sebastian/recursion-context": {
         "version": "3.0.0"
+    },
+    "seld/jsonlint": {
+        "version": "1.7.2"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",

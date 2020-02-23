@@ -1,0 +1,11 @@
+parameters:
+    tasks:
+        phplint: ~
+        phpstan:
+            level: 5
+            ignore_patterns: ['tests']
+        phpunitbridge: ~
+
+    ascii:
+        failed: ~
+        succeeded: ~
