@@ -31,7 +31,7 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setForum($forum);
 
             $this->faker->boolean(40) ? $thread->setIsLock(true) : $thread->setIsLock(false);
-            $this->faker->boolean(10) ? $thread->setIsPin(true) : $thread->setIsLock(false);
+            $this->faker->boolean(10) ? $thread->setIsPin(true) : $thread->setIsPin(false);
 
             $forum->incrementTotalThreads();
             $this->threads[] = $thread;
