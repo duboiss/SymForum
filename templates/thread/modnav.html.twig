@@ -1,0 +1,44 @@
+{% if is_granted('PIN', thread) %}
+    {% if thread.pin %}
+        <li>
+            <a href="{{ path('thread.unpin', {'id': thread.id}) }}" data-tooltip="tooltip"
+               title="Détacher le sujet">
+                <i class="fas fa-thumbtack rotate"></i>
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path('thread.pin', {'id': thread.id}) }}" data-tooltip="tooltip"
+               title="Épingler le sujet">
+                <i class="fas fa-thumbtack rotate"></i>
+            </a>
+        </li>
+    {% endif %}
+{% endif %}
+
+{% if is_granted('LOCK', thread) %}
+    {% if thread.lock %}
+        <li>
+            <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-tooltip="tooltip"
+               title="Ouvrir le sujet">
+                <i class="fas fa-lock-open rotate"></i>
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-tooltip="tooltip"
+               title="Fermer le sujet">
+                <i class="fas fa-lock rotate"></i>
+            </a>
+        </li>
+    {% endif %}
+{% endif %}
+
+{% if is_granted('DELETE', thread) %}
+    <li>
+        <a href="#" data-toggle="modal" data-target="#deleteModal" data-tooltip="tooltip"
+           title="Supprimer le sujet">
+            <i class="fas fa-trash-alt rotate"></i>
+        </a>
+    </li>
+{% endif %}

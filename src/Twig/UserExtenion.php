@@ -33,8 +33,8 @@ class UserExtenion extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('user_profile_link', [$this, 'userProfileLink'], ['is_safe' => ['html']]),
-            new TwigFunction('user_profile_role', [$this, 'userProfileRole'])
+            new TwigFunction('user_profile_link', [$this, 'getUserProfileLink'], ['is_safe' => ['html']]),
+            new TwigFunction('user_profile_role', [$this, 'getUserProfileRole'])
         ];
     }
 
@@ -44,7 +44,7 @@ class UserExtenion extends AbstractExtension
      * @param string|null $class
      * @return string
      */
-    public function userProfileLink(?User $user, string $text = null, string $class = null): string
+    public function getUserProfileLink(?User $user, string $text = null, string $class = null): string
     {
         if ($user) {
             $route = $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);
@@ -60,7 +60,7 @@ class UserExtenion extends AbstractExtension
      * @param User $user
      * @return string|null
      */
-    public function userProfileRole(User $user): ?string
+    public function getUserProfileRole(User $user): ?string
     {
         $roles = $user->getRoles();
 
