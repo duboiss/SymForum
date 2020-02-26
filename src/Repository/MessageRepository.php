@@ -55,16 +55,14 @@ class MessageRepository extends ServiceEntityRepository
 
     /**
      * @param Thread $thread
-     * @return Message[]
+     * @return QueryBuilder
      */
-    public function findMessagesByThreadWithAuthor(Thread $thread): array
+    public function findMessagesByThreadWithAuthorQb(Thread $thread): QueryBuilder
     {
         return $this->addWhereThreadQb($thread)
             ->select('m', 'author')
             ->leftJoin('m.author', 'author')
-            ->orderBy('m.publishedAt', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('m.publishedAt', 'ASC');
     }
 
     /**

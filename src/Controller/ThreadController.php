@@ -10,6 +10,7 @@ use App\Repository\MessageRepository;
 use App\Service\MessageService;
 use App\Service\ThreadService;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,12 +24,11 @@ class ThreadController extends BaseController
      * @param MessageRepository $messageRepository
      * @param Request $request
      * @param MessageService $messageService
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService): Response
+    public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator): Response
     {
-        $messages = $messageRepository->findMessagesByThreadWithAuthor($thread);
-
         $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
 
@@ -52,9 +52,17 @@ class ThreadController extends BaseController
             ]);
         }
 
+        $messages = $messageRepository->findMessagesByThreadWithAuthorQb($thread);
+
+        $pagination = $paginator->paginate(
+            $messages,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('thread/thread.html.twig', [
             'thread' => $thread,
-            'messages' => $messages,
+            'pagination' => $pagination,
             'form' => $form->createView()
         ]);
     }

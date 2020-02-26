@@ -3,14 +3,18 @@
 namespace App\Service;
 
 use App\Entity\Forum;
+use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThreadService
 {
+    const TOTAL_MESSAGES_BY_THREAD = 10;
+
     /** @var EntityManagerInterface */
     private $em;
 
@@ -23,12 +27,16 @@ class ThreadService
     /** @var AntispamService */
     private $antispamService;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService)
+    /* @var UrlGeneratorInterface */
+    private $urlGenerator;
+
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, UrlGeneratorInterface $urlGenerator)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
         $this->flashBag = $flashBag;
         $this->antispamService = $antispamService;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -165,5 +173,33 @@ class ThreadService
 
             $this->em->flush();
         }
+    }
+
+    /**
+     * @param Message $message
+     * @return int
+     */
+    public function getPageOfMessage(Message $message): int
+    {
+        $messages = $this->messageRepository->findBy(['thread' => $message->getThread()], ['publishedAt' => 'ASC']);
+        $key = array_search($message, $messages);
+
+        return (ceil(($key + 1) / self::TOTAL_MESSAGES_BY_THREAD));
+    }
+
+    /**
+     * @param Message $message
+     * @return string
+     */
+    public function getMessageLink(Message $message): string
+    {
+        $thread = $message->getThread();
+        $page = $this->getPageOfMessage($message);
+
+        return $this->urlGenerator->generate('thread.show', [
+            'slug' => $thread->getSlug(),
+            'page' => $page,
+            '_fragment' => $message->getId()
+        ]);
     }
 }

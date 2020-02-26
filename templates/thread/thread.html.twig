@@ -49,9 +49,13 @@
                     </ol>
                 </nav>
 
-                {% for message in messages %}
+                {{ knp_pagination_render(pagination) }}
+
+                {% for message in pagination %}
                     {{ include ('message/_message_card.html.twig', {displayActions: true}) }}
                 {% endfor %}
+
+                {{ knp_pagination_render(pagination) }}
 
                 {% if not thread.lock %}
                     {% if app.user %}

@@ -13,7 +13,7 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Message::class, 500, function (Message $message) {
+        $this->createMany(Message::class, 2500, function (Message $message) {
             /** @var Thread $thread */
             $thread = $this->getRandomReference(Thread::class);
 

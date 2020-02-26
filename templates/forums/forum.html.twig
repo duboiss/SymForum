@@ -53,7 +53,10 @@
                         <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ subforum.totalMessages }}</div>
                         <div class="col-lg-4 d-none d-lg-block">
                             {% if subforum.lastMessage %}
-                                {{ subforum.lastMessage.publishedAt|ago }} par {{ user_profile_link(subforum.lastMessage.author) }}
+                                {% set lastMessage = subforum.lastMessage %}
+
+                                <a href="{{ message_link(lastMessage) }}">{{ lastMessage.publishedAt|ago }}</a>
+                                par {{ user_profile_link(lastMessage.author) }}
                             {% else %}
                                 Aucun message
                             {% endif %}
@@ -88,8 +91,10 @@
                             </div>
                             <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ thread.getTotalAnswers }}</div>
                             <div class="col-lg-4 d-none d-lg-block">
-                                <a href="{{ path('thread.show', {'slug': thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
-                                par {{ user_profile_link(thread.lastMessage.author) }}
+                                {% set lastMessage = thread.lastMessage %}
+
+                                <a href="{{ message_link(lastMessage) }}">{{ lastMessage.publishedAt|ago }}</a>
+                                par {{ user_profile_link(lastMessage.author) }}
                             </div>
                         </div>
                     {% else %}
