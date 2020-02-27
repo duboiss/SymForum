@@ -13,8 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThreadService
 {
-    const TOTAL_MESSAGES_BY_THREAD = 10;
-
     /** @var EntityManagerInterface */
     private $em;
 
@@ -30,13 +28,17 @@ class ThreadService
     /* @var UrlGeneratorInterface */
     private $urlGenerator;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, UrlGeneratorInterface $urlGenerator)
+    /* @var OptionService */
+    private $optionService;
+
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, UrlGeneratorInterface $urlGenerator, OptionService $optionService)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
         $this->flashBag = $flashBag;
         $this->antispamService = $antispamService;
         $this->urlGenerator = $urlGenerator;
+        $this->optionService = $optionService;
     }
 
     /**
@@ -184,7 +186,7 @@ class ThreadService
         $messages = $this->messageRepository->findBy(['thread' => $message->getThread()], ['publishedAt' => 'ASC']);
         $key = array_search($message, $messages);
 
-        return (ceil(($key + 1) / self::TOTAL_MESSAGES_BY_THREAD));
+        return (ceil(($key + 1) / (int) $this->optionService->get("total_messages_by_thread", "10")));
     }
 
     /**

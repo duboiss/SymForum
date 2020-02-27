@@ -8,6 +8,7 @@ use App\Form\MessageType;
 use App\Form\ThreadType;
 use App\Repository\MessageRepository;
 use App\Service\MessageService;
+use App\Service\OptionService;
 use App\Service\ThreadService;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,9 +26,10 @@ class ThreadController extends BaseController
      * @param Request $request
      * @param MessageService $messageService
      * @param PaginatorInterface $paginator
+     * @param OptionService $optionService
      * @return Response
      */
-    public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator): Response
+    public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator, OptionService $optionService): Response
     {
         $form = $this->createForm(MessageType::class);
         $form->handleRequest($request);
@@ -57,7 +59,7 @@ class ThreadController extends BaseController
         $pagination = $paginator->paginate(
             $messages,
             $request->query->getInt('page', 1),
-            10
+            (int) $optionService->get("total_messages_by_thread", "10"),
         );
 
         return $this->render('thread/thread.html.twig', [
