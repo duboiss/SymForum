@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ActivityListener implements EventSubscriberInterface
+class ActivitySubscriber implements EventSubscriberInterface
 {
 
     /** @var EntityManagerInterface */
