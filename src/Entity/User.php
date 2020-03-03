@@ -101,6 +101,11 @@ class User implements UserInterface
         $this->messages = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return (string) $this->pseudo;
+    }
+
     public function isActiveNow(): bool
     {
         $delay = new DateTime('5 minutes ago');

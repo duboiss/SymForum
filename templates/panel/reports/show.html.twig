@@ -1,19 +1,19 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% set reportedByPseudo = report.reportedBy.pseudo ?? 'Compte supprimé' %}
+{% set reported_by_pseudo = report.reportedBy ?? 'Compte supprimé' %}
 
-{% block title %}Signalement de {{ reportedByPseudo }}{% endblock %}
+{% block title %}Signalement de {{ reported_by_pseudo }}{% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
             <li class="breadcrumb-item"><a href="{{ path('panel.reports') }}">Signalements</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Signalement de {{ reportedByPseudo }}</li>
+            <li class="breadcrumb-item active" aria-current="page">Signalement de {{ reported_by_pseudo }}</li>
         </ol>
     </nav>
 
-    <h1><span>Signalement de {{ reportedByPseudo }}</span>
+    <h1><span>Signalement de {{ reported_by_pseudo }}</span>
         {% if not report.isTreated %}
             <a class="btn btn-primary btn-sm" href="{{ path('panel.report.close', {'id': report.id}) }}">
                 <i class="fas fa-check"></i> Clôturer

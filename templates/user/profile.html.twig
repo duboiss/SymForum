@@ -1,7 +1,7 @@
 {% extends 'layouts/full-width.html.twig' %}
 
 {% block title %}
-    {{ app.user.pseudo == user.pseudo ? 'Mon profil' : 'Profil de ' ~ user.pseudo }}
+    {{ app.user == user ? 'Mon profil' : 'Profil de ' ~ user }}
 {% endblock %}
 
 {% set role = user_profile_role(user) %}
@@ -9,7 +9,7 @@
 {% block content %}
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">
-            <h3>{{ user.pseudo }}</h3>
+            <h3>{{ user }}</h3>
             <p>
                 {% if role %}
                     <strong class="text-danger">{{ role }}</strong><br>
@@ -35,7 +35,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a href="{{ path('user.threads', {'slug': user.slug}) }}">{{ app.user.pseudo == user.pseudo ? 'Voir mes sujets' : 'Voir tous les sujets crées par ' ~ user.pseudo }}</a>
+                <a href="{{ path('user.threads', {'slug': user.slug}) }}">{{ app.user == user ? 'Voir mes sujets' : 'Voir tous les sujets crées par ' ~ user }}</a>
             {% else %}
                 Cet utilisateur n'a pas encore crée de sujet
             {% endif %}
@@ -51,7 +51,7 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a href="{{ path('user.messages', {'slug': user.slug}) }}">{{ app.user.pseudo == user.pseudo ? 'Voir mes participations' : 'Voir toutes les participations de ' ~ user.pseudo }}</a>
+                <a href="{{ path('user.messages', {'slug': user.slug}) }}">{{ app.user == user ? 'Voir mes participations' : 'Voir toutes les participations de ' ~ user }}</a>
             {% else %}
                 Cet utilisateur n'a pas encore publié de message
             {% endif %}

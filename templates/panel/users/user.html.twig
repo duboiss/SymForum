@@ -1,6 +1,6 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Détails sur {{ user.pseudo }}{% endblock %}
+{% block title %}Détails sur {{ user }}{% endblock %}
 
 {% block content %}
     <div class="modal fade" id="deleteModal">
@@ -14,7 +14,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Êtes-vous certain de vouloir supprimer {{ user.pseudo }} ?</p>
+                        <p>Êtes-vous certain de vouloir supprimer {{ user }} ?</p>
                         <div class="custom-control custom-checkbox mb-3">
                             <input type="checkbox" class="custom-control-input" id="deleteData" name="deleteData"
                                    aria-describedby="deleteDataHelp" checked>
@@ -38,12 +38,12 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
             <li class="breadcrumb-item"><a href="{{ path('panel.users') }}">Utilisateurs</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ user.pseudo }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ user }}</li>
         </ol>
     </nav>
 
     <h1>
-        <span>{{ user.pseudo }}</span>
+        <span>{{ user }}</span>
         <a class="btn btn-warning btn-sm" href="{{ path('panel.user.reset', {'slug': user.slug}) }}"><i
                     class="fas fa-undo"></i> Remettre à zéro</a>
         <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#deleteModal"><i

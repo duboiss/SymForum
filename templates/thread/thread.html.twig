@@ -1,6 +1,6 @@
 {% extends 'layouts/modnav.html.twig' %}
 
-{% block title %}{{ thread.title }} par {{ thread.author.pseudo ?? 'Compte supprimé' }}{% endblock %}
+{% block title %}{{ thread.title }} par {{ thread.author ?? 'Compte supprimé' }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -16,7 +16,7 @@
 {% block body %}
     {{ parent() }}
 
-    {{ include ('thread/modals.html.twig') }}
+    {{ include('thread/modals.html.twig') }}
 
     {% if app.user %}
         <div class="toast-notification">
@@ -52,7 +52,7 @@
                 {{ knp_pagination_render(pagination) }}
 
                 {% for message in pagination %}
-                    {{ include ('message/_message_card.html.twig', {displayActions: true}) }}
+                    {{ include('message/_message_card.html.twig', {displayActions: true}) }}
                 {% endfor %}
 
                 {{ knp_pagination_render(pagination) }}
@@ -61,7 +61,7 @@
                     {% if app.user %}
                         <div class="mb-3">
                             <p class="text-center">
-                                Connecté en tant que {{ app.user.pseudo }}, vous pouvez répondre :
+                                Connecté en tant que {{ app.user }}, vous pouvez répondre :
                             </p>
                             {{ include('partials/_simple_form.twig', {button_label: 'Envoyer'}) }}
                         </div>

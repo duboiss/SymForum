@@ -1,14 +1,14 @@
 {% extends 'layouts/full-width.html.twig' %}
 
 {% block title %}
-    {{ app.user.pseudo == user.pseudo ? 'Mes messages' : 'Profil de ' ~ user.pseudo ~ ' : messages' }}
+    {{ app.user == user ? 'Mes messages' : 'Profil de ' ~ user ~ ' : messages' }}
 {% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('page.members') }}">Membres</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user.pseudo }}</a>
+            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user }}</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Messages publiés</li>
         </ol>
@@ -16,11 +16,11 @@
 
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">
-            <h3>{{ user.pseudo }}
+            <h3>{{ user }}
                 - {{ user.messages|length }} {{ user.messages|length <= 1 ? 'message publié' : 'messages publiés' }}</h3>
 
             {% if pagination.getTotalItemCount > 0 %}
-                <table class="table table-hover">
+                <table class="table table-hover table-sm">
                     <thead>
                     <tr>
                         <th scope="col" style="width: 20%">Publié</th>

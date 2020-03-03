@@ -1,14 +1,14 @@
 {% extends 'layouts/full-width.html.twig' %}
 
 {% block title %}
-    {{ app.user.pseudo == user.pseudo ? 'Mes sujets' : 'Profil de ' ~ user.pseudo ~ ' : sujets' }}
+    {{ app.user == user ? 'Mes sujets' : 'Profil de ' ~ user ~ ' : sujets' }}
 {% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('page.members') }}">Membres</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user.pseudo }}</a>
+            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user }}</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Sujets créés</li>
         </ol>
@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">
-            <h3>{{ user.pseudo }}
+            <h3>{{ user }}
                 - {{ user.threads|length }} {{ user.threads|length <= 1 ? 'sujet crée' : 'sujets créés' }}</h3>
 
             {% if pagination.getTotalItemCount > 0 %}
