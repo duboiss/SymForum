@@ -412,7 +412,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "6240c6d43e8237a32452f057f81816820fd56ab6"
+            "ref": "877bdb4223245783d00ed1f7429aa7ebc606d914"
         },
         "files": [
             "./config/packages/dev/monolog.yaml",
@@ -432,14 +432,13 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "4.3",
-            "ref": "b0582341f1df39aaf3a9a866cdbe49937da35984"
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
         },
         "files": [
             "./.env.test",
             "./bin/phpunit",
-            "./config/bootstrap.php",
             "./phpunit.xml.dist",
-            "./tests/.gitignore"
+            "./tests/bootstrap.php"
         ]
     },
     "symfony/polyfill-intl-grapheme": {
@@ -481,12 +480,11 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "4.2",
-            "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
+            "ref": "683dcb08707ba8d41b7e34adb0344bfd68d248a7"
         },
         "files": [
-            "./config/packages/dev/routing.yaml",
+            "./config/packages/prod/routing.yaml",
             "./config/packages/routing.yaml",
-            "./config/packages/test/routing.yaml",
             "./config/routes.yaml"
         ]
     },
