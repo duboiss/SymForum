@@ -8,7 +8,7 @@
         "antishov/doctrine-extensions-bundle": "^1.4",
         "exercise/htmlpurifier-bundle": "^2.0",
         "friendsofsymfony/jsrouting-bundle": "^2.5",
-        "knplabs/knp-paginator-bundle": "^4.1",
+        "knplabs/knp-paginator-bundle": "^5.1",
         "knplabs/knp-time-bundle": "^1.9",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony-bundles/json-request-bundle": "^3.0",
