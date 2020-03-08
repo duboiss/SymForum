@@ -64,9 +64,7 @@ class MessageService
             return true;
         }
 
-        $thread = $message->getThread();
-
-        if ($thread->isLock()) {
+        if ($message->getThread()->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
             return false;
         }
