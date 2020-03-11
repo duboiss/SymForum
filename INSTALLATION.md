@@ -33,7 +33,6 @@ $ yarn encore prod
 Launch server :
 ```sh
 $ symfony serve
-// or php bin/console server:run
 ```
 
 Enjoy !

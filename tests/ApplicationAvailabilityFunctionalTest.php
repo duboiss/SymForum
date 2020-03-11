@@ -13,14 +13,10 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
 {
     use FixturesTrait, NeedLoginTrait;
 
-    /**
-     * @var KernelBrowser
-     */
+    /** @var KernelBrowser */
     private $client;
 
-    /**
-     * @var User[]
-     */
+    /** @var User[] */
     private $users = [];
 
     protected function setUp(): void
