@@ -31,9 +31,12 @@ fixtures: vendor ## Load fixtures - requires database with tables
 
 ##
 ## Lint
-.PHONY: lint lint-twig lint-xliff lint-yaml
+.PHONY: lint lint-container lint-twig lint-xliff lint-yaml
 
-lint: vendor lint-twig lint-xliff lint-yaml ## Run all lint commands
+lint: vendor lint-container lint-twig lint-xliff lint-yaml ## Run all lint commands
+
+lint-container: vendor ## Checks the services defined in the container
+	@$(SYMFONY) lint:container
 
 lint-twig: vendor ## Check twig syntax in /templates folder (prod environment)
 	@$(SYMFONY) lint:twig templates -e prod
@@ -126,5 +129,7 @@ purge: ## Purge cache and logs
 
 ##
 ## Help
+.PHONY: help
+
 help: ## List of all commands
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
