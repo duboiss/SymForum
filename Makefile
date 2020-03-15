@@ -9,7 +9,7 @@ YARN = yarn
 
 ##
 ## Database
-.PHONY: db db-reset db-cache fixtures
+.PHONY: db db-reset db-cache db-validate fixtures
 
 db: vendor db-reset fixtures ## Reset database and load fixtures
 
@@ -24,6 +24,9 @@ db-cache: vendor ## Clear doctrine database cache
 	@$(SYMFONY) doctrine:cache:clear-query
 	@$(SYMFONY) doctrine:cache:clear-result
 	@echo "Cleared doctrine cache"
+
+db-validate: vendor ## Checks doctrine's mapping configurations are valid
+	@$(SYMFONY) doctrine:schema:validate --skip-sync -vvv --no-interaction
 
 fixtures: vendor ## Load fixtures - requires database with tables
 	@$(SYMFONY) d:f:l --no-interaction
@@ -73,7 +76,7 @@ vendor: composer.lock ## Install dependencies in /vendor folder
 
 ##
 ## Project
-.PHONY: install start update cache-clear cache-warmup clean reset
+.PHONY: install start update cache-clear cache-warmup ci clean reset
 
 install: db assets ## Install project dependencies
 
@@ -88,6 +91,8 @@ cache-clear: vendor ## Clear cache for current environment
 
 cache-warmup: vendor cache-clear ## Clear and warm up cache for current environment
 	@$(SYMFONY) cache:warmup
+
+ci: db-validate lint security tests ## Continuous integration
 
 clean: purge ## Delete all dependencies
 	@rm -rf .env.local node_modules var vendor
