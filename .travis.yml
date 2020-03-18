@@ -22,4 +22,5 @@ before_script:
     - php bin/console doctrine:database:create --env=test
 
 script:
+    - ./vendor/bin/phpstan analyse
     - ./vendor/bin/simple-phpunit
