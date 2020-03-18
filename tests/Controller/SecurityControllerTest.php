@@ -11,7 +11,7 @@ class SecurityControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    /** @var KernelBrowser|null  */
+    /** @var KernelBrowser|null */
     private $client = null;
 
     public function setUp()
