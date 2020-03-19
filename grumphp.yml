@@ -2,7 +2,7 @@ parameters:
     tasks:
         phplint: ~
         phpstan:
-            level: 5
+            level: 6
             ignore_patterns: ['tests']
         phpunitbridge: ~
         twigcs:

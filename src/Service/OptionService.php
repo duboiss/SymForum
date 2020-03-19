@@ -14,7 +14,7 @@ class OptionService
     /** @var CoreOptionRepository */
     private $coreOptionRepository;
 
-    /** @var array */
+    /** @var CoreOption[] */
     private $cache = [];
 
     public function __construct(EntityManagerInterface $em, CoreOptionRepository $coreOptionRepository)
@@ -22,7 +22,6 @@ class OptionService
         $this->em = $em;
         $this->coreOptionRepository = $coreOptionRepository;
     }
-
 
     /**
      * @param string $optionName

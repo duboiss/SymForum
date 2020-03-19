@@ -3,7 +3,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
 
 parameters:
-  level: 5
+  level: 6
   paths:
     - src
   excludes_analyse:
@@ -12,3 +12,5 @@ parameters:
       container_xml_path: 'var/cache/dev/App_KernelDevDebugContainer.xml'
   checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false
+  ignoreErrors:
+      - '#Property [A-z\\_]+::\$[A-z0-9_]+ has no typehint specified.#'

@@ -31,9 +31,7 @@ class SecurityController extends BaseController
     /**
      * @Route("/logout", name="security.logout", methods={"GET"})
      */
-    public function logout()
-    {
-    }
+    public function logout(): void {}
 
     /**
      * @Route("/logged-out", name="security.logged.out")

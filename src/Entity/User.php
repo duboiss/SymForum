@@ -190,6 +190,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -209,7 +213,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function eraseCredentials() {}
+    public function eraseCredentials():void {}
 
     /**
      * @return Collection|Thread[]

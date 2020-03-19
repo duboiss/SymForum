@@ -25,7 +25,7 @@ class MessageVoter extends Voter
             && $subject instanceof Message;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
     {
         /** @var User $user */
         $user = $token->getUser();

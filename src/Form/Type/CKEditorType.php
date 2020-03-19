@@ -10,14 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CKEditorType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => false
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $attr = $view->vars['attr'];
         $class = isset($attr['class']) ? $attr['class'].' ' : '';

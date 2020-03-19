@@ -43,7 +43,7 @@ class ThreadRepository extends ServiceEntityRepository
 
     /**
      * @param Forum $forum
-     * @return array
+     * @return Thread[]
      */
     public function findThreadsByForum(Forum $forum): array
     {

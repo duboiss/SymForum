@@ -95,7 +95,7 @@ class Forum
         $this->threads = new ArrayCollection();
     }
 
-    public function getRootCategory(): Category
+    public function getRootCategory(): ?Category
     {
         if (($parent = $this->getParent()) !== null) {
             return $parent->getRootCategory();

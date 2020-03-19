@@ -185,8 +185,9 @@ class ThreadService
     {
         $messages = $this->messageRepository->findBy(['thread' => $message->getThread()], ['publishedAt' => 'ASC']);
         $key = array_search($message, $messages);
+        $totalMessagesByThread = (int)$this->optionService->get("total_messages_by_thread", "10");
 
-        return (ceil(($key + 1) / (int) $this->optionService->get("total_messages_by_thread", "10")));
+        return (int)(ceil(((int)$key + 1) / $totalMessagesByThread));
     }
 
     /**

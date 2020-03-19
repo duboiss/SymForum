@@ -29,13 +29,7 @@ class ReportFixtures extends BaseFixtures implements DependentFixtureInterface
         $manager->flush();
     }
 
-    /**
-     * This method must return an array of fixtures classes
-     * on which the implementing class depends on
-     *
-     * @return array
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             MessageFixtures::class

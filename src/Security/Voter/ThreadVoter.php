@@ -25,7 +25,7 @@ class ThreadVoter extends Voter
             && $subject instanceof Thread;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
     {
         /** @var User $user */
         $user = $token->getUser();

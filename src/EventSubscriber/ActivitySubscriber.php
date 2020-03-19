@@ -35,7 +35,7 @@ class ActivitySubscriber implements EventSubscriberInterface
         $this->userRepository = $userRepository;
     }
 
-    public function onTerminate()
+    public function onTerminate(): void
     {
         if ($this->tokenStorage->getToken()) {
             /** @var User $user */

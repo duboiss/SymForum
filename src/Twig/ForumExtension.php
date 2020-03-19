@@ -14,9 +14,6 @@ class ForumExtension extends AbstractExtension
     /** @var UrlGeneratorInterface */
     private $urlGenerator;
 
-    /**
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
@@ -34,23 +31,20 @@ class ForumExtension extends AbstractExtension
 
     /**
      * @param Category|Forum $forumOrCategory
-     * @param array $parts
-     * @return array
+     * @param string[] $parts
+     * @return string[]
      */
     public function getBreadcrumbParts($forumOrCategory, array &$parts = []): array
     {
         if ($forumOrCategory instanceof Category) {
             $url = $this->urlGenerator->generate('category.show', ['slug' => $forumOrCategory->getSlug()]);
-            $title = $forumOrCategory->getTitle();
         } elseif ($forumOrCategory instanceof Forum) {
-            $url = $this->urlGenerator->generate('forum.show', [
-                'slug' => $forumOrCategory->getSlug()
-            ]);
-            $title = $forumOrCategory->getTitle();
+            $url = $this->urlGenerator->generate('forum.show', ['slug' => $forumOrCategory->getSlug()]);
         } else {
             throw new InvalidArgumentException('Filtered object must be an instance of Forum or Category.');
         }
 
+        $title = $forumOrCategory->getTitle();
         array_unshift($parts, ['url' => $url, 'title' => $title]);
 
         if ($forumOrCategory instanceof Forum && (($parent = $forumOrCategory->getParent()) || ($parent = $forumOrCategory->getCategory()))) {

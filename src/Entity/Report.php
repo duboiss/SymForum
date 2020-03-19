@@ -104,7 +104,7 @@ class Report
         return $this->reportedBy;
     }
 
-    public function setReportedBy($reportedBy): self
+    public function setReportedBy(?User $reportedBy): self
     {
         $this->reportedBy = $reportedBy;
 

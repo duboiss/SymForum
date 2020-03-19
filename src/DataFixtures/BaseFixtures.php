@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
 use Faker\Factory;
 use Faker\Generator;
 
@@ -18,7 +19,7 @@ abstract class BaseFixtures extends Fixture
     /** @var array */
     private $referencesIndex = [];
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
         $this->faker = Factory::create();
@@ -26,8 +27,13 @@ abstract class BaseFixtures extends Fixture
         $this->loadData($manager);
     }
 
-    abstract protected function loadData(ObjectManager $manager);
+    abstract protected function loadData(ObjectManager $manager): void;
 
+    /**
+     * @param string $className
+     * @param int $count
+     * @param callable $factory
+     */
     protected function createMany(string $className, int $count, callable $factory): void
     {
         for ($i = 0; $i < $count; $i++) {
@@ -39,6 +45,11 @@ abstract class BaseFixtures extends Fixture
         }
     }
 
+    /**
+     * @param string $className
+     * @return object
+     * @throws Exception
+     */
     protected function getRandomReference(string $className)
     {
         if (!isset($this->referencesIndex[$className])) {
@@ -52,7 +63,7 @@ abstract class BaseFixtures extends Fixture
         }
 
         if (empty($this->referencesIndex[$className])) {
-            throw new \Exception(sprintf('Cannot find any references for class "%s"', $className));
+            throw new Exception(sprintf('Cannot find any references for class "%s"', $className));
         }
 
         $randomReferenceKey = $this->faker->randomElement($this->referencesIndex[$className]);
@@ -60,6 +71,12 @@ abstract class BaseFixtures extends Fixture
         return $this->getReference($randomReferenceKey);
     }
 
+    /**
+     * @param string $className
+     * @param int $count
+     * @return array
+     * @throws Exception
+     */
     protected function getRandomReferences(string $className, int $count): array
     {
         $references = [];

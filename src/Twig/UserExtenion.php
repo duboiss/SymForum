@@ -19,9 +19,6 @@ class UserExtenion extends AbstractExtension
     /** @var UrlGeneratorInterface */
     private $generator;
 
-    /**
-     * @param UrlGeneratorInterface $generator
-     */
     public function __construct(UrlGeneratorInterface $generator)
     {
         $this->generator = $generator;

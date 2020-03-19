@@ -162,12 +162,12 @@ class Thread
         return $this;
     }
 
-    public function isPin()
+    public function isPin(): bool
     {
         return $this->isPin;
     }
 
-    public function setIsPin($isPin): self
+    public function setIsPin(bool $isPin): self
     {
         $this->isPin = $isPin;
 
