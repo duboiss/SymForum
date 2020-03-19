@@ -42,7 +42,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ path('forums.index') }}">Forums</a></li>
-                        {% for part in thread.forum | breadcrumb %}
+                        {% for part in thread.forum|breadcrumb %}
                             <li class="breadcrumb-item"><a href="{{ part.url }}">{{ part.title }}</a></li>
                         {% endfor %}
                         <li class="breadcrumb-item active" aria-current="page">{{ thread.title }}</li>

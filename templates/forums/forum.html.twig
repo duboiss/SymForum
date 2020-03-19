@@ -15,7 +15,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ path('forums.index') }}">Forums</a></li>
-                        {% for part in forum | breadcrumb %}
+                        {% for part in forum|breadcrumb %}
                             {% if loop.last %}
                                 <li class="breadcrumb-item active" aria-current="page">{{ part.title }}</li>
                             {% else %}
@@ -53,10 +53,10 @@
                         <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ subforum.totalMessages }}</div>
                         <div class="col-lg-4 d-none d-lg-block">
                             {% if subforum.lastMessage %}
-                                {% set lastMessage = subforum.lastMessage %}
+                                {% set last_message = subforum.lastMessage %}
 
-                                <a href="{{ message_link(lastMessage) }}">{{ lastMessage.publishedAt|ago }}</a>
-                                par {{ user_profile_link(lastMessage.author) }}
+                                <a href="{{ message_link(last_message) }}">{{ last_message.publishedAt|ago }}</a>
+                                par {{ user_profile_link(last_message.author) }}
                             {% else %}
                                 Aucun message
                             {% endif %}
@@ -91,10 +91,10 @@
                             </div>
                             <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ thread.getTotalAnswers }}</div>
                             <div class="col-lg-4 d-none d-lg-block">
-                                {% set lastMessage = thread.lastMessage %}
+                                {% set last_message = thread.lastMessage %}
 
-                                <a href="{{ message_link(lastMessage) }}">{{ lastMessage.publishedAt|ago }}</a>
-                                par {{ user_profile_link(lastMessage.author) }}
+                                <a href="{{ message_link(last_message) }}">{{ last_message.publishedAt|ago }}</a>
+                                par {{ user_profile_link(last_message.author) }}
                             </div>
                         </div>
                     {% else %}

@@ -28,7 +28,7 @@
         <div class="col col-lg-6 col-md-6 col-sm-6">
             <h4>Signalement</h4>
             <p>
-                Statut : {{ report.isTreated ?  'Traité' : 'En attente de traitement' }}<br>
+                Statut : {{ report.isTreated ? 'Traité' : 'En attente de traitement' }}<br>
                 Date : {{ report.reportedAt|date('d/m/Y à H:i:s') }}<br>
                 Signalé par : {{ user_profile_link(report.reportedBy) }}<br>
                 Raison : {{ report.reason }}

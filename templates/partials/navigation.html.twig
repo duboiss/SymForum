@@ -6,9 +6,9 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            {% set currentRoute = app.request.get('_route') %}
+            {% set current_route = app.request.get('_route') %}
 
-            <li class="nav-item{{ currentRoute starts with 'forum' or currentRoute starts with 'category' or currentRoute starts with 'thread' ? ' active' }}">
+            <li class="nav-item{{ current_route starts with 'forum' or current_route starts with 'category' or current_route starts with 'thread' ? ' active' }}">
                 <a class="nav-link" href="{{ path('forums.index') }}">Forums</a>
             </li>
 
@@ -19,7 +19,7 @@
                     <a class="nav-link" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                 </li>
                 {% if is_granted('ROLE_MODERATOR') %}
-                    <li class="nav-item{{ currentRoute starts with 'panel' ? ' active' }}">
+                    <li class="nav-item{{ current_route starts with 'panel' ? ' active' }}">
                         <a class="nav-link" href="{{ path('panel.homepage') }}">Panel</a>
                     </li>
                 {% endif %}

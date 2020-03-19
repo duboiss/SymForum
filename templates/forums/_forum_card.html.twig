@@ -11,9 +11,9 @@
         <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{{ forum.totalMessages }}</div>
         <div class="col-lg-3 d-none d-lg-block">
             {% if forum.lastMessage %}
-                {% set lastMessage = forum.lastMessage %}
+                {% set last_message = forum.lastMessage %}
 
-                <a href="{{ message_link(lastMessage) }}">{{ lastMessage.publishedAt|ago }}</a> par {{ user_profile_link(lastMessage.author) }}
+                <a href="{{ message_link(last_message) }}">{{ last_message.publishedAt|ago }}</a> par {{ user_profile_link(last_message.author) }}
             {% else %}
                 Aucun message
             {% endif %}

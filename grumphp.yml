@@ -5,6 +5,8 @@ parameters:
             level: 5
             ignore_patterns: ['tests']
         phpunitbridge: ~
+        twigcs:
+            path: 'templates'
 
     ascii:
         failed: ~

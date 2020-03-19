@@ -144,6 +144,9 @@
             "./config/routes/fos_js_routing.yaml"
         ]
     },
+    "friendsoftwig/twigcs": {
+        "version": "v3.2.2"
+    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
@@ -219,6 +222,9 @@
     },
     "phpstan/phpstan-symfony": {
         "version": "0.12.4"
+    },
+    "pimple/pimple": {
+        "version": "v3.3.0"
     },
     "psr/cache": {
         "version": "1.0.1"
