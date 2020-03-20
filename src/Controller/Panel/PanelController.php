@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/panel")
  */
-class HomePanelController extends BaseController
+class PanelController extends BaseController
 {
     /**
      * @Route("", name="panel.homepage")

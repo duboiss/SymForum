@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Forum;
+use App\Repository\ForumRepository;
 use App\Repository\ThreadRepository;
 use App\Service\ForumService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -21,9 +23,25 @@ class ForumController extends BaseController
     {
         $threads = $threadRepository->findThreadsByForum($forum);
 
-        return $this->render('forums/forum.html.twig', [
+        return $this->render('forum/show.html.twig', [
             'forum' => $forum,
             'threads' => $threads
+        ]);
+    }
+
+    /**
+     * @Route("/forums/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"})
+     * @param Category $category
+     * @param ForumRepository $forumRepository
+     * @return Response
+     */
+    public function category(Category $category, ForumRepository $forumRepository): Response
+    {
+        $forums = $forumRepository->findForumsByCategory($category);
+
+        return $this->render('forum/category.html.twig', [
+            'category' => $category,
+            'forums' => $forums,
         ]);
     }
 

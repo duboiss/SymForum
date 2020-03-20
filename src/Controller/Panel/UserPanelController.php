@@ -34,7 +34,7 @@ class UserPanelController extends BaseController
             30
         );
 
-        return $this->render('panel/users/index.html.twig', [
+        return $this->render('panel/user/index.html.twig', [
             'pagination' => $pagination
         ]);
     }
@@ -46,7 +46,7 @@ class UserPanelController extends BaseController
      */
     public function details(User $user): Response
     {
-        return $this->render('panel/users/user.html.twig', [
+        return $this->render('panel/user/details.html.twig', [
             'user' => $user
         ]);
     }

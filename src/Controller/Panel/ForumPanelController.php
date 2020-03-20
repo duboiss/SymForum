@@ -23,7 +23,7 @@ class ForumPanelController extends BaseController
     {
         $forums = $forumRepository->findForumsWithCategories();
 
-        return $this->render('panel/forums.html.twig', [
+        return $this->render('panel/forum/index.html.twig', [
             'forums' => $forums
         ]);
     }

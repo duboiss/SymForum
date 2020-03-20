@@ -36,7 +36,7 @@ class ReportPanelController extends BaseController
             25
         );
 
-        return $this->render('panel/reports/index.html.twig', [
+        return $this->render('panel/report/index.html.twig', [
             'pagination' => $pagination,
             'nbUntreatedReports' => $nbUntreatedReports
         ]);
@@ -52,7 +52,7 @@ class ReportPanelController extends BaseController
     {
         $messageReports = $reportRepository->findByMessage($report->getMessage(), $report->getId());
 
-        return $this->render('panel/reports/show.html.twig', [
+        return $this->render('panel/report/show.html.twig', [
             'report' => $report,
             'messageReports' => $messageReports
         ]);

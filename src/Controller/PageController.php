@@ -35,7 +35,7 @@ class PageController extends BaseController
      */
     public function forums(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
-        return $this->render('pages/index.html.twig', [
+        return $this->render('pages/forums.html.twig', [
             'categories' => $categoriesRepo->findAllCategories(),
             'onlineUsers' => $userRepository->findOnlineUsers(),
             'maxOnlineUsers' => $optionService->get("max_online_users", "0"),

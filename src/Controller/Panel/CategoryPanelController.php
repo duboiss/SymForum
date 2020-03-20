@@ -27,7 +27,7 @@ class CategoryPanelController extends BaseController
     {
         $categories = $categoryRepository->findAll();
 
-        return $this->render('panel/categories/index.html.twig', [
+        return $this->render('panel/category/index.html.twig', [
             'categories' => $categories
         ]);
     }
@@ -38,7 +38,7 @@ class CategoryPanelController extends BaseController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function add(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
@@ -52,7 +52,7 @@ class CategoryPanelController extends BaseController
             return $this->redirectToRoute('panel.categories');
         }
 
-        return $this->render('panel/categories/new.html.twig', [
+        return $this->render('panel/category/new.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -75,7 +75,7 @@ class CategoryPanelController extends BaseController
             return $this->redirectToRoute('panel.categories');
         }
 
-        return $this->render('panel/categories/edit.html.twig', [
+        return $this->render('panel/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView()
         ]);

@@ -62,7 +62,7 @@ class ThreadController extends BaseController
             (int) $optionService->get("total_messages_by_thread", "10"),
         );
 
-        return $this->render('thread/thread.html.twig', [
+        return $this->render('thread/show.html.twig', [
             'thread' => $thread,
             'pagination' => $pagination,
             'form' => $form->createView()
@@ -78,7 +78,7 @@ class ThreadController extends BaseController
      * @param MessageService $messageService
      * @return Response
      */
-    public function create(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
+    public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
     {
         $user = $this->getUser();
 
