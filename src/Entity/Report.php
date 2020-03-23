@@ -63,7 +63,7 @@ class Report
         return $this->id;
     }
 
-    public function getMessage(): ?Message
+    public function getMessage(): Message
     {
         return $this->message;
     }

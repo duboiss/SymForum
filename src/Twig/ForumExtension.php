@@ -31,7 +31,7 @@ class ForumExtension extends AbstractExtension
 
     /**
      * @param Category|Forum $forumOrCategory
-     * @param string[] $parts
+     * @param array $parts
      * @return string[]
      */
     public function getBreadcrumbParts($forumOrCategory, array &$parts = []): array

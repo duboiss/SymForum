@@ -138,7 +138,7 @@ class Thread
         return $this;
     }
 
-    public function getForum(): ?Forum
+    public function getForum(): Forum
     {
         return $this->forum;
     }
@@ -174,7 +174,7 @@ class Thread
         return $this;
     }
 
-    public function getLastMessage(): ?Message
+    public function getLastMessage(): Message
     {
         return $this->lastMessage;
     }

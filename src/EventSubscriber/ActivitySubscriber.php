@@ -9,8 +9,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ActivitySubscriber implements EventSubscriberInterface
 {
@@ -18,8 +17,8 @@ class ActivitySubscriber implements EventSubscriberInterface
     /** @var EntityManagerInterface */
     private $em;
 
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    /** @var Security */
+    private $security;
 
     /** @var OptionService */
     private $optionService;
@@ -27,32 +26,30 @@ class ActivitySubscriber implements EventSubscriberInterface
     /** @var UserRepository */
     private $userRepository;
 
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, OptionService $optionService, UserRepository $userRepository)
+    public function __construct(EntityManagerInterface $em, Security $security, OptionService $optionService, UserRepository $userRepository)
     {
         $this->em = $em;
-        $this->tokenStorage = $tokenStorage;
+        $this->security = $security;
         $this->optionService = $optionService;
         $this->userRepository = $userRepository;
     }
 
     public function onTerminate(): void
     {
-        if ($this->tokenStorage->getToken()) {
-            /** @var User $user */
-            $user = $this->tokenStorage->getToken()->getUser();
+        /** @var User|null $user */
+        $user = $this->security->getUser();
 
-            if ($user instanceof UserInterface) {
-                $user->setLastActivityAt(new DateTime());
-                $this->em->flush();
+        if ($user) {
+            $user->setLastActivityAt(new DateTime());
+            $this->em->flush();
 
-                $maxOnlineUsers = (int) $this->optionService->get("max_online_users", "0");
-                $nbOnlineUsers = $this->userRepository->countOnlineUsers();
+            $maxOnlineUsers = (int) $this->optionService->get("max_online_users", "0");
+            $nbOnlineUsers = $this->userRepository->countOnlineUsers();
 
-                if ($nbOnlineUsers > $maxOnlineUsers) {
-                    $currentDate = date("d-m-Y à H:i:s");
-                    $this->optionService->set("max_online_users", (string) $nbOnlineUsers);
-                    $this->optionService->set("max_online_users_date", $currentDate);
-                }
+            if ($nbOnlineUsers > $maxOnlineUsers) {
+                $currentDate = date("d-m-Y à H:i:s");
+                $this->optionService->set("max_online_users", (string) $nbOnlineUsers);
+                $this->optionService->set("max_online_users_date", $currentDate);
             }
         }
     }

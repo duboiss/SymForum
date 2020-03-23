@@ -109,7 +109,7 @@ class Message
         return $this;
     }
 
-    public function getThread(): ?Thread
+    public function getThread(): Thread
     {
         return $this->thread;
     }

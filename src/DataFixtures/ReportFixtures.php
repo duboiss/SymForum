@@ -13,6 +13,7 @@ class ReportFixtures extends BaseFixtures implements DependentFixtureInterface
     public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Report::class, 30, function (Report $report) {
+            /** @var Message $reportedMessage */
             $reportedMessage = $this->getRandomReference(Message::class);
 
             $report->setMessage($reportedMessage)

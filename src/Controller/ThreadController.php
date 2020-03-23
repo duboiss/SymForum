@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Forum;
 use App\Entity\Thread;
+use App\Entity\User;
 use App\Form\MessageType;
 use App\Form\ThreadType;
 use App\Repository\MessageRepository;
@@ -35,6 +36,7 @@ class ThreadController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
             $user = $this->getUser();
 
             if (!$messageService->canPostMessage($thread, $user)) {
@@ -59,7 +61,7 @@ class ThreadController extends BaseController
         $pagination = $paginator->paginate(
             $messages,
             $request->query->getInt('page', 1),
-            (int) $optionService->get("total_messages_by_thread", "10"),
+            (int) $optionService->get("messages_per_thread", "10"),
         );
 
         return $this->render('thread/show.html.twig', [
@@ -80,6 +82,7 @@ class ThreadController extends BaseController
      */
     public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         if (!$threadService->canPostThread($forum, $user)) {

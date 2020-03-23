@@ -3,10 +3,11 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
 
 parameters:
-  level: 6
+  level: 8
   paths:
     - src
   excludes_analyse:
+    - src/DataFixtures/*
     - src/Migrations/*
   symfony:
       container_xml_path: 'var/cache/dev/App_KernelDevDebugContainer.xml'

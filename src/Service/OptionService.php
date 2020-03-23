@@ -63,7 +63,12 @@ class OptionService
     private function getEntity(string $optionName): ?CoreOption
     {
         if(!isset($this->cache[$optionName])) {
-            $this->cache[$optionName] = $this->coreOptionRepository->findOneBy(['name' => $optionName]);
+            $option = $this->coreOptionRepository->findOneBy(['name' => $optionName]);
+            if($option) {
+                $this->cache[$optionName] = $option;
+            } else {
+                return null;
+            }
         }
 
         return $this->cache[$optionName];
