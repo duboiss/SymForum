@@ -223,9 +223,6 @@
     "phpstan/phpstan-symfony": {
         "version": "0.12.4"
     },
-    "pimple/pimple": {
-        "version": "v3.3.0"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
