@@ -45,7 +45,7 @@
                 Sujet : <a
                         href="{{ path('thread.show', {'slug': report.message.thread.slug}) }}">{{ report.message.thread.title }}</a><br>
                 Contenu : <a
-                        href="{{ message_link(report.message) }}">{{ report.message.content|striptags|u.truncate(50, '...') }}</a>
+                        href="{{ path('message.show', {'id': report.message.id}) }}">{{ report.message.content|striptags|u.truncate(50, '...') }}</a>
             </p>
         </div>
     </div>

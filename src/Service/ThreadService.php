@@ -189,20 +189,4 @@ class ThreadService
 
         return (int)(ceil(((int)$key + 1) / $messagesPerThread));
     }
-
-    /**
-     * @param Message $message
-     * @return string
-     */
-    public function getMessageLink(Message $message): string
-    {
-        $thread = $message->getThread();
-        $page = $this->getPageOfMessage($message);
-
-        return $this->urlGenerator->generate('thread.show', [
-            'slug' => $thread->getSlug(),
-            'page' => $page,
-            '_fragment' => $message->getId()
-        ]);
-    }
 }

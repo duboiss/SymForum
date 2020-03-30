@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\MessageService;
+use App\Service\ThreadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,6 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends BaseController
 {
+    /**
+     * @Route("/forums/messages/{id}", name="message.show")
+     * @param Message $message
+     * @param ThreadService $threadService
+     * @return Response
+     */
+    public function show(Message $message, ThreadService $threadService): Response
+    {
+        return $this->redirectToRoute('thread.show', [
+            'slug' => $message->getThread()->getSlug(),
+            'page' => $threadService->getPageOfMessage($message),
+            '_fragment' => $message->getId()
+        ]);
+    }
+
     /**
      * @Route("/forums/messages/{id}/edit", name="message.edit")
      * @IsGranted("EDIT", subject="message")
