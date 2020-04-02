@@ -29,7 +29,6 @@ class Message
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @Assert\DateTime()
      */
     private $publishedAt;
 
@@ -54,7 +53,6 @@ class Message
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="change", field={"content"})
-     * @Assert\DateTime()
      */
     private $updatedAt;
 
