@@ -32,7 +32,10 @@ class ThreadController extends BaseController
      */
     public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator, OptionService $optionService): Response
     {
-        $form = $this->createForm(MessageType::class);
+        $form = $this->createForm(MessageType::class, null, [
+            'action' => $request->getUri() . '#message',
+            'attr' => ['id' => 'message']
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
