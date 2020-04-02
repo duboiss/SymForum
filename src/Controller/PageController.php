@@ -56,10 +56,8 @@ class PageController extends BaseController
      */
     public function members(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $membersQb = $userRepository->findAllMembersQb();
-
         $pagination = $paginator->paginate(
-            $membersQb,
+            $userRepository->findAllMembersQb(),
             $request->query->getInt('page', 1),
             25
         );
@@ -76,12 +74,9 @@ class PageController extends BaseController
      */
     public function team(UserRepository $userRepository): Response
     {
-        $administrators = $userRepository->findByRole('ROLE_ADMIN');
-        $moderators = $userRepository->findByRole('ROLE_MODERATOR');
-
         return $this->render('pages/team.html.twig', [
-            'administrators' => $administrators,
-            'moderators' => $moderators
+            'administrators' => $userRepository->findByRole('ROLE_ADMIN'),
+            'moderators' => $userRepository->findByRole('ROLE_MODERATOR')
         ]);
     }
 }

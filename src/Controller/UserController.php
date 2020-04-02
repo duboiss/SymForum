@@ -44,10 +44,8 @@ class UserController extends BaseController
      */
     public function threads(User $user, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $threads = $threadRepository->findThreadsByUserQb($user);
-
         $pagination = $paginator->paginate(
-            $threads,
+            $threadRepository->findThreadsByUserQb($user),
             $request->query->getInt('page', 1),
             25
         );
@@ -68,10 +66,8 @@ class UserController extends BaseController
      */
     public function messages(User $user, MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $messages = $messageRepository->findMessagesByUserQb($user);
-
         $pagination = $paginator->paginate(
-            $messages,
+            $messageRepository->findMessagesByUserQb($user),
             $request->query->getInt('page', 1),
             25
         );

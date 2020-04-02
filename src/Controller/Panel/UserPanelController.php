@@ -26,10 +26,8 @@ class UserPanelController extends BaseController
      */
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $usersQb = $userRepository->findAllMembersQb();
-
         $pagination = $paginator->paginate(
-            $usersQb,
+            $userRepository->findAllMembersQb(),
             $request->query->getInt('page', 1),
             30
         );

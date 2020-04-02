@@ -27,18 +27,15 @@ class ReportPanelController extends BaseController
      */
     public function index(ReportRepository $reportRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $reports = $reportRepository->findAllReportsQb();
-        $nbUntreatedReports = $reportRepository->countUntreatedReports();
-
         $pagination = $paginator->paginate(
-            $reports,
+            $reportRepository->findAllReportsQb(),
             $request->query->getInt('page', 1),
             25
         );
 
         return $this->render('panel/report/index.html.twig', [
             'pagination' => $pagination,
-            'nbUntreatedReports' => $nbUntreatedReports
+            'nbUntreatedReports' => $reportRepository->countUntreatedReports()
         ]);
     }
 
