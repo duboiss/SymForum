@@ -41,12 +41,7 @@ class MessageController extends BaseController
      */
     public function edit(Message $message, Request $request, MessageService $messageService): Response
     {
-        $thread = $message->getThread();
-
-        $route = $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug(),
-            '_fragment' => $message->getId()
-        ]);
+        $route = $this->redirectToRoute('message.show', ['id' => $message->getId()]);
 
         if (!$messageService->canEditMessage($message)) {
             return $route;
@@ -103,14 +98,12 @@ class MessageController extends BaseController
         $thread->setLastMessage($lastMessage);
         $em->flush();
 
-        $nextMessage = $messageRepository->findNextMessageInThread($message);
-        $fragment = $nextMessage ? $nextMessage->getId() : $lastMessage->getId();
-
         $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');
 
-        return $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug(),
-            '_fragment' => $fragment
+        $nextMessage = $messageRepository->findNextMessageInThread($message);
+
+        return $this->redirectToRoute('message.show', [
+            'id' => $nextMessage ? $nextMessage->getId() : $lastMessage->getId()
         ]);
     }
 }

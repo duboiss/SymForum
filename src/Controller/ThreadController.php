@@ -43,9 +43,8 @@ class ThreadController extends BaseController
             $user = $this->getUser();
 
             if (!$messageService->canPostMessage($thread, $user)) {
-                return $this->redirectToRoute('thread.show', [
-                    'slug' => $thread->getSlug(),
-                    '_fragment' => $thread->getLastMessage()->getId()
+                return $this->redirectToRoute('message.show', [
+                    'id' => $thread->getLastMessage()->getId()
                 ]);
             }
 
@@ -53,9 +52,8 @@ class ThreadController extends BaseController
 
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
 
-            return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug(),
-                '_fragment' => $message->getId()
+            return $this->redirectToRoute('message.show', [
+                'id' => $message->getId()
             ]);
         }
 
@@ -103,13 +101,12 @@ class ThreadController extends BaseController
 
             $thread = $threadService->createThread($form['title']->getData(), $forum, $user, $lock, $pin);
 
-            $message = $messageService->createMessage($form['message']->getData(), $thread, $user);
+            $messageService->createMessage($form['message']->getData(), $thread, $user);
 
             $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
 
             return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug(),
-                '_fragment' => $message->getId()
+                'slug' => $thread->getSlug()
             ]);
         }
 

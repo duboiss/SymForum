@@ -34,7 +34,7 @@
                             <td><a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a></td>
                             <td>{{ thread.totalAnswers }}</td>
                             <td>
-                                <a href="{{ path('thread.show', {'slug': thread.lastMessage.thread.slug, '_fragment': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
+                                <a href="{{ path('message.show', {'id': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
                                 par {{ user_profile_link(thread.lastMessage.author) }}</td>
                         </tr>
                     {% endfor %}
