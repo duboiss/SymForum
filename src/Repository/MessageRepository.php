@@ -66,12 +66,14 @@ class MessageRepository extends ServiceEntityRepository
             $qb->select('m.id');
         }
 
-        return $qb
+        $qb = $qb
             ->where('m.thread = :thread')
             ->setParameter('thread', $thread)
             ->orderBy('m.publishedAt', 'ASC')
             ->getQuery()
             ->getResult();
+
+        return $onlyId ? array_column($qb, 'id') : $qb;
     }
 
     /**

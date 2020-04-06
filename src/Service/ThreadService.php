@@ -184,7 +184,7 @@ class ThreadService
     public function getPageOfMessage(Message $message): int
     {
         $messages = $this->messageRepository->findMessagesByThread($message->getThread(), true);
-        $key = array_search($message, $messages);
+        $key = array_search($message->getId(), $messages);
         $messagesPerThread = (int)$this->optionService->get("messages_per_thread", "10");
 
         return (int)(ceil(((int)$key + 1) / $messagesPerThread));
