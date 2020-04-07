@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
-use App\Repository\MessageRepository;
-use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
-use App\Service\OptionService;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,31 +15,7 @@ class PageController extends BaseController
      */
     public function index(): Response
     {
-        return $this->redirectToRoute('forums.index');
-    }
-
-    /**
-     * @Route("/forums", name="forums.index")
-     * @param CategoryRepository $categoriesRepo
-     * @param UserRepository $userRepository
-     * @param MessageRepository $messageRepository
-     * @param ThreadRepository $threadRepository
-     * @param OptionService $optionService
-     * @return Response
-     * @throws Exception
-     */
-    public function forums(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
-    {
-        return $this->render('pages/forums.html.twig', [
-            'categories' => $categoriesRepo->findAllCategories(),
-            'onlineUsers' => $userRepository->findOnlineUsers(),
-            'maxOnlineUsers' => $optionService->get("max_online_users", "0"),
-            'maxOnlineUsersDate' => $optionService->get("max_online_users_date"),
-            'nbUsers' => $userRepository->count([]),
-            'lastRegistered' => $userRepository->findLastRegistered(),
-            'nbMessages' => $messageRepository->count([]),
-            'nbThreads' => $threadRepository->count([])
-        ]);
+        return $this->redirectToRoute('forum.index');
     }
 
     /**

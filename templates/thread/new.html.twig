@@ -10,7 +10,7 @@
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('forums.index') }}">Forums</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('forum.index') }}">Forums</a></li>
             <li class="breadcrumb-item"><a href="{{ path('forum.show', {'slug': forum.slug}) }}">{{ forum.title }}</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Nouveau sujet</li>

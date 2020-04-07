@@ -14,7 +14,7 @@
 
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ path('forums.index') }}">Forums</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('forum.index') }}">Forums</a></li>
                         {% for part in forum|breadcrumb %}
                             {% if loop.last %}
                                 <li class="breadcrumb-item active" aria-current="page">{{ part.title }}</li>

@@ -16,7 +16,7 @@ class SecurityController extends BaseController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('forums.index');
+            return $this->redirectToRoute('forum.index');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -40,6 +40,6 @@ class SecurityController extends BaseController
     public function logged_out(): Response
     {
         $this->addCustomFlash('success', 'Déconnexion', 'Vous êtes désormais déconnecté !');
-        return $this->redirectToRoute('forums.index');
+        return $this->redirectToRoute('forum.index');
     }
 }

@@ -4,15 +4,44 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Forum;
+use App\Repository\CategoryRepository;
 use App\Repository\ForumRepository;
+use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
+use App\Repository\UserRepository;
 use App\Service\ForumService;
+use App\Service\OptionService;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ForumController extends BaseController
 {
+    /**
+     * @Route("/forums", name="forum.index")
+     * @param CategoryRepository $categoriesRepo
+     * @param UserRepository $userRepository
+     * @param MessageRepository $messageRepository
+     * @param ThreadRepository $threadRepository
+     * @param OptionService $optionService
+     * @return Response
+     * @throws Exception
+     */
+    public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
+    {
+        return $this->render('pages/forums.html.twig', [
+            'categories' => $categoriesRepo->findAllCategories(),
+            'onlineUsers' => $userRepository->findOnlineUsers(),
+            'maxOnlineUsers' => $optionService->get("max_online_users", "0"),
+            'maxOnlineUsersDate' => $optionService->get("max_online_users_date"),
+            'nbUsers' => $userRepository->count([]),
+            'lastRegistered' => $userRepository->findLastRegistered(),
+            'nbMessages' => $messageRepository->count([]),
+            'nbThreads' => $threadRepository->count([])
+        ]);
+    }
+
     /**
      * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"})
      * @param Forum $forum
