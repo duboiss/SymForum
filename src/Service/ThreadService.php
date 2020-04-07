@@ -13,23 +13,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThreadService
 {
-    /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /** @var MessageRepository */
-    private $messageRepository;
+    private MessageRepository $messageRepository;
 
-    /** @var FlashBagInterface */
-    private $flashBag;
+    private FlashBagInterface $flashBag;
 
-    /** @var AntispamService */
-    private $antispamService;
+    private AntispamService $antispamService;
 
-    /* @var UrlGeneratorInterface */
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    /* @var OptionService */
-    private $optionService;
+    private OptionService $optionService;
 
     public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, UrlGeneratorInterface $urlGenerator, OptionService $optionService)
     {

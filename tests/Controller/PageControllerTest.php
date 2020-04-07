@@ -8,13 +8,11 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class PageControllerTest extends WebTestCase
 {
-    /** @var KernelBrowser */
-    private $client;
+    private KernelBrowser $client;
 
-    /** @var Crawler */
-    private $crawler;
+    private Crawler $crawler;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = static::createClient();
     }

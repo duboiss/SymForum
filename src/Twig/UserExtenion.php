@@ -14,10 +14,7 @@ class UserExtenion extends AbstractExtension
         'ROLE_MODERATOR' => 'Modérateur'
     ];
 
-    // TODO Store a color for each role
-
-    /** @var UrlGeneratorInterface */
-    private $generator;
+    private UrlGeneratorInterface $generator;
 
     public function __construct(UrlGeneratorInterface $generator)
     {

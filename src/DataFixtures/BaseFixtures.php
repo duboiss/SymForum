@@ -10,14 +10,11 @@ use Faker\Generator;
 
 abstract class BaseFixtures extends Fixture
 {
-    /** @var Generator */
-    protected $faker;
+    protected Generator $faker;
 
-    /** @var ObjectManager */
-    private $manager;
+    private ObjectManager $manager;
 
-    /** @var array */
-    private $referencesIndex = [];
+    private array $referencesIndex = [];
 
     public function load(ObjectManager $manager): void
     {

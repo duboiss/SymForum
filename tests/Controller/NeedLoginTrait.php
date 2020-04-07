@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 trait NeedLoginTrait
 {
-    public function logIn(KernelBrowser $client, User $user)
+    public function logIn(KernelBrowser $client, User $user): void
     {
         $session = $client->getContainer()->get('session');
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());

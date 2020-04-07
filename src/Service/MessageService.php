@@ -12,20 +12,15 @@ use Symfony\Component\Security\Core\Security;
 
 class MessageService
 {
-    /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /** @var MessageRepository */
-    private $messageRepository;
+    private MessageRepository $messageRepository;
 
-    /** @var FlashBagInterface */
-    private $flashBag;
+    private FlashBagInterface $flashBag;
 
-    /** @var AntispamService */
-    private $antispamService;
+    private AntispamService $antispamService;
 
-    /** @var Security */
-    private $security;
+    private Security $security;
 
     public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, Security $security)
     {

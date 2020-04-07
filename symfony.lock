@@ -106,16 +106,7 @@
         "version": "v1.0.0"
     },
     "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        },
-        "files": [
-            "./config/packages/dev/easy_log_handler.yaml"
-        ]
+        "version": "v1.0.9"
     },
     "exercise/htmlpurifier-bundle": {
         "version": "0.2",
@@ -171,6 +162,9 @@
     "knplabs/knp-time-bundle": {
         "version": "v1.9.1"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.3"
+    },
     "liip/test-fixtures-bundle": {
         "version": "1.0.0"
     },
@@ -203,7 +197,7 @@
         "version": "2.2.2"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"

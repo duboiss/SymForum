@@ -7,17 +7,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserService
 {
-    /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /** @var ThreadService */
-    private $threadService;
+    private ThreadService $threadService;
 
-    /** @var MessageService */
-    private $messageService;
+    private MessageService $messageService;
 
-    /** @var ReportService */
-    private $reportService;
+    private ReportService $reportService;
 
     public function __construct(EntityManagerInterface $em, ThreadService $threadService, MessageService $messageService, ReportService $reportService)
     {

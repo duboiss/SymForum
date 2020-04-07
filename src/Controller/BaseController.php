@@ -11,8 +11,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  */
 abstract class BaseController extends AbstractController
 {
-    /** @var FlashBagInterface */
-    private $flashBag;
+    private FlashbagInterface $flashBag;
 
     public function __construct(FlashBagInterface $flashBag)
     {

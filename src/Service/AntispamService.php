@@ -11,17 +11,14 @@ use Symfony\Component\Security\Core\Security;
 
 class AntispamService
 {
-    const DELAY_MESSAGE = 60;
-    const DELAY_THREAD = 90;
+    private const DELAY_MESSAGE = 60;
+    private const DELAY_THREAD = 90;
 
-    /** @var ThreadRepository */
-    private $threadRepository;
+    private ThreadRepository $threadRepository;
 
-    /** @var MessageRepository */
-    private $messageRepository;
+    private MessageRepository $messageRepository;
 
-    /** @var Security */
-    private $security;
+    private Security $security;
 
     public function __construct(ThreadRepository $threadRepository, MessageRepository $messageRepository, Security $security)
     {

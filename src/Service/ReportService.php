@@ -7,8 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ReportService
 {
-    /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {

@@ -11,8 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ForumVoter extends Voter
 {
-    /** @var Security */
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {

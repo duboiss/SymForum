@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     /** @var Thread[] $threads */
-    private $threads = [];
+    private array $threads = [];
 
     public function loadData(ObjectManager $manager): void
     {
