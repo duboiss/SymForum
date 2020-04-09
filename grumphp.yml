@@ -1,7 +1,9 @@
 parameters:
     tasks:
+        jsonlint: ~
         phplint: ~
         phpstan:
+            configuration: './phpstan.neon'
             level: 8
             ignore_patterns: ['tests']
         phpunitbridge: ~
