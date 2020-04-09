@@ -12,18 +12,16 @@
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
 
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ path('forum.index') }}">Forums</a></li>
-                        {% for part in forum|breadcrumb %}
-                            {% if loop.last %}
-                                <li class="breadcrumb-item active" aria-current="page">{{ part.title }}</li>
-                            {% else %}
-                                <li class="breadcrumb-item"><a href="{{ part.url }}">{{ part.title }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                    </ol>
-                </nav>
+                {% do append_breadcrumb(path('forum.index'), 'Forums') %}
+                {% for part in forum|breadcrumb %}
+                    {% if loop.last %}
+                        {% do set_active_label(part.title) %}
+                    {% else %}
+                        {% do append_breadcrumb(part.url, part.title) %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ include('partials/_breadcrumb.html.twig') }}
 
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">

@@ -3,12 +3,10 @@
 {% block title %}Utilisateurs{% endblock %}
 
 {% block content %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Utilisateurs</li>
-        </ol>
-    </nav>
+    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do set_active_label('Utilisateurs') %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>Utilisateurs ({{ pagination.getTotalItemCount }})</h1>
 

@@ -5,13 +5,11 @@
 {% block title %}Signalement de {{ reported_by_pseudo }}{% endblock %}
 
 {% block content %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('panel.reports') }}">Signalements</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Signalement de {{ reported_by_pseudo }}</li>
-        </ol>
-    </nav>
+    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do append_breadcrumb(path('panel.reports'), 'Signalements') %}
+    {% do set_active_label('Signalement de' ~ reported_by_pseudo) %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1><span>Signalement de {{ reported_by_pseudo }}</span>
         {% if not report.isTreated %}

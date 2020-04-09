@@ -8,18 +8,16 @@
 {% endblock %}
 
 {% block content %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('forum.index') }}">Forums</a></li>
-            <li class="breadcrumb-item"><a
-                        href="{{ path('forum.show', {'slug': message.thread.forum.slug}) }}">{{ message.thread.forum.slug }}</a>
-            </li>
-            <li class="breadcrumb-item"><a
-                        href="{{ path('thread.show', {'slug': message.thread.slug}) }}">{{ message.thread.title }}</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">Edition de votre message</li>
-        </ol>
-    </nav>
+    {% do append_breadcrumb(path('forum.index'), 'Forums') %}
+
+    {% for part in message.thread.forum|breadcrumb %}
+        {% do append_breadcrumb(part.url, part.title) %}
+    {% endfor %}
+
+    {% do append_breadcrumb(path('thread.show', {'slug': message.thread.slug}), message.thread.title) %}
+    {% do set_active_label('Edition de votre message') %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
 
     <div class="mb-3">
         <h2 class="text-center">Edition de votre message</h2>

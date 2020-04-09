@@ -7,6 +7,11 @@
 {% set role = user_profile_role(user) %}
 
 {% block content %}
+    {% do append_breadcrumb(path('page.members'), 'Membres') %}
+    {% do set_active_label(user.pseudo) %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
+
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">
             <h3>{{ user }}</h3>

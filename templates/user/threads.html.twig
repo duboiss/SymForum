@@ -5,14 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('page.members') }}">Membres</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('user.profile', {'slug': user.slug}) }}">{{ user }}</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">Sujets créés</li>
-        </ol>
-    </nav>
+    {% do append_breadcrumb(path('page.members'), 'Membres') %}
+    {% do append_breadcrumb(path('user.profile', {'slug': user.slug}), user.pseudo) %}
+    {% do set_active_label('Sujets créés') %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
 
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">

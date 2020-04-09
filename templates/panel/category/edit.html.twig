@@ -3,13 +3,11 @@
 {% block title %}Catégories - Modification de {{ category.title }}{% endblock %}
 
 {% block content %}
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('panel.categories') }}">Catégories</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Modification</li>
-        </ol>
-    </nav>
+    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do append_breadcrumb(path('panel.categories'), 'Catégories') %}
+    {% do set_active_label('Modification') %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>Modifier la catégorie</h1>
 

@@ -8,9 +8,14 @@ use InvalidArgumentException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class ForumExtension extends AbstractExtension
+class BreadcrumbExtension extends AbstractExtension
 {
+    private string $activeLabel = '';
+
+    private array $breadcrumbsPaths = [];
+
     private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(UrlGeneratorInterface $urlGenerator)
@@ -18,13 +23,20 @@ class ForumExtension extends AbstractExtension
         $this->urlGenerator = $urlGenerator;
     }
 
-    /**
-     * @return array|TwigFilter[]
-     */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('breadcrumb', [$this, 'getBreadcrumbParts']),
+        ];
+    }
+
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('get_active_label', [$this, 'getActiveLabel']),
+            new TwigFunction('set_active_label', [$this, 'setActiveLabel']),
+            new TwigFunction('get_breadcrumbs', [$this, 'getBreadcrumbs']),
+            new TwigFunction('append_breadcrumb', [$this, 'appendBreadcrumb']),
         ];
     }
 
@@ -51,5 +63,28 @@ class ForumExtension extends AbstractExtension
         }
 
         return $parts;
+    }
+
+    public function getActiveLabel(): string
+    {
+        return $this->activeLabel;
+    }
+
+    public function setActiveLabel(string $label): void
+    {
+        $this->activeLabel = $label;
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return $this->breadcrumbsPaths;
+    }
+
+    public function appendBreadcrumb(string $path, string $label): void
+    {
+        $pair = [$path, $label];
+        if (!in_array($pair, $this->breadcrumbsPaths, true)) {
+            $this->breadcrumbsPaths[] = $pair;
+        }
     }
 }

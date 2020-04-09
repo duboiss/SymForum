@@ -34,13 +34,11 @@
         </div>
     </div>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('panel.homepage') }}">Panel</a></li>
-            <li class="breadcrumb-item"><a href="{{ path('panel.users') }}">Utilisateurs</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ user }}</li>
-        </ol>
-    </nav>
+    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do append_breadcrumb(path('panel.users'), 'Utilisateurs') %}
+    {% do set_active_label(user.pseudo) %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>
         <span>{{ user }}</span>
