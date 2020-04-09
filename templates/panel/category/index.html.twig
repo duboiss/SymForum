@@ -10,7 +10,9 @@
 
     <h1>
         <span>Catégories</span>
-        <a class="btn btn-primary btn-sm" href="{{ path('panel.category.add') }}"><i class="fas fa-plus"></i></a>
+        <a class="btn btn-primary btn-sm" href="{{ path('panel.category.add') }}" title="Ajouter">
+            <i class="fas fa-plus"></i>
+        </a>
     </h1>
 
     <div class="messages"></div>
@@ -30,9 +32,11 @@
                     <td class="col-2">{{ category.position }}</td>
                     <td class="col-8">{{ category.title }}</td>
                     <td class="col-2">
-                        <a class="btn btn-primary btn-sm" href="{{ path('panel.category.edit', {'id': category.id}) }}"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-primary btn-sm" href="{{ path('panel.category.edit', {'id': category.id}) }}" title="Modifier">
+                            <i class="fas fa-edit"></i>
+                        </a>
                         -
-                        <button class="btn btn-danger btn-sm js-delete-button" data-delete-url="{{ path('panel.category.delete', {'id': category.id}) }}">
+                        <button class="btn btn-danger btn-sm js-delete-button" data-delete-url="{{ path('panel.category.delete', {'id': category.id}) }}" title="Supprimer">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>

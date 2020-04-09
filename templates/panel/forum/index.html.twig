@@ -10,7 +10,9 @@
 
     <h1>
         <span>Forums</span>
-        <button class="pull-right btn btn-primary btn-sm disabled"><i class="fas fa-plus"></i></button>
+        <button class="pull-right btn btn-primary btn-sm disabled" title="Ajouter">
+            <i class="fas fa-plus"></i>
+        </button>
     </h1>
 
     <div class="mt-3">
@@ -24,18 +26,22 @@
             </tr>
             </thead>
             <tbody class="thead-light">
-            {% for forum in forums %}
-                <tr class="d-flex">
-                    <td class="col-2">{{ forum.position }}</td>
-                    <td class="col-5">{{ forum.title }}</td>
-                    <td class="col-3">{{ forum.category.title }}</td>
-                    <td class="col-3">
-                        <button class="btn btn-primary btn-sm disabled"><i class="fas fa-edit"></i></button>
-                        -
-                        <button class="btn btn-danger btn-sm disabled"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for forum in forums %}
+                    <tr class="d-flex">
+                        <td class="col-2">{{ forum.position }}</td>
+                        <td class="col-5">{{ forum.title }}</td>
+                        <td class="col-3">{{ forum.category.title }}</td>
+                        <td class="col-3">
+                            <a class="btn btn-primary btn-sm disabled" href="#" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            -
+                            <button class="btn btn-danger btn-sm disabled" title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
