@@ -105,9 +105,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "easycorp/easy-log-handler": {
-        "version": "v1.0.9"
-    },
     "exercise/htmlpurifier-bundle": {
         "version": "0.2",
         "recipe": {
@@ -644,6 +641,9 @@
     },
     "twig/twig": {
         "version": "v2.11.3"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.0.1"
     },
     "webmozart/assert": {
         "version": "1.4.0"
