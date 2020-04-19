@@ -30,9 +30,10 @@ $ yarn encore prod
 
 
 ## Usage
-Launch server :
+Run server :
 ```sh
 $ symfony serve
+$ // php -S localhost:8000 -t public
 ```
 
 Enjoy !
