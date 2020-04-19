@@ -159,6 +159,12 @@
     "knplabs/knp-time-bundle": {
         "version": "v1.9.1"
     },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.3"
     },
