@@ -13,18 +13,13 @@ use Symfony\Component\Security\Core\Security;
 
 class ActivitySubscriber implements EventSubscriberInterface
 {
+    private EntityManagerInterface $em;
 
-    /** @var EntityManagerInterface */
-    private $em;
+    private Security $security;
 
-    /** @var Security */
-    private $security;
+    private OptionService $optionService;
 
-    /** @var OptionService */
-    private $optionService;
-
-    /** @var UserRepository */
-    private $userRepository;
+    private UserRepository $userRepository;
 
     public function __construct(EntityManagerInterface $em, Security $security, OptionService $optionService, UserRepository $userRepository)
     {
@@ -43,18 +38,18 @@ class ActivitySubscriber implements EventSubscriberInterface
             $user->setLastActivityAt(new DateTime());
             $this->em->flush();
 
-            $maxOnlineUsers = (int) $this->optionService->get("max_online_users", "0");
+            $maxOnlineUsers = (int) $this->optionService->get('max_online_users', '0');
             $nbOnlineUsers = $this->userRepository->countOnlineUsers();
 
             if ($nbOnlineUsers > $maxOnlineUsers) {
-                $currentDate = date("d-m-Y à H:i:s");
-                $this->optionService->set("max_online_users", (string) $nbOnlineUsers);
-                $this->optionService->set("max_online_users_date", $currentDate);
+                $currentDate = date('d-m-Y à H:i:s');
+                $this->optionService->set('max_online_users', (string) $nbOnlineUsers);
+                $this->optionService->set('max_online_users_date', $currentDate);
             }
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => [['onTerminate', 20]],
