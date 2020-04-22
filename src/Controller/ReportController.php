@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Message;
-use App\Entity\Report;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\ReportService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +16,11 @@ class ReportController extends BaseController
      * @Route("/forums/report/{id}", name="report.message", methods={"POST"})
      * @IsGranted("REPORT", subject="message")
      * @param Message $message
-     * @param EntityManagerInterface $em
      * @param Request $request
+     * @param ReportService $reportService
      * @return JsonResponse
      */
-    public function message(Message $message, EntityManagerInterface $em, Request $request): Response
+    public function message(Message $message, Request $request, ReportService $reportService): Response
     {
         $reason = $request->request->get('reason');
         $author = $this->getUser();
@@ -40,12 +39,7 @@ class ReportController extends BaseController
             ], 403);
         }
 
-        $report = (new Report())
-            ->setMessage($message)
-            ->setReason($reason);
-
-        $em->persist($report);
-        $em->flush();
+        $reportService->createReport($message, $reason);
 
         return $this->json([
             'message' => 'Le message a été signalé, merci !'

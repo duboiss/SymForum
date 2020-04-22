@@ -5,9 +5,7 @@ namespace App\Controller\Panel;
 use App\Controller\BaseController;
 use App\Entity\Report;
 use App\Repository\ReportRepository;
-use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
+use App\Service\ReportService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,14 +56,12 @@ class ReportPanelController extends BaseController
     /**
      * @Route("/reports/{id}/delete", name="panel.report.delete")
      * @param Report $report
-     * @param EntityManagerInterface $em
+     * @param ReportService $reportService
      * @return Response
      */
-    public function delete(Report $report, EntityManagerInterface $em): Response
+    public function delete(Report $report, ReportService $reportService): Response
     {
-        $em->remove($report);
-        $em->flush();
-
+        $reportService->deleteReport($report);
         $this->addCustomFlash('success', 'Signalement', 'Le signalement a été supprimé !');
 
         return $this->redirectToRoute('panel.reports');
@@ -74,15 +70,12 @@ class ReportPanelController extends BaseController
     /**
      * @Route("/reports/{id}/close", name="panel.report.close")
      * @param Report $report
-     * @param EntityManagerInterface $em
+     * @param ReportService $reportService
      * @return Response
-     * @throws Exception
      */
-    public function close(Report $report, EntityManagerInterface $em): Response
+    public function close(Report $report, ReportService $reportService): Response
     {
-        $report->setTreatedAt(new DateTime());
-        $em->flush();
-
+        $reportService->closeReport($report);
         $this->addCustomFlash('success', 'Signalement', 'Le signalement a été clôturé !');
 
         return $this->redirectToRoute('panel.reports');

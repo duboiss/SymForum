@@ -2,7 +2,10 @@
 
 namespace App\Service;
 
+use App\Entity\Message;
+use App\Entity\Report;
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ReportService
@@ -12,6 +15,32 @@ class ReportService
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
+    }
+
+    /**
+     * @param Message $message
+     * @param string $reason
+     */
+    public function createReport(Message $message, string $reason): void
+    {
+        $report = (new Report())
+            ->setMessage($message)
+            ->setReason($reason);
+
+        $this->em->persist($report);
+        $this->em->flush();
+    }
+
+    public function deleteReport(Report $report): void
+    {
+        $this->em->remove($report);
+        $this->em->flush();
+    }
+
+    public function closeReport(Report $report): void
+    {
+        $report->setTreatedAt(new DateTime());
+        $this->em->flush();
     }
 
     /**
