@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThreadService
 {
@@ -21,17 +20,14 @@ class ThreadService
 
     private AntispamService $antispamService;
 
-    private UrlGeneratorInterface $urlGenerator;
-
     private OptionService $optionService;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, UrlGeneratorInterface $urlGenerator, OptionService $optionService)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, OptionService $optionService)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
         $this->flashBag = $flashBag;
         $this->antispamService = $antispamService;
-        $this->urlGenerator = $urlGenerator;
         $this->optionService = $optionService;
     }
 
@@ -45,27 +41,25 @@ class ThreadService
         if ($forum->isLock()) {
             $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !']);
             return false;
-        } elseif (!$this->antispamService->canPostThread($user)) {
+        }
+        if (!$this->antispamService->canPostThread($user)) {
             $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !']);
             return false;
         }
-
         return true;
     }
 
     /**
      * @param string $title
      * @param Forum $forum
-     * @param User $user
      * @param bool $lock
      * @param bool $pin
      * @return Thread
      */
-    public function createThread(string $title, Forum $forum, User $user, bool $lock = false, bool $pin = false): Thread
+    public function createThread(string $title, Forum $forum, bool $lock = false, bool $pin = false): Thread
     {
         $thread = (new Thread())
             ->setTitle($title)
-            ->setAuthor($user)
             ->setForum($forum)
             ->setIsLock($lock)
             ->setIsPin($pin);
@@ -179,7 +173,7 @@ class ThreadService
     {
         $messages = $this->messageRepository->findMessagesByThread($message->getThread(), true);
         $key = array_search($message->getId(), $messages);
-        $messagesPerThread = (int)$this->optionService->get("messages_per_thread", "10");
+        $messagesPerThread = (int)$this->optionService->get('messages_per_thread', '10');
 
         return (int)(ceil(((int)$key + 1) / $messagesPerThread));
     }

@@ -42,8 +42,7 @@ class ReportController extends BaseController
 
         $report = (new Report())
             ->setMessage($message)
-            ->setReason($reason)
-            ->setReportedBy($author);
+            ->setReason($reason);
 
         $em->persist($report);
         $em->flush();

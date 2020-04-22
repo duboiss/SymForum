@@ -41,11 +41,11 @@ class MessageService
         if ($thread->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
             return false;
-        } elseif (!$this->antispamService->canPostMessage($user)) {
+        }
+        if (!$this->antispamService->canPostMessage($user)) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous devez encore attendre un peu avant de pouvoir poster un message !']);
             return false;
         }
-
         return true;
     }
 
@@ -88,13 +88,11 @@ class MessageService
     /**
      * @param string $content
      * @param Thread $thread
-     * @param User $user
      * @return Message
      */
-    public function createMessage(string $content, Thread $thread, User $user): Message
+    public function createMessage(string $content, Thread $thread): Message
     {
         $message = (new Message())
-            ->setAuthor($user)
             ->setContent($content)
             ->setThread($thread);
 

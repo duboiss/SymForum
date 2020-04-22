@@ -23,6 +23,7 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @Gedmo\Blameable(on="create")
      */
     private $author;
 
@@ -55,6 +56,12 @@ class Message
      * @Gedmo\Timestampable(on="change", field={"content"})
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @Gedmo\Blameable(on="change", field={"content"})
+     */
+    private $updatedBy;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="message", orphanRemoval=true)
@@ -127,6 +134,18 @@ class Message
     public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedBy(): ?User
+    {
+        return $this->updatedBy;
+    }
+
+    public function setUpdatedBy(?User $updatedBy): self
+    {
+        $this->updatedBy = $updatedBy;
 
         return $this;
     }

@@ -80,9 +80,7 @@ class ReportPanelController extends BaseController
      */
     public function close(Report $report, EntityManagerInterface $em): Response
     {
-        $report->setTreatedAt(new DateTime())
-            ->setTreatedBy($this->getUser());
-
+        $report->setTreatedAt(new DateTime());
         $em->flush();
 
         $this->addCustomFlash('success', 'Signalement', 'Le signalement a été clôturé !');

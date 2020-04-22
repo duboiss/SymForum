@@ -48,7 +48,7 @@ class ThreadController extends BaseController
                 ]);
             }
 
-            $message = $messageService->createMessage($form['content']->getData(), $thread, $user);
+            $message = $messageService->createMessage($form['content']->getData(), $thread);
 
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
 
@@ -62,7 +62,7 @@ class ThreadController extends BaseController
         $pagination = $paginator->paginate(
             $messages,
             $request->query->getInt('page', 1),
-            (int) $optionService->get("messages_per_thread", "10"),
+            (int) $optionService->get('messages_per_thread', '10'),
         );
 
         return $this->render('thread/show.html.twig', [
@@ -99,9 +99,9 @@ class ThreadController extends BaseController
             $lock = (bool) $request->request->get('lock');
             $pin = (bool) $request->request->get('pin');
 
-            $thread = $threadService->createThread($form['title']->getData(), $forum, $user, $lock, $pin);
+            $thread = $threadService->createThread($form['title']->getData(), $forum, $lock, $pin);
 
-            $messageService->createMessage($form['message']->getData(), $thread, $user);
+            $messageService->createMessage($form['message']->getData(), $thread);
 
             $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
 
@@ -138,9 +138,8 @@ class ThreadController extends BaseController
             return $this->redirectToRoute('forum.show', [
                 'slug' => $forum->getSlug()
             ]);
-        } else {
-            throw new Exception("Jeton CSRF invalide !");
         }
+        throw new Exception('Jeton CSRF invalide !');
     }
 
     /**

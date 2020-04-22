@@ -43,6 +43,7 @@ class Thread
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="threads")
+     * @Gedmo\Blameable(on="create")
      */
     private $author;
 

@@ -45,6 +45,7 @@ class Report
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports")
+     * @Gedmo\Blameable(on="create")
      */
     private $reportedBy;
 
@@ -55,6 +56,7 @@ class Report
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="treatedReports")
+     * @Gedmo\Blameable(on="change", field={"treatedAt"})
      */
     private $treatedBy;
 

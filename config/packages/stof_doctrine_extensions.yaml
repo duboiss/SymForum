@@ -4,5 +4,6 @@ stof_doctrine_extensions:
     default_locale: en_US
     orm:
         default:
+            blameable: true
             sluggable: true
             timestampable: true
