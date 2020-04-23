@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
@@ -26,5 +28,14 @@ abstract class BaseController extends AbstractController
     protected function addCustomFlash(string $type, string $title, string $content): void
     {
         $this->flashBag->add($type, ['title' => $title, 'content' => $content]);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    protected function redirectToReferer(Request $request): RedirectResponse
+    {
+        return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('forum.index'));
     }
 }

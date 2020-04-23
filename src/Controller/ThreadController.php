@@ -147,16 +147,15 @@ class ThreadController extends BaseController
      * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
+     * @param Request $request
      * @return Response
      */
-    public function lock(Thread $thread, ThreadService $threadService): Response
+    public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->lock($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
 
-        return $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug()
-        ]);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -164,16 +163,15 @@ class ThreadController extends BaseController
      * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
+     * @param Request $request
      * @return Response
      */
-    public function unlock(Thread $thread, ThreadService $threadService): Response
+    public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unlock($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
 
-        return $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug()
-        ]);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -181,16 +179,15 @@ class ThreadController extends BaseController
      * @IsGranted("PIN", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
+     * @param Request $request
      * @return Response
      */
-    public function pin(Thread $thread, ThreadService $threadService): Response
+    public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->pin($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été épinglé !');
 
-        return $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug()
-        ]);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -198,15 +195,14 @@ class ThreadController extends BaseController
      * @IsGranted("PIN", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
+     * @param Request $request
      * @return Response
      */
-    public function unpin(Thread $thread, ThreadService $threadService): Response
+    public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unpin($thread);
         $this->addCustomFlash('success', 'Sujet', 'Le sujet a été détaché !');
 
-        return $this->redirectToRoute('thread.show', [
-            'slug' => $thread->getSlug()
-        ]);
+        return $this->redirectToReferer($request);
     }
 }
