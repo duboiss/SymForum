@@ -26,7 +26,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="token" value="{{ csrf_token('delete-user') }}"/>
-                        <button type="submit" class="btn btn-primary">Valider</button>
+                        <button type="submit" class="btn btn-primary js-submit-btn">Valider</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     </div>
                 </form>
@@ -42,7 +42,7 @@
 
     <h1>
         <span>{{ user }}</span>
-        <a class="btn btn-warning btn-sm" href="{{ path('panel.user.reset', {'slug': user.slug}) }}"><i
+        <a class="btn btn-warning btn-sm js-submit-link" href="{{ path('panel.user.reset', {'slug': user.slug}) }}"><i
                     class="fas fa-undo"></i> Remettre à zéro</a>
         <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#deleteModal"><i
                     class="fas fa-trash"></i> Supprimer</a>
