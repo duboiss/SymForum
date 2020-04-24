@@ -58,7 +58,7 @@ class Message
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="updatedMessages")
      * @Gedmo\Blameable(on="change", field={"content"})
      */
     private $updatedBy;

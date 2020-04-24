@@ -86,6 +86,11 @@ class User implements UserInterface
     private $messages;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="updatedBy")
+     */
+    private $updatedMessages;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="reportedBy")
      */
     private $reports;
@@ -275,6 +280,14 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Message[];
+     */
+    public function getUpdatedByMessages(): Collection
+    {
+        return $this->updatedMessages;
     }
 
     /**

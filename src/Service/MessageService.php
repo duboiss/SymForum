@@ -168,4 +168,18 @@ class MessageService
             $this->em->flush();
         }
     }
+
+    /**
+     * @param User $user
+     */
+    public function setUpdatedbyNullByUser(User $user): void
+    {
+        if (count($user->getUpdatedByMessages()) > 0) {
+            foreach ($user->getUpdatedByMessages() as $message) {
+                $message->setUpdatedBy(null);
+            }
+
+            $this->em->flush();
+        }
+    }
 }

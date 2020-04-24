@@ -175,7 +175,7 @@ class Thread
         return $this;
     }
 
-    public function getLastMessage(): Message
+    public function getLastMessage(): ?Message
     {
         return $this->lastMessage;
     }

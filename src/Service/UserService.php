@@ -32,6 +32,7 @@ class UserService
     {
         $deleteContent ? $this->resetUser($user) : $this->setContentNullByUser($user);
         $this->reportService->setTreatedbyNullByUser($user);
+        $this->messageService->setUpdatedbyNullByUser($user);
 
         $this->em->remove($user);
         $this->em->flush();
