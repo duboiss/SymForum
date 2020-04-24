@@ -13,11 +13,11 @@
 
     <h1><span>Signalement de {{ reported_by_pseudo }}</span>
         {% if not report.isTreated %}
-            <a class="btn btn-primary btn-sm" href="{{ path('panel.report.close', {'id': report.id}) }}">
+            <a class="btn btn-primary btn-sm js-submit-link" href="{{ path('panel.report.close', {'id': report.id}) }}">
                 <i class="fas fa-check"></i> Clôturer
             </a>
         {% endif %}
-        <a class="btn btn-danger btn-sm" href="{{ path('panel.report.delete', {'id': report.id}) }}">
+        <a class="btn btn-danger btn-sm js-submit-link" href="{{ path('panel.report.delete', {'id': report.id}) }}">
             <i class="fas fa-trash"></i> Supprimer
         </a>
     </h1>
