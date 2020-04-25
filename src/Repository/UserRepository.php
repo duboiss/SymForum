@@ -29,12 +29,13 @@ class UserRepository extends ServiceEntityRepository
      */
     private function getOnlineUsers(): QueryBuilder
     {
-        $currentDate = new DateTime();
-        $currentDate->sub(new DateInterval('PT15M'));
+        $currentDate = (new DateTime())
+            ->sub(new DateInterval('PT15M'));
 
         return $this->createQueryBuilder('u')
             ->where('u.lastActivityAt > :date')
-            ->setParameter('date', $currentDate);
+            ->setParameter('date', $currentDate)
+            ->orderBy('u.lastActivityAt', 'DESC');
     }
 
     /**
