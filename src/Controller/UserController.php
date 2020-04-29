@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends BaseController
 {
     /**
-     * @Route("{slug}", name="user.profile")
+     * @Route("{slug}", name="user.profile", methods={"GET"})
      * @param User $user
      * @param ThreadRepository $threadRepository
      * @param MessageRepository $messageRepository

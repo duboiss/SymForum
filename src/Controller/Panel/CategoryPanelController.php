@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryPanelController extends BaseController
 {
     /**
-     * @Route("/categories", name="panel.categories")
+     * @Route("/categories", name="panel.categories", methods={"GET"})
      * @param CategoryRepository $categoryRepository
      * @return Response
      */
@@ -33,7 +33,7 @@ class CategoryPanelController extends BaseController
     }
 
     /**
-     * @Route("/categories/add", name="panel.category.add")
+     * @Route("/categories/add", name="panel.category.add", methods={"GET", "POST"})
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return Response
@@ -58,7 +58,7 @@ class CategoryPanelController extends BaseController
     }
 
     /**
-     * @Route("/categories/{id}/edit", name="panel.category.edit")
+     * @Route("/categories/{id}/edit", name="panel.category.edit", methods={"GET", "POST"})
      * @param Category $category
      * @param Request $request
      * @return Response

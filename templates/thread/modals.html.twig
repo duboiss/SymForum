@@ -14,7 +14,7 @@
                 <div class="modal-footer">
                     <form action="{{ path('thread.delete', {'id': thread.id}) }}" method="POST">
                         <input type="hidden" name="token" value="{{ csrf_token('delete-thread') }}"/>
-                        <button type="submit" class="btn btn-primary">Confirmer</button>
+                        <button type="submit" class="btn btn-primary js-submit-btn">Confirmer</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                 </div>

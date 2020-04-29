@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ThreadController extends BaseController
 {
     /**
-     * @Route("/forums/threads/{slug}", name="thread.show")
+     * @Route("/forums/threads/{slug}", name="thread.show", methods={"GET", "POST"})
      * @param Thread $thread
      * @param MessageRepository $messageRepository
      * @param Request $request
@@ -73,7 +73,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/forums/{slug}/new-thread", name="thread.new")
+     * @Route("/forums/{slug}/new-thread", name="thread.new", methods={"GET", "POST"})
      * @IsGranted("ROLE_USER")
      * @param Forum $forum
      * @param Request $request
@@ -143,7 +143,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/forums/threads/{id}/lock", name="thread.lock")
+     * @Route("/forums/threads/{id}/lock", name="thread.lock", methods={"GET"})
      * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
@@ -159,7 +159,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/forums/threads/{id}/unlock", name="thread.unlock")
+     * @Route("/forums/threads/{id}/unlock", name="thread.unlock", methods={"GET"})
      * @IsGranted("LOCK", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
@@ -175,7 +175,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/forums/threads/{id}/pin", name="thread.pin")
+     * @Route("/forums/threads/{id}/pin", name="thread.pin", methods={"GET"})
      * @IsGranted("PIN", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService
@@ -191,7 +191,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/forums/threads/{id}/unpin", name="thread.unpin")
+     * @Route("/forums/threads/{id}/unpin", name="thread.unpin", methods={"GET"})
      * @IsGranted("PIN", subject="thread")
      * @param Thread $thread
      * @param ThreadService $threadService

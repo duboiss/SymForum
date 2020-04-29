@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends BaseController
 {
     /**
-     * @Route("/")
+     * @Route("/", methods={"GET"})
      */
     public function index(): Response
     {
@@ -19,7 +19,7 @@ class PageController extends BaseController
     }
 
     /**
-     * @Route("/members", name="page.members")
+     * @Route("/members", name="page.members", methods={"GET"})
      * @param UserRepository $userRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
@@ -39,7 +39,7 @@ class PageController extends BaseController
     }
 
     /**
-     * @Route("/team", name="page.team")
+     * @Route("/team", name="page.team", methods={"GET"})
      * @param UserRepository $userRepository
      * @return Response
      */

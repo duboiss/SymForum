@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PanelController extends BaseController
 {
     /**
-     * @Route("", name="panel.homepage")
+     * @Route("", name="panel.homepage", methods={"GET"})
      * @param ReportRepository $reportRepository
      * @return Response
      */

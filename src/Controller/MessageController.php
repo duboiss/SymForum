@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends BaseController
 {
     /**
-     * @Route("/forums/messages/{id}", name="message.show")
+     * @Route("/forums/messages/{id}", name="message.show", methods={"GET"})
      * @param Message $message
      * @param ThreadService $threadService
      * @return Response
@@ -32,7 +32,7 @@ class MessageController extends BaseController
     }
 
     /**
-     * @Route("/forums/messages/{id}/edit", name="message.edit")
+     * @Route("/forums/messages/{id}/edit", name="message.edit", methods={"GET", "POST"})
      * @IsGranted("EDIT", subject="message")
      * @param Message $message
      * @param Request $request
@@ -63,7 +63,7 @@ class MessageController extends BaseController
     }
 
     /**
-     * @Route("/forums/messages/{id}/delete", name="message.delete")
+     * @Route("/forums/messages/{id}/delete", name="message.delete", methods={"GET"})
      * @IsGranted("DELETE", subject="message")
      * @param Message $message
      * @param EntityManagerInterface $em

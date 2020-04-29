@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumController extends BaseController
 {
     /**
-     * @Route("/forums", name="forum.index")
+     * @Route("/forums", name="forum.index", methods={"GET"})
      * @param CategoryRepository $categoriesRepo
      * @param UserRepository $userRepository
      * @param MessageRepository $messageRepository
@@ -33,8 +33,8 @@ class ForumController extends BaseController
         return $this->render('pages/forums.html.twig', [
             'categories' => $categoriesRepo->findAllCategories(),
             'onlineUsers' => $userRepository->findOnlineUsers(),
-            'maxOnlineUsers' => $optionService->get("max_online_users", "0"),
-            'maxOnlineUsersDate' => $optionService->get("max_online_users_date"),
+            'maxOnlineUsers' => $optionService->get('max_online_users', '0'),
+            'maxOnlineUsersDate' => $optionService->get('max_online_users_date'),
             'nbUsers' => $userRepository->count([]),
             'lastRegistered' => $userRepository->findLastRegistered(),
             'nbMessages' => $messageRepository->count([]),
@@ -43,7 +43,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"})
+     * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"}, methods={"GET"})
      * @param Forum $forum
      * @param ThreadRepository $threadRepository
      * @return Response
@@ -59,7 +59,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/forums/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"})
+     * @Route("/forums/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"}, methods={"GET"})
      * @param Category $category
      * @param ForumRepository $forumRepository
      * @return Response
@@ -75,7 +75,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/forums/{id}-{slug}/lock", name="forum.lock")
+     * @Route("/forums/{id}-{slug}/lock", name="forum.lock", methods={"GET"})
      * @IsGranted("LOCK", subject="forum")
      * @param Forum $forum
      * @param ForumService $forumService
@@ -92,7 +92,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/forums/{id}-{slug}/unlock", name="forum.unlock")
+     * @Route("/forums/{id}-{slug}/unlock", name="forum.unlock", methods={"GET"})
      * @IsGranted("LOCK", subject="forum")
      * @param Forum $forum
      * @param ForumService $forumService

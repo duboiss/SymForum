@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends BaseController
 {
     /**
-     * @Route("/login", name="security.login")
+     * @Route("/login", name="security.login", methods={"GET", "POST"})
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
@@ -34,7 +34,7 @@ class SecurityController extends BaseController
     public function logout(): void {}
 
     /**
-     * @Route("/logged-out", name="security.logged.out")
+     * @Route("/logged-out", name="security.logged.out", methods={"GET"})
      * @return Response
      */
     public function logged_out(): Response
