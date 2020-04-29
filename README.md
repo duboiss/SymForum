@@ -5,7 +5,7 @@
 <img alt="PHP from Travis config" src="https://img.shields.io/travis/php-v/DuboisS/SymForum">
 </p>
 
-SymForum is a simple PHP forum built with the [Symfony 4](https://symfony.com/) framework.
+SymForum is a simple PHP forum built with the [Symfony 5](https://symfony.com/) framework.
 
 This project is under development, it is **not currently intended for the production**.
 
