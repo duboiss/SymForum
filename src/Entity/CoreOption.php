@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\PrimaryKeyTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,12 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CoreOption
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -29,11 +25,6 @@ class CoreOption
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $value;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getName(): ?string
     {

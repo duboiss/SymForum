@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\PrimaryKeyTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,12 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Forum
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -102,11 +98,6 @@ class Forum
         }
 
         return $this->getCategory();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getTitle(): ?string

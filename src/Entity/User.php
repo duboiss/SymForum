@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\PrimaryKeyTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,12 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -116,11 +112,6 @@ class User implements UserInterface
         $delay = new DateTime('5 minutes ago');
 
         return ($this->getLastActivityAt() > $delay);
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getPseudo(): ?string

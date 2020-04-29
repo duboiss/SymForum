@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\PrimaryKeyTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -12,12 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Report
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="reports")
@@ -59,11 +55,6 @@ class Report
      * @Gedmo\Blameable(on="change", field={"treatedAt"})
      */
     private $treatedBy;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getMessage(): Message
     {
