@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Forum;
+use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use App\Form\MessageType;
@@ -43,8 +44,11 @@ class ThreadController extends BaseController
             $user = $this->getUser();
 
             if (!$messageService->canPostMessage($thread, $user)) {
+                /** @var Message $lastMessage */
+                $lastMessage = $thread->getLastMessage();
+
                 return $this->redirectToRoute('message.show', [
-                    'id' => $thread->getLastMessage()->getId()
+                    'id' => $lastMessage->getId()
                 ]);
             }
 
