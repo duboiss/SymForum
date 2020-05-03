@@ -1,7 +1,7 @@
 # SymForum
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
-<img alt="Travis (.org) branch" src="https://img.shields.io/travis/DuboisS/SymForum/master">
+<a href="https://travis-ci.org/github/DuboisS/SymForum"><img alt="Travis (.org) branch" src="https://img.shields.io/travis/DuboisS/SymForum/master"></a>
 <img alt="PHP from Travis config" src="https://img.shields.io/travis/php-v/DuboisS/SymForum">
 </p>
 
