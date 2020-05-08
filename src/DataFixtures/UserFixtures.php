@@ -35,10 +35,12 @@ class UserFixtures extends BaseFixtures
             $user->setPseudo($this->faker->userName)
                 ->setHash($this->encoder->encodePassword($user, 'password'))
                 ->setEmail($this->faker->email)
-                ->setRegistrationDate($this->faker->dateTimeBetween('-1 years'))
-                ->setLastActivityAt($this->faker->dateTimeBetween($user->getRegistrationDate()));
+                ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
+                ->setLastActivityAt($this->faker->dateTimeBetween($user->getCreatedAt()));
 
-            if ($this->faker->boolean(7)) $user->setRoles(['ROLE_MODERATOR']);
+            if ($this->faker->boolean(7)) {
+                $user->setRoles(['ROLE_MODERATOR']);
+            }
         });
 
         $manager->flush();

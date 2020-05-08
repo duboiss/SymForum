@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Report
 {
     use PrimaryKeyTrait;
+    use CreatedAtTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="reports")
@@ -32,12 +34,6 @@ class Report
      * )
      */
     private $reason;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $reportedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports")
@@ -76,18 +72,6 @@ class Report
     public function setReason(string $reason): self
     {
         $this->reason = $reason;
-
-        return $this;
-    }
-
-    public function getReportedAt(): ?DateTimeInterface
-    {
-        return $this->reportedAt;
-    }
-
-    public function setReportedAt(DateTimeInterface $reportedAt): self
-    {
-        $this->reportedAt = $reportedAt;
 
         return $this;
     }

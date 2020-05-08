@@ -50,9 +50,8 @@ class ReportRepository extends ServiceEntityRepository
             ->leftJoin('r.reportedBy', 'reportedBy')
             ->join('r.message', 'm')
             ->leftJoin('m.author', 'messageAuthor')
-            ->orderBy('r.reportedAt', 'DESC');
+            ->orderBy('r.createdAt', 'DESC');
     }
-
 
     /**
      * @param Message $message
@@ -70,7 +69,7 @@ class ReportRepository extends ServiceEntityRepository
                 ->setParameter('except', $except);
         }
 
-        return $qb->orderBy('r.reportedAt', 'DESC')
+        return $qb->orderBy('r.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

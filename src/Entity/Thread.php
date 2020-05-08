@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Thread
 {
     use PrimaryKeyTrait;
+    use CreatedAtTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,12 +31,6 @@ class Thread
      * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="threads")
@@ -102,18 +97,6 @@ class Thread
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

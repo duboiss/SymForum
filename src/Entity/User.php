@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
 use DateTime;
 use DateTimeInterface;
@@ -22,6 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface
 {
     use PrimaryKeyTrait;
+    use CreatedAtTrait;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -59,12 +61,6 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $registrationDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -151,18 +147,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getRegistrationDate(): ?DateTimeInterface
-    {
-        return $this->registrationDate;
-    }
-
-    public function setRegistrationDate(DateTimeInterface $registrationDate): self
-    {
-        $this->registrationDate = $registrationDate;
 
         return $this;
     }

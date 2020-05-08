@@ -29,7 +29,7 @@
                     {% for message in pagination %}
                         <tr>
                             <td>
-                                <a href="{{ path('message.show', {'id': message.id}) }}">{{ message.publishedAt|ago }}</a>
+                                <a href="{{ path('message.show', {'id': message.id}) }}">{{ message.createdAt|ago }}</a>
                             </td>
                             <td>{{ message.content|striptags|u.truncate(45, '...') }}</td>
                             <td>

@@ -27,7 +27,7 @@
             <h4>Signalement</h4>
             <p>
                 Statut : {{ report.isTreated ? 'Traité' : 'En attente de traitement' }}<br>
-                Date : {{ report.reportedAt|date('d/m/Y à H:i:s') }}<br>
+                Date : {{ report.createdAt|date('d/m/Y à H:i:s') }}<br>
                 Signalé par : {{ user_profile_link(report.reportedBy) }}<br>
                 Raison : {{ report.reason }}
                 {% if report.isTreated %}
@@ -39,7 +39,7 @@
         <div class="col col-lg-6 col-md-6 col-sm-6">
             <h4>Message</h4>
             <p>Auteur : {{ user_profile_link(report.message.author) }}<br>
-                Date de publication : {{ report.message.publishedAt|date('d/m/y à H:i:s') }}<br>
+                Date de publication : {{ report.message.createdAt|date('d/m/y à H:i:s') }}<br>
                 Sujet : <a
                         href="{{ path('thread.show', {'slug': report.message.thread.slug}) }}">{{ report.message.thread.title }}</a><br>
                 Contenu : <a
@@ -66,7 +66,7 @@
                 <tr{{ not report.isTreated ? ' class="table-warning"' }}>
                     <td>{{ report.id }}</td>
                     <td>{{ user_profile_link(report.message.author) }}</td>
-                    <td>{{ report.reportedAt|date('d/m/Y à H:i:s') }}</td>
+                    <td>{{ report.createdAt|date('d/m/Y à H:i:s') }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
                     <td>{{ report.reason|slice(0, 50) }}{{ report.reason|length > 50 ? '...' }}</td>
                     <td><a href="{{ path('panel.report.show', {'id': report.id}) }}">Détails</a></td>

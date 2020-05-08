@@ -18,11 +18,11 @@ class ReportFixtures extends BaseFixtures implements DependentFixtureInterface
 
             $report->setMessage($reportedMessage)
                 ->setReason($this->faker->sentence)
-                ->setReportedAt($this->faker->dateTimeBetween($reportedMessage->getPublishedAt()))
+                ->setCreatedAt($this->faker->dateTimeBetween($reportedMessage->getCreatedAt()))
                 ->setReportedBy($this->getRandomReference(User::class));
 
             if ($this->faker->boolean(65)) {
-                $report->setTreatedAt($this->faker->dateTimeBetween($report->getReportedAt()))
+                $report->setTreatedAt($this->faker->dateTimeBetween($report->getCreatedAt()))
                     ->setTreatedBy($this->getRandomReference(User::class));
             }
         });

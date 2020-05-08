@@ -56,7 +56,7 @@ class AntispamService
 
         if ($lastMessage && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
-            return $currentDate->modify(sprintf('-%s seconds', self::DELAY_MESSAGE)) > $lastMessage->getPublishedAt();
+            return $currentDate->modify(sprintf('-%s seconds', self::DELAY_MESSAGE)) > $lastMessage->getCreatedAt();
         }
 
         return true;

@@ -2,7 +2,7 @@
     <div class="card-header">
         {{ thread.title }}
         <div class="float-right">
-            <i class="far fa-clock"></i> {{ message.publishedAt|date('d-m-Y à H:i:s') }}
+            <i class="far fa-clock"></i> {{ message.createdAt|date('d-m-Y à H:i:s') }}
         </div>
     </div>
     <div class="card-body">

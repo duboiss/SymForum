@@ -20,7 +20,7 @@
                     <strong class="text-danger">{{ role }}</strong><br>
                 {% endif %}
 
-                Date d'inscription : {{ user.registrationDate|date("d/m/Y") }}
+                Date d'inscription : {{ user.createdAt|date("d/m/Y") }}
                 {% if user.lastActivityAt %}
                     <br>Dernière activité : {{ user.lastActivityAt|date("d/m/Y à H:i") }}
                 {% endif %}

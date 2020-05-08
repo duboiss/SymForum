@@ -53,7 +53,7 @@
                             {% if subforum.lastMessage %}
                                 {% set last_message = subforum.lastMessage %}
 
-                                <a href="{{ path('message.show', {'id': last_message.id}) }}">{{ last_message.publishedAt|ago }}</a>
+                                <a href="{{ path('message.show', {'id': last_message.id}) }}">{{ last_message.createdAt|ago }}</a>
                                 par {{ user_profile_link(last_message.author) }}
                             {% else %}
                                 Aucun message
@@ -91,7 +91,7 @@
                             <div class="col-lg-4 d-none d-lg-block">
                                 {% set last_message = thread.lastMessage %}
 
-                                <a href="{{ path('message.show', {'id': last_message.id}) }}">{{ last_message.publishedAt|ago }}</a>
+                                <a href="{{ path('message.show', {'id': last_message.id}) }}">{{ last_message.createdAt|ago }}</a>
                                 par {{ user_profile_link(last_message.author) }}
                             </div>
                         </div>

@@ -17,17 +17,21 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
             $thread = $this->getRandomReference(Thread::class);
 
             $message->setAuthor($this->getRandomReference(User::class))
-                ->setPublishedAt($this->faker->dateTimeBetween($thread->getCreatedAt()))
+                ->setCreatedAt($this->faker->dateTimeBetween($thread->getCreatedAt()))
                 ->setContent($this->faker->sentences(mt_rand(1, 15), true))
                 ->setThread($thread);
 
-            $this->faker->boolean() ? $message->setUpdatedAt($this->faker->dateTimeBetween($message->getPublishedAt())) : $message->setUpdatedAt(null);
+            $this->faker->boolean() ? $message->setUpdatedAt($this->faker->dateTimeBetween($message->getCreatedAt())) : $message->setUpdatedAt(null);
 
-            if ($thread->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $thread->setLastMessage($message);
+            if ($thread->getLastMessage()->getCreatedAt() < $message->getCreatedAt()) {
+                $thread->setLastMessage($message);
+            }
 
             $forum = $thread->getForum();
 
-            if (!$forum->getLastMessage() || $forum->getLastMessage()->getPublishedAt() < $message->getPublishedAt()) $forum->setLastMessage($message);
+            if (!$forum->getLastMessage() || $forum->getLastMessage()->getCreatedAt() < $message->getCreatedAt()) {
+                $forum->setLastMessage($message);
+            }
 
             $thread->incrementTotalMessages();
             $forum->incrementTotalMessages();

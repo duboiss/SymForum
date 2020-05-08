@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,18 +17,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Message
 {
     use PrimaryKeyTrait;
+    use CreatedAtTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
      * @Gedmo\Blameable(on="create")
      */
     private $author;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     */
-    private $publishedAt;
 
     /**
      * @ORM\Column(type="text")
@@ -77,18 +73,6 @@ class Message
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
-
-        return $this;
-    }
-
-    public function getPublishedAt(): ?DateTimeInterface
-    {
-        return $this->publishedAt;
-    }
-
-    public function setPublishedAt(DateTimeInterface $publishedAt): self
-    {
-        $this->publishedAt = $publishedAt;
 
         return $this;
     }

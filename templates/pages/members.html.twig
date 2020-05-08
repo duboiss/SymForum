@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{ user_profile_link(member) }}</td>
                     <td>{{ member.messages|length }}</td>
-                    <td>{{ member.registrationDate|date('d/m/Y') }}</td>
+                    <td>{{ member.createdAt|date('d/m/Y') }}</td>
                     <td>{{ member.lastActivityAt ? member.lastActivityAt|ago : 'Jamais' }}</td>
                 </tr>
             {% endfor %}

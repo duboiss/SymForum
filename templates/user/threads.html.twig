@@ -17,7 +17,7 @@
                 - {{ user.threads|length }} {{ user.threads|length <= 1 ? 'sujet crée' : 'sujets créés' }}</h3>
 
             {% if pagination.getTotalItemCount > 0 %}
-                <table class="table table-hover">
+                <table class="table table-hover table-sm">
                     <thead>
                     <tr>
                         <th scope="col">Sujet</th>
@@ -31,7 +31,7 @@
                             <td><a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a></td>
                             <td>{{ thread.totalAnswers }}</td>
                             <td>
-                                <a href="{{ path('message.show', {'id': thread.lastMessage.id}) }}">{{ thread.lastMessage.publishedAt|ago }}</a>
+                                <a href="{{ path('message.show', {'id': thread.lastMessage.id}) }}">{{ thread.lastMessage.createdAt|ago }}</a>
                                 par {{ user_profile_link(thread.lastMessage.author) }}</td>
                         </tr>
                     {% endfor %}

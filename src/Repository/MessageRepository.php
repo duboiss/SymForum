@@ -31,7 +31,7 @@ class MessageRepository extends ServiceEntityRepository
      */
     public function findLastMessageByUser(User $user): ?Message
     {
-        return $this->findOneBy(['author' => $user], ['publishedAt' => 'DESC']);
+        return $this->findOneBy(['author' => $user], ['createdAt' => 'DESC']);
     }
 
     /**
@@ -41,7 +41,7 @@ class MessageRepository extends ServiceEntityRepository
      */
     public function findLastMessagesByUser(User $user, int $limit): array
     {
-        return $this->findBy(['author' => $user], ['publishedAt' => 'DESC'], $limit);
+        return $this->findBy(['author' => $user], ['createdAt' => 'DESC'], $limit);
     }
 
     /**
@@ -50,7 +50,7 @@ class MessageRepository extends ServiceEntityRepository
      */
     public function findLastMessageByThread(Thread $thread): ?Message
     {
-        return $this->findOneBy(['thread' => $thread], ['publishedAt' => 'DESC']);
+        return $this->findOneBy(['thread' => $thread], ['createdAt' => 'DESC']);
     }
 
     /**
@@ -69,7 +69,7 @@ class MessageRepository extends ServiceEntityRepository
         $qb = $qb
             ->where('m.thread = :thread')
             ->setParameter('thread', $thread)
-            ->orderBy('m.publishedAt', 'ASC')
+            ->orderBy('m.createdAt', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -85,7 +85,7 @@ class MessageRepository extends ServiceEntityRepository
         return $this->addWhereThreadQb($thread)
             ->select('m', 'author')
             ->leftJoin('m.author', 'author')
-            ->orderBy('m.publishedAt', 'ASC');
+            ->orderBy('m.createdAt', 'ASC');
     }
 
     /**
@@ -98,7 +98,7 @@ class MessageRepository extends ServiceEntityRepository
             return $this->addThreadQb()
                 ->where('thread.forum = :forum')
                 ->setParameter(':forum', $forum)
-                ->orderBy('m.publishedAt', 'DESC')
+                ->orderBy('m.createdAt', 'DESC')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
@@ -115,7 +115,7 @@ class MessageRepository extends ServiceEntityRepository
     {
         try {
             return $this->addWhereThreadQb($thread)
-                ->orderBy('m.publishedAt', 'ASC')
+                ->orderBy('m.createdAt', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getSingleResult();
@@ -132,9 +132,9 @@ class MessageRepository extends ServiceEntityRepository
     {
         try {
             return $this->addWhereThreadQb($message->getThread())
-                ->andWhere('m.publishedAt > :message')
-                ->setParameter(':message', $message->getPublishedAt())
-                ->orderBy('m.publishedAt', 'ASC')
+                ->andWhere('m.createdAt > :message')
+                ->setParameter(':message', $message->getCreatedAt())
+                ->orderBy('m.createdAt', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
@@ -151,7 +151,7 @@ class MessageRepository extends ServiceEntityRepository
     {
         return $this->addThreadQb()
             ->where('m.author = :user')
-            ->orderBy('m.publishedAt', 'DESC')
+            ->orderBy('m.createdAt', 'DESC')
             ->setParameter('user', $user);
     }
 
