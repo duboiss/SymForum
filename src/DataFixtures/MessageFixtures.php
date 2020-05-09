@@ -23,6 +23,7 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 
             if($this->faker->boolean) {
                 $message->setUpdatedAt($this->faker->dateTimeBetween($message->getCreatedAt()));
+                $message->setUpdatedBy($message->getAuthor());
             } else {
                 $message->setUpdatedAt($message->getCreatedAt());
             }
