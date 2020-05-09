@@ -21,7 +21,11 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setContent($this->faker->sentences(mt_rand(1, 15), true))
                 ->setThread($thread);
 
-            $this->faker->boolean() ? $message->setUpdatedAt($this->faker->dateTimeBetween($message->getCreatedAt())) : $message->setUpdatedAt(null);
+            if($this->faker->boolean) {
+                $message->setUpdatedAt($this->faker->dateTimeBetween($message->getCreatedAt()));
+            } else {
+                $message->setUpdatedAt($message->getCreatedAt());
+            }
 
             if ($thread->getLastMessage()->getCreatedAt() < $message->getCreatedAt()) {
                 $thread->setLastMessage($message);

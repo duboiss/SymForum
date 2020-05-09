@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Message
 {
     use PrimaryKeyTrait;
-    use CreatedAtTrait;
+    use TimestampableEntity;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
@@ -42,12 +41,6 @@ class Message
      * @ORM\JoinColumn(nullable=false)
      */
     private $thread;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="change", field={"content"})
-     */
-    private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="updatedMessages")
@@ -97,18 +90,6 @@ class Message
     public function setThread(?Thread $thread): self
     {
         $this->thread = $thread;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

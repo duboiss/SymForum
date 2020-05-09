@@ -42,7 +42,11 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setContent($this->faker->sentences(mt_rand(1, 15), true))
                 ->setThread($thread);
 
-            $this->faker->boolean() ? $firstMessage->setUpdatedAt($this->faker->dateTimeBetween($firstMessage->getCreatedAt())) : $firstMessage->setUpdatedAt(null);
+            if($this->faker->boolean) {
+                $firstMessage->setUpdatedAt($this->faker->dateTimeBetween($firstMessage->getCreatedAt()));
+            } else {
+                $firstMessage->setUpdatedAt($firstMessage->getCreatedAt());
+            }
 
             $manager->persist($firstMessage);
 
