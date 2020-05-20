@@ -17,31 +17,31 @@ class PageControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function responseIsSuccessful(string $url)
+    public function responseIsSuccessful(string $url): void
     {
         $this->crawler = $this->client->request('GET', $url);
         $this->assertResponseIsSuccessful();
     }
 
-    public function testIndexRedirection()
+    public function testIndexRedirection(): void
     {
         $this->client->request('GET', '/');
         $this->assertResponseRedirects('/forums');
     }
 
-    public function testDisplayForums()
+    public function testDisplayForums(): void
     {
         $this->responseIsSuccessful('/forums');
     }
 
-    public function testDisplayMembers()
+    public function testDisplayMembers(): void
     {
         $this->responseIsSuccessful('/members');
         $this->assertSelectorTextContains('h1', 'Liste des membres');
         $this->assertSelectorExists('table');
     }
 
-    public function testDisplayTeam()
+    public function testDisplayTeam(): void
     {
         $this->responseIsSuccessful('/team');
         $this->assertSelectorTextContains('html h1', 'Membres de l\'équipe');

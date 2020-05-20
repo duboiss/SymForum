@@ -22,20 +22,20 @@ class ThreadTest extends WebTestCase
             ->setIsPin(false);
     }
 
-    public function testInvalidBlankTitleEntity()
+    public function testInvalidBlankTitleEntity(): void
     {
         $invalidThread = $this->getEntity()->setTitle("");
         $this->assertHasErrors($invalidThread, 1);
     }
 
-    public function testInvalidNullForumEntity()
+    public function testInvalidNullForumEntity(): void
     {
         $invalidThread = $this->getEntity()->setForum(null);
         $this->assertHasErrors($invalidThread, 1);
     }
 
 
-    public function testInvalidUsedSlug()
+    public function testInvalidUsedSlug(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/threads.yaml']);
         $this->assertHasErrors($this->getEntity()->setSlug("first-thread"), 1);

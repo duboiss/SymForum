@@ -18,14 +18,14 @@ class SecurityControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testDisplayLogin()
+    public function testDisplayLogin(): void
     {
         $this->client->request('GET', '/login');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertSelectorNotExists('.alert.alert-danger');
     }
 
-    public function testLoginWithBadCredentials()
+    public function testLoginWithBadCredentials(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
         $crawler = $this->client->request('GET', '/login');
@@ -42,7 +42,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert.alert-danger');
     }
 
-    public function testLoginWithRightCredentials()
+    public function testLoginWithRightCredentials(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
 

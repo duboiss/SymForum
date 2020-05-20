@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Entity\User;
 use App\Tests\Controller\NeedLoginTrait;
+use Generator;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,11 +14,10 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
 {
     use FixturesTrait, NeedLoginTrait;
 
-    /** @var KernelBrowser */
-    private $client;
+    private KernelBrowser $client;
 
     /** @var User[] */
-    private $users = [];
+    private array $users = [];
 
     protected function setUp(): void
     {
@@ -29,7 +29,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
      * @dataProvider urlPublicProvider
      * @param string $url
      */
-    public function testPageIsSuccessful(string $url)
+    public function testPageIsSuccessful(string $url): void
     {
         $this->client->request('GET', $url);
         $this->assertResponseIsSuccessful();
@@ -41,7 +41,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
      * @dataProvider urlRestrictedUserProvider
      * @param string $url
      */
-    public function testRedirectToLogin(string $url)
+    public function testRedirectToLogin(string $url): void
     {
         $this->client->request('GET', $url);
         $this->assertResponseRedirects('/login');
@@ -51,7 +51,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
      * @dataProvider urlRestrictedUserProvider
      * @param string $url
      */
-    public function testAuthenticatedUserAccess(string $url)
+    public function testAuthenticatedUserAccess(string $url): void
     {
         $this->checkStatusUrl($url, 'user_demo', Response::HTTP_OK);
     }
@@ -61,7 +61,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
      * @param string $username
      * @param int $expectedStatus
      */
-    private function checkStatusUrl(string $url, string $username, int $expectedStatus)
+    private function checkStatusUrl(string $url, string $username, int $expectedStatus): void
     {
         $this->logIn($this->client, $this->users[$username]);
         $this->client->request('GET', $url);
@@ -72,7 +72,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
      * @dataProvider urlRestrictedAdminProvider
      * @param string $url
      */
-    public function testAuthenticatedAdminAccess(string $url)
+    public function testAuthenticatedAdminAccess(string $url): void
     {
         $this->checkStatusUrl($url, 'user_admin', Response::HTTP_OK);
         $this->checkStatusUrl($url, 'user_moderator', Response::HTTP_FORBIDDEN);
@@ -83,14 +83,14 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
      * @dataProvider urlRestrictedModeratorProvider
      * @param string $url
      */
-    public function testAuthenticatedModeratorAccess(string $url)
+    public function testAuthenticatedModeratorAccess(string $url): void
     {
         $this->checkStatusUrl($url, 'user_admin', Response::HTTP_OK);
         $this->checkStatusUrl($url, 'user_moderator', Response::HTTP_OK);
         $this->checkStatusUrl($url, 'user_demo', Response::HTTP_FORBIDDEN);
     }
 
-    public function urlPublicProvider()
+    public function urlPublicProvider(): ?Generator
     {
         // Pages
         yield 'page_forums' => ['/forums'];
@@ -101,7 +101,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
         yield 'security_login' => ['/login'];
     }
 
-    public function urlRestrictedAdminProvider()
+    public function urlRestrictedAdminProvider(): ?Generator
     {
         // Categories
         yield 'panel_categories' => ['/panel/categories'];
@@ -111,7 +111,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
         yield 'panel_forums' => ['/panel/forums'];
     }
 
-    public function urlRestrictedModeratorProvider()
+    public function urlRestrictedModeratorProvider(): ?Generator
     {
         yield 'panel' => ['/panel'];
 
@@ -122,7 +122,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
         yield 'panel_users' => ['/panel/users'];
     }
 
-    public function urlRestrictedUserProvider()
+    public function urlRestrictedUserProvider(): ?Generator
     {
         // User profile
         yield 'user_profile' => ['/user/demo'];

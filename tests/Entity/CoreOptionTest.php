@@ -17,13 +17,13 @@ class CoreOptionTest extends WebTestCase
             ->setValue("CoreOption value");
     }
 
-    public function testInvalidBlankNameEntity()
+    public function testInvalidBlankNameEntity(): void
     {
         $invalidCoreOption = $this->getEntity()->setName("");
         $this->assertHasErrors($invalidCoreOption, 1);
     }
 
-    public function testInvalidUsedName()
+    public function testInvalidUsedName(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/core_options.yaml']);
         $this->assertHasErrors($this->getEntity()->setName("max_online_users"), 1);

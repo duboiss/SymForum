@@ -18,13 +18,13 @@ class ForumTest extends WebTestCase
             ->setPosition(1);
     }
 
-    public function testInvalidBlankTitleEntity()
+    public function testInvalidBlankTitleEntity(): void
     {
         $invalidForum = $this->getEntity()->setTitle("");
         $this->assertHasErrors($invalidForum, 1);
     }
 
-    public function testInvalidPositivePositionEntity()
+    public function testInvalidPositivePositionEntity(): void
     {
         $invalidForum = $this->getEntity()->setPosition(-1);
         $this->assertHasErrors($invalidForum, 1);
@@ -33,7 +33,7 @@ class ForumTest extends WebTestCase
         $this->assertHasErrors($invalidForum, 1);
     }
 
-    public function testInvalidUsedSlug()
+    public function testInvalidUsedSlug(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/forums.yaml']);
         $this->assertHasErrors($this->getEntity()->setSlug("forum-title"), 1);

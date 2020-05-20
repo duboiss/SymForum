@@ -6,7 +6,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 
 trait TestUtilsTrait
 {
-    public function assertHasErrors($entity, int $number = 0)
+    public function assertHasErrors($entity, int $number = 0): void
     {
         self::bootKernel();
         $errors = self::$container->get('validator')->validate($entity);
@@ -20,7 +20,7 @@ trait TestUtilsTrait
         $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
-    public function testValidEntity()
+    public function testValidEntity(): void
     {
         $this->assertHasErrors($this->getEntity(), 0);
     }
