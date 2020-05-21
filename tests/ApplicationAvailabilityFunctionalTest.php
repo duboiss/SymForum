@@ -27,8 +27,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      */
     public function testPageIsSuccessful(string $url): void
     {
-        $this->client->request('GET', $url);
-        self::assertResponseIsSuccessful();
+        $this->responseIsSuccessful($url);
     }
 
     /**
