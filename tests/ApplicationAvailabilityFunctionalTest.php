@@ -58,7 +58,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      */
     private function checkStatusUrl(string $url, string $username, int $expectedStatus): void
     {
-        $this->logIn($this->client, $this->users[$username]);
+        $this->logIn($this->users[$username]);
         $this->client->request('GET', $url);
         self::assertResponseStatusCodeSame($expectedStatus);
     }

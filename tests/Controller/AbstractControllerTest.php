@@ -23,15 +23,15 @@ abstract class AbstractControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
     }
 
-    protected function logIn(KernelBrowser $client, User $user): void
+    protected function logIn(User $user): void
     {
-        $session = $client->getContainer()->get('session');
+        $session = $this->client->getContainer()->get('session');
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
 
         $session->set('_security_main', serialize($token));
         $session->save();
 
         $cookie = new Cookie($session->getName(), $session->getId());
-        $client->getCookieJar()->set($cookie);
+        $this->client->getCookieJar()->set($cookie);
     }
 }
