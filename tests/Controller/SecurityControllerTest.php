@@ -3,26 +3,16 @@
 namespace App\Tests\Controller;
 
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
-class SecurityControllerTest extends WebTestCase
+class SecurityControllerTest extends AbstractControllerTest
 {
     use FixturesTrait;
-
-    private ?KernelBrowser $client = null;
-
-    public function setUp(): void
-    {
-        $this->client = static::createClient();
-    }
 
     public function testDisplayLogin(): void
     {
         $this->client->request('GET', '/login');
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertSelectorNotExists('.alert.alert-danger');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorNotExists('.alert.alert-danger');
     }
 
     public function testLoginWithBadCredentials(): void
@@ -36,10 +26,10 @@ class SecurityControllerTest extends WebTestCase
         ]);
 
         $this->client->submit($form);
-        $this->assertResponseRedirects('/login');
+        self::assertResponseRedirects('/login');
         $this->client->followRedirect();
 
-        $this->assertSelectorExists('.alert.alert-danger');
+        self::assertSelectorExists('.alert.alert-danger');
     }
 
     public function testLoginWithRightCredentials(): void
@@ -53,6 +43,6 @@ class SecurityControllerTest extends WebTestCase
             'password' => 'demo',
         ]);
 
-        $this->assertResponseRedirects('/forums');
+        self::assertResponseRedirects('/forums');
     }
 }

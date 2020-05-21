@@ -32,7 +32,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     public function testPageIsSuccessful(string $url): void
     {
         $this->client->request('GET', $url);
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
     }
 
     /**
@@ -44,7 +44,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     public function testRedirectToLogin(string $url): void
     {
         $this->client->request('GET', $url);
-        $this->assertResponseRedirects('/login');
+        self::assertResponseRedirects('/login');
     }
 
     /**
@@ -65,7 +65,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     {
         $this->logIn($this->client, $this->users[$username]);
         $this->client->request('GET', $url);
-        $this->assertResponseStatusCodeSame($expectedStatus);
+        self::assertResponseStatusCodeSame($expectedStatus);
     }
 
     /**
