@@ -3,18 +3,14 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use App\Tests\Controller\NeedLoginTrait;
+use App\Tests\Controller\AbstractControllerTest;
 use Generator;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApplicationAvailabilityFunctionalTest extends WebTestCase
+class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 {
-    use FixturesTrait, NeedLoginTrait;
-
-    private KernelBrowser $client;
+    use FixturesTrait;
 
     /** @var User[] */
     private array $users = [];

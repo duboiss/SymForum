@@ -6,7 +6,7 @@ use Liip\TestFixturesBundle\Test\FixturesTrait;
 
 class UserControllerTest extends AbstractControllerTest
 {
-    use NeedLoginTrait, FixturesTrait;
+    use FixturesTrait;
 
     private function logAsDemo(): void
     {
