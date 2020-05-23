@@ -23,6 +23,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
+    public const LOGIN_ROUTE = 'security.login';
+    public const REDIRECT_AFTER_LOGIN_ROUTE = 'forum.index';
+
     private UserRepository $userRepository;
 
     private RouterInterface $router;
@@ -44,7 +47,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supports(Request $request): bool
     {
-        return $request->attributes->get('_route') === 'security.login'
+        return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
@@ -93,11 +96,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->router->generate('forum.index'));
+        return new RedirectResponse($this->router->generate(self::REDIRECT_AFTER_LOGIN_ROUTE));
     }
 
     protected function getLoginUrl(): string
     {
-        return $this->router->generate('security.login');
+        return $this->router->generate(self::LOGIN_ROUTE);
     }
 }
