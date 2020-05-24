@@ -11,6 +11,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class MessageVoter extends Voter
 {
+    private const EDIT = 'edit';
+    private const DELETE = 'delete';
+    private const REPORT = 'report';
+
     private Security $security;
 
     public function __construct(Security $security)
@@ -18,13 +22,13 @@ class MessageVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
-        return in_array($attribute, ['EDIT', 'DELETE', 'REPORT'])
+        return in_array($attribute, [self::EDIT, self::DELETE, self::REPORT])
             && $subject instanceof Message;
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         /** @var User $user */
         $user = $token->getUser();
@@ -36,11 +40,11 @@ class MessageVoter extends Voter
         }
 
         switch ($attribute) {
-            case 'EDIT':
+            case self::EDIT:
                 return $this->canEdit($message, $user);
-            case 'DELETE':
+            case self::DELETE:
                 return $this->canDelete();
-            case 'REPORT':
+            case self::REPORT:
                 return $this->canReport($message, $user);
         }
 

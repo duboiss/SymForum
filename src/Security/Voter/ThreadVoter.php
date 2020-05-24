@@ -11,6 +11,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ThreadVoter extends Voter
 {
+    private const LOCK = 'lock';
+    private const PIN = 'pin';
+    private const DELETE = 'delete';
+
     private Security $security;
 
     public function __construct(Security $security)
@@ -18,29 +22,27 @@ class ThreadVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
-        return in_array($attribute, ['LOCK', 'PIN', 'DELETE'])
+        return in_array($attribute, [self::LOCK, self::PIN, self::DELETE])
             && $subject instanceof Thread;
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         /** @var User $user */
         $user = $token->getUser();
-
-        $thread = $subject;
 
         if (!$user instanceof UserInterface) {
             return false;
         }
 
         switch ($attribute) {
-            case 'LOCK':
+            case self::LOCK:
                 return $this->canLock();
-            case 'PIN':
+            case self::PIN:
                 return $this->canPin();
-            case 'DELETE':
+            case self::DELETE:
                 return $this->canDelete();
         }
 

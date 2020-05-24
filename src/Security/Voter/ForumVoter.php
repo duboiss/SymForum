@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ForumVoter extends Voter
 {
+    private const LOCK = 'lock';
+
     private Security $security;
 
     public function __construct(Security $security)
@@ -18,13 +20,13 @@ class ForumVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
-        return in_array($attribute, ['LOCK'])
+        return in_array($attribute, [self::LOCK])
             && $subject instanceof Forum;
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         /** @var User $user */
         $user = $token->getUser();
@@ -34,7 +36,7 @@ class ForumVoter extends Voter
         }
 
         switch ($attribute) {
-            case 'LOCK':
+            case self::LOCK:
                 return $this->canLock();
         }
 
