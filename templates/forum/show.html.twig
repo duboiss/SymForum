@@ -1,5 +1,6 @@
 {% extends 'layouts/modnav.html.twig' %}
 
+
 {% block title %}{{ forum.title }}{% endblock %}
 
 {% block modnav_elements %}
@@ -7,6 +8,7 @@
 {% endblock %}
 
 {% block body %}
+    {% set page = app.request.query.get('page') %}
     {{ parent() }}
     <div class="container">
         <div class="row justify-content-md-center mt-5">
@@ -20,8 +22,6 @@
                         {% do append_breadcrumb(part.url, part.title) %}
                     {% endif %}
                 {% endfor %}
-
-                {{ include('partials/_breadcrumb.html.twig') }}
 
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">
@@ -39,6 +39,7 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        {% if (page is null) or (page is defined and page == 1) %}
                         {% for subforum in forum.forums %}
                         {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
                         <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
@@ -61,8 +62,9 @@
                         </div>
                     </div>
                     {% endfor %}
+                    {% endif %}
 
-                    {% if forum.forums|length > 0 %}
+                    {% if forum.forums|length > 0 and ((page is null) or (page is defined and page == 1)) %}
                         <div class="row mt-3">
                             <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12"></div>
                             <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">
@@ -77,7 +79,7 @@
                         </div>
                     {% endif %}
 
-                    {% for thread in threads %}
+                    {% for thread in pagination %}
                         <div class="row mb-1">
                             <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
                                 {{ thread.pin ? '<i class="fas fa-thumbtack"></i>' }}
@@ -99,6 +101,9 @@
                         Ce forum ne dispose pas encore de sujets.
                     {% endfor %}
                 </div>
+            </div>
+            <div class="float-right">
+                {{ knp_pagination_render(pagination) }}
             </div>
             {% if forum.lock == false and is_granted('ROLE_USER') %}
                 <a class="mb-3 btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">Nouveau sujet</a>

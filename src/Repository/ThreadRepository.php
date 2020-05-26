@@ -43,9 +43,9 @@ class ThreadRepository extends ServiceEntityRepository
 
     /**
      * @param Forum $forum
-     * @return Thread[]
+     * @return QueryBuilder
      */
-    public function findThreadsByForum(Forum $forum): array
+    public function findThreadsByForumQb(Forum $forum): QueryBuilder
     {
         return $this->addLastMessageQb()
             ->addSelect('t', 'author')
@@ -53,9 +53,7 @@ class ThreadRepository extends ServiceEntityRepository
             ->where('t.forum = :forum')
             ->orderBy('t.isPin', 'DESC')
             ->addOrderBy('lm.createdAt', 'DESC')
-            ->setParameter('forum', $forum)
-            ->getQuery()
-            ->getResult();
+            ->setParameter('forum', $forum);
     }
 
     /**

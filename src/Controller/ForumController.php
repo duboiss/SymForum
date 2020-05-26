@@ -12,7 +12,9 @@ use App\Repository\UserRepository;
 use App\Service\ForumService;
 use App\Service\OptionService;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -46,15 +48,21 @@ class ForumController extends BaseController
      * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"}, methods={"GET"})
      * @param Forum $forum
      * @param ThreadRepository $threadRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function show(Forum $forum, ThreadRepository $threadRepository): Response
+    public function show(Forum $forum, ThreadRepository $threadRepository,Request $request, PaginatorInterface $paginator): Response
     {
-        $threads = $threadRepository->findThreadsByForum($forum);
+        $pagination = $paginator->paginate(
+            $threadRepository->findThreadsByForumQb($forum),
+            $request->query->getInt('page', 1),
+            15
+        );
 
         return $this->render('forum/show.html.twig', [
             'forum' => $forum,
-            'threads' => $threads
+            'pagination' => $pagination
         ]);
     }
 
