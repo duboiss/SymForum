@@ -11,9 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ThreadVoter extends Voter
 {
-    private const LOCK = 'lock';
-    private const PIN = 'pin';
-    private const DELETE = 'delete';
+    private const LOCK = 'LOCK';
+    private const PIN = 'PIN';
+    private const DELETE = 'DELETE';
 
     private Security $security;
 

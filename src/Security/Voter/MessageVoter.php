@@ -11,9 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class MessageVoter extends Voter
 {
-    private const EDIT = 'edit';
-    private const DELETE = 'delete';
-    private const REPORT = 'report';
+    private const EDIT = 'EDIT';
+    private const DELETE = 'DELETE';
+    private const REPORT = 'REPORT';
 
     private Security $security;
 

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ForumVoter extends Voter
 {
-    private const LOCK = 'lock';
+    private const LOCK = 'LOCK';
 
     private Security $security;
 
