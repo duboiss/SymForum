@@ -9,7 +9,7 @@ use Twig\TwigFunction;
 
 class UserExtenion extends AbstractExtension
 {
-    const ROLES = [
+    private const ROLES = [
         'ROLE_ADMIN' => 'Administrateur',
         'ROLE_MODERATOR' => 'Modérateur'
     ];
@@ -45,9 +45,8 @@ class UserExtenion extends AbstractExtension
             $classAttr = $class ? ' class="' . $class . '"' : '';
 
             return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
-        } else {
-            return 'Compte supprimé';
         }
+        return 'Compte supprimé';
     }
 
     /**
@@ -59,7 +58,9 @@ class UserExtenion extends AbstractExtension
         $roles = $user->getRoles();
 
         foreach (self::ROLES as $k => $role) {
-            if (in_array($k, $roles)) return $role;
+            if (in_array($k, $roles, true)) {
+                return $role;
+            }
         }
 
         return null;
