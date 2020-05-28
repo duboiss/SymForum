@@ -23,6 +23,9 @@ class BreadcrumbExtension extends AbstractExtension
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * @return array|TwigFilter[]
+     */
     public function getFilters(): array
     {
         return [
@@ -30,6 +33,9 @@ class BreadcrumbExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @return array|TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [
@@ -55,8 +61,7 @@ class BreadcrumbExtension extends AbstractExtension
             throw new InvalidArgumentException('Filtered object must be an instance of Forum or Category.');
         }
 
-        $title = $forumOrCategory->getTitle();
-        array_unshift($parts, ['url' => $url, 'title' => $title]);
+        array_unshift($parts, ['url' => $url, 'title' => $forumOrCategory->getTitle()]);
 
         if ($forumOrCategory instanceof Forum && (($parent = $forumOrCategory->getParent()) || ($parent = $forumOrCategory->getCategory()))) {
             return $this->getBreadcrumbParts($parent, $parts);

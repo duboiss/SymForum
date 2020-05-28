@@ -19,6 +19,9 @@ class AppExtension extends AbstractExtension
         $this->request = $request;
     }
 
+    /**
+     * @return array|TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [

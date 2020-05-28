@@ -14,11 +14,11 @@ class UserExtenion extends AbstractExtension
         'ROLE_MODERATOR' => 'Modérateur'
     ];
 
-    private UrlGeneratorInterface $generator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $generator)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        $this->generator = $generator;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -41,7 +41,7 @@ class UserExtenion extends AbstractExtension
     public function getUserProfileLink(?User $user, string $text = null, string $class = null): string
     {
         if ($user) {
-            $route = $this->generator->generate('user.profile', ['slug' => $user->getSlug()]);
+            $route = $this->urlGenerator->generate('user.profile', ['slug' => $user->getSlug()]);
             $classAttr = $class ? ' class="' . $class . '"' : '';
 
             return sprintf('<a href="%s"' . $classAttr . '>%s</a>', $route, $text ?? $user->getPseudo());
@@ -55,10 +55,8 @@ class UserExtenion extends AbstractExtension
      */
     public function getUserProfileRole(User $user): ?string
     {
-        $roles = $user->getRoles();
-
         foreach (self::ROLES as $k => $role) {
-            if (in_array($k, $roles, true)) {
+            if (in_array($k, $user->getRoles(), true)) {
                 return $role;
             }
         }
