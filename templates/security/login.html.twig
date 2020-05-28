@@ -28,6 +28,9 @@
         </div>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        {% if target_url %}
+            <input type="hidden" name="targetUrl" value="{{ target_url }}">
+        {% endif %}
 
         <button type="submit" class="btn btn-primary btn-block">Connexion</button>
     </form>

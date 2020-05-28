@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -11,20 +12,19 @@ class SecurityController extends BaseController
     /**
      * @Route("/login", name="security.login", methods={"GET", "POST"})
      * @param AuthenticationUtils $authenticationUtils
+     * @param Request $request
      * @return Response
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('forum.index');
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
-
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError(),
+            'target_url' => $request->query->get('redirect')
         ]);
     }
 
