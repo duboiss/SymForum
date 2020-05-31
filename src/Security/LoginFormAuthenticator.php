@@ -92,8 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         $this->flashBag->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
 
-        if(preg_match('@^/forums@', $targetUrl = $request->request->get('targetUrl')))
-        {
+        if(($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', $targetUrl)) {
             return new RedirectResponse($targetUrl);
         }
 
