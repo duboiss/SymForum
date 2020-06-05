@@ -7,17 +7,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @method User|null getUser()
  */
 abstract class BaseController extends AbstractController
 {
-    private FlashbagInterface $flashBag;
+    private SessionInterface $session;
 
-    public function __construct(FlashBagInterface $flashBag)
+    public function __construct(SessionInterface $session)
     {
-        $this->flashBag = $flashBag;
+        $this->session = $session;
     }
 
     /**
@@ -27,7 +29,7 @@ abstract class BaseController extends AbstractController
      */
     protected function addCustomFlash(string $type, string $title, string $content): void
     {
-        $this->flashBag->add($type, ['title' => $title, 'content' => $content]);
+        $this->session->getFlashBag()->add($type, ['title' => $title, 'content' => $content]);
     }
 
     /**

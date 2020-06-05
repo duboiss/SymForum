@@ -5,7 +5,7 @@ namespace App\Security;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -34,15 +34,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     private UserPasswordEncoderInterface $passwordEncoder;
 
-    private FlashBagInterface $flashBag;
+    private SessionInterface $session;
 
-    public function __construct(UserRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, FlashBagInterface $flashBag)
+    public function __construct(UserRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, SessionInterface $session)
     {
         $this->userRepository = $userRepository;
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
-        $this->flashBag = $flashBag;
+        $this->session = $session;
     }
 
     public function supports(Request $request): bool
@@ -90,7 +90,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        $this->flashBag->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
+        $this->session->getFlashBag()->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
 
         if(($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', $targetUrl)) {
             return new RedirectResponse($targetUrl);
