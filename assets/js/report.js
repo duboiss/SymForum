@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import axios from 'axios';
 
 $(document).ready(function () {
     const modal = $('#reportModal');
@@ -37,17 +36,17 @@ $(document).ready(function () {
         let url = modal.find('form').attr('action');
         let reason = modal.find(reasonTextarea).val();
 
-        axios.post(url, {
+        $.post(url, {
             messageId: messageId,
             reason: reason
-        }).then(function (response) {
-            responseMessage = response.data.message;
+        }).done(function (response) {
+            responseMessage = response.message;
             toastReport.find('.toast-body').text(responseMessage);
 
             toastReport.toast('show');
             modal.modal('hide');
-        }).catch(function (error) {
-            responseMessage = error.response.data.message;
+        }).fail(function (error) {
+            responseMessage = error.responseJSON.message;
             errorMessage.text(responseMessage);
         });
     });
