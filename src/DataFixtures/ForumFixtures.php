@@ -11,7 +11,7 @@ class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Forum::class, 10, function (Forum $forum, $count) {
+        $this->createMany(Forum::class, FixturesSettings::FORUMS_COUNT, function (Forum $forum, $count) {
             /** @var Category $category */
             $category = $this->getRandomReference(Category::class);
 

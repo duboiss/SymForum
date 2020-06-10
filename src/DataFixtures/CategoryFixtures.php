@@ -9,7 +9,7 @@ class CategoryFixtures extends BaseFixtures
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Category::class, 3, function (Category $category, $count) {
+        $this->createMany(Category::class, FixturesSettings::CATEGORIES_COUNT, function (Category $category, $count) {
             $category->setTitle($this->faker->words(4, true))
                 ->setPosition($count);
         });

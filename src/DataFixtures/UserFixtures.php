@@ -31,7 +31,7 @@ class UserFixtures extends BaseFixtures
         $manager->persist($demoUser);
         $manager->persist($adminUser);
 
-        $this->createMany(User::class, 80, function (User $user) {
+        $this->createMany(User::class, FixturesSettings::USERS_COUNT, function (User $user) {
             $user->setPseudo($this->faker->userName)
                 ->setHash($this->encoder->encodePassword($user, 'password'))
                 ->setEmail($this->faker->email)
