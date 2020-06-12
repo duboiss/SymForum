@@ -31,7 +31,7 @@
                             <td>
                                 <a href="{{ path('message.show', {'id': message.id}) }}">{{ message.createdAt|ago }}</a>
                             </td>
-                            <td>{{ message.content|striptags|u.truncate(45, '...') }}</td>
+                            <td>{{ message.content|striptags|u.truncate(45, '...', false) }}</td>
                             <td>
                                 <a href="{{ path('thread.show', {'slug': message.thread.slug}) }}">{{ message.thread.title }}</a>
                             </td>

@@ -29,7 +29,7 @@
                     <td>{{ user_profile_link(report.message.author) }}</td>
                     <td>{{ report.createdAt|date('d/m/Y à H:i:s') }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
-                    <td>{{ report.reason|slice(0, 50) }}{{ report.reason|length > 50 ? '...' }}</td>
+                    <td>{{ report.reason|u.truncate(45, '...', false) }}</td>
                     <td><a href="{{ path('panel.report.show', {'id': report.id}) }}">Détails</a></td>
                 </tr>
             {% endfor %}

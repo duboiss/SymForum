@@ -36,7 +36,7 @@
                 <ul>
                     {% for thread in lastThreads %}
                         <li>
-                            <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title|u.truncate(50, '...') }}</a>
+                            <a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title|u.truncate(50, '...', false) }}</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -52,7 +52,7 @@
                 <ul>
                     {% for message in lastMessages %}
                         <li>
-                            <a href="{{ path('message.show', {'id': message.id}) }}">{{ message.content|striptags|u.truncate(50, '...') }}
+                            <a href="{{ path('message.show', {'id': message.id}) }}">{{ message.content|striptags|u.truncate(50, '...', false) }}
                         </li>
                     {% endfor %}
                 </ul>
