@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Repository\ReportRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ReportRepository")
+ * @ORM\Entity(repositoryClass=ReportRepository::class)
  */
 class Report
 {
@@ -18,7 +19,7 @@ class Report
     use CreatedAtTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="reports")
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="reports")
      * @ORM\JoinColumn(nullable=false)
      */
     private $message;
@@ -36,7 +37,7 @@ class Report
     private $reason;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reports")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @Gedmo\Blameable(on="create")
      */
     private $reportedBy;
@@ -47,7 +48,7 @@ class Report
     private $treatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="treatedReports")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="treatedReports")
      * @Gedmo\Blameable(on="change", field={"treatedAt"})
      */
     private $treatedBy;

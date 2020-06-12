@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Repository\MessageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
+ * @ORM\Entity(repositoryClass=MessageRepository::class)
  */
 class Message
 {
@@ -19,7 +20,7 @@ class Message
     use TimestampableEntity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @Gedmo\Blameable(on="create")
      */
     private $author;
@@ -37,19 +38,19 @@ class Message
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Thread", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=Thread::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="updatedMessages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="updatedMessages")
      * @Gedmo\Blameable(on="change", field={"content"})
      */
     private $updatedBy;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="message", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="message", orphanRemoval=true)
      */
     private $reports;
 

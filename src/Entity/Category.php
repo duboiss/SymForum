@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @UniqueEntity("slug")
  */
 class Category
@@ -38,7 +39,7 @@ class Category
     private $position;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="category")
+     * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="category")
      * @ORM\OrderBy({"position" = "ASC"})
      */
     private $forums;

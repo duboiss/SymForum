@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Repository\UserRepository;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity("pseudo")
  * @UniqueEntity("email")
  * @UniqueEntity("slug")
@@ -68,27 +69,27 @@ class User implements UserInterface
     protected $lastActivityAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Thread::class, mappedBy="author")
      */
     private $threads;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author")
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="updatedBy")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="updatedBy")
      */
     private $updatedMessages;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="reportedBy")
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="reportedBy")
      */
     private $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Report", mappedBy="treatedBy")
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="treatedBy")
      */
     private $treatedReports;
 

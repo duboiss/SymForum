@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Repository\ForumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ForumRepository")
+ * @ORM\Entity(repositoryClass=ForumRepository::class)
  * @UniqueEntity("slug")
  */
 class Forum
@@ -36,7 +37,7 @@ class Forum
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="forums")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="forums")
      * @ORM\JoinColumn(nullable=true)
      */
     private $category;

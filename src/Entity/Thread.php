@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Repository\ThreadRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
+ * @ORM\Entity(repositoryClass=ThreadRepository::class)
  * @UniqueEntity("slug")
  */
 class Thread
@@ -33,13 +34,13 @@ class Thread
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="threads")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="threads")
      * @Gedmo\Blameable(on="create")
      */
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Forum", inversedBy="threads")
+     * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="threads")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull()
      */
@@ -58,12 +59,12 @@ class Thread
     private $isPin = false;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Message", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Message::class, cascade={"persist", "remove"})
      */
     private $lastMessage;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="thread", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="thread", orphanRemoval=true)
      */
     private $messages;
 
