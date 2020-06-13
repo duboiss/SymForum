@@ -6,9 +6,8 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
 
 /**
  * @method User|null getUser()
@@ -17,9 +16,12 @@ abstract class BaseController extends AbstractController
 {
     private SessionInterface $session;
 
-    public function __construct(SessionInterface $session)
+    private DecoderInterface $decoder;
+
+    public function __construct(SessionInterface $session, DecoderInterface $decoder)
     {
         $this->session = $session;
+        $this->decoder = $decoder;
     }
 
     /**
@@ -39,5 +41,10 @@ abstract class BaseController extends AbstractController
     protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('forum.index'));
+    }
+
+    protected function json_decode_request_content(Request $request): array
+    {
+        return $this->decoder->decode($request->getContent(), 'json');
     }
 }

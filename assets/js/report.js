@@ -36,16 +36,18 @@ $(document).ready(function () {
         let url = modal.find('form').attr('action');
         let reason = modal.find(reasonTextarea).val();
 
-        $.post(url, {
-            messageId: messageId,
-            reason: reason
-        }).done(function (response) {
+        $.ajax({
+            method: "POST",
+            url,
+            data: JSON.stringify({ reason: reason }),
+            dataType: "json"
+        }).done(function(response) {
             responseMessage = response.message;
             toastReport.find('.toast-body').text(responseMessage);
 
             toastReport.toast('show');
             modal.modal('hide');
-        }).fail(function (error) {
+        }).fail(function(error) {
             responseMessage = error.responseJSON.message;
             errorMessage.text(responseMessage);
         });

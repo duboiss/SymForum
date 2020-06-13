@@ -22,18 +22,21 @@ class ReportController extends BaseController
      */
     public function message(Message $message, Request $request, ReportService $reportService): Response
     {
-        $reason = $request->request->get('reason');
-        $author = $this->getUser();
+        $reason = $this->json_decode_request_content($request)['reason'];
 
         if (!$reason) {
             return $this->json([
                 'message' => 'Vous devez indiquer un motif !'
             ], 403);
-        } elseif (strlen($reason) < 8) {
+        }
+
+        if (strlen($reason) < 8) {
             return $this->json([
                 'message' => 'Merci d\'apporter plus de précisions..'
             ], 403);
-        } elseif ($author === $message->getAuthor()) {
+        }
+
+        if ($this->getUser() === $message->getAuthor()) {
             return $this->json([
                 'message' => 'Vous ne pouvez pas vous signaler vous-même !'
             ], 403);
