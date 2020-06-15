@@ -14,7 +14,6 @@ YARN = yarn
 db: vendor db-reset fixtures ## Reset database and load fixtures
 
 db-reset: vendor ## Reset database
-	@$(EXEC_PHP) php -r 'echo "Wait database...\n"; set_time_limit(30); require __DIR__."/config/bootstrap.php"; $$u = parse_url($$_ENV["DATABASE_URL"]); for(;;) { if(@fsockopen($$u["host"].":".($$u["port"] ?? 3306))) { break; }}'
 	@-$(SYMFONY) doctrine:database:drop --if-exists --force
 	@-$(SYMFONY) doctrine:database:create --if-not-exists
 	@$(SYMFONY) doctrine:schema:update --force
@@ -33,7 +32,7 @@ fixtures: vendor ## Load fixtures - requires database with tables
 
 
 ##
-## Lint
+## Linting
 .PHONY: lint lint-container lint-twig lint-xliff lint-yaml
 
 lint: vendor lint-container lint-twig lint-xliff lint-yaml ## Run all lint commands
@@ -53,7 +52,7 @@ lint-yaml: vendor ## Check yaml syntax in /config and /translations folders
 
 ##
 ## Node.js
-.PHONY: assets
+.PHONY: assets build watch
 
 yarn.lock: package.json
 	$(YARN) upgrade
@@ -61,8 +60,14 @@ yarn.lock: package.json
 node_modules: yarn.lock ## Install yarn packages
 	@$(YARN)
 
-assets: node_modules ## Run Webpack Encore to compile assets
+assets: node_modules ## Run Webpack Encore to compile development assets
 	@$(YARN) dev
+
+build: node_modules ## Run Webpack Encore to compile production assets
+	@$(YARN) build
+
+watch: node_modules ## Recompile assets automatically when files change
+	@$(YARN) watch
 
 
 ##
@@ -95,8 +100,8 @@ cache-warmup: vendor cache-clear ## Clear and warm up cache for current environm
 ci: db-validate lint security tests ## Continuous integration
 
 clean: purge ## Delete all dependencies
-	@rm -rf .env.local node_modules var vendor
-	@echo -e "Vendor and node_modules folder have been deleted !"
+	@rm -rf .env.local var vendor node_modules public/build
+	@echo -e "Var, vendor, node_modules and public/build folders have been deleted !"
 
 reset: unserve clean install
 
