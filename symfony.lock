@@ -1,4 +1,28 @@
 {
+    "amphp/amp": {
+        "version": "v2.4.4"
+    },
+    "amphp/byte-stream": {
+        "version": "v1.7.3"
+    },
+    "amphp/parallel": {
+        "version": "v1.4.0"
+    },
+    "amphp/parallel-functions": {
+        "version": "v0.1.3"
+    },
+    "amphp/parser": {
+        "version": "v1.0.0"
+    },
+    "amphp/process": {
+        "version": "v1.1.0"
+    },
+    "amphp/serialization": {
+        "version": "v1.0.0"
+    },
+    "amphp/sync": {
+        "version": "v1.4.0"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
@@ -57,16 +81,16 @@
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
-        "version": "1.2",
+        "version": "2.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
-            "version": "1.2",
-            "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
+            "version": "2.2",
+            "ref": "baaa439e3e3179e69e3da84b671f0a3e4a2f56ad"
         },
         "files": [
             "./config/packages/doctrine_migrations.yaml",
-            "./src/Migrations/.gitignore"
+            "./migrations/.gitignore"
         ]
     },
     "doctrine/event-manager": {
@@ -93,13 +117,16 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.1.0"
+    },
     "exercise/htmlpurifier-bundle": {
-        "version": "0.2",
+        "version": "3.0",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
-            "version": "0.2",
-            "ref": "0b76657841c2ba52647bb1b4a5595a0e3b9f485c"
+            "version": "3.0",
+            "ref": "4667fd2103dc4645d234591e1c85f727c6fe0d11"
         },
         "files": [
             "./config/packages/exercise_html_purifier.yaml"
@@ -119,12 +146,6 @@
     },
     "gitonomy/gitlib": {
         "version": "v1.2.0"
-    },
-    "jakub-onderka/php-parallel-lint": {
-        "version": "v1.0.0"
-    },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
     },
     "knplabs/knp-components": {
         "version": "v2.2.1"
@@ -175,8 +196,14 @@
     "ocramius/proxy-manager": {
         "version": "2.2.2"
     },
+    "opis/closure": {
+        "version": "3.5.5"
+    },
     "php": {
         "version": "7.4"
+    },
+    "php-parallel-lint/php-parallel-lint": {
+        "version": "v1.2.0"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -349,7 +376,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.1",
-            "ref": "20148abf61a454d2c045931d20e6418c729a675a"
+            "ref": "ffcb76bab779154c0a7d8cddb9f448c2c45a4e50"
         },
         "files": [
             "./config/packages/cache.yaml",
