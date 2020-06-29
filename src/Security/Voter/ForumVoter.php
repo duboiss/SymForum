@@ -20,7 +20,7 @@ class ForumVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports($attribute, $subject): bool
+    protected function supports(string $attribute, $subject): bool
     {
         return in_array($attribute, [self::LOCK])
             && $subject instanceof Forum;

@@ -22,7 +22,7 @@ class ThreadVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports($attribute, $subject): bool
+    protected function supports(string $attribute, $subject): bool
     {
         return in_array($attribute, [self::LOCK, self::PIN, self::DELETE])
             && $subject instanceof Thread;
