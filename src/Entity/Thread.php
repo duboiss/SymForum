@@ -131,7 +131,7 @@ class Thread
         return $this->isLock;
     }
 
-    public function setIsLock(bool $isLock): self
+    public function setLock(bool $isLock): self
     {
         $this->isLock = $isLock;
 
@@ -143,7 +143,7 @@ class Thread
         return $this->isPin;
     }
 
-    public function setIsPin(bool $isPin): self
+    public function setPin(bool $isPin): self
     {
         $this->isPin = $isPin;
 

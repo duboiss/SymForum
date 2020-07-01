@@ -19,7 +19,7 @@ class ForumService
      */
     public function lock(Forum $forum): void
     {
-        $forum->setIsLock(true);
+        $forum->setLock(true);
         $this->em->flush();
     }
 
@@ -28,7 +28,7 @@ class ForumService
      */
     public function unlock(Forum $forum): void
     {
-        $forum->setIsLock(false);
+        $forum->setLock(false);
         $this->em->flush();
     }
 }

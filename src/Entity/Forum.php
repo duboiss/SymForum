@@ -208,7 +208,7 @@ class Forum
         return $this->isLock;
     }
 
-    public function setIsLock(bool $isLock): self
+    public function setLock(bool $isLock): self
     {
         $this->isLock = $isLock;
 

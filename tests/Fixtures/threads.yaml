@@ -5,6 +5,6 @@ App\Entity\Thread:
     thread1:
         title: Thread title
         slug: first-thread
-        isLock: false
-        isPin: false
+        lock: false
+        pin: false
         forum: '@forum1'

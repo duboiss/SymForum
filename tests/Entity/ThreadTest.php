@@ -18,8 +18,8 @@ class ThreadTest extends WebTestCase
         return (new Thread())
             ->setTitle("Thread title")
             ->setForum($forum)
-            ->setIsLock(false)
-            ->setIsPin(false);
+            ->setLock(false)
+            ->setPin(false);
     }
 
     public function testInvalidBlankTitleEntity(): void

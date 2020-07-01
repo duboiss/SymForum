@@ -61,8 +61,8 @@ class ThreadService
         $thread = (new Thread())
             ->setTitle($title)
             ->setForum($forum)
-            ->setIsLock($lock)
-            ->setIsPin($pin);
+            ->setLock($lock)
+            ->setPin($pin);
 
         $thread->getForum()->incrementTotalThreads();
 
@@ -110,7 +110,7 @@ class ThreadService
      */
     public function lock(Thread $thread): void
     {
-        $thread->setIsLock(true);
+        $thread->setLock(true);
         $this->em->flush();
     }
 
@@ -119,7 +119,7 @@ class ThreadService
      */
     public function unlock(Thread $thread): void
     {
-        $thread->setIsLock(false);
+        $thread->setLock(false);
         $this->em->flush();
     }
 
@@ -128,7 +128,7 @@ class ThreadService
      */
     public function pin(Thread $thread): void
     {
-        $thread->setIsPin(true);
+        $thread->setPin(true);
         $this->em->flush();
     }
 
@@ -137,7 +137,7 @@ class ThreadService
      */
     public function unpin(Thread $thread): void
     {
-        $thread->setIsPin(false);
+        $thread->setPin(false);
         $this->em->flush();
     }
 

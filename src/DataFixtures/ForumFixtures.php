@@ -21,7 +21,7 @@ class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setParent(null)
                 ->setPosition($count);
 
-            $this->faker->boolean(20) ? $forum->setIsLock(true) : $forum->setIsLock(false);
+            $this->faker->boolean(20) ? $forum->setLock(true) : $forum->setLock(false);
         });
 
         $manager->flush();

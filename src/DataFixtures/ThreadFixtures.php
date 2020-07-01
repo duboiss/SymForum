@@ -28,8 +28,8 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
                 ->setForum($forum);
 
-            $this->faker->boolean(40) ? $thread->setIsLock(true) : $thread->setIsLock(false);
-            $this->faker->boolean(10) ? $thread->setIsPin(true) : $thread->setIsPin(false);
+            $this->faker->boolean(40) ? $thread->setLock(true) : $thread->setLock(false);
+            $this->faker->boolean(10) ? $thread->setPin(true) : $thread->setPin(false);
 
             $forum->incrementTotalThreads();
             $this->threads[] = $thread;
