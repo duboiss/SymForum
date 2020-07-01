@@ -37,7 +37,7 @@ class SecurityController extends BaseController
      * @Route("/logged-out", name="security.logged.out", methods={"GET"})
      * @return Response
      */
-    public function logged_out(): Response
+    public function loggedOut(): Response
     {
         $this->addCustomFlash('success', 'Déconnexion', 'Vous êtes désormais déconnecté !');
         return $this->redirectToRoute('forum.index');
