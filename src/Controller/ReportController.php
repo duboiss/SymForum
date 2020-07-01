@@ -22,7 +22,7 @@ class ReportController extends BaseController
      */
     public function message(Message $message, Request $request, ReportService $reportService): Response
     {
-        $reason = $this->json_decode_request_content($request)['reason'];
+        $reason = $this->jsonDecodeRequestContent($request)['reason'];
 
         if (!$reason) {
             return $this->json([

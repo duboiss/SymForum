@@ -43,7 +43,7 @@ abstract class BaseController extends AbstractController
         return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('forum.index'));
     }
 
-    protected function json_decode_request_content(Request $request): array
+    protected function jsonDecodeRequestContent(Request $request): array
     {
         return $this->decoder->decode($request->getContent(), 'json');
     }
