@@ -25,10 +25,8 @@ class CategoryPanelController extends BaseController
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll();
-
         return $this->render('panel/category/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 

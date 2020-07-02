@@ -19,10 +19,8 @@ class PanelController extends BaseController
      */
     public function homepage(ReportRepository $reportRepository): Response
     {
-        $nbUntreatedReports = $reportRepository->countUntreatedReports();
-
         return $this->render('panel/homepage.html.twig', [
-            'nbUntreatedReports' => $nbUntreatedReports
+            'nbUntreatedReports' => $reportRepository->countUntreatedReports()
         ]);
     }
 }

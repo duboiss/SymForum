@@ -74,11 +74,9 @@ class ForumController extends BaseController
      */
     public function category(Category $category, ForumRepository $forumRepository): Response
     {
-        $forums = $forumRepository->findForumsByCategory($category);
-
         return $this->render('forum/category.html.twig', [
             'category' => $category,
-            'forums' => $forums,
+            'forums' => $forumRepository->findForumsByCategory($category)
         ]);
     }
 

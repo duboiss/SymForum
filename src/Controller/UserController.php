@@ -24,13 +24,10 @@ class UserController extends BaseController
      */
     public function profile(User $user, ThreadRepository $threadRepository, MessageRepository $messageRepository): Response
     {
-        $lastThreads = $threadRepository->findLastThreadsByUser($user, 5);
-        $lastMessages = $messageRepository->findLastMessagesByUser($user, 5);
-
         return $this->render('user/profile.html.twig', [
             'user' => $user,
-            'lastThreads' => $lastThreads,
-            'lastMessages' => $lastMessages
+            'lastThreads' => $threadRepository->findLastThreadsByUser($user, 5),
+            'lastMessages' => $messageRepository->findLastMessagesByUser($user, 5)
         ]);
     }
 

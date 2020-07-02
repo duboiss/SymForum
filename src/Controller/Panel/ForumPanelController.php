@@ -21,10 +21,8 @@ class ForumPanelController extends BaseController
      */
     public function index(ForumRepository $forumRepository): Response
     {
-        $forums = $forumRepository->findForumsWithCategories();
-
         return $this->render('panel/forum/index.html.twig', [
-            'forums' => $forums
+            'forums' => $forumRepository->findForumsWithCategories()
         ]);
     }
 }
