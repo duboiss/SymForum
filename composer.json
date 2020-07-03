@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "exercise/htmlpurifier-bundle": "^3.0",
@@ -49,6 +49,9 @@
         "theofidry/alice-data-fixtures": "^1.1"
     },
     "config": {
+        "platform": {
+            "php": "7.4.4"
+        },
         "preferred-install": {
             "*": "dist"
         },
