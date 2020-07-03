@@ -22,7 +22,6 @@ before_install:
 
 install:
     - composer install
-    - ./bin/phpunit install
     - yarn install
 
 before_script:
