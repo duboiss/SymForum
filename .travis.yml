@@ -5,15 +5,24 @@ os: linux
 cache:
     yarn: true
     directories:
-        - $HOME/.composer/cache
-        - $HOME/symfony-bridge/.phpunit
+        - $HOME/.symfony
+        - $HOME/.composer/cache/files
+        - ./bin/.phpunit
         - node_modules
+
+env:
+    global:
+        - PATH="$HOME/.symfony/bin:$PATH"
 
 php:
     - '7.4'
 
+before_install:
+    - if symfony self:version; then symfony self:update --yes ; else wget https://get.symfony.com/cli/installer -O - | bash ; fi
+
 install:
     - composer install
+    - ./bin/phpunit install
     - yarn install
 
 before_script:
@@ -21,5 +30,8 @@ before_script:
     - php bin/console doctrine:database:create --env=test
 
 script:
+    - make lint
     - ./vendor/bin/phpstan analyse
     - ./vendor/bin/simple-phpunit
+    - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+    - symfony check:security
