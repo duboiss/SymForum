@@ -25,12 +25,13 @@ install:
     - yarn install
 
 before_script:
+    - phpenv config-rm xdebug.ini
     - yarn build
-    - php bin/console doctrine:database:create --env=test
+    - symfony bin/console doctrine:database:create --env=test
 
 script:
     - make lint
     - ./vendor/bin/phpstan analyse
     - ./vendor/bin/simple-phpunit
-    - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+    - symfony console doctrine:schema:validate --skip-sync -vvv --no-interaction
     - symfony check:security
