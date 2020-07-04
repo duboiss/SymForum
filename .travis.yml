@@ -22,6 +22,7 @@ before_install:
 
 install:
     - composer install
+    - ./bin/phpunit install
     - yarn install
 
 before_script:
@@ -30,8 +31,5 @@ before_script:
     - symfony console doctrine:database:create --env=test
 
 script:
-    - make lint
     - ./vendor/bin/phpstan analyse
-    - ./vendor/bin/simple-phpunit
-    - symfony console doctrine:schema:validate --skip-sync -vvv --no-interaction
-    - symfony check:security
+    - make ci
