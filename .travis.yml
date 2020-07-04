@@ -27,7 +27,7 @@ install:
 before_script:
     - phpenv config-rm xdebug.ini
     - yarn build
-    - symfony bin/console doctrine:database:create --env=test
+    - symfony console doctrine:database:create --env=test
 
 script:
     - make lint
