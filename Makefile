@@ -1,10 +1,11 @@
 .DEFAULT_GOAL := help
 
-COMPOSER = composer
-PHPUNIT = php bin/phpunit
-SYMFONY = php bin/console
 SYMFONY_BIN = symfony
 YARN = yarn
+
+COMPOSER = $(SYMFONY_BIN) composer
+SYMFONY = $(SYMFONY_BIN) console
+PHPUNIT = $(SYMFONY_BIN) php bin/phpunit
 
 
 ##
