@@ -1,1 +1,8 @@
 php_version: 7.4.3
+rules:
+    composer.invalid_file:
+        enabled: false
+    web.missing_favicon:
+        enabled: false
+    web.missing_robots_txt:
+        enabled: false
