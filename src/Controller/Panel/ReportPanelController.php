@@ -47,7 +47,7 @@ class ReportPanelController extends BaseController
     {
         return $this->render('panel/report/show.html.twig', [
             'report' => $report,
-            'messageReports' => $reportRepository->findByMessage($report->getMessage(), $report->getId())
+            'messageReports' => $reportRepository->findByMessage($report->getMessage(), $report)
         ]);
     }
 

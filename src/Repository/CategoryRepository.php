@@ -25,14 +25,11 @@ class CategoryRepository extends ServiceEntityRepository
     public function findAllCategories(): array
     {
         return $this->createQueryBuilder('c')
-            ->addSelect('c', 'forums')
-            ->addSelect('c', 'lm')
-            ->addSelect('c', 'lmAuthor')
-            ->addSelect('c', 'lmThread')
-            ->join('c.forums', 'forums')
-            ->leftJoin('forums.lastMessage', 'lm')
+            ->join('c.forums', 'f')
+            ->leftJoin('f.lastMessage', 'lm')
             ->leftJoin('lm.author', 'lmAuthor')
             ->leftJoin('lm.thread', 'lmThread')
+            ->addSelect('f, lm, lmAuthor, lmThread')
             ->orderBy('c.position', 'ASC')
             ->getQuery()
             ->getResult();

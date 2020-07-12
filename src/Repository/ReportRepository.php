@@ -44,28 +44,26 @@ class ReportRepository extends ServiceEntityRepository
     public function findAllReportsQb(): QueryBuilder
     {
         return $this->createQueryBuilder('r')
-            ->addSelect('r', 'reportedBy')
-            ->addSelect('r', 'm')
-            ->addSelect('r', 'messageAuthor')
             ->leftJoin('r.reportedBy', 'reportedBy')
             ->join('r.message', 'm')
-            ->leftJoin('m.author', 'messageAuthor')
+            ->leftJoin('m.author', 'mAuthor')
+            ->addSelect('reportedBy', 'm', 'mAuthor')
             ->orderBy('r.createdAt', 'DESC');
     }
 
     /**
      * @param Message $message
-     * @param int $except
+     * @param Report|null $except
      * @return Report[]
      */
-    public function findByMessage(Message $message, int $except = null): array
+    public function findByMessage(Message $message, Report $except = null): array
     {
         $qb = $this->createQueryBuilder('r')
             ->where('r.message = :message')
             ->setParameter('message', $message);
 
         if ($except) {
-            $qb->andWhere('r.id != :except')
+            $qb->andWhere('r != :except')
                 ->setParameter('except', $except);
         }
 

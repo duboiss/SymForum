@@ -24,30 +24,11 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return QueryBuilder
-     * @throws Exception
-     */
-    private function getOnlineUsers(): QueryBuilder
-    {
-        $currentDate = (new DateTime())
-            ->sub(new DateInterval('PT15M'));
-
-        return $this->createQueryBuilder('u')
-            ->where('u.lastActivityAt > :date')
-            ->setParameter('date', $currentDate)
-            ->orderBy('u.lastActivityAt', 'DESC');
-    }
-
-    /**
      * @return User[] Array of online users
-     * @throws Exception
      */
     public function findOnlineUsers(): array
     {
-        return $this->getOnlineUsers()
-            ->getQuery()
-            ->getResult()
-            ;
+        return $this->onlineUsersQb()->getQuery()->getResult();
     }
 
     /**
@@ -56,14 +37,13 @@ class UserRepository extends ServiceEntityRepository
     public function countOnlineUsers(): int
     {
         try {
-            return (int)$this->getOnlineUsers()
+            return (int)$this->onlineUsersQb()
                 ->select('COUNT(u.id)')
                 ->getQuery()
                 ->getSingleScalarResult();
         } catch (Exception $e) {
             return 0;
         }
-
     }
 
     /**
@@ -80,7 +60,7 @@ class UserRepository extends ServiceEntityRepository
      */
     public function findByRole(string $role): array
     {
-        return $this->addMessagesQb()
+        return $this->joinMessagesQb()
             ->where('u.roles LIKE :role')
             ->setParameter('role', '%"' . $role . '"%')
             ->getQuery()
@@ -90,9 +70,23 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return QueryBuilder
      */
+    private function onlineUsersQb(): QueryBuilder
+    {
+        $comparisonDate = (new DateTime())
+            ->sub(new DateInterval('PT15M'));
+
+        return $this->createQueryBuilder('u')
+            ->where('u.lastActivityAt > :date')
+            ->setParameter('date', $comparisonDate)
+            ->orderBy('u.lastActivityAt', 'DESC');
+    }
+
+    /**
+     * @return QueryBuilder
+     */
     public function findAllMembersQb(): QueryBuilder
     {
-        return $this->addMessagesQb()
+        return $this->joinMessagesQb()
             ->orderBy('u.pseudo');
     }
 
@@ -100,11 +94,11 @@ class UserRepository extends ServiceEntityRepository
      * @param QueryBuilder|null $qb
      * @return QueryBuilder
      */
-    public function addMessagesQb(QueryBuilder $qb = null): QueryBuilder
+    public function joinMessagesQb(QueryBuilder $qb = null): QueryBuilder
     {
         return $this->getOrCreateQb($qb)
-            ->addSelect('m')
-            ->leftJoin('u.messages', 'm');
+            ->leftJoin('u.messages', 'm')
+            ->addSelect('m');
     }
 
     /**

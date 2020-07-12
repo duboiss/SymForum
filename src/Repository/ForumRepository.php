@@ -27,12 +27,10 @@ class ForumRepository extends ServiceEntityRepository
     public function findForumsByCategory(Category $category): array
     {
         return $this->createQueryBuilder('f')
-            ->addSelect('f', 'lm')
-            ->addSelect('f', 'lmAuthor')
-            ->addSelect('f', 'lmThread')
             ->leftJoin('f.lastMessage', 'lm')
             ->leftJoin('lm.author', 'lmAuthor')
             ->leftJoin('lm.thread', 'lmThread')
+            ->addSelect('lm, lmAuthor, lmThread')
             ->where('f.category = :category')
             ->setParameter(':category', $category)
             ->orderBy('f.position', 'ASC')
@@ -46,8 +44,8 @@ class ForumRepository extends ServiceEntityRepository
     public function findForumsWithCategories(): array
     {
         return $this->createQueryBuilder('f')
-            ->addSelect('f', 'category')
-            ->join('f.category', 'category')
+            ->leftJoin('f.category', 'cat')
+            ->addSelect('cat')
             ->orderBy('f.position', 'ASC')
             ->getQuery()
             ->getResult();
