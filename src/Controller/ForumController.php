@@ -27,8 +27,6 @@ class ForumController extends BaseController
      */
     public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
-        $a = 4;
-
         return $this->render('pages/forums.html.twig', [
             'categories' => $categoriesRepo->findAllCategories(),
             'onlineUsers' => $userRepository->findOnlineUsers(),
