@@ -11,9 +11,6 @@ class SecurityController extends BaseController
 {
     /**
      * @Route("/login", name="security.login", methods={"GET", "POST"})
-     * @param AuthenticationUtils $authenticationUtils
-     * @param Request $request
-     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
@@ -24,22 +21,24 @@ class SecurityController extends BaseController
         return $this->render('security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
-            'target_url' => $request->query->get('redirect')
+            'target_url' => $request->query->get('redirect'),
         ]);
     }
 
     /**
      * @Route("/logout", name="security.logout", methods={"GET"})
      */
-    public function logout(): void {}
+    public function logout(): void
+    {
+    }
 
     /**
      * @Route("/logged-out", name="security.logged.out", methods={"GET"})
-     * @return Response
      */
     public function loggedOut(): Response
     {
         $this->addCustomFlash('success', 'Déconnexion', 'Vous êtes désormais déconnecté !');
+
         return $this->redirectToRoute('forum.index');
     }
 }

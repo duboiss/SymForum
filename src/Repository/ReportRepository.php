@@ -22,13 +22,10 @@ class ReportRepository extends ServiceEntityRepository
         parent::__construct($registry, Report::class);
     }
 
-    /**
-     * @return int Number of untreated reports
-     */
     public function countUntreatedReports(): int
     {
         try {
-            return (int)$this->createQueryBuilder('r')
+            return (int) $this->createQueryBuilder('r')
                 ->select('COUNT(r.id)')
                 ->where('r.treatedAt is NULL')
                 ->getQuery()
@@ -38,9 +35,6 @@ class ReportRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return QueryBuilder
-     */
     public function findAllReportsQb(): QueryBuilder
     {
         return $this->createQueryBuilder('r')
@@ -52,8 +46,6 @@ class ReportRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Message $message
-     * @param Report|null $except
      * @return Report[]
      */
     public function findByMessage(Message $message, Report $except = null): array

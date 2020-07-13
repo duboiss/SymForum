@@ -23,12 +23,7 @@ class UserService
         $this->reportService = $reportService;
     }
 
-    /**
-     * @param User $user
-     * @param bool $deleteContent
-     * @return void
-     */
-    public function deleteUser(User $user, $deleteContent = false): void
+    public function deleteUser(User $user, bool $deleteContent = false): void
     {
         $deleteContent ? $this->resetUser($user) : $this->setContentNullByUser($user);
         $this->reportService->setTreatedbyNullByUser($user);
@@ -38,10 +33,6 @@ class UserService
         $this->em->flush();
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function resetUser(User $user): void
     {
         $this->threadService->deleteThreadsByUser($user);
@@ -49,10 +40,6 @@ class UserService
         $this->reportService->deleteReportsByUser($user);
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function setContentNullByUser(User $user): void
     {
         $this->threadService->setAuthorNullByUser($user);

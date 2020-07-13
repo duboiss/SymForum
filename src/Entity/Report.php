@@ -115,6 +115,6 @@ class Report
 
     public function isTreated(): bool
     {
-        return $this->treatedAt !== null;
+        return null !== $this->treatedAt;
     }
 }

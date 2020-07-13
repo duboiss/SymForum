@@ -33,7 +33,7 @@ class ReportFixtures extends BaseFixtures implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            MessageFixtures::class
+            MessageFixtures::class,
         ];
     }
 }

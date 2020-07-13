@@ -14,13 +14,11 @@ class PanelController extends BaseController
 {
     /**
      * @Route("", name="panel.homepage", methods={"GET"})
-     * @param ReportRepository $reportRepository
-     * @return Response
      */
     public function homepage(ReportRepository $reportRepository): Response
     {
         return $this->render('panel/homepage.html.twig', [
-            'nbUntreatedReports' => $reportRepository->countUntreatedReports()
+            'nbUntreatedReports' => $reportRepository->countUntreatedReports(),
         ]);
     }
 }

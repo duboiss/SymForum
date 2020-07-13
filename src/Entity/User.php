@@ -108,7 +108,7 @@ class User implements UserInterface
     {
         $delay = new DateTime('5 minutes ago');
 
-        return ($this->getLastActivityAt() > $delay);
+        return $this->getLastActivityAt() > $delay;
     }
 
     public function getPseudo(): ?string
@@ -164,7 +164,8 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles() {
+    public function getRoles()
+    {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
 
@@ -173,7 +174,6 @@ class User implements UserInterface
 
     /**
      * @param string[] $roles
-     * @return $this
      */
     public function setRoles(array $roles): self
     {
@@ -182,19 +182,24 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->hash;
     }
 
-    public function getSalt() {
+    public function getSalt()
+    {
         return null;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->email;
     }
 
-    public function eraseCredentials():void {}
+    public function eraseCredentials(): void
+    {
+    }
 
     /**
      * @return Collection|Thread[]

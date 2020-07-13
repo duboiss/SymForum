@@ -8,19 +8,20 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ForumTest extends WebTestCase
 {
-    use FixturesTrait, TestUtilsTrait;
+    use FixturesTrait;
+    use TestUtilsTrait;
 
     public function getEntity(): Forum
     {
         return (new Forum())
-            ->setTitle("Forum title")
-            ->setDescription("Forum description")
+            ->setTitle('Forum title')
+            ->setDescription('Forum description')
             ->setPosition(1);
     }
 
     public function testInvalidBlankTitleEntity(): void
     {
-        $invalidForum = $this->getEntity()->setTitle("");
+        $invalidForum = $this->getEntity()->setTitle('');
         $this->assertHasErrors($invalidForum, 1);
     }
 
@@ -36,6 +37,6 @@ class ForumTest extends WebTestCase
     public function testInvalidUsedSlug(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/forums.yaml']);
-        $this->assertHasErrors($this->getEntity()->setSlug("forum-title"), 1);
+        $this->assertHasErrors($this->getEntity()->setSlug('forum-title'), 1);
     }
 }

@@ -22,7 +22,7 @@ class ForumVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, [self::LOCK])
+        return in_array($attribute, [self::LOCK], true)
             && $subject instanceof Forum;
     }
 
@@ -43,9 +43,6 @@ class ForumVoter extends Voter
         return false;
     }
 
-    /**
-     * @return bool
-     */
     private function canLock(): bool
     {
         return $this->security->isGranted('ROLE_MODERATOR');

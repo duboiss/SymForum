@@ -23,7 +23,6 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 
     /**
      * @dataProvider urlPublicProvider
-     * @param string $url
      */
     public function testPageIsSuccessful(string $url): void
     {
@@ -34,7 +33,6 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      * @dataProvider urlRestrictedAdminProvider
      * @dataProvider urlRestrictedModeratorProvider
      * @dataProvider urlRestrictedUserProvider
-     * @param string $url
      */
     public function testRedirectToLogin(string $url): void
     {
@@ -44,18 +42,12 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 
     /**
      * @dataProvider urlRestrictedUserProvider
-     * @param string $url
      */
     public function testAuthenticatedUserAccess(string $url): void
     {
         $this->checkStatusUrl($url, 'user_demo', Response::HTTP_OK);
     }
 
-    /**
-     * @param string $url
-     * @param string $username
-     * @param int $expectedStatus
-     */
     private function checkStatusUrl(string $url, string $username, int $expectedStatus): void
     {
         $this->logIn($this->users[$username]);
@@ -65,7 +57,6 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 
     /**
      * @dataProvider urlRestrictedAdminProvider
-     * @param string $url
      */
     public function testAuthenticatedAdminAccess(string $url): void
     {
@@ -76,7 +67,6 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 
     /**
      * @dataProvider urlRestrictedModeratorProvider
-     * @param string $url
      */
     public function testAuthenticatedModeratorAccess(string $url): void
     {

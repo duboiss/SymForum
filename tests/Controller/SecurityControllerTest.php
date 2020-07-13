@@ -22,7 +22,7 @@ class SecurityControllerTest extends AbstractControllerTest
 
         $form = $crawler->selectButton('Connexion')->form([
             'email' => 'john@doe.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $this->client->submit($form);

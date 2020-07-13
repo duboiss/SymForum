@@ -23,19 +23,12 @@ class ThreadController extends BaseController
 {
     /**
      * @Route("/forums/threads/{slug}", name="thread.show", methods={"GET", "POST"})
-     * @param Thread $thread
-     * @param MessageRepository $messageRepository
-     * @param Request $request
-     * @param MessageService $messageService
-     * @param PaginatorInterface $paginator
-     * @param OptionService $optionService
-     * @return Response
      */
     public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator, OptionService $optionService): Response
     {
         $form = $this->createForm(MessageType::class, null, [
             'action' => $request->getUri() . '#message',
-            'attr' => ['id' => 'message']
+            'attr' => ['id' => 'message'],
         ]);
         $form->handleRequest($request);
 
@@ -48,7 +41,7 @@ class ThreadController extends BaseController
                 $lastMessage = $thread->getLastMessage();
 
                 return $this->redirectToRoute('message.show', [
-                    'id' => $lastMessage->getId()
+                    'id' => $lastMessage->getId(),
                 ]);
             }
 
@@ -57,7 +50,7 @@ class ThreadController extends BaseController
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
 
             return $this->redirectToRoute('message.show', [
-                'id' => $message->getId()
+                'id' => $message->getId(),
             ]);
         }
 
@@ -70,18 +63,13 @@ class ThreadController extends BaseController
         return $this->render('thread/show.html.twig', [
             'thread' => $thread,
             'pagination' => $pagination,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/forums/{slug}/new-thread", name="thread.new", methods={"GET", "POST"})
      * @IsGranted("ROLE_USER")
-     * @param Forum $forum
-     * @param Request $request
-     * @param ThreadService $threadService
-     * @param MessageService $messageService
-     * @return Response
      */
     public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
     {
@@ -90,7 +78,7 @@ class ThreadController extends BaseController
 
         if (!$threadService->canPostThread($forum, $user)) {
             return $this->redirectToRoute('forum.show', [
-                'slug' => $forum->getSlug()
+                'slug' => $forum->getSlug(),
             ]);
         }
 
@@ -108,23 +96,20 @@ class ThreadController extends BaseController
             $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
 
             return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug()
+                'slug' => $thread->getSlug(),
             ]);
         }
 
         return $this->render('thread/new.html.twig', [
             'forum' => $forum,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/forums/threads/{id}/delete", name="thread.delete", methods={"POST"})
      * @IsGranted("DELETE", subject="thread")
-     * @param Thread $thread
-     * @param ThreadService $threadService
-     * @param Request $request
-     * @return Response
+     *
      * @throws Exception
      */
     public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
@@ -138,7 +123,7 @@ class ThreadController extends BaseController
             $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
 
             return $this->redirectToRoute('forum.show', [
-                'slug' => $forum->getSlug()
+                'slug' => $forum->getSlug(),
             ]);
         }
         throw new Exception('Jeton CSRF invalide !');
@@ -147,10 +132,6 @@ class ThreadController extends BaseController
     /**
      * @Route("/forums/threads/{id}/lock", name="thread.lock", methods={"GET"})
      * @IsGranted("LOCK", subject="thread")
-     * @param Thread $thread
-     * @param ThreadService $threadService
-     * @param Request $request
-     * @return Response
      */
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
@@ -163,10 +144,6 @@ class ThreadController extends BaseController
     /**
      * @Route("/forums/threads/{id}/unlock", name="thread.unlock", methods={"GET"})
      * @IsGranted("LOCK", subject="thread")
-     * @param Thread $thread
-     * @param ThreadService $threadService
-     * @param Request $request
-     * @return Response
      */
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
@@ -179,10 +156,6 @@ class ThreadController extends BaseController
     /**
      * @Route("/forums/threads/{id}/pin", name="thread.pin", methods={"GET"})
      * @IsGranted("PIN", subject="thread")
-     * @param Thread $thread
-     * @param ThreadService $threadService
-     * @param Request $request
-     * @return Response
      */
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
@@ -195,10 +168,6 @@ class ThreadController extends BaseController
     /**
      * @Route("/forums/threads/{id}/unpin", name="thread.unpin", methods={"GET"})
      * @IsGranted("PIN", subject="thread")
-     * @param Thread $thread
-     * @param ThreadService $threadService
-     * @param Request $request
-     * @return Response
      */
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response
     {

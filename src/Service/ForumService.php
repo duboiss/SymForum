@@ -14,18 +14,12 @@ class ForumService
         $this->em = $em;
     }
 
-    /**
-     * @param Forum $forum
-     */
     public function lock(Forum $forum): void
     {
         $forum->setLock(true);
         $this->em->flush();
     }
 
-    /**
-     * @param Forum $forum
-     */
     public function unlock(Forum $forum): void
     {
         $forum->setLock(false);

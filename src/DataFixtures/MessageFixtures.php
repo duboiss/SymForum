@@ -21,7 +21,7 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setContent($this->faker->sentences(mt_rand(1, 15), true))
                 ->setThread($thread);
 
-            if($this->faker->boolean) {
+            if ($this->faker->boolean) {
                 $message->setUpdatedAt($this->faker->dateTimeBetween($message->getCreatedAt()));
                 $message->setUpdatedBy($message->getAuthor());
             } else {
@@ -48,7 +48,7 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            ThreadFixtures::class
+            ThreadFixtures::class,
         ];
     }
 }

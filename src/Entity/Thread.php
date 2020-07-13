@@ -200,14 +200,14 @@ class Thread
 
     public function incrementTotalMessages(): self
     {
-        $this->totalMessages++;
+        ++$this->totalMessages;
 
         return $this;
     }
 
     public function decrementTotalMessages(): self
     {
-        $this->totalMessages--;
+        --$this->totalMessages;
 
         return $this;
     }

@@ -21,26 +21,16 @@ class OptionService
         $this->coreOptionRepository = $coreOptionRepository;
     }
 
-    /**
-     * @param string $optionName
-     * @param string $default
-     * @return string|null
-     */
     public function get(string $optionName, ?string $default = null): ?string
     {
         return ($option = $this->getEntity($optionName)) ? $option->getValue() : $default;
     }
 
-    /**
-     * @param string $optionName
-     * @param string $value
-     * @param bool $flush
-     */
     public function set(string $optionName, string $value, bool $flush = true): void
     {
         $option = $this->getEntity($optionName);
 
-        if(!$option) {
+        if (!$option) {
             $option = new CoreOption();
             $option->setName($optionName);
         }
@@ -49,20 +39,16 @@ class OptionService
 
         $this->em->persist($option);
 
-        if($flush) {
+        if ($flush) {
             $this->em->flush();
         }
     }
 
-    /**
-     * @param string $optionName
-     * @return CoreOption|null
-     */
     private function getEntity(string $optionName): ?CoreOption
     {
-        if(!isset($this->cache[$optionName])) {
+        if (!isset($this->cache[$optionName])) {
             $option = $this->coreOptionRepository->findOneBy(['name' => $optionName]);
-            if($option) {
+            if ($option) {
                 $this->cache[$optionName] = $option;
             } else {
                 return null;

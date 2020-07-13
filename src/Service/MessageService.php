@@ -31,46 +31,37 @@ class MessageService
         $this->security = $security;
     }
 
-    /**
-     * @param Thread $thread
-     * @param User $user
-     * @return bool
-     */
     public function canPostMessage(Thread $thread, User $user): bool
     {
         if ($thread->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
+
             return false;
         }
         if (!$this->antispamService->canPostMessage($user)) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous devez encore attendre un peu avant de pouvoir poster un message !']);
+
             return false;
         }
+
         return true;
     }
 
-    /**
-     * @param Message $message
-     * @return bool
-     */
     public function canEditMessage(Message $message): bool
     {
-        if($this->security->isGranted('ROLE_MODERATOR')) {
+        if ($this->security->isGranted('ROLE_MODERATOR')) {
             return true;
         }
 
         if ($message->getThread()->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
+
             return false;
         }
 
         return true;
     }
 
-    /**
-     * @param Message $message
-     * @return bool
-     */
     public function canDeleteMessage(Message $message): bool
     {
         $thread = $message->getThread();
@@ -85,11 +76,6 @@ class MessageService
         return true;
     }
 
-    /**
-     * @param string $content
-     * @param Thread $thread
-     * @return Message
-     */
     public function createMessage(string $content, Thread $thread): Message
     {
         $message = (new Message())
@@ -110,10 +96,6 @@ class MessageService
         return $message;
     }
 
-    /**
-     * @param Message $message
-     * @return Message|null
-     */
     public function deleteMessage(Message $message): ?Message
     {
         $thread = $message->getThread();
@@ -142,10 +124,6 @@ class MessageService
         return $this->messageRepository->findLastMessageByThread($thread);
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function deleteMessagesByUser(User $user): void
     {
         foreach ($user->getMessages() as $message) {
@@ -153,10 +131,6 @@ class MessageService
         }
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function setAuthorNullByUser(User $user): void
     {
         if (count($user->getMessages()) > 0) {
@@ -169,9 +143,6 @@ class MessageService
         }
     }
 
-    /**
-     * @param User $user
-     */
     public function setUpdatedbyNullByUser(User $user): void
     {
         if (count($user->getUpdatedByMessages()) > 0) {

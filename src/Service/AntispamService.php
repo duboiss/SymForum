@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 class AntispamService
 {
     private const DELAY_MESSAGE = 60;
+
     private const DELAY_THREAD = 90;
 
     private ThreadRepository $threadRepository;
@@ -22,15 +23,12 @@ class AntispamService
 
     public function __construct(ThreadRepository $threadRepository, MessageRepository $messageRepository, Security $security)
     {
-
         $this->threadRepository = $threadRepository;
         $this->messageRepository = $messageRepository;
         $this->security = $security;
     }
 
     /**
-     * @param User $user
-     * @return bool
      * @throws Exception
      */
     public function canPostThread(User $user): bool
@@ -39,6 +37,7 @@ class AntispamService
 
         if ($lastThread && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
+
             return $currentDate->modify(sprintf('-%s seconds', self::DELAY_THREAD)) > $lastThread->getCreatedAt();
         }
 
@@ -46,8 +45,6 @@ class AntispamService
     }
 
     /**
-     * @param User $user
-     * @return bool
      * @throws Exception
      */
     public function canPostMessage(User $user): bool
@@ -56,6 +53,7 @@ class AntispamService
 
         if ($lastMessage && !$this->security->isGranted('ROLE_MODERATOR')) {
             $currentDate = new DateTime();
+
             return $currentDate->modify(sprintf('-%s seconds', self::DELAY_MESSAGE)) > $lastMessage->getCreatedAt();
         }
 

@@ -15,13 +15,13 @@ class MessageTest extends WebTestCase
         $thread = new Thread();
 
         return (new Message())
-            ->setContent("Message content")
+            ->setContent('Message content')
             ->setThread($thread);
     }
 
     public function testInvalidMinLengthContentEntity(): void
     {
-        $invalidCategory = $this->getEntity()->setContent("a");
+        $invalidCategory = $this->getEntity()->setContent('a');
         $this->assertHasErrors($invalidCategory, 1);
     }
 }

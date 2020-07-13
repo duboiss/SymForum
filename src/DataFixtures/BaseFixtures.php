@@ -26,14 +26,9 @@ abstract class BaseFixtures extends Fixture
 
     abstract protected function loadData(ObjectManager $manager): void;
 
-    /**
-     * @param string $className
-     * @param int $count
-     * @param callable $factory
-     */
     protected function createMany(string $className, int $count, callable $factory): void
     {
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $entity = new $className();
             $factory($entity, $i);
 
@@ -43,8 +38,6 @@ abstract class BaseFixtures extends Fixture
     }
 
     /**
-     * @param string $className
-     * @return object
      * @throws Exception
      */
     protected function getRandomReference(string $className): object
@@ -53,7 +46,7 @@ abstract class BaseFixtures extends Fixture
             $this->referencesIndex[$className] = [];
 
             foreach ($this->referenceRepository->getReferences() as $key => $ref) {
-                if (strpos($key, $className . '_') === 0) {
+                if (0 === mb_strpos($key, $className . '_')) {
                     $this->referencesIndex[$className][] = $key;
                 }
             }
@@ -69,9 +62,6 @@ abstract class BaseFixtures extends Fixture
     }
 
     /**
-     * @param string $className
-     * @param int $count
-     * @return array
      * @throws Exception
      */
     protected function getRandomReferences(string $className, int $count): array

@@ -94,7 +94,7 @@ class Forum
 
     public function getRootCategory(): ?Category
     {
-        if (($parent = $this->getParent()) !== null) {
+        if (null !== ($parent = $this->getParent())) {
             return $parent->getRootCategory();
         }
 
@@ -121,6 +121,7 @@ class Forum
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
         return $this;
     }
 
@@ -248,14 +249,14 @@ class Forum
 
     public function incrementTotalThreads(): self
     {
-        $this->totalThreads++;
+        ++$this->totalThreads;
 
         return $this;
     }
 
     public function decrementTotalThreads(): self
     {
-        $this->totalThreads--;
+        --$this->totalThreads;
 
         return $this;
     }
@@ -273,14 +274,14 @@ class Forum
 
     public function incrementTotalMessages(): self
     {
-        $this->totalMessages++;
+        ++$this->totalMessages;
 
         return $this;
     }
 
     public function decrementTotalMessages(): self
     {
-        $this->totalMessages--;
+        --$this->totalMessages;
 
         return $this;
     }

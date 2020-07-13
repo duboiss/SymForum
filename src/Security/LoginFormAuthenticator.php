@@ -56,7 +56,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token')
+            'csrf_token' => $request->request->get('_csrf_token'),
         ];
 
         $request->getSession()->set(
@@ -92,7 +92,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         $this->session->getFlashBag()->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
 
-        if(($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', $targetUrl)) {
+        if (($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', $targetUrl)) {
             return new RedirectResponse($targetUrl);
         }
 

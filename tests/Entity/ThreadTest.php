@@ -9,14 +9,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ThreadTest extends WebTestCase
 {
-    use FixturesTrait, TestUtilsTrait;
+    use FixturesTrait;
+    use TestUtilsTrait;
 
     public function getEntity(): Thread
     {
         $forum = new Forum();
 
         return (new Thread())
-            ->setTitle("Thread title")
+            ->setTitle('Thread title')
             ->setForum($forum)
             ->setLock(false)
             ->setPin(false);
@@ -24,7 +25,7 @@ class ThreadTest extends WebTestCase
 
     public function testInvalidBlankTitleEntity(): void
     {
-        $invalidThread = $this->getEntity()->setTitle("");
+        $invalidThread = $this->getEntity()->setTitle('');
         $this->assertHasErrors($invalidThread, 1);
     }
 
@@ -34,10 +35,9 @@ class ThreadTest extends WebTestCase
         $this->assertHasErrors($invalidThread, 1);
     }
 
-
     public function testInvalidUsedSlug(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/threads.yaml']);
-        $this->assertHasErrors($this->getEntity()->setSlug("first-thread"), 1);
+        $this->assertHasErrors($this->getEntity()->setSlug('first-thread'), 1);
     }
 }

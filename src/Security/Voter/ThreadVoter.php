@@ -24,7 +24,7 @@ class ThreadVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, [self::LOCK, self::PIN, self::DELETE])
+        return in_array($attribute, [self::LOCK, self::PIN, self::DELETE], true)
             && $subject instanceof Thread;
     }
 
@@ -49,25 +49,16 @@ class ThreadVoter extends Voter
         return false;
     }
 
-    /**
-     * @return bool
-     */
     private function canLock(): bool
     {
         return $this->security->isGranted('ROLE_MODERATOR');
     }
 
-    /**
-     * @return bool
-     */
     private function canPin(): bool
     {
         return $this->security->isGranted('ROLE_MODERATOR');
     }
 
-    /**
-     * @return bool
-     */
     private function canDelete(): bool
     {
         return $this->security->isGranted('ROLE_MODERATOR');

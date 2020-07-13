@@ -25,18 +25,12 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-    /**
-     * @param User $user
-     * @return Message|null
-     */
     public function findLastMessageByUser(User $user): ?Message
     {
         return $this->findOneBy(['author' => $user], ['createdAt' => 'DESC']);
     }
 
     /**
-     * @param User $user
-     * @param int $limit
      * @return Message[]
      */
     public function findLastMessagesByUser(User $user, int $limit): array
@@ -44,18 +38,12 @@ class MessageRepository extends ServiceEntityRepository
         return $this->findBy(['author' => $user], ['createdAt' => 'DESC'], $limit);
     }
 
-    /**
-     * @param Thread $thread
-     * @return Message|null
-     */
     public function findLastMessageByThread(Thread $thread): ?Message
     {
         return $this->findOneBy(['thread' => $thread], ['createdAt' => 'DESC']);
     }
 
     /**
-     * @param Thread $thread
-     * @param bool $onlyId
      * @return Message[]
      */
     public function findMessagesByThread(Thread $thread, bool $onlyId = false): array
@@ -74,10 +62,6 @@ class MessageRepository extends ServiceEntityRepository
         return $onlyId ? array_column($qb, 'id') : $qb;
     }
 
-    /**
-     * @param Thread $thread
-     * @return QueryBuilder
-     */
     public function findMessagesByThreadWithAuthorQb(Thread $thread): QueryBuilder
     {
         return $this->whereThreadQb($thread)
@@ -86,10 +70,6 @@ class MessageRepository extends ServiceEntityRepository
             ->orderBy('m.createdAt', 'ASC');
     }
 
-    /**
-     * @param Forum $forum
-     * @return Message|null
-     */
     public function findLastMessageByForum(Forum $forum): ?Message
     {
         try {
@@ -105,10 +85,6 @@ class MessageRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @param Thread $thread
-     * @return Message
-     */
     public function findFirstMessageInThread(Thread $thread): Message
     {
         try {
@@ -118,14 +94,10 @@ class MessageRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getSingleResult();
         } catch (UnexpectedResultException $e) {
-            throw new $e;
+            throw $e;
         }
     }
 
-    /**
-     * @param Message $message
-     * @return Message|null
-     */
     public function findNextMessageInThread(Message $message): ?Message
     {
         try {
@@ -141,10 +113,6 @@ class MessageRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @param User $user
-     * @return QueryBuilder
-     */
     public function findMessagesByUserQb(User $user): QueryBuilder
     {
         return $this->joinThreadQb()
@@ -153,10 +121,6 @@ class MessageRepository extends ServiceEntityRepository
             ->setParameter('user', $user);
     }
 
-    /**
-     * @param QueryBuilder|null $qb
-     * @return QueryBuilder
-     */
     private function joinThreadQb(QueryBuilder $qb = null): QueryBuilder
     {
         return $this->getOrCreateQb($qb)
@@ -164,11 +128,6 @@ class MessageRepository extends ServiceEntityRepository
             ->addSelect('thread');
     }
 
-    /**
-     * @param Thread $thread
-     * @param QueryBuilder|null $qb
-     * @return QueryBuilder
-     */
     private function whereThreadQb(Thread $thread, QueryBuilder $qb = null): QueryBuilder
     {
         return $this->getOrCreateQb($qb)
@@ -176,10 +135,6 @@ class MessageRepository extends ServiceEntityRepository
             ->setParameter(':thread', $thread);
     }
 
-    /**
-     * @param QueryBuilder|null $qb
-     * @return QueryBuilder
-     */
     private function getOrCreateQb(QueryBuilder $qb = null): QueryBuilder
     {
         return $qb ?: $this->createQueryBuilder('m');

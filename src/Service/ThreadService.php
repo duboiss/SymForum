@@ -31,31 +31,22 @@ class ThreadService
         $this->optionService = $optionService;
     }
 
-    /**
-     * @param Forum $forum
-     * @param User $user
-     * @return bool
-     */
     public function canPostThread(Forum $forum, User $user): bool
     {
         if ($forum->isLock()) {
             $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !']);
+
             return false;
         }
         if (!$this->antispamService->canPostThread($user)) {
             $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !']);
+
             return false;
         }
+
         return true;
     }
 
-    /**
-     * @param string $title
-     * @param Forum $forum
-     * @param bool $lock
-     * @param bool $pin
-     * @return Thread
-     */
     public function createThread(string $title, Forum $forum, bool $lock = false, bool $pin = false): Thread
     {
         $thread = (new Thread())
@@ -72,10 +63,6 @@ class ThreadService
         return $thread;
     }
 
-    /**
-     * @param Thread $thread
-     * @return void
-     */
     public function deleteThread(Thread $thread): void
     {
         $forum = $thread->getForum();
@@ -105,45 +92,30 @@ class ThreadService
         }
     }
 
-    /**
-     * @param Thread $thread
-     */
     public function lock(Thread $thread): void
     {
         $thread->setLock(true);
         $this->em->flush();
     }
 
-    /**
-     * @param Thread $thread
-     */
     public function unlock(Thread $thread): void
     {
         $thread->setLock(false);
         $this->em->flush();
     }
 
-    /**
-     * @param Thread $thread
-     */
     public function pin(Thread $thread): void
     {
         $thread->setPin(true);
         $this->em->flush();
     }
 
-    /**
-     * @param Thread $thread
-     */
     public function unpin(Thread $thread): void
     {
         $thread->setPin(false);
         $this->em->flush();
     }
 
-    /**
-     * @param User $user
-     */
     public function deleteThreadsByUser(User $user): void
     {
         foreach ($user->getThreads() as $thread) {
@@ -151,9 +123,6 @@ class ThreadService
         }
     }
 
-    /**
-     * @param User $user
-     */
     public function setAuthorNullByUser(User $user): void
     {
         if (count($user->getThreads()) > 0) {
@@ -165,16 +134,12 @@ class ThreadService
         }
     }
 
-    /**
-     * @param Message $message
-     * @return int
-     */
     public function getPageOfMessage(Message $message): int
     {
         $messages = $this->messageRepository->findMessagesByThread($message->getThread(), true);
-        $key = array_search($message->getId(), $messages);
-        $messagesPerThread = (int)$this->optionService->get('messages_per_thread', '10');
+        $key = array_search($message->getId(), $messages, true);
+        $messagesPerThread = (int) $this->optionService->get('messages_per_thread', '10');
 
-        return (int)(ceil(((int)$key + 1) / $messagesPerThread));
+        return (int) (ceil(((int) $key + 1) / $messagesPerThread));
     }
 }

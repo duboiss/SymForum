@@ -20,21 +20,16 @@ class CategoryPanelController extends BaseController
 {
     /**
      * @Route("/categories", name="panel.categories", methods={"GET"})
-     * @param CategoryRepository $categoryRepository
-     * @return Response
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('panel/category/index.html.twig', [
-            'categories' => $categoryRepository->findAll()
+            'categories' => $categoryRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/categories/add", name="panel.category.add", methods={"GET", "POST"})
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @return Response
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
@@ -47,19 +42,17 @@ class CategoryPanelController extends BaseController
             $em->flush();
 
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a été ajoutée !');
+
             return $this->redirectToRoute('panel.categories');
         }
 
         return $this->render('panel/category/new.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/categories/{id}/edit", name="panel.category.edit", methods={"GET", "POST"})
-     * @param Category $category
-     * @param Request $request
-     * @return Response
      */
     public function edit(Category $category, Request $request): Response
     {
@@ -70,26 +63,24 @@ class CategoryPanelController extends BaseController
             $this->getDoctrine()->getManager()->flush();
 
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été modifiée !');
+
             return $this->redirectToRoute('panel.categories');
         }
 
         return $this->render('panel/category/edit.html.twig', [
             'category' => $category,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/categories/{id}/delete", name="panel.category.delete", methods={"DELETE"})
-     * @param Category $category
-     * @param EntityManagerInterface $em
-     * @return Response
      */
     public function delete(Category $category, EntityManagerInterface $em): Response
     {
         if (count($category->getForums()) > 0) {
             return $this->json([
-                'message' => 'Impossible de supprimer la catégorie, elle contient des forums !'
+                'message' => 'Impossible de supprimer la catégorie, elle contient des forums !',
             ], 403);
         }
 
@@ -97,7 +88,7 @@ class CategoryPanelController extends BaseController
         $em->flush();
 
         return $this->json([
-            'message' => 'La catégorie a bien été supprimée !'
+            'message' => 'La catégorie a bien été supprimée !',
         ], 200);
     }
 }

@@ -21,7 +21,6 @@ class ForumRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Category $category
      * @return Forum[]
      */
     public function findForumsByCategory(Category $category): array

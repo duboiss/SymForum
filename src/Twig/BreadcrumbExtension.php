@@ -48,7 +48,7 @@ class BreadcrumbExtension extends AbstractExtension
 
     /**
      * @param Category|Forum $forumOrCategory
-     * @param array $parts
+     *
      * @return string[]
      */
     public function getBreadcrumbParts($forumOrCategory, array &$parts = []): array

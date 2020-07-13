@@ -19,10 +19,6 @@ class UserPanelController extends BaseController
 {
     /**
      * @Route("/users", name="panel.users", methods={"GET"})
-     * @param UserRepository $userRepository
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -33,27 +29,22 @@ class UserPanelController extends BaseController
         );
 
         return $this->render('panel/user/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
         ]);
     }
 
     /**
      * @Route("/users/{slug}", name="panel.user.details", methods={"GET"})
-     * @param User $user
-     * @return Response
      */
     public function details(User $user): Response
     {
         return $this->render('panel/user/details.html.twig', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
     /**
      * @Route("/users/{slug}/reset", name="panel.user.reset", methods={"GET"})
-     * @param User $user
-     * @param UserService $userService
-     * @return Response
      */
     public function reset(User $user, UserService $userService): Response
     {
@@ -61,16 +52,13 @@ class UserPanelController extends BaseController
         $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été remis à zéro !", $user->getPseudo()));
 
         return $this->redirectToRoute('panel.user.details', [
-            'slug' => $user->getSlug()
+            'slug' => $user->getSlug(),
         ]);
     }
 
     /**
      * @Route("/users/{slug}/delete", name="panel.user.delete", methods={"POST"})
-     * @param User $user
-     * @param UserService $userService
-     * @param Request $request
-     * @return Response
+     *
      * @throws Exception
      */
     public function delete(User $user, UserService $userService, Request $request): Response

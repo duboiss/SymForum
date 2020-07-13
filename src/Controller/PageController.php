@@ -20,10 +20,6 @@ class PageController extends BaseController
 
     /**
      * @Route("/members", name="page.members", methods={"GET"})
-     * @param UserRepository $userRepository
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
     public function members(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -34,20 +30,18 @@ class PageController extends BaseController
         );
 
         return $this->render('pages/members.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
         ]);
     }
 
     /**
      * @Route("/team", name="page.team", methods={"GET"})
-     * @param UserRepository $userRepository
-     * @return Response
      */
     public function team(UserRepository $userRepository): Response
     {
         return $this->render('pages/team.html.twig', [
             'administrators' => $userRepository->findByRole('ROLE_ADMIN'),
-            'moderators' => $userRepository->findByRole('ROLE_MODERATOR')
+            'moderators' => $userRepository->findByRole('ROLE_MODERATOR'),
         ]);
     }
 }

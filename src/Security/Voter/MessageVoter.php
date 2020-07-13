@@ -24,7 +24,7 @@ class MessageVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, [self::EDIT, self::DELETE, self::REPORT])
+        return in_array($attribute, [self::EDIT, self::DELETE, self::REPORT], true)
             && $subject instanceof Message;
     }
 
@@ -51,32 +51,20 @@ class MessageVoter extends Voter
         return false;
     }
 
-    /**
-     * @param Message $message
-     * @param User $user
-     * @return bool
-     */
     private function canEdit(Message $message, User $user): bool
     {
-        if($this->security->isGranted('ROLE_MODERATOR')) {
+        if ($this->security->isGranted('ROLE_MODERATOR')) {
             return true;
         }
+
         return $user === $message->getAuthor() && !$message->getThread()->isLock();
     }
 
-    /**
-     * @return bool
-     */
     private function canDelete(): bool
     {
         return $this->security->isGranted('ROLE_MODERATOR');
     }
 
-    /**
-     * @param Message $message
-     * @param User $user
-     * @return bool
-     */
     private function canReport(Message $message, User $user): bool
     {
         return $user !== $message->getAuthor();

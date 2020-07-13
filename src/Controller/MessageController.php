@@ -18,25 +18,20 @@ class MessageController extends BaseController
 {
     /**
      * @Route("/forums/messages/{id}", name="message.show", methods={"GET"})
-     * @param Message $message
-     * @param ThreadService $threadService
-     * @return Response
      */
     public function show(Message $message, ThreadService $threadService): Response
     {
         return $this->redirectToRoute('thread.show', [
             'slug' => $message->getThread()->getSlug(),
             'page' => $threadService->getPageOfMessage($message),
-            '_fragment' => $message->getId()
+            '_fragment' => $message->getId(),
         ]);
     }
 
     /**
      * @Route("/forums/messages/{id}/edit", name="message.edit", methods={"GET", "POST"})
      * @IsGranted("EDIT", subject="message")
-     * @param Message $message
-     * @param Request $request
-     * @param MessageService $messageService
+     *
      * @return RedirectResponse|Response
      */
     public function edit(Message $message, Request $request, MessageService $messageService): Response
@@ -53,6 +48,7 @@ class MessageController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
+
             return $route;
         }
 
@@ -65,11 +61,6 @@ class MessageController extends BaseController
     /**
      * @Route("/forums/messages/{id}/delete", name="message.delete", methods={"GET"})
      * @IsGranted("DELETE", subject="message")
-     * @param Message $message
-     * @param EntityManagerInterface $em
-     * @param MessageService $messageService
-     * @param MessageRepository $messageRepository
-     * @return Response
      */
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
     {
@@ -78,7 +69,7 @@ class MessageController extends BaseController
 
         if (!$messageService->canDeleteMessage($message)) {
             return $this->redirectToRoute('thread.show', [
-                'slug' => $thread->getSlug()
+                'slug' => $thread->getSlug(),
             ]);
         }
 
@@ -91,7 +82,7 @@ class MessageController extends BaseController
             $this->addCustomFlash('success', 'Message', 'Le message ainsi que le thread ont été supprimé !');
 
             return $this->redirectToRoute('forum.show', [
-                'slug' => $forum->getSlug()
+                'slug' => $forum->getSlug(),
             ]);
         }
 
@@ -103,7 +94,7 @@ class MessageController extends BaseController
         $nextMessage = $messageRepository->findNextMessageInThread($message);
 
         return $this->redirectToRoute('message.show', [
-            'id' => $nextMessage ? $nextMessage->getId() : $lastMessage->getId()
+            'id' => $nextMessage ? $nextMessage->getId() : $lastMessage->getId(),
         ]);
     }
 }

@@ -17,10 +17,6 @@ class ReportService
         $this->em = $em;
     }
 
-    /**
-     * @param Message $message
-     * @param string $reason
-     */
     public function createReport(Message $message, string $reason): void
     {
         $report = (new Report())
@@ -43,10 +39,6 @@ class ReportService
         $this->em->flush();
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function deleteReportsByUser(User $user): void
     {
         if (count($user->getReports()) > 0) {
@@ -58,10 +50,6 @@ class ReportService
         }
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function setAuthorNullByUser(User $user): void
     {
         if (count($user->getReports()) > 0) {
@@ -73,10 +61,6 @@ class ReportService
         }
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     public function setTreatedbyNullByUser(User $user): void
     {
         if (count($user->getTreatedReports()) > 0) {

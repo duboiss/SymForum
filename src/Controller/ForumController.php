@@ -22,16 +22,13 @@ class ForumController extends BaseController
 {
     /**
      * @Route("/forums", name="forum.index", methods={"GET"})
-     * @param CategoryRepository $categoriesRepo
-     * @param UserRepository $userRepository
-     * @param MessageRepository $messageRepository
-     * @param ThreadRepository $threadRepository
-     * @param OptionService $optionService
-     * @return Response
+     *
      * @throws Exception
      */
     public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
+        $a = 4;
+
         return $this->render('pages/forums.html.twig', [
             'categories' => $categoriesRepo->findAllCategories(),
             'onlineUsers' => $userRepository->findOnlineUsers(),
@@ -40,19 +37,14 @@ class ForumController extends BaseController
             'nbUsers' => $userRepository->count([]),
             'lastRegistered' => $userRepository->findLastRegistered(),
             'nbMessages' => $messageRepository->count([]),
-            'nbThreads' => $threadRepository->count([])
+            'nbThreads' => $threadRepository->count([]),
         ]);
     }
 
     /**
      * @Route("/forums/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"}, methods={"GET"})
-     * @param Forum $forum
-     * @param ThreadRepository $threadRepository
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
-    public function show(Forum $forum, ThreadRepository $threadRepository,Request $request, PaginatorInterface $paginator): Response
+    public function show(Forum $forum, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
             $threadRepository->findThreadsByForumQb($forum),
@@ -62,30 +54,24 @@ class ForumController extends BaseController
 
         return $this->render('forum/show.html.twig', [
             'forum' => $forum,
-            'pagination' => $pagination
+            'pagination' => $pagination,
         ]);
     }
 
     /**
      * @Route("/forums/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"}, methods={"GET"})
-     * @param Category $category
-     * @param ForumRepository $forumRepository
-     * @return Response
      */
     public function category(Category $category, ForumRepository $forumRepository): Response
     {
         return $this->render('forum/category.html.twig', [
             'category' => $category,
-            'forums' => $forumRepository->findForumsByCategory($category)
+            'forums' => $forumRepository->findForumsByCategory($category),
         ]);
     }
 
     /**
      * @Route("/forums/{id}-{slug}/lock", name="forum.lock", methods={"GET"})
      * @IsGranted("LOCK", subject="forum")
-     * @param Forum $forum
-     * @param ForumService $forumService
-     * @return Response
      */
     public function lock(Forum $forum, ForumService $forumService): Response
     {
@@ -93,16 +79,13 @@ class ForumController extends BaseController
         $this->addCustomFlash('success', 'Forum', 'Le forum a été fermé !');
 
         return $this->redirectToRoute('forum.show', [
-            'slug' => $forum->getSlug()
+            'slug' => $forum->getSlug(),
         ]);
     }
 
     /**
      * @Route("/forums/{id}-{slug}/unlock", name="forum.unlock", methods={"GET"})
      * @IsGranted("LOCK", subject="forum")
-     * @param Forum $forum
-     * @param ForumService $forumService
-     * @return Response
      */
     public function unlock(Forum $forum, ForumService $forumService): Response
     {
@@ -110,7 +93,7 @@ class ForumController extends BaseController
         $this->addCustomFlash('success', 'Forum', 'Le forum a été ouvert !');
 
         return $this->redirectToRoute('forum.show', [
-            'slug' => $forum->getSlug()
+            'slug' => $forum->getSlug(),
         ]);
     }
 }

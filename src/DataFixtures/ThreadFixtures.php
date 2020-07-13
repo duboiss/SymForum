@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 {
-    /** @var Thread[] $threads */
+    /** @var Thread[] */
     private array $threads = [];
 
     public function loadData(ObjectManager $manager): void
@@ -35,14 +35,14 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
             $this->threads[] = $thread;
         });
 
-        foreach($this->threads as $thread) {
+        foreach ($this->threads as $thread) {
             $firstMessage = new Message();
             $firstMessage->setAuthor($thread->getAuthor())
                 ->setCreatedAt($thread->getCreatedAt())
                 ->setContent($this->faker->sentences(mt_rand(1, 15), true))
                 ->setThread($thread);
 
-            if($this->faker->boolean) {
+            if ($this->faker->boolean) {
                 $firstMessage->setUpdatedAt($this->faker->dateTimeBetween($firstMessage->getCreatedAt()));
             } else {
                 $firstMessage->setUpdatedAt($firstMessage->getCreatedAt());
@@ -63,7 +63,7 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
     {
         return [
             ForumFixtures::class,
-            UserFixtures::class
+            UserFixtures::class,
         ];
     }
 }

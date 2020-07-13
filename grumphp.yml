@@ -1,6 +1,7 @@
 grumphp:
     tasks:
         jsonlint: ~
+        phpcsfixer: ~
         phplint: ~
         phpstan:
             configuration: './phpstan.neon'

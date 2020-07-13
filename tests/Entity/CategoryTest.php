@@ -8,18 +8,19 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {
-    use FixturesTrait, TestUtilsTrait;
+    use FixturesTrait;
+    use TestUtilsTrait;
 
     public function getEntity(): Category
     {
         return (new Category())
-            ->setTitle("Category name")
+            ->setTitle('Category name')
             ->setPosition(1);
     }
 
     public function testInvalidBlankTitleEntity(): void
     {
-        $invalidCategory = $this->getEntity()->setTitle("");
+        $invalidCategory = $this->getEntity()->setTitle('');
         $this->assertHasErrors($invalidCategory, 1);
     }
 
@@ -35,6 +36,6 @@ class CategoryTest extends WebTestCase
     public function testInvalidUsedSlug(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/categories.yaml']);
-        $this->assertHasErrors($this->getEntity()->setSlug("first-category"), 1);
+        $this->assertHasErrors($this->getEntity()->setSlug('first-category'), 1);
     }
 }

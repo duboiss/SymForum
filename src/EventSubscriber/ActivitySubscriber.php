@@ -55,5 +55,4 @@ class ActivitySubscriber implements EventSubscriberInterface
             KernelEvents::CONTROLLER => [['onTerminate', 20]],
         ];
     }
-
 }

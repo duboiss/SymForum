@@ -17,27 +17,18 @@ class UserController extends BaseController
 {
     /**
      * @Route("{slug}", name="user.profile", methods={"GET"})
-     * @param User $user
-     * @param ThreadRepository $threadRepository
-     * @param MessageRepository $messageRepository
-     * @return Response
      */
     public function profile(User $user, ThreadRepository $threadRepository, MessageRepository $messageRepository): Response
     {
         return $this->render('user/profile.html.twig', [
             'user' => $user,
             'lastThreads' => $threadRepository->findLastThreadsByUser($user, 5),
-            'lastMessages' => $messageRepository->findLastMessagesByUser($user, 5)
+            'lastMessages' => $messageRepository->findLastMessagesByUser($user, 5),
         ]);
     }
 
     /**
      * @Route("{slug}/threads", name="user.threads")
-     * @param User $user
-     * @param ThreadRepository $threadRepository
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
     public function threads(User $user, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -49,17 +40,12 @@ class UserController extends BaseController
 
         return $this->render('user/threads.html.twig', [
             'user' => $user,
-            'pagination' => $pagination
+            'pagination' => $pagination,
         ]);
     }
 
     /**
      * @Route("{slug}/messages", name="user.messages")
-     * @param User $user
-     * @param MessageRepository $messageRepository
-     * @param Request $request
-     * @param PaginatorInterface $paginator
-     * @return Response
      */
     public function messages(User $user, MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -71,7 +57,7 @@ class UserController extends BaseController
 
         return $this->render('user/messages.html.twig', [
             'user' => $user,
-            'pagination' => $pagination
+            'pagination' => $pagination,
         ]);
     }
 }

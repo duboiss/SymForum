@@ -32,4 +32,5 @@ before_script:
 
 script:
     - ./vendor/bin/phpstan analyse
+    - ./vendor/bin/php-cs-fixer
     - make ci
