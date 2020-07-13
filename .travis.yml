@@ -32,5 +32,5 @@ before_script:
 
 script:
     - ./vendor/bin/phpstan analyse
-    - ./vendor/bin/php-cs-fixer
+    - ./vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi
     - make ci
