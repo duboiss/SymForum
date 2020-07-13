@@ -20,6 +20,13 @@ The goal is to eventually make a bundle allowing any symfony developer to add a 
 - Statistics (online users record, totals...)
 - Control panel for moderators and administrators
 
+### Code Quality
+To get a quality code, SymForum uses:
+- Linters: including [PHPLint](https://github.com/php-parallel-lint/PHP-Parallel-Lint), [TwigCs](https://github.com/friendsoftwig/twigcs) and symfony linters (container, twig, xliff, yaml)
+- [PHPCs](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+- [PHPStan](https://github.com/phpstan/phpstan) (level 8)
+- [SymfonyInsight](https://insight.symfony.com/)
+
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
