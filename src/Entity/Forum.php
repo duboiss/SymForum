@@ -43,12 +43,12 @@ class Forum
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Forum", inversedBy="forums")
+     * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="forums")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="parent")
      * @ORM\OrderBy({"position" = "ASC"})
      */
     private $forums;
@@ -67,12 +67,12 @@ class Forum
     private $isLock = false;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Message", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Message::class, cascade={"persist", "remove"})
      */
     private $lastMessage;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Thread", mappedBy="forum", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Thread::class, mappedBy="forum", orphanRemoval=true)
      */
     private $threads;
 
