@@ -33,7 +33,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 - PHP 7.4.4 (or higher) and [composer](https://getcomposer.org/)
 - MySQL 5.7
-- [Node.js](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/) >= 12
 - [Yarn](https://yarnpkg.com/lang/en/)
 - [Symfony binary](https://github.com/symfony/cli) (optional)
 

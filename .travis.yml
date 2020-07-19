@@ -1,6 +1,12 @@
+os: linux
+
 language: php
 
-os: linux
+php:
+    - 7.4
+
+node_js:
+    - 12
 
 cache:
     yarn: true
@@ -13,9 +19,6 @@ cache:
 env:
     global:
         - PATH="$HOME/.symfony/bin:$PATH"
-
-php:
-    - '7.4'
 
 before_install:
     - if symfony self:version; then symfony self:update --yes ; else wget https://get.symfony.com/cli/installer -O - | bash ; fi
