@@ -38,7 +38,6 @@ class Forum
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="forums")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $category;
 
