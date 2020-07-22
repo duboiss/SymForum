@@ -87,8 +87,6 @@ class CategoryPanelController extends BaseController
         $em->remove($category);
         $em->flush();
 
-        return $this->json([
-            'message' => 'La catégorie a bien été supprimée !',
-        ], 200);
+        return $this->json(['message' => 'La catégorie a bien été supprimée !']);
     }
 }

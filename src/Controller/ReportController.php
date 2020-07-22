@@ -39,8 +39,6 @@ class ReportController extends BaseController
 
         $reportService->createReport($message, $reason);
 
-        return $this->json([
-            'message' => 'Le message a été signalé, merci !',
-        ], 200);
+        return $this->json(['message' => 'Le message a été signalé, merci !']);
     }
 }
