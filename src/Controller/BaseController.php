@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 
@@ -14,19 +15,19 @@ use Symfony\Component\Serializer\Encoder\DecoderInterface;
  */
 abstract class BaseController extends AbstractController
 {
-    private SessionInterface $session;
+    private FlashBagInterface $flashBag;
 
     private DecoderInterface $decoder;
 
     public function __construct(SessionInterface $session, DecoderInterface $decoder)
     {
-        $this->session = $session;
+        $this->flashBag = $session->getFlashBag();
         $this->decoder = $decoder;
     }
 
     protected function addCustomFlash(string $type, string $title, string $content): void
     {
-        $this->session->getFlashBag()->add($type, ['title' => $title, 'content' => $content]);
+        $this->flashBag->add($type, ['title' => $title, 'content' => $content]);
     }
 
     protected function redirectToReferer(Request $request): RedirectResponse

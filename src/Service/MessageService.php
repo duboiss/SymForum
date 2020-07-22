@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 
 class MessageService
@@ -22,11 +23,11 @@ class MessageService
 
     private Security $security;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, Security $security)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService, Security $security)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
-        $this->flashBag = $flashBag;
+        $this->flashBag = $session->getFlashBag();
         $this->antispamService = $antispamService;
         $this->security = $security;
     }

@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ThreadService
 {
@@ -22,11 +23,11 @@ class ThreadService
 
     private OptionService $optionService;
 
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, FlashBagInterface $flashBag, AntispamService $antispamService, OptionService $optionService)
+    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService, OptionService $optionService)
     {
         $this->em = $em;
         $this->messageRepository = $messageRepository;
-        $this->flashBag = $flashBag;
+        $this->flashBag = $session->getFlashBag();
         $this->antispamService = $antispamService;
         $this->optionService = $optionService;
     }
