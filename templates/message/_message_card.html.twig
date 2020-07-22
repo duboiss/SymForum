@@ -38,13 +38,11 @@
                         </a>
                     {% endif %}
 
-                    {% if not loop.first %}
-                        {% if is_granted('DELETE', message) %}
-                            <a style="text-decoration: none;" href="{{ path('message.delete', {'id': message.id}) }}"
-                               title="Supprimer">
-                                <i class="far fa-trash-alt"></i>
-                            </a>
-                        {% endif %}
+                    {% if is_granted('DELETE', message) %}
+                        <a style="text-decoration: none;" href="{{ path('message.delete', {'id': message.id}) }}"
+                           title="Supprimer">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
                     {% endif %}
                 </div>
             </div>
