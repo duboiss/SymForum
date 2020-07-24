@@ -13,6 +13,7 @@ class MessageVoter extends Voter
 {
     private const EDIT = 'EDIT';
     private const DELETE = 'DELETE';
+    private const LIKE = 'LIKE';
     private const REPORT = 'REPORT';
 
     private Security $security;
@@ -24,7 +25,7 @@ class MessageVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        return in_array($attribute, [self::EDIT, self::DELETE, self::REPORT], true)
+        return in_array($attribute, [self::EDIT, self::DELETE, self::LIKE, self::REPORT], true)
             && $subject instanceof Message;
     }
 
@@ -44,6 +45,8 @@ class MessageVoter extends Voter
                 return $this->canEdit($message, $user);
             case self::DELETE:
                 return $this->canDelete();
+            case self::LIKE:
+                return true;
             case self::REPORT:
                 return $this->canReport($message, $user);
         }

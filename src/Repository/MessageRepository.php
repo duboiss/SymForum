@@ -62,11 +62,12 @@ class MessageRepository extends ServiceEntityRepository
         return $onlyId ? array_column($qb, 'id') : $qb;
     }
 
-    public function findMessagesByThreadWithAuthorQb(Thread $thread): QueryBuilder
+    public function findMessagesByThreadWithAuthorAndLikesQb(Thread $thread): QueryBuilder
     {
         return $this->whereThreadQb($thread)
             ->leftJoin('m.author', 'author')
-            ->addSelect('author')
+            ->leftJoin('m.likes', 'likes')
+            ->addSelect('author', 'likes')
             ->orderBy('m.createdAt', 'ASC');
     }
 

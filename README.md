@@ -16,7 +16,7 @@ The goal is to eventually make a bundle allowing any symfony developer to add a 
 - Forums with sub-forums in categories
 - Breadcrumbs, antispam, reports...
 - Threads and forums locked/unlocked
-- Messages with WYSIWYG
+- Messages with WYSIWYG, likes
 - Statistics (online users record, totals...)
 - Control panel for moderators and administrators
 

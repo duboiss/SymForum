@@ -26,7 +26,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('modnav', './assets/js/modnav.js')
     .addEntry('ckeditor', './assets/js/components/ckeditor.js')
-    .addEntry('report', './assets/js/report.js')
+    .addEntry('messageCard', './assets/js/messageCard.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

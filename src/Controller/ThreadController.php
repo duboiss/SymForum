@@ -55,7 +55,7 @@ class ThreadController extends BaseController
         }
 
         $pagination = $paginator->paginate(
-            $messageRepository->findMessagesByThreadWithAuthorQb($thread),
+            $messageRepository->findMessagesByThreadWithAuthorAndLikesQb($thread),
             $request->query->getInt('page', 1),
             (int) $optionService->get('messages_per_thread', '10'),
         );

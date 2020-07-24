@@ -50,12 +50,18 @@ class Message
     private $updatedBy;
 
     /**
+     * @ORM\OneToMany(targetEntity=MessageLike::class, mappedBy="message", orphanRemoval=true)
+     */
+    private $likes;
+
+    /**
      * @ORM\OneToMany(targetEntity=Report::class, mappedBy="message", orphanRemoval=true)
      */
     private $reports;
 
     public function __construct()
     {
+        $this->likes = new ArrayCollection();
         $this->reports = new ArrayCollection();
     }
 
@@ -105,6 +111,48 @@ class Message
         $this->updatedBy = $updatedBy;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|MessageLike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(MessageLike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setMessage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(MessageLike $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getMessage() === $this) {
+                $like->setMessage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isLikeByUser(User $user): bool
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getUser() === $user) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

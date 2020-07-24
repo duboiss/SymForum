@@ -84,6 +84,11 @@ class User implements UserInterface
     private $updatedMessages;
 
     /**
+     * @ORM\OneToMany(targetEntity=MessageLike::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $likes;
+
+    /**
      * @ORM\OneToMany(targetEntity=Report::class, mappedBy="reportedBy")
      */
     private $reports;
@@ -97,6 +102,7 @@ class User implements UserInterface
     {
         $this->threads = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function __toString()
@@ -269,6 +275,37 @@ class User implements UserInterface
     public function getUpdatedByMessages(): Collection
     {
         return $this->updatedMessages;
+    }
+
+    /**
+     * @return Collection|MessageLike[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(MessageLike $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(MessageLike $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
     /**

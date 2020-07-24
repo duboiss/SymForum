@@ -83,7 +83,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% if app.user %}
-        {{ encore_entry_script_tags('report') }}
+        {{ encore_entry_script_tags('messageCard') }}
         {% if not thread.lock %}
             {{ encore_entry_script_tags('ckeditor') }}
         {% endif %}

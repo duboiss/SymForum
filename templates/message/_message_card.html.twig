@@ -23,18 +23,32 @@
         {% if displayActions|default(false) == true %}
             <div class="row">
                 <div class="col text-right">
-                    {% if is_granted('REPORT', message) %}
-                        <a style="text-decoration: none;" data-toggle="modal" data-target="#reportModal"
-                           data-author="{{ message.author ?? 'compte supprimé' }}"
-                           data-message="{{ message.id }}" href="#" title="Signaler">
-                            <i class="far fa-flag"></i>
+                    {% if app.user %}
+                        <a style="text-decoration: none;" href="{{ path('message.like', {'id': message.id}) }}"
+                           class="js-message-like" title="Liker">
+                            {{ message.isLikeByUser(app.user) ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>' }}
+                            <span class="js-message-count-likes">
+                                {{ message.likes|length > 0 ? message.likes|length }}
+                            </span>
                         </a>
+                    {% else %}
+                        {% if message.likes|length > 0 %}
+                            <i class="fas fa-heart"></i>{{ message.likes|length }}
+                        {% endif %}
                     {% endif %}
 
                     {% if is_granted('EDIT', message) %}
                         <a style="text-decoration: none;" href="{{ path('message.edit', {'id': message.id}) }}"
                            title="Editer">
                             <i class="far fa-edit"></i>
+                        </a>
+                    {% endif %}
+
+                    {% if is_granted('REPORT', message) %}
+                        <a style="text-decoration: none;" data-toggle="modal" data-target="#reportModal"
+                           data-author="{{ message.author ?? 'compte supprimé' }}"
+                           data-message="{{ message.id }}" href="#" title="Signaler">
+                            <i class="far fa-flag"></i>
                         </a>
                     {% endif %}
 
