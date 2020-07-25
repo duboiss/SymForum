@@ -27,7 +27,7 @@
                 <tr{{ not report.isTreated ? ' class="table-warning"' }}>
                     <td>{{ report.id }}</td>
                     <td>{{ user_profile_link(report.message.author) }}</td>
-                    <td>{{ report.createdAt|date('d/m/Y à H:i:s') }}</td>
+                    <td>{{ report.createdAt|format_datetime }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
                     <td>{{ report.reason|u.truncate(45, '...', false) }}</td>
                     <td><a href="{{ path('panel.report.show', {'id': report.id}) }}">Détails</a></td>

@@ -20,9 +20,9 @@
                     <strong class="text-danger">{{ role }}</strong><br>
                 {% endif %}
 
-                Date d'inscription : {{ user.createdAt|date("d/m/Y") }}
+                Date d'inscription : {{ user.createdAt|format_datetime('medium', 'none') }}
                 {% if user.lastActivityAt %}
-                    <br>Dernière activité : {{ user.lastActivityAt|date("d/m/Y à H:i") }}
+                    <br>Dernière activité : {{ user.lastActivityAt|format_datetime }}
                 {% endif %}
                 <br> Nombre de messages : {{ user.messages|length }}
             </p>

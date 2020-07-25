@@ -54,8 +54,8 @@
             <p>
                 {{ user.isActiveNow ? 'En ligne' : 'Hors ligne' }} <br>
                 Email : {{ user.email }}<br>
-                Inscription : {{ user.createdAt|date('d/m/Y à H:i:s') }}<br>
-                Dernière activité : {{ user.lastActivityAt ? user.lastActivityAt|date('d/m/Y à H:i:s') : 'Jamais' }}
+                Inscription : {{ user.createdAt|format_datetime('short') }}<br>
+                Dernière activité : {{ user.lastActivityAt ? user.lastActivityAt|format_datetime('short') : 'Jamais' }}
             </p>
 
         </div>

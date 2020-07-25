@@ -26,10 +26,10 @@
             {% for user in pagination %}
                 <tr>
                     <td>{{ user.id }}</td>
-                    <td>{{ user.createdAt|date('d/m/Y à H:i:s') }}</td>
+                    <td>{{ user.createdAt|format_datetime('short') }}</td>
                     <td>{{ user_profile_link(user) }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.lastActivityAt ? user.lastActivityAt|date('d/m/Y à H:i:s') : 'Jamais' }}</td>
+                    <td>{{ user.lastActivityAt ? user.lastActivityAt|format_datetime('short') : 'Jamais' }}</td>
                     <td><a href="{{ path('panel.user.details', {'slug': user.slug}) }}">Détails</a></td>
                 </tr>
             {% endfor %}

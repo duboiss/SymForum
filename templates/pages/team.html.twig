@@ -21,7 +21,7 @@
                 <tr>
                     <td>{{ user_profile_link(administrator) }}</td>
                     <td>{{ administrator.messages|length }}</td>
-                    <td>{{ administrator.createdAt|date('d/m/Y') }}</td>
+                    <td>{{ administrator.createdAt|format_datetime('medium', 'none') }}</td>
                     <td>{{ administrator.lastActivityAt ? administrator.lastActivityAt|ago : 'Jamais' }}</td>
                 </tr>
             {% endfor %}
@@ -43,7 +43,7 @@
                 <tr>
                     <th>{{ user_profile_link(moderator) }}</th>
                     <td>{{ moderator.messages|length }}</td>
-                    <td>{{ moderator.createdAt|date('d/m/Y') }}</td>
+                    <td>{{ moderator.createdAt|format_datetime('medium', 'none') }}</td>
                     <td>{{ moderator.lastActivityAt ? moderator.lastActivityAt|ago : 'Jamais' }}</td>
                 </tr>
             {% endfor %}
