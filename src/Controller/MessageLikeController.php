@@ -9,10 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/forums")
+ */
 class MessageLikeController extends BaseController
 {
     /**
-     * @Route("/forums/messages/{id}/like", name="message.like", methods={"POST"})
+     * @Route("/messages/{id}/like", name="message.like", methods={"POST"})
      * @IsGranted("LIKE", subject="message")
      */
     public function like(Message $message, MessageLikeService $likeService, MessageLikeRepository $likeRepository): Response

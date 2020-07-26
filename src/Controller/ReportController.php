@@ -9,10 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/forums")
+ */
 class ReportController extends BaseController
 {
     /**
-     * @Route("/forums/report/{id}", name="report.message", methods={"POST"})
+     * @Route("/report/{id}", name="report.message", methods={"POST"})
      * @IsGranted("REPORT", subject="message")
      */
     public function message(Message $message, Request $request, ReportService $reportService): Response
