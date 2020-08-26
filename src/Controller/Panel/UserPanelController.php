@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserPanelController extends BaseController
 {
     /**
-     * @Route("/users", name="panel.users", methods={"GET"})
+     * @Route("/users", name="panel.users", methods="GET")
      */
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -34,7 +34,7 @@ class UserPanelController extends BaseController
     }
 
     /**
-     * @Route("/users/{slug}", name="panel.user.details", methods={"GET"})
+     * @Route("/users/{slug}", name="panel.user.details", methods="GET")
      */
     public function details(User $user): Response
     {
@@ -44,7 +44,7 @@ class UserPanelController extends BaseController
     }
 
     /**
-     * @Route("/users/{slug}/reset", name="panel.user.reset", methods={"GET"})
+     * @Route("/users/{slug}/reset", name="panel.user.reset", methods="GET")
      */
     public function reset(User $user, UserService $userService): Response
     {
@@ -57,7 +57,7 @@ class UserPanelController extends BaseController
     }
 
     /**
-     * @Route("/users/{slug}/delete", name="panel.user.delete", methods={"POST"})
+     * @Route("/users/{slug}/delete", name="panel.user.delete", methods="POST")
      *
      * @throws Exception
      */

@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumController extends BaseController
 {
     /**
-     * @Route("", name="forum.index", methods={"GET"})
+     * @Route("", name="forum.index", methods="GET")
      *
      * @throws Exception
      */
@@ -43,7 +43,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"}, methods={"GET"})
+     * @Route("/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"}, methods="GET")
      */
     public function show(Forum $forum, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -60,7 +60,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"}, methods={"GET"})
+     * @Route("/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"}, methods="GET")
      */
     public function category(Category $category, ForumRepository $forumRepository): Response
     {
@@ -71,7 +71,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/{id}-{slug}/lock", name="forum.lock", methods={"GET"})
+     * @Route("/{id}-{slug}/lock", name="forum.lock", methods="GET")
      * @IsGranted("LOCK", subject="forum")
      */
     public function lock(Forum $forum, ForumService $forumService): Response
@@ -85,7 +85,7 @@ class ForumController extends BaseController
     }
 
     /**
-     * @Route("/{id}-{slug}/unlock", name="forum.unlock", methods={"GET"})
+     * @Route("/{id}-{slug}/unlock", name="forum.unlock", methods="GET")
      * @IsGranted("LOCK", subject="forum")
      */
     public function unlock(Forum $forum, ForumService $forumService): Response

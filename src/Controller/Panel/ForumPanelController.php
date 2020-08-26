@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumPanelController extends BaseController
 {
     /**
-     * @Route("/forums", name="panel.forums", methods={"GET"})
+     * @Route("/forums", name="panel.forums", methods="GET")
      */
     public function index(ForumRepository $forumRepository): Response
     {

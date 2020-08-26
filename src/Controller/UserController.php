@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends BaseController
 {
     /**
-     * @Route("{slug}", name="user.profile", methods={"GET"})
+     * @Route("{slug}", name="user.profile", methods="GET")
      */
     public function profile(User $user, ThreadRepository $threadRepository, MessageRepository $messageRepository): Response
     {
@@ -28,7 +28,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("{slug}/threads", name="user.threads")
+     * @Route("{slug}/threads", name="user.threads", methods="GET")
      */
     public function threads(User $user, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -45,7 +45,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("{slug}/messages", name="user.messages")
+     * @Route("{slug}/messages", name="user.messages", methods="GET")
      */
     public function messages(User $user, MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {

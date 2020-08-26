@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReportPanelController extends BaseController
 {
     /**
-     * @Route("/reports", name="panel.reports", methods={"GET"})
+     * @Route("/reports", name="panel.reports", methods="GET")
      */
     public function index(ReportRepository $reportRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -34,7 +34,7 @@ class ReportPanelController extends BaseController
     }
 
     /**
-     * @Route("/reports/{id}", name="panel.report.show", methods={"GET"})
+     * @Route("/reports/{id}", name="panel.report.show", methods="GET")
      */
     public function show(Report $report, ReportRepository $reportRepository): Response
     {
@@ -45,7 +45,7 @@ class ReportPanelController extends BaseController
     }
 
     /**
-     * @Route("/reports/{id}/delete", name="panel.report.delete", methods={"GET"})
+     * @Route("/reports/{id}/delete", name="panel.report.delete", methods="GET")
      */
     public function delete(Report $report, ReportService $reportService): Response
     {
@@ -56,7 +56,7 @@ class ReportPanelController extends BaseController
     }
 
     /**
-     * @Route("/reports/{id}/close", name="panel.report.close", methods={"GET"})
+     * @Route("/reports/{id}/close", name="panel.report.close", methods="GET")
      */
     public function close(Report $report, ReportService $reportService): Response
     {

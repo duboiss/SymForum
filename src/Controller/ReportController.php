@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReportController extends BaseController
 {
     /**
-     * @Route("/report/{id}", name="report.message", methods={"POST"})
+     * @Route("/report/{id}", name="report.message", methods="POST")
      * @IsGranted("REPORT", subject="message")
      */
     public function message(Message $message, Request $request, ReportService $reportService): Response

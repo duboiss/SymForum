@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageLikeController extends BaseController
 {
     /**
-     * @Route("/messages/{id}/like", name="message.like", methods={"POST"})
+     * @Route("/messages/{id}/like", name="message.like", methods="POST")
      * @IsGranted("LIKE", subject="message")
      */
     public function like(Message $message, MessageLikeService $likeService, MessageLikeRepository $likeRepository): Response

@@ -110,7 +110,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/threads/{id}/delete", name="thread.delete", methods={"POST"})
+     * @Route("/threads/{id}/delete", name="thread.delete", methods="POST")
      * @IsGranted("DELETE", subject="thread")
      *
      * @throws Exception
@@ -133,7 +133,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/threads/{id}/lock", name="thread.lock", methods={"GET"})
+     * @Route("/threads/{id}/lock", name="thread.lock", methods="GET")
      * @IsGranted("LOCK", subject="thread")
      */
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
@@ -145,7 +145,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/threads/{id}/unlock", name="thread.unlock", methods={"GET"})
+     * @Route("/threads/{id}/unlock", name="thread.unlock", methods="GET")
      * @IsGranted("LOCK", subject="thread")
      */
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
@@ -157,7 +157,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/threads/{id}/pin", name="thread.pin", methods={"GET"})
+     * @Route("/threads/{id}/pin", name="thread.pin", methods="GET")
      * @IsGranted("PIN", subject="thread")
      */
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
@@ -169,7 +169,7 @@ class ThreadController extends BaseController
     }
 
     /**
-     * @Route("/threads/{id}/unpin", name="thread.unpin", methods={"GET"})
+     * @Route("/threads/{id}/unpin", name="thread.unpin", methods="GET")
      * @IsGranted("PIN", subject="thread")
      */
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response

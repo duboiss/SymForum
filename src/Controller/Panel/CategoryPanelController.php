@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryPanelController extends BaseController
 {
     /**
-     * @Route("/categories", name="panel.categories", methods={"GET"})
+     * @Route("/categories", name="panel.categories", methods="GET")
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -74,7 +74,7 @@ class CategoryPanelController extends BaseController
     }
 
     /**
-     * @Route("/categories/{id}/delete", name="panel.category.delete", methods={"DELETE"})
+     * @Route("/categories/{id}/delete", name="panel.category.delete", methods="DELETE")
      */
     public function delete(Category $category, EntityManagerInterface $em): Response
     {

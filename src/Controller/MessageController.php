@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MessageController extends BaseController
 {
     /**
-     * @Route("/messages/{id}", name="message.show", methods={"GET"})
+     * @Route("/messages/{id}", name="message.show", methods="GET")
      */
     public function show(Message $message, ThreadService $threadService): Response
     {
@@ -62,7 +62,7 @@ class MessageController extends BaseController
     }
 
     /**
-     * @Route("/messages/{id}/delete", name="message.delete", methods={"GET"})
+     * @Route("/messages/{id}/delete", name="message.delete", methods="GET")
      * @IsGranted("DELETE", subject="message")
      */
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
