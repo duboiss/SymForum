@@ -1,5 +1,5 @@
-import $ from "jquery";
+import $ from 'jquery';
 
-$(document).ready(function () {
-    for (let el of $('*[id^="toast-"]')) $("#" + el.id).toast('show');
-});
+for (let el of document.querySelectorAll('*[id^="toast-"]')) {
+    $("#" + el.id).toast('show');
+}

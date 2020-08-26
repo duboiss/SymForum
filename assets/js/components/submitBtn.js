@@ -1,16 +1,13 @@
-import $ from 'jquery';
-
 const spinner = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Chargement...';
 
-$(document).ready(function() {
-    $('form').submit(function() {
-        let $btn = $(this).find('.js-submit-btn');
-        $btn.prop('disabled', true);
-        $btn.html(spinner);
-    });
+document.querySelectorAll('form').forEach((el) => el.addEventListener('submit', () => {
+        let btn = this.querySelector('.js-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = spinner;
+}));
 
-    $('a.js-submit-link').click(function() {
-        $(this).addClass('disabled');
-        $(this).html(spinner);
-    });
-});
+
+document.querySelectorAll('a.js-submit-link').forEach((el) => el.addEventListener('click', () => {
+    this.classList.add('disabled')
+    this.innerHTML = spinner;
+}));

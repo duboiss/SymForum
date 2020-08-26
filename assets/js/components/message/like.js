@@ -1,27 +1,25 @@
-import $ from "jquery";
+import $ from 'jquery';
 
-let $links = $('.js-message-like');
-
-$links.click(function (event) {
-    event.preventDefault();
+document.querySelectorAll('.js-message-like').forEach((el) => el.addEventListener('click', (e) => {
+    e.preventDefault();
 
     let url = this.href;
     let icone = this.querySelector('i');
-    let spanCount = this.querySelector('span.js-message-count-likes')
+    let spanCount = this.querySelector('span.js-message-count-likes');
 
     $.ajax({
-        method: "POST",
+        method: 'POST',
         url
-    }).done(function(response) {
+    }).done((response) => {
         let text;
         response !== 0 ? text = response.toString() : text = '';
 
         toggleIcone(icone);
         spanCount.textContent = text;
-    }).fail(function() {
-        window.alert("Une erreur est survenue ! Essayez d'actualiser.")
+    }).fail(() => {
+        window.alert('Une erreur est survenue ! Essayez d\'actualiser.');
     });
-});
+}));
 
 function toggleIcone(icone) {
     if (icone.classList.contains('far')) {
