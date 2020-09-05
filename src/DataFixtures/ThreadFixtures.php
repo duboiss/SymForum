@@ -7,7 +7,7 @@ use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 {

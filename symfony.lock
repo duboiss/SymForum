@@ -80,7 +80,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.0",
-            "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
+            "ref": "e5b542d4ef47d8a003c91beb35650c76907f7e53"
         },
         "files": [
             "./src/DataFixtures/AppFixtures.php"
@@ -394,7 +394,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.1",
-            "ref": "ffcb76bab779154c0a7d8cddb9f448c2c45a4e50"
+            "ref": "e1b2770f2404d8307450a49cabfc3b2ff3184792"
         },
         "files": [
             "./config/packages/cache.yaml",
@@ -549,9 +549,6 @@
     },
     "symfony/string": {
         "version": "v5.0.2"
-    },
-    "symfony/templating": {
-        "version": "v4.3.5"
     },
     "symfony/test-pack": {
         "version": "v1.0.6"

@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Forum;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
 {
