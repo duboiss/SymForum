@@ -12,5 +12,5 @@ $('#deleteModal').on('hidden.bs.modal', () => {
 })
 
 document.querySelectorAll('.rotate').forEach((el) => el.addEventListener('click', () => {
-    this.classList.add('fa-spin')
+    el.classList.add('fa-spin')
 }));

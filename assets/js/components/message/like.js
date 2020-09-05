@@ -3,9 +3,9 @@ import $ from 'jquery';
 document.querySelectorAll('.js-message-like').forEach((el) => el.addEventListener('click', (e) => {
     e.preventDefault();
 
-    let url = this.href;
-    let icone = this.querySelector('i');
-    let spanCount = this.querySelector('span.js-message-count-likes');
+    let url = el.href;
+    let icone = el.querySelector('i');
+    let spanCount = el.querySelector('span.js-message-count-likes');
 
     $.ajax({
         method: 'POST',

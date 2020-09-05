@@ -4,7 +4,7 @@ document.querySelectorAll('.js-delete-button').forEach((btn) => btn.addEventList
     if (!confirm('Etes-vous certain de vouloir faire cela ?')) return;
 
     let alert, type, message;
-    let url = this.dataset.deleteUrl;
+    let url = btn.dataset.deleteUrl;
     let $row = $(this).closest('tr');
 
     $.ajax({
