@@ -17,8 +17,8 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->users = $this->loadFixtureFiles([__DIR__ . '/Fixtures/users.yaml']);
-        $this->client = static::createClient();
     }
 
     /**
@@ -36,7 +36,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      */
     public function testRedirectToLogin(string $url): void
     {
-        $this->client->request('GET', $url);
+        self::$client->request('GET', $url);
         self::assertResponseRedirects('/login');
     }
 
@@ -51,7 +51,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     private function checkStatusUrl(string $url, string $username, int $expectedStatus): void
     {
         $this->logIn($this->users[$username]);
-        $this->client->request('GET', $url);
+        self::$client->request('GET', $url);
         self::assertResponseStatusCodeSame($expectedStatus);
     }
 

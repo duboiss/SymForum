@@ -6,7 +6,7 @@ class PageControllerTest extends AbstractControllerTest
 {
     public function testIndexRedirection(): void
     {
-        $this->client->request('GET', '/');
+        self::$client->request('GET', '/');
         self::assertResponseRedirects('/forums');
     }
 
@@ -19,7 +19,7 @@ class PageControllerTest extends AbstractControllerTest
 
     public function testDisplayTeam(): void
     {
-        $crawler = $this->client->request('GET', '/team');
+        $crawler = self::$client->request('GET', '/team');
         self::assertResponseIsSuccessful();
 
         self::assertSelectorTextContains('h1', 'Membres de l\'équipe');

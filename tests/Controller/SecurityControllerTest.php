@@ -10,7 +10,7 @@ class SecurityControllerTest extends AbstractControllerTest
 
     public function testDisplayLogin(): void
     {
-        $this->client->request('GET', '/login');
+        self::$client->request('GET', '/login');
         self::assertResponseIsSuccessful();
         self::assertSelectorNotExists('.alert.alert-danger');
     }
@@ -18,16 +18,16 @@ class SecurityControllerTest extends AbstractControllerTest
     public function testLoginWithBadCredentials(): void
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
-        $crawler = $this->client->request('GET', '/login');
+        $crawler = self::$client->request('GET', '/login');
 
         $form = $crawler->selectButton('Connexion')->form([
             'email' => 'john@doe.com',
             'password' => 'password',
         ]);
 
-        $this->client->submit($form);
+        self::$client->submit($form);
         self::assertResponseRedirects('/login');
-        $this->client->followRedirect();
+        self::$client->followRedirect();
 
         self::assertSelectorExists('.alert.alert-danger');
     }
@@ -36,8 +36,8 @@ class SecurityControllerTest extends AbstractControllerTest
     {
         $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
 
-        $csrfToken = $this->client->getContainer()->get('security.csrf.token_manager')->getToken('authenticate');
-        $this->client->request('POST', '/login', [
+        $csrfToken = self::$client->getContainer()->get('security.csrf.token_manager')->getToken('authenticate');
+        self::$client->request('POST', '/login', [
             '_csrf_token' => $csrfToken,
             'email' => 'demo@demo.com',
             'password' => 'demo',

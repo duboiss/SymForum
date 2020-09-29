@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b76c171c3be18237d4f6e12a4949bc4f",
+    "content-hash": "354161024c3cfae611c9aedf2b268519",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -8213,16 +8213,16 @@
         },
         {
             "name": "liip/test-fixtures-bundle",
-            "version": "1.7.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipTestFixturesBundle.git",
-                "reference": "664e155cf57c3f6a376d1d7a8e426d5468bbd0de"
+                "reference": "c8d4984f134e21c2b6e30b85dbd62e60fdf824dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipTestFixturesBundle/zipball/664e155cf57c3f6a376d1d7a8e426d5468bbd0de",
-                "reference": "664e155cf57c3f6a376d1d7a8e426d5468bbd0de",
+                "url": "https://api.github.com/repos/liip/LiipTestFixturesBundle/zipball/c8d4984f134e21c2b6e30b85dbd62e60fdf824dd",
+                "reference": "c8d4984f134e21c2b6e30b85dbd62e60fdf824dd",
                 "shasum": ""
             },
             "require": {
@@ -8280,7 +8280,7 @@
                 "symfony",
                 "testing"
             ],
-            "time": "2020-02-16T18:43:29+00:00"
+            "time": "2020-05-15T16:02:44+00:00"
         },
         {
             "name": "myclabs/deep-copy",
