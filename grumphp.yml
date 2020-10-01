@@ -4,9 +4,7 @@ grumphp:
         phpcsfixer: ~
         phplint: ~
         phpstan:
-            configuration: './phpstan.neon'
             level: 8
-            ignore_patterns: ['tests']
         phpunitbridge: ~
         twigcs:
             path: 'templates'
