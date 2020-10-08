@@ -75,7 +75,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
         $this->checkStatusUrl($url, 'user_demo', Response::HTTP_FORBIDDEN);
     }
 
-    public function urlPublicProvider(): ?Generator
+    public function urlPublicProvider(): iterable
     {
         // Pages
         yield 'page_forums' => ['/forums'];
@@ -86,7 +86,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
         yield 'security_login' => ['/login'];
     }
 
-    public function urlRestrictedAdminProvider(): ?Generator
+    public function urlRestrictedAdminProvider(): iterable
     {
         // Categories
         yield 'panel_categories' => ['/panel/categories'];
@@ -96,7 +96,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
         yield 'panel_forums' => ['/panel/forums'];
     }
 
-    public function urlRestrictedModeratorProvider(): ?Generator
+    public function urlRestrictedModeratorProvider(): iterable
     {
         yield 'panel' => ['/panel'];
 
@@ -107,7 +107,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
         yield 'panel_users' => ['/panel/users'];
     }
 
-    public function urlRestrictedUserProvider(): ?Generator
+    public function urlRestrictedUserProvider(): iterable
     {
         // User profile
         yield 'user_profile' => ['/user/demo'];

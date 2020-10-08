@@ -4,12 +4,13 @@ includes:
 
 parameters:
   level: 8
+  bootstrapFiles:
+    - bin/.phpunit/phpunit/vendor/autoload.php
   paths:
     - src
   excludes_analyse:
     - src/DataFixtures/*
     - src/Migrations/*
-    - tests
   symfony:
       container_xml_path: 'var/cache/dev/App_KernelDevDebugContainer.xml'
   checkGenericClassInNonGenericObjectType: false
