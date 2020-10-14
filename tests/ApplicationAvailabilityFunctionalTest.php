@@ -4,7 +4,6 @@ namespace App\Tests;
 
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerTest;
-use Generator;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\HttpFoundation\Response;
 
