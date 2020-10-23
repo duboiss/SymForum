@@ -180,8 +180,7 @@ class Forum
 
     public function removeForum(self $forum): self
     {
-        if ($this->forums->contains($forum)) {
-            $this->forums->removeElement($forum);
+        if ($this->forums->removeElement($forum)) {
             // set the owning side to null (unless already changed)
             if ($forum->getParent() === $this) {
                 $forum->setParent(null);
@@ -297,8 +296,7 @@ class Forum
 
     public function removeThread(Thread $thread): self
     {
-        if ($this->threads->contains($thread)) {
-            $this->threads->removeElement($thread);
+        if ($this->threads->removeElement($thread)) {
             // set the owning side to null (unless already changed)
             if ($thread->getForum() === $this) {
                 $thread->setForum(null);

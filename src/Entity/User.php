@@ -227,8 +227,7 @@ class User implements UserInterface
 
     public function removeThread(Thread $thread): self
     {
-        if ($this->threads->contains($thread)) {
-            $this->threads->removeElement($thread);
+        if ($this->threads->removeElement($thread)) {
             // set the owning side to null (unless already changed)
             if ($thread->getAuthor() === $this) {
                 $thread->setAuthor(null);
@@ -258,8 +257,7 @@ class User implements UserInterface
 
     public function removeMessage(Message $message): self
     {
-        if ($this->messages->contains($message)) {
-            $this->messages->removeElement($message);
+        if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
             if ($message->getAuthor() === $this) {
                 $message->setAuthor(null);
@@ -297,8 +295,7 @@ class User implements UserInterface
 
     public function removeLike(MessageLike $like): self
     {
-        if ($this->likes->contains($like)) {
-            $this->likes->removeElement($like);
+        if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
             if ($like->getUser() === $this) {
                 $like->setUser(null);

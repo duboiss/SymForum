@@ -105,8 +105,7 @@ class Category
 
     public function removeForum(Forum $forum): self
     {
-        if ($this->forums->contains($forum)) {
-            $this->forums->removeElement($forum);
+        if ($this->forums->removeElement($forum)) {
             // set the owning side to null (unless already changed)
             if ($forum->getCategory() === $this) {
                 $forum->setCategory(null);

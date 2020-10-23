@@ -182,8 +182,7 @@ class Thread
 
     public function removeMessage(Message $message): self
     {
-        if ($this->messages->contains($message)) {
-            $this->messages->removeElement($message);
+        if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
             if ($message->getThread() === $this) {
                 $message->setThread(null);

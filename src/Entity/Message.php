@@ -133,8 +133,7 @@ class Message
 
     public function removeLike(MessageLike $like): self
     {
-        if ($this->likes->contains($like)) {
-            $this->likes->removeElement($like);
+        if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
             if ($like->getMessage() === $this) {
                 $like->setMessage(null);
@@ -175,8 +174,7 @@ class Message
 
     public function removeReport(Report $report): self
     {
-        if ($this->reports->contains($report)) {
-            $this->reports->removeElement($report);
+        if ($this->reports->removeElement($report)) {
             // set the owning side to null (unless already changed)
             if ($report->getMessage() === $this) {
                 $report->setMessage(null);
