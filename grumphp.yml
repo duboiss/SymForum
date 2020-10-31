@@ -3,8 +3,7 @@ grumphp:
         jsonlint: ~
         phpcsfixer: ~
         phplint: ~
-        phpstan:
-            level: 8
+        phpstan: ~
         phpunitbridge: ~
         twigcs:
             path: 'templates'

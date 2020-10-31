@@ -214,6 +214,9 @@
     "ocramius/proxy-manager": {
         "version": "2.2.2"
     },
+    "ondram/ci-detector": {
+        "version": "3.5.1"
+    },
     "opis/closure": {
         "version": "3.5.5"
     },
