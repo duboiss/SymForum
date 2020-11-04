@@ -2,7 +2,7 @@
 
 namespace App\Controller\Panel;
 
-use App\Controller\BaseController;
+use App\Controller\AbstractBaseController;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\UserService;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/panel")
  */
-class UserPanelController extends BaseController
+class UserPanelController extends AbstractBaseController
 {
     /**
      * @Route("/users", name="panel.users", methods="GET")

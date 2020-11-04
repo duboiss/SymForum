@@ -2,7 +2,7 @@
 
 namespace App\Controller\Panel;
 
-use App\Controller\BaseController;
+use App\Controller\AbstractBaseController;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/panel")
  * @IsGranted("ROLE_ADMIN")
  */
-class CategoryPanelController extends BaseController
+class CategoryPanelController extends AbstractBaseController
 {
     /**
      * @Route("/categories", name="panel.categories", methods="GET")

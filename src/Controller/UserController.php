@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/user/")
  */
-class UserController extends BaseController
+class UserController extends AbstractBaseController
 {
     /**
      * @Route("{slug}", name="user.profile", methods="GET")

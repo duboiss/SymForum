@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/forums")
  */
-class ReportController extends BaseController
+class ReportController extends AbstractBaseController
 {
     /**
      * @Route("/report/{id}", name="report.message", methods="POST")

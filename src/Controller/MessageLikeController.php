@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/forums")
  */
-class MessageLikeController extends BaseController
+class MessageLikeController extends AbstractBaseController
 {
     /**
      * @Route("/messages/{id}/like", name="message.like", methods="POST")

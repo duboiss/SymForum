@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/forums")
  */
-class ThreadController extends BaseController
+class ThreadController extends AbstractBaseController
 {
     /**
      * @Route("/threads/{slug}", name="thread.show", methods={"GET", "POST"})

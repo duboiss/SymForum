@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/forums")
  */
-class MessageController extends BaseController
+class MessageController extends AbstractBaseController
 {
     /**
      * @Route("/messages/{id}", name="message.show", methods="GET")

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Panel;
 
-use App\Controller\BaseController;
+use App\Controller\AbstractBaseController;
 use App\Entity\Report;
 use App\Repository\ReportRepository;
 use App\Service\ReportService;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/panel")
  */
-class ReportPanelController extends BaseController
+class ReportPanelController extends AbstractBaseController
 {
     /**
      * @Route("/reports", name="panel.reports", methods="GET")

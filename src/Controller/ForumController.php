@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/forums")
  */
-class ForumController extends BaseController
+class ForumController extends AbstractBaseController
 {
     /**
      * @Route("", name="forum.index", methods="GET")

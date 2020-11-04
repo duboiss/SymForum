@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Encoder\DecoderInterface;
 /**
  * @method User|null getUser()
  */
-abstract class BaseController extends AbstractController
+abstract class AbstractBaseController extends AbstractController
 {
     private FlashBagInterface $flashBag;
 
