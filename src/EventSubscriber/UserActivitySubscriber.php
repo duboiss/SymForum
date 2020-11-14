@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Security;
 
-class ActivitySubscriber implements EventSubscriberInterface
+class UserActivitySubscriber implements EventSubscriberInterface
 {
     private EntityManagerInterface $em;
 

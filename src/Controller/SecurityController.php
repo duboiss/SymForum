@@ -31,14 +31,4 @@ class SecurityController extends AbstractBaseController
     public function logout(): void
     {
     }
-
-    /**
-     * @Route("/logged-out", name="security.logged.out", methods="GET")
-     */
-    public function loggedOut(): Response
-    {
-        $this->addCustomFlash('success', 'Déconnexion', 'Vous êtes désormais déconnecté !');
-
-        return $this->redirectToRoute('forum.index');
-    }
 }
