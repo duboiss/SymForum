@@ -1,6 +1,5 @@
 {% extends 'layouts/modnav.html.twig' %}
 
-
 {% block title %}{{ forum.title }}{% endblock %}
 
 {% block modnav_elements %}
@@ -22,6 +21,8 @@
                         {% do append_breadcrumb(part.url, part.title) %}
                     {% endif %}
                 {% endfor %}
+
+                {{ include('partials/_breadcrumb.html.twig') }}
 
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">
