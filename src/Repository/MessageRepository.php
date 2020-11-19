@@ -7,10 +7,10 @@ use App\Entity\Message;
 use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\UnexpectedResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Message|null find($id, $lockMode = null, $lockVersion = null)

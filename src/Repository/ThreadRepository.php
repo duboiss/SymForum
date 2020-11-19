@@ -6,8 +6,8 @@ use App\Entity\Forum;
 use App\Entity\Thread;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Thread|null find($id, $lockMode = null, $lockVersion = null)
