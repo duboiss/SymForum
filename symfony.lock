@@ -65,13 +65,13 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "2.0",
-            "ref": "a9f2463b9f73efe74482f831f03a204a41328555"
+            "ref": "368794356c1fb634e58b38ad2addb36933f2e73e"
         },
         "files": [
-            "./config/packages/doctrine.yaml",
-            "./config/packages/prod/doctrine.yaml",
-            "./src/Entity/.gitignore",
-            "./src/Repository/.gitignore"
+            "config/packages/doctrine.yaml",
+            "config/packages/prod/doctrine.yaml",
+            "src/Entity/.gitignore",
+            "src/Repository/.gitignore"
         ]
     },
     "doctrine/doctrine-fixtures-bundle": {
@@ -119,9 +119,6 @@
     },
     "doctrine/persistence": {
         "version": "1.1.1"
-    },
-    "doctrine/reflection": {
-        "version": "v1.0.0"
     },
     "doctrine/sql-formatter": {
         "version": "1.1.0"
@@ -397,7 +394,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.1",
-            "ref": "6ee1194b036378b21884e7f57b6a2ac721167f16"
+            "ref": "5f0d0fd82ffa3580fe0ce8e3b2d18506ebf37a0e"
         },
         "files": [
             "config/packages/cache.yaml",

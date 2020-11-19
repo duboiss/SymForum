@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use App\Entity\Forum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Forum|null find($id, $lockMode = null, $lockVersion = null)
