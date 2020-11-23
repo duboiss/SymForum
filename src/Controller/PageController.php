@@ -8,10 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("", name="page.")
+ */
 class PageController extends AbstractBaseController
 {
     /**
-     * @Route("/", methods="GET")
+     * @Route("/", name="index", methods="GET")
      */
     public function index(): Response
     {
@@ -19,7 +22,7 @@ class PageController extends AbstractBaseController
     }
 
     /**
-     * @Route("/members", name="page.members", methods="GET")
+     * @Route("/members", name="members", methods="GET")
      */
     public function members(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -35,7 +38,7 @@ class PageController extends AbstractBaseController
     }
 
     /**
-     * @Route("/team", name="page.team", methods="GET")
+     * @Route("/team", name="team", methods="GET")
      */
     public function team(UserRepository $userRepository): Response
     {

@@ -77,7 +77,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     public function urlPublicProvider(): iterable
     {
         // Pages
-        yield 'page_forums' => ['/forums'];
+        yield 'page_forums' => ['/forums/'];
         yield 'page_members' => ['/members'];
         yield 'page_team' => ['/team'];
 
@@ -88,11 +88,11 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     public function urlRestrictedAdminProvider(): iterable
     {
         // Categories
-        yield 'panel_categories' => ['/panel/categories'];
+        yield 'panel_categories' => ['/panel/categories/'];
         yield 'panel_categories_add' => ['/panel/categories/add'];
 
         // Forums
-        yield 'panel_forums' => ['/panel/forums'];
+        yield 'panel_forums' => ['/panel/forums/'];
     }
 
     public function urlRestrictedModeratorProvider(): iterable
@@ -100,10 +100,10 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
         yield 'panel' => ['/panel'];
 
         // Reports
-        yield 'panel_reports' => ['/panel/reports'];
+        yield 'panel_reports' => ['/panel/reports/'];
 
         // Users
-        yield 'panel_users' => ['/panel/users'];
+        yield 'panel_users' => ['/panel/users/'];
     }
 
     public function urlRestrictedUserProvider(): iterable

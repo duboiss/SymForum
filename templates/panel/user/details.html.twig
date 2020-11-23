@@ -35,7 +35,7 @@
     </div>
 
     {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
-    {% do append_breadcrumb(path('panel.users'), 'Utilisateurs') %}
+    {% do append_breadcrumb(path('panel.user.index'), 'Utilisateurs') %}
     {% do set_active_label(user.pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}

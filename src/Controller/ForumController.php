@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ForumController extends AbstractBaseController
 {
     /**
-     * @Route("", name="forum.index", methods="GET")
+     * @Route("/", name="forum.index", methods="GET")
      *
      * @throws Exception
      */

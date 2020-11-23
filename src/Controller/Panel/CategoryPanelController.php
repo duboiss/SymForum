@@ -13,13 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/panel")
+ * @Route("/panel/categories", name="panel.category.")
  * @IsGranted("ROLE_ADMIN")
  */
 class CategoryPanelController extends AbstractBaseController
 {
     /**
-     * @Route("/categories", name="panel.categories", methods="GET")
+     * @Route("/", name="index", methods="GET")
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -29,9 +29,9 @@ class CategoryPanelController extends AbstractBaseController
     }
 
     /**
-     * @Route("/categories/add", name="panel.category.add", methods={"GET", "POST"})
+     * @Route("/add", name="add", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function add(Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
@@ -43,7 +43,7 @@ class CategoryPanelController extends AbstractBaseController
 
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a été ajoutée !');
 
-            return $this->redirectToRoute('panel.categories');
+            return $this->redirectToRoute('panel.category.index');
         }
 
         return $this->render('panel/category/new.html.twig', [
@@ -52,7 +52,7 @@ class CategoryPanelController extends AbstractBaseController
     }
 
     /**
-     * @Route("/categories/{id}/edit", name="panel.category.edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      */
     public function edit(Category $category, Request $request): Response
     {
@@ -64,7 +64,7 @@ class CategoryPanelController extends AbstractBaseController
 
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été modifiée !');
 
-            return $this->redirectToRoute('panel.categories');
+            return $this->redirectToRoute('panel.category.index');
         }
 
         return $this->render('panel/category/edit.html.twig', [
@@ -74,7 +74,7 @@ class CategoryPanelController extends AbstractBaseController
     }
 
     /**
-     * @Route("/categories/{id}/delete", name="panel.category.delete", methods="DELETE")
+     * @Route("/{id}/delete", name="delete", methods="DELETE")
      */
     public function delete(Category $category, EntityManagerInterface $em): Response
     {

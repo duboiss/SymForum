@@ -7,7 +7,7 @@ class PageControllerTest extends AbstractControllerTest
     public function testIndexRedirection(): void
     {
         self::$client->request('GET', '/');
-        self::assertResponseRedirects('/forums');
+        self::assertResponseRedirects('/forums/');
     }
 
     public function testDisplayMembers(): void

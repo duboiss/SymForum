@@ -10,13 +10,13 @@
 {% endblock %}
 
 {% block modnav_elements %}
-    {{ include('thread/modnav.html.twig') }}
+    {{ include('thread/_modnav.html.twig') }}
 {% endblock %}
 
 {% block body %}
     {{ parent() }}
 
-    {{ include('thread/modals.html.twig') }}
+    {{ include('thread/_modals.html.twig') }}
 
     {% if app.user %}
         <div class="toast-notification">

@@ -17,7 +17,7 @@ $modal.on('show.bs.modal', (event) => {
 
     // Modal customization
     $modal.find('.reportText').text('Signaler le message de ' + messageAuthor);
-    $modal.find('form').attr('action', '/forums/report/' + messageId);
+    $modal.find('form').attr('action', '/forums/reports/' + messageId);
 });
 
 $modal.on('shown.bs.modal', () => {

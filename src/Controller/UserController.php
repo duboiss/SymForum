@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/")
+ * @Route("/user", name="user.")
  */
 class UserController extends AbstractBaseController
 {
     /**
-     * @Route("{slug}", name="user.profile", methods="GET")
+     * @Route("/{slug}", name="profile", methods="GET")
      */
     public function profile(User $user, ThreadRepository $threadRepository, MessageRepository $messageRepository): Response
     {
@@ -28,7 +28,7 @@ class UserController extends AbstractBaseController
     }
 
     /**
-     * @Route("{slug}/threads", name="user.threads", methods="GET")
+     * @Route("/{slug}/threads", name="threads", methods="GET")
      */
     public function threads(User $user, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -45,7 +45,7 @@ class UserController extends AbstractBaseController
     }
 
     /**
-     * @Route("{slug}/messages", name="user.messages", methods="GET")
+     * @Route("/{slug}/messages", name="messages", methods="GET")
      */
     public function messages(User $user, MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {

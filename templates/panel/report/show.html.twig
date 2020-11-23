@@ -6,7 +6,7 @@
 
 {% block content %}
     {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
-    {% do append_breadcrumb(path('panel.reports'), 'Signalements') %}
+    {% do append_breadcrumb(path('panel.report.index'), 'Signalements') %}
     {% do set_active_label('Signalement de ' ~ reported_by_pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}

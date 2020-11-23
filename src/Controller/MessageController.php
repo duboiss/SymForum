@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/forums")
+ * @Route("/forums/messages", name="message.")
  */
 class MessageController extends AbstractBaseController
 {
     /**
-     * @Route("/messages/{id}", name="message.show", methods="GET")
+     * @Route("/{id}", name="show", methods="GET")
      */
     public function show(Message $message, ThreadService $threadService): Response
     {
@@ -32,7 +32,7 @@ class MessageController extends AbstractBaseController
     }
 
     /**
-     * @Route("/messages/{id}/edit", name="message.edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("EDIT", subject="message")
      *
      * @return RedirectResponse|Response
@@ -62,7 +62,7 @@ class MessageController extends AbstractBaseController
     }
 
     /**
-     * @Route("/messages/{id}/delete", name="message.delete", methods="GET")
+     * @Route("/{id}/delete", name="delete", methods="GET")
      * @IsGranted("DELETE", subject="message")
      */
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response

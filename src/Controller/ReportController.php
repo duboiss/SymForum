@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/forums")
+ * @Route("/forums/reports", name="report.")
  */
 class ReportController extends AbstractBaseController
 {
     /**
-     * @Route("/report/{id}", name="report.message", methods="POST")
+     * @Route("/{id}", name="message", methods="POST")
      * @IsGranted("REPORT", subject="message")
      */
     public function message(Message $message, Request $request, ReportService $reportService): Response

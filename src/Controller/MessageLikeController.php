@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/forums")
+ * @Route("/forums/messages", name="message.")
  */
 class MessageLikeController extends AbstractBaseController
 {
     /**
-     * @Route("/messages/{id}/like", name="message.like", methods="POST")
+     * @Route("/{id}/like", name="like", methods="POST")
      * @IsGranted("LIKE", subject="message")
      */
     public function like(Message $message, MessageLikeService $likeService, MessageLikeRepository $likeRepository): Response

@@ -4,7 +4,7 @@
 
 {% block content %}
     {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
-    {% do append_breadcrumb(path('panel.categories'), 'Catégories') %}
+    {% do append_breadcrumb(path('panel.category.index'), 'Catégories') %}
     {% do set_active_label('Modification') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}

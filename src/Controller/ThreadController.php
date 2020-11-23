@@ -20,12 +20,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/forums")
+ * @Route("/forums", name="thread.")
  */
 class ThreadController extends AbstractBaseController
 {
     /**
-     * @Route("/threads/{slug}", name="thread.show", methods={"GET", "POST"})
+     * @Route("/threads/{slug}", name="show", methods={"GET", "POST"})
      */
     public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator, OptionService $optionService): Response
     {
@@ -71,7 +71,7 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{slug}/new-thread", name="thread.new", methods={"GET", "POST"})
+     * @Route("/{slug}/new-thread", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_USER")
      */
     public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
@@ -110,7 +110,7 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/delete", name="thread.delete", methods="POST")
+     * @Route("/threads/{id}/delete", name="delete", methods="POST")
      * @IsGranted("DELETE", subject="thread")
      *
      * @throws Exception
@@ -133,7 +133,7 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/lock", name="thread.lock", methods="GET")
+     * @Route("/threads/{id}/lock", name="lock", methods="GET")
      * @IsGranted("LOCK", subject="thread")
      */
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
@@ -145,7 +145,7 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/unlock", name="thread.unlock", methods="GET")
+     * @Route("/threads/{id}/unlock", name="unlock", methods="GET")
      * @IsGranted("LOCK", subject="thread")
      */
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
@@ -157,7 +157,7 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/pin", name="thread.pin", methods="GET")
+     * @Route("/threads/{id}/pin", name="pin", methods="GET")
      * @IsGranted("PIN", subject="thread")
      */
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
@@ -169,7 +169,7 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/unpin", name="thread.unpin", methods="GET")
+     * @Route("/threads/{id}/unpin", name="unpin", methods="GET")
      * @IsGranted("PIN", subject="thread")
      */
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response

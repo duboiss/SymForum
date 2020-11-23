@@ -43,6 +43,6 @@ class SecurityControllerTest extends AbstractControllerTest
             'password' => 'demo',
         ]);
 
-        self::assertResponseRedirects('/forums');
+        self::assertResponseRedirects('/forums/');
     }
 }

@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/panel")
+ * @Route("/panel/users", name="panel.user.")
  */
 class UserPanelController extends AbstractBaseController
 {
     /**
-     * @Route("/users", name="panel.users", methods="GET")
+     * @Route("/", name="index", methods="GET")
      */
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -34,7 +34,7 @@ class UserPanelController extends AbstractBaseController
     }
 
     /**
-     * @Route("/users/{slug}", name="panel.user.details", methods="GET")
+     * @Route("/{slug}", name="details", methods="GET")
      */
     public function details(User $user): Response
     {
@@ -44,7 +44,7 @@ class UserPanelController extends AbstractBaseController
     }
 
     /**
-     * @Route("/users/{slug}/reset", name="panel.user.reset", methods="GET")
+     * @Route("/{slug}/reset", name="reset", methods="GET")
      */
     public function reset(User $user, UserService $userService): Response
     {
@@ -57,7 +57,7 @@ class UserPanelController extends AbstractBaseController
     }
 
     /**
-     * @Route("/users/{slug}/delete", name="panel.user.delete", methods="POST")
+     * @Route("/{slug}/delete", name="delete", methods="POST")
      *
      * @throws Exception
      */
@@ -70,7 +70,7 @@ class UserPanelController extends AbstractBaseController
 
             $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été supprimé !", $user->getPseudo()));
 
-            return $this->redirectToRoute('panel.users');
+            return $this->redirectToRoute('panel.user.index');
         }
 
         throw new Exception('Jeton CSRF invalide !');
