@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use App\Entity\User;
 use App\Tests\Controller\AbstractControllerTest;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,13 +10,10 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 {
     use FixturesTrait;
 
-    /** @var User[] */
-    private array $users = [];
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->users = $this->loadFixtureFiles([__DIR__ . '/Fixtures/users.yaml']);
+        $this->loadFixtureFiles([__DIR__ . '/Fixtures/users.yaml']);
     }
 
     /**
@@ -44,12 +40,13 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      */
     public function testAuthenticatedUserAccess(string $url): void
     {
-        $this->checkStatusUrl($url, 'user_demo', Response::HTTP_OK);
+        $this->checkStatusUrl($url, 'demo', Response::HTTP_OK);
     }
 
     private function checkStatusUrl(string $url, string $username, int $expectedStatus): void
     {
-        $this->logIn($this->users[$username]);
+        self::$client->loginUser($this->findUserByUsername($username));
+
         self::$client->request('GET', $url);
         self::assertResponseStatusCodeSame($expectedStatus);
     }
@@ -59,9 +56,9 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      */
     public function testAuthenticatedAdminAccess(string $url): void
     {
-        $this->checkStatusUrl($url, 'user_admin', Response::HTTP_OK);
-        $this->checkStatusUrl($url, 'user_moderator', Response::HTTP_FORBIDDEN);
-        $this->checkStatusUrl($url, 'user_demo', Response::HTTP_FORBIDDEN);
+        $this->checkStatusUrl($url, 'admin', Response::HTTP_OK);
+        $this->checkStatusUrl($url, 'moderator', Response::HTTP_FORBIDDEN);
+        $this->checkStatusUrl($url, 'demo', Response::HTTP_FORBIDDEN);
     }
 
     /**
@@ -69,9 +66,9 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
      */
     public function testAuthenticatedModeratorAccess(string $url): void
     {
-        $this->checkStatusUrl($url, 'user_admin', Response::HTTP_OK);
-        $this->checkStatusUrl($url, 'user_moderator', Response::HTTP_OK);
-        $this->checkStatusUrl($url, 'user_demo', Response::HTTP_FORBIDDEN);
+        $this->checkStatusUrl($url, 'admin', Response::HTTP_OK);
+        $this->checkStatusUrl($url, 'moderator', Response::HTTP_OK);
+        $this->checkStatusUrl($url, 'demo', Response::HTTP_FORBIDDEN);
     }
 
     public function urlPublicProvider(): iterable

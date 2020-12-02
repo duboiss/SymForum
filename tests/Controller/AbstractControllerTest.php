@@ -3,10 +3,9 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 abstract class AbstractControllerTest extends WebTestCase
 {
@@ -23,15 +22,8 @@ abstract class AbstractControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
     }
 
-    protected function logIn(User $user): void
-    {
-        $session = self::$client->getContainer()->get('session');
-        $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-
-        $session->set('_security_main', serialize($token));
-        $session->save();
-
-        $cookie = new Cookie($session->getName(), $session->getId());
-        self::$client->getCookieJar()->set($cookie);
+    protected function findUserByUsername(string $username): ?User {
+        $userRepository = static::$container->get(UserRepository::class);
+        return $userRepository->findOneBy(['pseudo' => $username]);
     }
 }

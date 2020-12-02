@@ -10,8 +10,7 @@ class UserControllerTest extends AbstractControllerTest
 
     private function logAsDemo(): void
     {
-        $users = $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
-        $this->logIn($users['user_demo']);
+        self::$client->loginUser($this->findUserByUsername('demo'));
     }
 
     public function testDisplayProfile(): void
