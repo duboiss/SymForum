@@ -22,7 +22,8 @@ abstract class AbstractControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
     }
 
-    protected function findUserByUsername(string $username): ?User {
+    protected function findUserByUsername(string $username): ?User
+    {
         $userRepository = static::$container->get(UserRepository::class);
         return $userRepository->findOneBy(['pseudo' => $username]);
     }
