@@ -23,7 +23,7 @@ The goal is to eventually make a bundle allowing any symfony developer to add a 
 ### Code Quality
 To get a quality code, SymForum uses:
 - Linters: including [PHPLint](https://github.com/php-parallel-lint/PHP-Parallel-Lint), [TwigCs](https://github.com/friendsoftwig/twigcs) and symfony linters (container, twig, xliff, yaml)
-- [PHPCs](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+- [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 - [PHPStan](https://github.com/phpstan/phpstan) (level 8)
 - [SymfonyInsight](https://insight.symfony.com/)
 
@@ -31,11 +31,8 @@ To get a quality code, SymForum uses:
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
-- PHP 7.4.4 (or higher) and [composer](https://getcomposer.org/)
-- MySQL 5.7
-- [Node.js](https://nodejs.org/en/) >= 12
-- [Yarn](https://yarnpkg.com/lang/en/)
-- [Symfony binary](https://github.com/symfony/cli) (optional)
+- [Docker & Docker Compose](https://www.docker.com/get-started)
+- [Make](https://www.gnu.org/software/make/): windows users go [here](http://gnuwin32.sourceforge.net/packages/make.htm)
 
 
 ### Installation
@@ -45,18 +42,20 @@ All steps are detailed in [INSTALLATION.md](INSTALLATION.md)
 ## Running the tests
 Create the SQLite database (located in /var folder) :
 ```sh
-$ php bin/console doctrine:database:create --env=test
+$ docker-compose exec php bin/console doctrine:database:create --env=test
 ```
+
 Use the following command to run tests :
 ```sh
-$ php bin/phpunit
+$ make tests
 ```
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Acknowledgment
-- Gux : OptionService, breadcrumb twig filter
+- Gux : OptionService, breadcrumb twig filter, help for docker
 - [Capuchon](https://github.com/rampinflorian) : prototypes testings and suggestions
 
 ## License

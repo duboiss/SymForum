@@ -1,11 +1,11 @@
 .DEFAULT_GOAL := help
 
-SYMFONY_BIN = symfony
-YARN = yarn
+PHP = docker-compose exec php
+YARN = docker run --rm -it -u '1000:1000' -v $(PWD):/app -w /app node:latest yarn
 
-COMPOSER = $(SYMFONY_BIN) composer
-SYMFONY = $(SYMFONY_BIN) console
-PHPUNIT = $(SYMFONY_BIN) php bin/phpunit
+COMPOSER = $(PHP) composer
+PHPUNIT = $(PHP) bin/phpunit
+SYMFONY = $(PHP) bin/console
 
 
 ##
@@ -29,7 +29,7 @@ db-validate: vendor ## Checks doctrine's mapping configurations are valid
 	@$(SYMFONY) doctrine:schema:validate --skip-sync -vvv --no-interaction
 
 fixtures: vendor ## Load fixtures - requires database with tables
-	@$(SYMFONY) d:f:l --no-interaction
+	@$(SYMFONY) doctrine:fixtures:load --no-interaction
 
 
 ##
@@ -86,8 +86,6 @@ vendor: composer.lock ## Install dependencies in /vendor folder
 
 install: db assets ## Install project dependencies
 
-start: install serve ## Install project dependencies and launch symfony web server
-
 update: vendor node_modules ## Update project dependencies
 	@$(COMPOSER) update
 	@$(YARN) upgrade
@@ -98,27 +96,13 @@ cache-clear: vendor ## Clear cache for current environment
 cache-warmup: vendor cache-clear ## Clear and warm up cache for current environment
 	@$(SYMFONY) cache:warmup
 
-ci: db-validate lint security tests ## Continuous integration
+ci: db-validate lint tests ## Continuous integration
 
 clean: purge ## Delete all dependencies
 	@rm -rf .env.local var vendor node_modules public/build
 	@echo -e "Var, vendor, node_modules and public/build folders have been deleted !"
 
-reset: unserve clean install
-
-
-##
-## Symfony bin
-.PHONY: serve unserve security
-
-serve: ## Run symfony web server in the background
-	@$(SYMFONY_BIN) serve --daemon --no-tls
-
-unserve: ## Stop symfony web server
-	@$(SYMFONY_BIN) server:stop
-
-security: vendor ## Check packages vulnerabilities (using composer.lock)
-	@$(SYMFONY_BIN) check:security
+reset: clean install
 
 
 ##

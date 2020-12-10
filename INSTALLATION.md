@@ -1,39 +1,23 @@
 ## Installation
-Clone project and move inside :
+### Step 1 - Download project
+Clone project and move inside.
 ```sh
 $ git clone https://github.com/DuboisS/symforum.git
 $ cd symforum
 ```
 
-### Step 1 - Dependencies
-Install PHP and Node.js dependencies :
+### Step 2 - Containers and volume
+Install docker containers and database volume.
+It may take a little time the first time (pull images).
 ```sh
-$ composer install
-$ yarn install
+$ docker-compose up -d
 ```
 
-### Step 2 - Database
-Configure database informations in .env file (or .env.local if you plan to contribute).
-
-Create database, update its schema and launch fixtures if you wish :
+### Step 3 - Project
+Install dependencies, database schema, fixtures and build assets.
 ```sh
-$ php bin/console doctrine:database:create --if-not-exists
-$ php bin/console doctrine:schema:update --force
-$ php bin/console doctrine:fixtures:load --no-interaction
+$ make install
 ```
 
-### Step 3 - Assets
-Build webpack encore assets :
-```sh
-$ yarn encore prod
-```
-
-
-## Usage
-Run server :
-```sh
-$ symfony serve
-$ // php -S localhost:8000 -t public
-```
-
-Enjoy !
+## Step 3 - Enjoy !
+Open `http://localhost` in your favorite browser.
