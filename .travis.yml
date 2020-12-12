@@ -5,31 +5,28 @@ language: php
 php:
     - 7.4
 
+services:
+    - docker
+
 cache:
     yarn: true
     directories:
-        - $HOME/.symfony
-        - $HOME/.composer/cache/files
         - ./bin/.phpunit
         - node_modules
 
 env:
+    - DOCKER_COMPOSE_VERSION=3.6
     global:
         - PATH="$HOME/.symfony/bin:$PATH"
 
 before_install:
-    - nvm install 12.0
-    - if symfony self:version; then symfony self:update --yes ; else wget https://get.symfony.com/cli/installer -O - | bash ; fi
+    - docker-compose up -d
 
 install:
-    - composer install
-    - ./bin/phpunit install
-    - yarn install
+    - make install
 
 before_script:
     - phpenv config-rm xdebug.ini
-    - yarn build
-    - symfony console doctrine:database:create --env=test
 
 script:
     - ./vendor/bin/phpstan analyse
