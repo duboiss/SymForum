@@ -1,12 +1,8 @@
 os: linux
-
 language: php
 
 php:
     - 7.4
-
-services:
-    - docker
 
 cache:
     yarn: true
@@ -15,11 +11,19 @@ cache:
         - node_modules
 
 env:
-    - DOCKER_COMPOSE_VERSION=3.6
-    global:
-        - PATH="$HOME/.symfony/bin:$PATH"
+    - DOCKER_COMPOSE_VERSION=1.27.4
 
 before_install:
+    - sudo apt-get -y remove docker docker-engine docker.io containerd runc
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    - sudo apt-get update
+    - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce docker-ce-cli containerd.io
+    - docker --version
+    - sudo rm /usr/local/bin/docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - chmod +x docker-compose
+    - sudo mv docker-compose /usr/local/bin
     - docker-compose up -d
 
 install:
@@ -29,6 +33,6 @@ before_script:
     - phpenv config-rm xdebug.ini
 
 script:
-    - ./vendor/bin/phpstan analyse
-    - ./vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi
+    - docker-compose exec php vendor/bin/phpstan analyse
+    - docker-compose exec php vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi
     - make ci
