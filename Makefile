@@ -59,7 +59,7 @@ yarn.lock: package.json
 	$(YARN) upgrade
 
 node_modules: yarn.lock ## Install yarn packages
-	@$(YARN)
+	@$(YARN) install
 
 assets: node_modules ## Run Webpack Encore to compile development assets
 	@$(YARN) dev
