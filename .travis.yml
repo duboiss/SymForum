@@ -34,6 +34,4 @@ before_script:
     - phpenv config-rm xdebug.ini
 
 script:
-    - docker-compose exec php vendor/bin/phpstan analyse
-    - docker-compose exec php vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi
     - make ci

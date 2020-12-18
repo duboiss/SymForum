@@ -82,7 +82,7 @@ vendor: composer.lock ## Install dependencies in /vendor folder
 
 ##
 ## Project
-.PHONY: install start update cache-clear cache-warmup ci clean reset
+.PHONY: install update cache-clear cache-warmup ci clean reset
 
 install: db assets ## Install project dependencies
 
@@ -96,7 +96,7 @@ cache-clear: vendor ## Clear cache for current environment
 cache-warmup: vendor cache-clear ## Clear and warm up cache for current environment
 	@$(SYMFONY) cache:warmup
 
-ci: db-validate lint tests ## Continuous integration
+ci: db-validate quality tests ## Continuous integration
 
 clean: purge ## Delete all dependencies
 	@rm -rf .env.local var vendor node_modules public/build
@@ -104,6 +104,23 @@ clean: purge ## Delete all dependencies
 
 reset: clean install
 
+##
+## Quality tools
+.PHONY: phpcsfixer-audit phpcsfixer-fix phpstan quality
+
+quality: lint phpcsfixer-audit phpstan twigcs ## Run linters and others quality tools
+
+phpcsfixer-audit: vendor ## Run php-cs-fixer audit
+	@$(PHP) ./vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi --verbose
+
+phpcsfixer-fix: vendor ## Run php-cs-fixer fix
+	@$(PHP) ./vendor/bin/php-cs-fixer fix --verbose
+
+phpstan: vendor ## Run phpstan
+	@$(PHP) ./vendor/bin/phpstan analyse
+
+twigcs: vendor ## Run twigcs
+	@$(PHP) ./vendor/bin/twigcs templates
 
 ##
 ## Tests
