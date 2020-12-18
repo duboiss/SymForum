@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 
-PHP = docker-compose exec php
-YARN = docker run --rm -it -u '1000:1000' -v $(PWD):/app -w /app node:latest yarn
+PHP = docker-compose exec -T php
+YARN = docker run --rm -v $(PWD):/app -w /app node:latest yarn
 
 COMPOSER = $(PHP) composer
 PHPUNIT = $(PHP) bin/phpunit
@@ -77,7 +77,7 @@ composer.lock: composer.json
 	@$(COMPOSER) update
 
 vendor: composer.lock ## Install dependencies in /vendor folder
-	@$(COMPOSER) install
+	@$(COMPOSER) install --no-progress
 
 
 ##

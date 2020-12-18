@@ -1,8 +1,7 @@
 # SymForum
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img alt="License MIT badge" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
-<a href="https://travis-ci.org/github/DuboisS/SymForum"><img alt="Travis (.org) branch badge" src="https://img.shields.io/travis/DuboisS/SymForum/master"></a>
-<img alt="PHP from Travis config badge" src="https://img.shields.io/travis/php-v/DuboisS/SymForum">
+<a href="https://github.com/DuboisS/SymForum/actions"><img alt="CI badge" src="https://github.com/DuboisS/SymForum/workflows/CI/badge.svg"></a>
 <a href="https://insight.symfony.com/projects/2235e118-e5e6-46bf-867e-7b47ed212430"><img alt="Symfony Insight badge" src="https://insight.symfony.com/projects/2235e118-e5e6-46bf-867e-7b47ed212430/mini.svg"></a>
 </p>
 
