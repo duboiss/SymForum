@@ -1,4 +1,5 @@
 php_version: 7.4.3
+
 rules:
     composer.invalid_file:
         enabled: false
@@ -6,3 +7,9 @@ rules:
         enabled: false
     web.missing_robots_txt:
         enabled: false
+
+global_exclude_dirs:
+    - public
+
+exclude_patterns:
+    - docker-compose.yml
