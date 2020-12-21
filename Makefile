@@ -36,7 +36,8 @@ fixtures: vendor ## Load fixtures - requires database with tables
 ## Linting
 .PHONY: lint lint-container lint-twig lint-xliff lint-yaml
 
-lint: vendor lint-container lint-twig lint-xliff lint-yaml ## Run all lint commands
+lint: vendor ## Run all lint commands
+	make -j lint-container lint-twig lint-xliff lint-yaml
 
 lint-container: vendor ## Checks the services defined in the container
 	@$(SYMFONY) lint:container
@@ -73,6 +74,11 @@ watch: node_modules ## Recompile assets automatically when files change
 
 ##
 ## PHP
+.PHONY: php
+
+php: ## Exec PHP container
+	@docker-compose exec php sh
+
 composer.lock: composer.json
 	@$(COMPOSER) update
 
@@ -100,15 +106,17 @@ ci: db-validate quality tests ## Continuous integration
 
 clean: purge ## Delete all dependencies
 	@rm -rf .env.local var vendor node_modules public/build
-	@echo -e "Var, vendor, node_modules and public/build folders have been deleted !"
+	@echo "Var, vendor, node_modules and public/build folders have been deleted !"
 
 reset: clean install
 
+
 ##
 ## Quality tools
-.PHONY: phpcsfixer-audit phpcsfixer-fix phpstan quality
+.PHONY: quality phpcsfixer-audit phpcsfixer-fix phpstan twigcs
 
-quality: lint phpcsfixer-audit phpstan twigcs ## Run linters and others quality tools
+quality: ## Run linters and others quality tools
+	make -j lint phpcsfixer-audit phpstan twigcs
 
 phpcsfixer-audit: vendor ## Run php-cs-fixer audit
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi --verbose
@@ -117,10 +125,11 @@ phpcsfixer-fix: vendor ## Run php-cs-fixer fix
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --verbose
 
 phpstan: vendor ## Run phpstan
-	@$(PHP) ./vendor/bin/phpstan analyse
+	@$(PHP) ./vendor/bin/phpstan analyse --no-progress --xdebug
 
 twigcs: vendor ## Run twigcs
 	@$(PHP) ./vendor/bin/twigcs templates
+
 
 ##
 ## Tests
@@ -136,7 +145,7 @@ tests: vendor ## Run tests
 
 purge: ## Purge cache and logs
 	@rm -rf var/cache/* var/log/*
-	@echo -e "Cache and logs have been deleted !"
+	@echo "Cache and logs have been deleted !"
 
 
 ##
