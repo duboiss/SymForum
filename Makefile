@@ -36,7 +36,8 @@ fixtures: vendor ## Load fixtures - requires database with tables
 ## Linting
 .PHONY: lint lint-container lint-twig lint-xliff lint-yaml
 
-lint: vendor lint-container lint-twig lint-xliff lint-yaml ## Run all lint commands
+lint: vendor ## Run all lint commands
+	make -j lint-container lint-twig lint-xliff lint-yaml
 
 lint-container: vendor ## Checks the services defined in the container
 	@$(SYMFONY) lint:container
@@ -73,6 +74,9 @@ watch: node_modules ## Recompile assets automatically when files change
 
 ##
 ## PHP
+php: ## Exec PHP container
+	docker-compose exec php sh
+
 composer.lock: composer.json
 	@$(COMPOSER) update
 
@@ -108,7 +112,8 @@ reset: clean install
 ## Quality tools
 .PHONY: phpcsfixer-audit phpcsfixer-fix phpstan quality
 
-quality: lint phpcsfixer-audit phpstan twigcs ## Run linters and others quality tools
+quality: ## Run linters and others quality tools
+	make -j lint phpcsfixer-audit phpstan twigcs
 
 phpcsfixer-audit: vendor ## Run php-cs-fixer audit
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi --verbose
@@ -117,7 +122,7 @@ phpcsfixer-fix: vendor ## Run php-cs-fixer fix
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --verbose
 
 phpstan: vendor ## Run phpstan
-	@$(PHP) ./vendor/bin/phpstan analyse
+	@$(PHP) ./vendor/bin/phpstan analyse --no-progress --xdebug
 
 twigcs: vendor ## Run twigcs
 	@$(PHP) ./vendor/bin/twigcs templates
