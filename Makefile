@@ -57,7 +57,7 @@ lint-yaml: vendor ## Check yaml syntax in /config and /translations folders
 .PHONY: assets build watch
 
 yarn.lock: package.json
-	$(YARN) upgrade
+	@$(YARN) upgrade
 
 node_modules: yarn.lock ## Install yarn packages
 	@$(YARN) install
@@ -108,7 +108,7 @@ clean: purge ## Delete all dependencies
 	@rm -rf .env.local var vendor node_modules public/build
 	@echo "Var, vendor, node_modules and public/build folders have been deleted !"
 
-reset: clean install
+reset: clean install ## Reset project
 
 
 ##
