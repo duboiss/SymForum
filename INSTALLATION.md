@@ -20,4 +20,4 @@ $ make install
 ```
 
 ## Step 3 - Enjoy !
-Open `http://localhost` in your favorite browser.
+Open `https://symforum.localhost` in your favorite browser.

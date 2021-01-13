@@ -1,15 +1,20 @@
 version: '3.6'
 
 services:
-  nginx:
-    image: nginx:alpine
-    container_name: symforum_nginx
+  caddy:
+    image: caddy:2
+    container_name: symforum_caddy
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-symforum.localhost, caddy:80}
     ports:
       - 80:80
+      - 443:443
     working_dir: /var/www/html
     volumes:
-      - ./:/var/www/html:rw,cached
-      - ./docker/nginx/symfony.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./public:/var/www/html/public:ro
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - php
 
@@ -37,4 +42,6 @@ services:
       - database_data:/var/lib/mysql
 
 volumes:
+  caddy_data:
+  caddy_config:
   database_data:
