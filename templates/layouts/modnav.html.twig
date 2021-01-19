@@ -8,6 +8,14 @@
     {% endif %}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        {{ encore_entry_script_tags('modnav') }}
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     {% if is_granted('ROLE_MODERATOR') %}
         <div class="mod_nav">
@@ -15,13 +23,5 @@
                 {% block modnav_elements %}{% endblock %}
             </ul>
         </div>
-    {% endif %}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% if is_granted('ROLE_MODERATOR') %}
-        {{ encore_entry_script_tags('modnav') }}
     {% endif %}
 {% endblock %}

@@ -7,15 +7,15 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </head>
     <body>
         {{ include('partials/_navigation.html.twig') }}
         {{ include('partials/_flash_messages.html.twig') }}
 
         {% block body %}{% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </body>
 </html>

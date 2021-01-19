@@ -9,6 +9,16 @@
     {% endif %}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.user %}
+        {{ encore_entry_script_tags('messageCard') }}
+        {% if not thread.lock %}
+            {{ encore_entry_script_tags('ckeditor') }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
 {% block modnav_elements %}
     {{ include('thread/_modnav.html.twig') }}
 {% endblock %}
@@ -78,14 +88,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {% if app.user %}
-        {{ encore_entry_script_tags('messageCard') }}
-        {% if not thread.lock %}
-            {{ encore_entry_script_tags('ckeditor') }}
-        {% endif %}
-    {% endif %}
 {% endblock %}

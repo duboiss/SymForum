@@ -7,6 +7,11 @@
     {{ encore_entry_link_tags('ckeditor') }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('ckeditor') }}
+{% endblock %}
+
 {% block content %}
     {% do append_breadcrumb(path('forum.index'), 'Forums') %}
     {% for part in forum|breadcrumb %}
@@ -40,9 +45,4 @@
         {{ form_end(form) }}
 
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('ckeditor') }}
 {% endblock %}

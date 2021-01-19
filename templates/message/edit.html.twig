@@ -7,6 +7,11 @@
     {{ encore_entry_link_tags('ckeditor') }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('ckeditor') }}
+{% endblock %}
+
 {% block content %}
     {% do append_breadcrumb(path('forum.index'), 'Forums') %}
 
@@ -24,9 +29,4 @@
         <p class="text-center">Sujet {{ message.thread.title }}</p>
         {{ include('partials/_simple_form.twig', {button_label: 'Modifier'}) }}
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('ckeditor') }}
 {% endblock %}
