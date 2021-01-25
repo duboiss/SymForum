@@ -3,14 +3,14 @@
 {% block title %}Catégories{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
     {% do set_active_label('Catégories') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>
         <span>Catégories</span>
-        <a class="btn btn-primary btn-sm" href="{{ path('panel.category.add') }}" title="Ajouter">
+        <a class="btn btn-primary btn-sm" href="{{ path('admin.category.add') }}" title="Ajouter">
             <i class="fas fa-plus"></i>
         </a>
     </h1>
@@ -32,11 +32,11 @@
                     <td class="col-2">{{ category.position }}</td>
                     <td class="col-8">{{ category.title }}</td>
                     <td class="col-2">
-                        <a class="btn btn-primary btn-sm" href="{{ path('panel.category.edit', {'id': category.id}) }}" title="Modifier">
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.category.edit', {'id': category.id}) }}" title="Modifier">
                             <i class="fas fa-edit"></i>
                         </a>
                         -
-                        <button class="btn btn-danger btn-sm js-delete-button" data-delete-url="{{ path('panel.category.delete', {'id': category.id}) }}" title="Supprimer">
+                        <button class="btn btn-danger btn-sm js-delete-button" data-delete-url="{{ path('admin.category.delete', {'id': category.id}) }}" title="Supprimer">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>

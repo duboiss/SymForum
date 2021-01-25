@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Panel;
+namespace App\Controller\Admin;
 
 use App\Controller\AbstractBaseController;
 use App\Entity\Category;
@@ -13,17 +13,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/panel/categories", name="panel.category.")
+ * @Route("/admin/categories", name="admin.category.")
  * @IsGranted("ROLE_ADMIN")
  */
-class CategoryPanelController extends AbstractBaseController
+class CategoryAdminController extends AbstractBaseController
 {
     /**
      * @Route("/", name="index", methods="GET")
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        return $this->render('panel/category/index.html.twig', [
+        return $this->render('admin/category/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
         ]);
     }
@@ -43,10 +43,10 @@ class CategoryPanelController extends AbstractBaseController
 
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a été ajoutée !');
 
-            return $this->redirectToRoute('panel.category.index');
+            return $this->redirectToRoute('admin.category.index');
         }
 
-        return $this->render('panel/category/new.html.twig', [
+        return $this->render('admin/category/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -64,10 +64,10 @@ class CategoryPanelController extends AbstractBaseController
 
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été modifiée !');
 
-            return $this->redirectToRoute('panel.category.index');
+            return $this->redirectToRoute('admin.category.index');
         }
 
-        return $this->render('panel/category/edit.html.twig', [
+        return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Panel;
+namespace App\Controller\Admin;
 
 use App\Controller\AbstractBaseController;
 use App\Entity\User;
@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/panel/users", name="panel.user.")
+ * @Route("/admin/users", name="admin.user.")
  */
-class UserPanelController extends AbstractBaseController
+class UserAdminController extends AbstractBaseController
 {
     /**
      * @Route("/", name="index", methods="GET")
@@ -28,7 +28,7 @@ class UserPanelController extends AbstractBaseController
             30
         );
 
-        return $this->render('panel/user/index.html.twig', [
+        return $this->render('admin/user/index.html.twig', [
             'pagination' => $pagination,
         ]);
     }
@@ -38,7 +38,7 @@ class UserPanelController extends AbstractBaseController
      */
     public function details(User $user): Response
     {
-        return $this->render('panel/user/details.html.twig', [
+        return $this->render('admin/user/details.html.twig', [
             'user' => $user,
         ]);
     }
@@ -51,7 +51,7 @@ class UserPanelController extends AbstractBaseController
         $userService->resetUser($user);
         $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été remis à zéro !", $user->getPseudo()));
 
-        return $this->redirectToRoute('panel.user.details', [
+        return $this->redirectToRoute('admin.user.details', [
             'slug' => $user->getSlug(),
         ]);
     }
@@ -70,7 +70,7 @@ class UserPanelController extends AbstractBaseController
 
             $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été supprimé !", $user->getPseudo()));
 
-            return $this->redirectToRoute('panel.user.index');
+            return $this->redirectToRoute('admin.user.index');
         }
 
         throw new Exception('Jeton CSRF invalide !');

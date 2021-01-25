@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Panel;
+namespace App\Controller\Admin;
 
 use App\Controller\AbstractBaseController;
 use App\Repository\ForumRepository;
@@ -9,17 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/panel/forums", name="panel.forum.")
+ * @Route("/admin/forums", name="admin.forum.")
  * @IsGranted("ROLE_ADMIN")
  */
-class ForumPanelController extends AbstractBaseController
+class ForumAdminController extends AbstractBaseController
 {
     /**
      * @Route("/", name="index", methods="GET")
      */
     public function index(ForumRepository $forumRepository): Response
     {
-        return $this->render('panel/forum/index.html.twig', [
+        return $this->render('admin/forum/index.html.twig', [
             'forums' => $forumRepository->findForumsWithCategories(),
         ]);
     }

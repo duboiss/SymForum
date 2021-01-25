@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Panel;
+namespace App\Controller\Admin;
 
 use App\Controller\AbstractBaseController;
 use App\Entity\Report;
@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/panel/reports", name="panel.report.")
+ * @Route("/admin/reports", name="admin.report.")
  */
-class ReportPanelController extends AbstractBaseController
+class ReportAdminController extends AbstractBaseController
 {
     /**
      * @Route("/", name="index", methods="GET")
@@ -27,7 +27,7 @@ class ReportPanelController extends AbstractBaseController
             25
         );
 
-        return $this->render('panel/report/index.html.twig', [
+        return $this->render('admin/report/index.html.twig', [
             'pagination' => $pagination,
             'nbUntreatedReports' => $reportRepository->countUntreatedReports(),
         ]);
@@ -38,7 +38,7 @@ class ReportPanelController extends AbstractBaseController
      */
     public function show(Report $report, ReportRepository $reportRepository): Response
     {
-        return $this->render('panel/report/show.html.twig', [
+        return $this->render('admin/report/show.html.twig', [
             'report' => $report,
             'messageReports' => $reportRepository->findByMessage($report->getMessage(), $report),
         ]);
@@ -52,7 +52,7 @@ class ReportPanelController extends AbstractBaseController
         $reportService->deleteReport($report);
         $this->addCustomFlash('success', 'Signalement', 'Le signalement a été supprimé !');
 
-        return $this->redirectToRoute('panel.report.index');
+        return $this->redirectToRoute('admin.report.index');
     }
 
     /**
@@ -63,6 +63,6 @@ class ReportPanelController extends AbstractBaseController
         $reportService->closeReport($report);
         $this->addCustomFlash('success', 'Signalement', 'Le signalement a été clôturé !');
 
-        return $this->redirectToRoute('panel.report.index');
+        return $this->redirectToRoute('admin.report.index');
     }
 }

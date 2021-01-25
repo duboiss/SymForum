@@ -6,7 +6,7 @@
     <div class="modal fade" id="deleteModal">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action="{{ path('panel.user.delete', {'slug': user.slug}) }}" method="POST">
+                <form action="{{ path('admin.user.delete', {'slug': user.slug}) }}" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title">Confirmation de suppression</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -34,15 +34,15 @@
         </div>
     </div>
 
-    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
-    {% do append_breadcrumb(path('panel.user.index'), 'Utilisateurs') %}
+    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
+    {% do append_breadcrumb(path('admin.user.index'), 'Utilisateurs') %}
     {% do set_active_label(user.pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>
         <span>{{ user }}</span>
-        <a class="btn btn-warning btn-sm js-submit-link" href="{{ path('panel.user.reset', {'slug': user.slug}) }}"><i
+        <a class="btn btn-warning btn-sm js-submit-link" href="{{ path('admin.user.reset', {'slug': user.slug}) }}"><i
                     class="fas fa-undo"></i> Remettre à zéro</a>
         <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#deleteModal"><i
                     class="fas fa-trash"></i> Supprimer</a>

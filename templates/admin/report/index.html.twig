@@ -3,7 +3,7 @@
 {% block title %}Signalements{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
     {% do set_active_label('Signalements') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
@@ -30,7 +30,7 @@
                     <td>{{ report.createdAt|format_datetime }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
                     <td>{{ report.reason|u.truncate(45, '...', false) }}</td>
-                    <td><a href="{{ path('panel.report.show', {'id': report.id}) }}">Détails</a></td>
+                    <td><a href="{{ path('admin.report.show', {'id': report.id}) }}">Détails</a></td>
                 </tr>
             {% endfor %}
             </tbody>

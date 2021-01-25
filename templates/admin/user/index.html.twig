@@ -3,7 +3,7 @@
 {% block title %}Utilisateurs{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('panel.homepage'), 'Panel') %}
+    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
     {% do set_active_label('Utilisateurs') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
@@ -30,7 +30,7 @@
                     <td>{{ user_profile_link(user) }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.lastActivityAt ? user.lastActivityAt|format_datetime('short') : 'Jamais' }}</td>
-                    <td><a href="{{ path('panel.user.details', {'slug': user.slug}) }}">Détails</a></td>
+                    <td><a href="{{ path('admin.user.details', {'slug': user.slug}) }}">Détails</a></td>
                 </tr>
             {% endfor %}
             </tbody>
