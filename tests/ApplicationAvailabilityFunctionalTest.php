@@ -85,22 +85,22 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     public function urlRestrictedAdminProvider(): iterable
     {
         // Categories
-        yield 'panel_categories' => ['/panel/categories/'];
-        yield 'panel_categories_add' => ['/panel/categories/add'];
+        yield 'admin_categories' => ['/admin/categories/'];
+        yield 'admin_categories_add' => ['/admin/categories/add'];
 
         // Forums
-        yield 'panel_forums' => ['/panel/forums/'];
+        yield 'admin_forums' => ['/admin/forums/'];
     }
 
     public function urlRestrictedModeratorProvider(): iterable
     {
-        yield 'panel' => ['/panel'];
+        yield 'admin' => ['/admin'];
 
         // Reports
-        yield 'panel_reports' => ['/panel/reports/'];
+        yield 'admin_reports' => ['/admin/reports/'];
 
         // Users
-        yield 'panel_users' => ['/panel/users/'];
+        yield 'admin_users' => ['/admin/users/'];
     }
 
     public function urlRestrictedUserProvider(): iterable
