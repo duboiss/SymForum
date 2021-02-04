@@ -7,7 +7,7 @@ ClassicEditor
     .create(document.querySelector('.editor'), {
         language: 'fr',
         mediaEmbed: {
-            previewsInData: true
+            previewsInData: true,
         },
-        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo']
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
     });

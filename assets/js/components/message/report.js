@@ -6,18 +6,19 @@ const reportSubmitBtn = document.getElementById('js-report-button');
 const errorMessage = document.querySelector('.error-message');
 const $toastReport = $('#toastHide-report');
 
-let messageAuthor, messageId, responseMessage;
+let messageAuthor; let messageId; let
+    responseMessage;
 
 $modal.on('show.bs.modal', (event) => {
-    let button = $(event.relatedTarget); // Button that triggered the modal
+    const button = $(event.relatedTarget); // Button that triggered the modal
 
     // Extract info from data-* attributes
     messageAuthor = button.data('author');
     messageId = button.data('message');
 
     // Modal customization
-    $modal.find('.reportText').text('Signaler le message de ' + messageAuthor);
-    $modal.find('form').attr('action', '/forums/reports/' + messageId);
+    $modal.find('.reportText').text(`Signaler le message de ${messageAuthor}`);
+    $modal.find('form').attr('action', `/forums/reports/${messageId}`);
 });
 
 $modal.on('shown.bs.modal', () => {
@@ -32,14 +33,14 @@ $modal.on('hidden.bs.modal', () => {
 reportSubmitBtn.addEventListener('click', (e) => {
     e.preventDefault();
 
-    let url = $modal.find('form').attr('action');
-    let reason = $modal.find($reasonTextarea).val();
+    const url = $modal.find('form').attr('action');
+    const reason = $modal.find($reasonTextarea).val();
 
     $.ajax({
         method: 'POST',
         url,
-        data: JSON.stringify({reason}),
-        dataType: 'json'
+        data: JSON.stringify({ reason }),
+        dataType: 'json',
     }).done((response) => {
         responseMessage = response.message;
         $toastReport.find('.toast-body').text(responseMessage);

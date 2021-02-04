@@ -21,7 +21,7 @@ The goal is to eventually make a bundle allowing any symfony developer to add a 
 
 ### Code Quality
 To get a quality code, SymForum uses:
-- Linters: including [PHPLint](https://github.com/php-parallel-lint/PHP-Parallel-Lint), [TwigCs](https://github.com/friendsoftwig/twigcs) and symfony linters (container, twig, xliff, yaml)
+- Linters: including [PHPLint](https://github.com/php-parallel-lint/PHP-Parallel-Lint), [TwigCs](https://github.com/friendsoftwig/twigcs), [ESLint](https://eslint.org/) and symfony linters (container, twig, xliff, yaml)
 - [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
 - [PHPStan](https://github.com/phpstan/phpstan) (level 8)
 - [SymfonyInsight](https://insight.symfony.com/)

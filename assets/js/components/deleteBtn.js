@@ -3,13 +3,14 @@ import $ from 'jquery';
 document.querySelectorAll('.js-delete-button').forEach((btn) => btn.addEventListener('click', () => {
     if (!confirm('Etes-vous certain de vouloir faire cela ?')) return;
 
-    let alert, type, message;
-    let url = btn.dataset.deleteUrl;
-    let $row = $(this).closest('tr');
+    let alert; let type; let
+        message;
+    const url = btn.dataset.deleteUrl;
+    const $row = $(this).closest('tr');
 
     $.ajax({
         type: 'DELETE',
-        url: url
+        url,
     }).done((response) => {
         type = 'success';
         message = response.message;
@@ -20,7 +21,7 @@ document.querySelectorAll('.js-delete-button').forEach((btn) => btn.addEventList
         type = 'danger';
         message = error.responseJSON.message;
     }).always(() => {
-        alert = '<div class="alert alert-dismissible alert-' + type + '"><button type="button" class="close" data-dismiss="alert">&times;</button>' + message + '</div>';
+        alert = `<div class="alert alert-dismissible alert-${type}"><button type="button" class="close" data-dismiss="alert">&times;</button>${message}</div>`;
         $('.messages').append(alert).hide().fadeIn('normal');
     });
 }));

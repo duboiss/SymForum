@@ -113,10 +113,16 @@ reset: clean install ## Reset project
 
 ##
 ## Quality tools
-.PHONY: quality phpcsfixer-audit phpcsfixer-fix phpstan twigcs
+.PHONY: quality eslint-fix phpcsfixer-audit phpcsfixer-fix phpstan twigcs
 
 quality: ## Run linters and others quality tools
 	make -j lint phpcsfixer-audit phpstan twigcs
+
+eslint-audit: node_modules
+	@$(YARN) run eslint assets --quiet
+
+eslint-fix: node_modules
+	@$(YARN) run eslint assets --quiet --fix
 
 phpcsfixer-audit: vendor ## Run php-cs-fixer audit
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --diff --diff-format=udiff --dry-run --no-interaction --ansi --verbose

@@ -1,18 +1,29 @@
 import $ from 'jquery';
 
+function toggleIcone(icone) {
+    if (icone.classList.contains('far')) {
+        icone.classList.replace('far', 'fas');
+    } else {
+        icone.classList.replace('fas', 'far');
+    }
+}
+
 document.querySelectorAll('.js-message-like').forEach((el) => el.addEventListener('click', (e) => {
     e.preventDefault();
 
-    let url = el.href;
-    let icone = el.querySelector('i');
-    let spanCount = el.querySelector('span.js-message-count-likes');
+    const url = el.href;
+    const icone = el.querySelector('i');
+    const spanCount = el.querySelector('span.js-message-count-likes');
 
     $.ajax({
         method: 'POST',
-        url
+        url,
     }).done((response) => {
-        let text;
-        response !== 0 ? text = response.toString() : text = '';
+        let text = '';
+
+        if (response !== 0) {
+            text = response.toString();
+        }
 
         toggleIcone(icone);
         spanCount.textContent = text;
@@ -20,12 +31,3 @@ document.querySelectorAll('.js-message-like').forEach((el) => el.addEventListene
         window.alert('Une erreur est survenue ! Essayez d\'actualiser.');
     });
 }));
-
-function toggleIcone(icone) {
-    if (icone.classList.contains('far')) {
-        icone.classList.replace('far', 'fas');
-    }
-    else {
-        icone.classList.replace('fas', 'far');
-    }
-}

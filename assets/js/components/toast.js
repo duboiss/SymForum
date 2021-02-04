@@ -1,5 +1,5 @@
 import $ from 'jquery';
 
-for (let el of document.querySelectorAll('*[id^="toast-"]')) {
-    $("#" + el.id).toast('show');
+for (const el of document.querySelectorAll('*[id^="toast-"]')) {
+    $(`#${el.id}`).toast('show');
 }
