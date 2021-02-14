@@ -42,9 +42,8 @@ class UserActivitySubscriber implements EventSubscriberInterface
             $nbOnlineUsers = $this->userRepository->countOnlineUsers();
 
             if ($nbOnlineUsers > $maxOnlineUsers) {
-                $currentDate = date('d-m-Y à H:i:s');
                 $this->optionService->set('max_online_users', (string) $nbOnlineUsers);
-                $this->optionService->set('max_online_users_date', $currentDate);
+                $this->optionService->set('max_online_users_date', date('d-m-Y à H:i:s'));
             }
         }
     }

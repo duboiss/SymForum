@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Message;
 use App\Entity\MessageLike;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,5 +19,10 @@ class MessageLikeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, MessageLike::class);
+    }
+
+    public function findMessageLikeByUser(Message $message, User $user): ?MessageLike
+    {
+        return $this->findOneBy(['message' => $message, 'user' => $user]);
     }
 }

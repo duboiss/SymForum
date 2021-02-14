@@ -8,12 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class OptionService
 {
+    /** @var CoreOption[] */
+    private array $cache = [];
+
     private EntityManagerInterface $em;
 
     private CoreOptionRepository $coreOptionRepository;
-
-    /** @var CoreOption[] */
-    private array $cache = [];
 
     public function __construct(EntityManagerInterface $em, CoreOptionRepository $coreOptionRepository)
     {
@@ -21,7 +21,7 @@ class OptionService
         $this->coreOptionRepository = $coreOptionRepository;
     }
 
-    public function get(string $optionName, ?string $default = null): ?string
+    public function get(string $optionName, string $default = null): ?string
     {
         return ($option = $this->getEntity($optionName)) ? $option->getValue() : $default;
     }
@@ -36,7 +36,6 @@ class OptionService
         }
 
         $option->setValue($value);
-
         $this->em->persist($option);
 
         if ($flush) {
@@ -47,8 +46,7 @@ class OptionService
     private function getEntity(string $optionName): ?CoreOption
     {
         if (!isset($this->cache[$optionName])) {
-            $option = $this->coreOptionRepository->findOneBy(['name' => $optionName]);
-            if ($option) {
+            if ($option = $this->coreOptionRepository->findCoreOptionByName($optionName)) {
                 $this->cache[$optionName] = $option;
             } else {
                 return null;

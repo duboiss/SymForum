@@ -26,7 +26,7 @@ class MessageController extends AbstractBaseController
     {
         return $this->redirectToRoute('thread.show', [
             'slug' => $message->getThread()->getSlug(),
-            'page' => $threadService->getPageOfMessage($message),
+            'page' => $threadService->getMessagePage($message),
             '_fragment' => $message->getId(),
         ]);
     }

@@ -135,7 +135,7 @@ class ThreadService
         }
     }
 
-    public function getPageOfMessage(Message $message): int
+    public function getMessagePage(Message $message): int
     {
         $messages = $this->messageRepository->findMessagesByThread($message->getThread(), true);
         $key = array_search($message->getId(), $messages, true);

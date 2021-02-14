@@ -29,9 +29,7 @@ class MessageLikeService
         /** @var User $user */
         $user = $this->security->getUser();
 
-        $like = $this->likeRepository->findOneBy(['message' => $message, 'user' => $user]);
-
-        if ($like) {
+        if ($like = $this->likeRepository->findMessageLikeByUser($message, $user)) {
             $this->em->remove($like);
         } else {
             $messageLike = (new MessageLike())

@@ -18,4 +18,9 @@ class CoreOptionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CoreOption::class);
     }
+
+    public function findCoreOptionByName(string $name): ?CoreOption
+    {
+        return $this->findOneBy(['name' => $name]);
+    }
 }
