@@ -26,8 +26,7 @@ security:
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 604800 # 7 days in seconds
-                path:     /
-                secure: false
+                secure: true
 
             logout:
                 invalidate_session: false
