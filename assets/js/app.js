@@ -6,3 +6,6 @@ import 'bootstrap';
 import './components/deleteBtn';
 import './components/submitBtn';
 import './components/toast';
+
+// start the Stimulus application
+// import './bootstrap';

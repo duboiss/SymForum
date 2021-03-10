@@ -68,7 +68,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "2.0",
-            "ref": "368794356c1fb634e58b38ad2addb36933f2e73e"
+            "ref": "40631978d2c4adc9b11220b13eba539b727c36a8"
         },
         "files": [
             "config/packages/doctrine.yaml",
@@ -141,6 +141,9 @@
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
     },
+    "fakerphp/faker": {
+        "version": "v1.13.0"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.16",
         "recipe": {
@@ -158,9 +161,6 @@
     },
     "friendsoftwig/twigcs": {
         "version": "v4.0-beta4"
-    },
-    "fzaninotto/faker": {
-        "version": "v1.9.2"
     },
     "gedmo/doctrine-extensions": {
         "version": "v3.0.0"
@@ -465,7 +465,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.1",
-            "ref": "cb82a2355ec62fef0e7028ac969fe86fa722feb8"
+            "ref": "bf16921ef8309a81d9f046e9b6369c46bcbd031f"
         },
         "files": [
             ".env.test",
@@ -638,7 +638,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "1.9",
-            "ref": "579d8de06df2ceb34d39e84e84c0c051b9b5ac68"
+            "ref": "9399a0bfc6ee7a0c019f952bca46d6a6045dd451"
         },
         "files": [
             "assets/app.js",
