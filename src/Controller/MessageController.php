@@ -27,9 +27,7 @@ class MessageController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @IsGranted("EDIT", subject="message")
-     */
+    #[IsGranted('EDIT', subject: 'message')]
     #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Message $message, Request $request, MessageService $messageService): RedirectResponse | Response
     {
@@ -55,9 +53,7 @@ class MessageController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @IsGranted("DELETE", subject="message")
-     */
+    #[IsGranted('DELETE', subject: 'message')]
     #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
     {

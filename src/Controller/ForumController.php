@@ -11,7 +11,6 @@ use App\Repository\ThreadRepository;
 use App\Repository\UserRepository;
 use App\Service\ForumService;
 use App\Service\OptionService;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/forums')]
 class ForumController extends AbstractBaseController
 {
-    /**
-     * @throws Exception
-     */
     #[Route(path: '/', name: 'forum.index', methods: ['GET'])]
     public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
@@ -63,9 +59,7 @@ class ForumController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @IsGranted("LOCK", subject="forum")
-     */
+    #[IsGranted('LOCK', subject: 'forum')]
     #[Route(path: '/{id}-{slug}/lock', name: 'forum.lock', methods: ['GET'])]
     public function lock(Forum $forum, ForumService $forumService): Response
     {
@@ -77,9 +71,7 @@ class ForumController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @IsGranted("LOCK", subject="forum")
-     */
+    #[IsGranted('LOCK', subject: 'forum')]
     #[Route(path: '/{id}-{slug}/unlock', name: 'forum.unlock', methods: ['GET'])]
     public function unlock(Forum $forum, ForumService $forumService): Response
     {

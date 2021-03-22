@@ -66,9 +66,7 @@ class ThreadController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_USER")
-     */
+    #[IsGranted('ROLE_USER')]
     #[Route(path: '/{slug}/new-thread', name: 'new', methods: ['GET', 'POST'])]
     public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
     {
@@ -105,11 +103,7 @@ class ThreadController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @IsGranted("DELETE", subject="thread")
-     *
-     * @throws Exception
-     */
+    #[IsGranted('DELETE', subject: 'thread')]
     #[Route(path: '/threads/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
     {
@@ -129,9 +123,7 @@ class ThreadController extends AbstractBaseController
         throw new Exception('Jeton CSRF invalide !');
     }
 
-    /**
-     * @IsGranted("LOCK", subject="thread")
-     */
+    #[IsGranted('LOCK', subject: 'thread')]
     #[Route(path: '/threads/{id}/lock', name: 'lock', methods: ['GET'])]
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
@@ -141,9 +133,7 @@ class ThreadController extends AbstractBaseController
         return $this->redirectToReferer($request);
     }
 
-    /**
-     * @IsGranted("LOCK", subject="thread")
-     */
+    #[IsGranted('LOCK', subject: 'thread')]
     #[Route(path: '/threads/{id}/unlock', name: 'unlock', methods: ['GET'])]
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
@@ -153,9 +143,7 @@ class ThreadController extends AbstractBaseController
         return $this->redirectToReferer($request);
     }
 
-    /**
-     * @IsGranted("PIN", subject="thread")
-     */
+    #[IsGranted('PIN', subject: 'thread')]
     #[Route(path: '/threads/{id}/pin', name: 'pin', methods: ['GET'])]
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
@@ -165,9 +153,7 @@ class ThreadController extends AbstractBaseController
         return $this->redirectToReferer($request);
     }
 
-    /**
-     * @IsGranted("PIN", subject="thread")
-     */
+    #[IsGranted('PIN', subject: 'thread')]
     #[Route(path: '/threads/{id}/unpin', name: 'unpin', methods: ['GET'])]
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response
     {

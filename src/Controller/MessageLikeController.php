@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/forums/messages', name: 'message.')]
 class MessageLikeController extends AbstractBaseController
 {
-    /**
-     * @IsGranted("LIKE", subject="message")
-     */
+    #[IsGranted('LIKE', subject: 'message')]
     #[Route(path: '/{id}/like', name: 'like', methods: ['POST'])]
     public function like(Message $message, MessageLikeService $likeService, MessageLikeRepository $likeRepository): Response
     {

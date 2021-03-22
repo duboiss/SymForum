@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/forums/reports', name: 'report.')]
 class ReportController extends AbstractBaseController
 {
-    /**
-     * @IsGranted("REPORT", subject="message")
-     */
+    #[IsGranted('REPORT', subject: 'message')]
     #[Route(path: '/{id}', name: 'message', methods: ['POST'])]
     public function message(Message $message, Request $request, ReportService $reportService): Response
     {
