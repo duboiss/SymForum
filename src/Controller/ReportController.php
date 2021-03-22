@@ -9,15 +9,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/forums/reports", name="report.")
- */
+#[Route(path: '/forums/reports', name: 'report.')]
 class ReportController extends AbstractBaseController
 {
     /**
-     * @Route("/{id}", name="message", methods="POST")
      * @IsGranted("REPORT", subject="message")
      */
+    #[Route(path: '/{id}', name: 'message', methods: ['POST'])]
     public function message(Message $message, Request $request, ReportService $reportService): Response
     {
         $reason = $this->jsonDecodeRequestContent($request)['reason'];

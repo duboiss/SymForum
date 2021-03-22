@@ -17,12 +17,9 @@ abstract class AbstractBaseController extends AbstractController
 {
     private FlashBagInterface $flashBag;
 
-    private DecoderInterface $decoder;
-
-    public function __construct(SessionInterface $session, DecoderInterface $decoder)
+    public function __construct(SessionInterface $session, private DecoderInterface $decoder)
     {
         $this->flashBag = $session->getFlashBag();
-        $this->decoder = $decoder;
     }
 
     protected function addCustomFlash(string $type, string $title, string $content): void

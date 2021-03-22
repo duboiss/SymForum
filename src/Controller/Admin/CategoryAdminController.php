@@ -13,14 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/categories", name="admin.category.")
  * @IsGranted("ROLE_ADMIN")
  */
+#[Route(path: '/admin/categories', name: 'admin.category.')]
 class CategoryAdminController extends AbstractBaseController
 {
-    /**
-     * @Route("/", name="index", methods="GET")
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('admin/category/index.html.twig', [
@@ -28,14 +26,11 @@ class CategoryAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/add", name="add", methods={"GET", "POST"})
-     */
+    #[Route(path: '/add', name: 'add', methods: ['GET', 'POST'])]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(CategoryType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $category = $form->getData();
             $em->persist($category);
@@ -51,14 +46,11 @@ class CategoryAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Category $category, Request $request): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -73,9 +65,7 @@ class CategoryAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/delete", name="delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}/delete', name: 'delete', methods: ['DELETE'])]
     public function delete(Category $category, EntityManagerInterface $em): Response
     {
         if (count($category->getForums()) > 0) {

@@ -13,11 +13,8 @@ class ForumVoter extends Voter
 {
     private const LOCK = 'LOCK';
 
-    private Security $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     protected function supports(string $attribute, $subject): bool

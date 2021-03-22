@@ -11,14 +11,8 @@ class OptionService
     /** @var CoreOption[] */
     private array $cache = [];
 
-    private EntityManagerInterface $em;
-
-    private CoreOptionRepository $coreOptionRepository;
-
-    public function __construct(EntityManagerInterface $em, CoreOptionRepository $coreOptionRepository)
+    public function __construct(private EntityManagerInterface $em, private CoreOptionRepository $coreOptionRepository)
     {
-        $this->em = $em;
-        $this->coreOptionRepository = $coreOptionRepository;
     }
 
     public function get(string $optionName, string $default = null): ?string

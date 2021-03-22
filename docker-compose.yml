@@ -19,7 +19,7 @@ services:
       - php
 
   php:
-    build: docker/php/7.4-fpm-dev
+    build: docker/php
     container_name: symforum_php
     user: '1000:1000'
     env_file:
@@ -27,7 +27,7 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html:rw,cached
-      - ./docker/php/symfony.dev.ini:/etc/php7/conf.d/symfony.ini
+      - ./docker/php/symfony.dev.ini:/etc/php8/conf.d/symfony.ini
 
   database:
     image: mysql:8

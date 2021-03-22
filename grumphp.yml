@@ -5,8 +5,8 @@ grumphp:
         phplint: ~
         phpstan: ~
         phpunitbridge: ~
-        twigcs:
-            path: 'templates'
+        #twigcs:
+        #    path: 'templates'
 
     ascii:
         failed: ~

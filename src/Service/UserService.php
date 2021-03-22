@@ -7,20 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserService
 {
-    private EntityManagerInterface $em;
-
-    private ThreadService $threadService;
-
-    private MessageService $messageService;
-
-    private ReportService $reportService;
-
-    public function __construct(EntityManagerInterface $em, ThreadService $threadService, MessageService $messageService, ReportService $reportService)
+    public function __construct(private EntityManagerInterface $em, private ThreadService $threadService, private MessageService $messageService, private ReportService $reportService)
     {
-        $this->em = $em;
-        $this->threadService = $threadService;
-        $this->messageService = $messageService;
-        $this->reportService = $reportService;
     }
 
     public function deleteUser(User $user, bool $deleteContent = false): void

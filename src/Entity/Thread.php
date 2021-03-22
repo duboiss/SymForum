@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ThreadRepository::class)
- * @UniqueEntity("slug")
  */
+#[UniqueEntity('slug')]
 class Thread
 {
     use PrimaryKeyTrait;
@@ -23,8 +23,8 @@ class Thread
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     private $title;
 
     /**
@@ -42,20 +42,20 @@ class Thread
     /**
      * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="threads")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
      */
+    #[Assert\NotNull]
     private $forum;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull()
      */
+    #[Assert\NotNull]
     private $isLock = false;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotNull()
      */
+    #[Assert\NotNull]
     private $isPin = false;
 
     /**

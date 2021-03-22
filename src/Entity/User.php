@@ -17,28 +17,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity("pseudo")
- * @UniqueEntity("email")
- * @UniqueEntity("slug")
  */
-class User implements UserInterface
+#[UniqueEntity('pseudo')]
+#[UniqueEntity('email')]
+#[UniqueEntity('slug')]
+class User implements UserInterface, \Stringable
 {
     use PrimaryKeyTrait;
     use CreatedAtTrait;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\Regex(
-     *     pattern="^[a-z0-9]+$/i",
-     *     message="Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres."
-     * )
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 10,
-     *      minMessage = "Votre pseudo doit faire au moins {{ limit }} caractères.",
-     *      maxMessage = "Votre pseudo doit faire au plus {{ limit }} caractères."
-     * )
      */
+    #[Assert\Regex(pattern: '^[a-z0-9]+$/i', message: 'Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres.')]
+    #[Assert\Length(min: 3, max: 10, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
     private $pseudo;
 
     /**
@@ -54,8 +46,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\Email(message = "Veuillez saisir une adresse email valide.")
      */
+    #[Assert\Email(message: 'Veuillez saisir une adresse email valide.')]
     private $email;
 
     /**
@@ -105,7 +97,7 @@ class User implements UserInterface
         $this->likes = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->pseudo;
     }

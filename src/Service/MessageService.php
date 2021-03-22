@@ -13,23 +13,11 @@ use Symfony\Component\Security\Core\Security;
 
 class MessageService
 {
-    private EntityManagerInterface $em;
-
-    private MessageRepository $messageRepository;
-
     private FlashBagInterface $flashBag;
 
-    private AntispamService $antispamService;
-
-    private Security $security;
-
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService, Security $security)
+    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, SessionInterface $session, private AntispamService $antispamService, private Security $security)
     {
-        $this->em = $em;
-        $this->messageRepository = $messageRepository;
         $this->flashBag = $session->getFlashBag();
-        $this->antispamService = $antispamService;
-        $this->security = $security;
     }
 
     public function canPostMessage(Thread $thread, User $user): bool

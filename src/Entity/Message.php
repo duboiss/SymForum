@@ -27,14 +27,9 @@ class Message
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Votre message ne peut pas être vide.")
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 6000,
-     *      minMessage = "Votre message doit faire au moins 3 caractères.",
-     *      maxMessage = "Votre message doit faire au maximum {{ limit }} caractères."
-     * )
      */
+    #[Assert\NotBlank(message: 'Votre message ne peut être vide.')]
+    #[Assert\Length(min: 10, max: 6000, minMessage: 'Votre message doit faire au moins 3 caractères.', maxMessage: 'Votre message doit faire au maximum {{ limit }} caractères.')]
     private $content;
 
     /**

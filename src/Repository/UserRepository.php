@@ -38,7 +38,7 @@ class UserRepository extends ServiceEntityRepository
                 ->select('COUNT(u.id)')
                 ->getQuery()
                 ->getSingleScalarResult();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return 0;
         }
     }

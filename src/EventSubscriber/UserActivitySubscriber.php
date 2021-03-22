@@ -13,20 +13,8 @@ use Symfony\Component\Security\Core\Security;
 
 class UserActivitySubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $em;
-
-    private Security $security;
-
-    private OptionService $optionService;
-
-    private UserRepository $userRepository;
-
-    public function __construct(EntityManagerInterface $em, Security $security, OptionService $optionService, UserRepository $userRepository)
+    public function __construct(private EntityManagerInterface $em, private Security $security, private OptionService $optionService, private UserRepository $userRepository)
     {
-        $this->em = $em;
-        $this->security = $security;
-        $this->optionService = $optionService;
-        $this->userRepository = $userRepository;
     }
 
     public function onTerminate(): void

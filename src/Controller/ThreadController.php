@@ -19,14 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/forums", name="thread.")
- */
+#[Route(path: '/forums', name: 'thread.')]
 class ThreadController extends AbstractBaseController
 {
-    /**
-     * @Route("/threads/{slug}", name="show", methods={"GET", "POST"})
-     */
+    #[Route(path: '/threads/{slug}', name: 'show', methods: ['GET', 'POST'])]
     public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator, OptionService $optionService): Response
     {
         $form = $this->createForm(MessageType::class, null, [
@@ -71,9 +67,9 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{slug}/new-thread", name="new", methods={"GET", "POST"})
      * @IsGranted("ROLE_USER")
      */
+    #[Route(path: '/{slug}/new-thread', name: 'new', methods: ['GET', 'POST'])]
     public function new(Forum $forum, Request $request, ThreadService $threadService, MessageService $messageService): Response
     {
         /** @var User $user */
@@ -110,11 +106,11 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/delete", name="delete", methods="POST")
      * @IsGranted("DELETE", subject="thread")
      *
      * @throws Exception
      */
+    #[Route(path: '/threads/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
     {
         $submittedToken = $request->request->get('token');
@@ -129,13 +125,14 @@ class ThreadController extends AbstractBaseController
                 'slug' => $forum->getSlug(),
             ]);
         }
+
         throw new Exception('Jeton CSRF invalide !');
     }
 
     /**
-     * @Route("/threads/{id}/lock", name="lock", methods="GET")
      * @IsGranted("LOCK", subject="thread")
      */
+    #[Route(path: '/threads/{id}/lock', name: 'lock', methods: ['GET'])]
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->lock($thread);
@@ -145,9 +142,9 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/unlock", name="unlock", methods="GET")
      * @IsGranted("LOCK", subject="thread")
      */
+    #[Route(path: '/threads/{id}/unlock', name: 'unlock', methods: ['GET'])]
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unlock($thread);
@@ -157,9 +154,9 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/pin", name="pin", methods="GET")
      * @IsGranted("PIN", subject="thread")
      */
+    #[Route(path: '/threads/{id}/pin', name: 'pin', methods: ['GET'])]
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->pin($thread);
@@ -169,9 +166,9 @@ class ThreadController extends AbstractBaseController
     }
 
     /**
-     * @Route("/threads/{id}/unpin", name="unpin", methods="GET")
      * @IsGranted("PIN", subject="thread")
      */
+    #[Route(path: '/threads/{id}/unpin', name: 'unpin', methods: ['GET'])]
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unpin($thread);

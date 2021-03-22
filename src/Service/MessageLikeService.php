@@ -11,17 +11,8 @@ use Symfony\Component\Security\Core\Security;
 
 class MessageLikeService
 {
-    private Security $security;
-
-    private EntityManagerInterface $em;
-
-    private MessageLikeRepository $likeRepository;
-
-    public function __construct(Security $security, EntityManagerInterface $em, MessageLikeRepository $likeRepository)
+    public function __construct(private Security $security, private EntityManagerInterface $em, private MessageLikeRepository $likeRepository)
     {
-        $this->security = $security;
-        $this->em = $em;
-        $this->likeRepository = $likeRepository;
     }
 
     public function likeMessage(Message $message): void

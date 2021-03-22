@@ -16,11 +16,8 @@ class MessageVoter extends Voter
     private const LIKE = 'LIKE';
     private const REPORT = 'REPORT';
 
-    private Security $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     protected function supports(string $attribute, $subject): bool

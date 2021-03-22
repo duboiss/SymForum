@@ -10,16 +10,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CoreOptionRepository::class)
- * @UniqueEntity("name")
  */
+#[UniqueEntity('name')]
 class CoreOption
 {
     use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     private $name;
 
     /**

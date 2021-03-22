@@ -9,9 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractBaseController
 {
-    /**
-     * @Route("/admin", name="admin.homepage", methods="GET")
-     */
+    #[Route(path: '/admin', name: 'admin.homepage', methods: ['GET'])]
     public function homepage(ReportRepository $reportRepository): Response
     {
         return $this->render('admin/homepage.html.twig', [

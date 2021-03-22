@@ -27,22 +27,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public const LOGIN_ROUTE = 'security.login';
     public const REDIRECT_AFTER_LOGIN_ROUTE = 'forum.index';
 
-    private UserRepository $userRepository;
-
-    private RouterInterface $router;
-
-    private CsrfTokenManagerInterface $csrfTokenManager;
-
-    private UserPasswordEncoderInterface $passwordEncoder;
-
     private FlashBagInterface $flashBag;
 
-    public function __construct(UserRepository $userRepository, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, SessionInterface $session)
+    public function __construct(private UserRepository $userRepository, private RouterInterface $router, private CsrfTokenManagerInterface $csrfTokenManager, private UserPasswordEncoderInterface $passwordEncoder, SessionInterface $session)
     {
-        $this->userRepository = $userRepository;
-        $this->router = $router;
-        $this->csrfTokenManager = $csrfTokenManager;
-        $this->passwordEncoder = $passwordEncoder;
         $this->flashBag = $session->getFlashBag();
     }
 

@@ -14,14 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/forums/messages", name="message.")
- */
+#[Route(path: '/forums/messages', name: 'message.')]
 class MessageController extends AbstractBaseController
 {
-    /**
-     * @Route("/{id}", name="show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'show', methods: ['GET'])]
     public function show(Message $message, ThreadService $threadService): Response
     {
         return $this->redirectToRoute('thread.show', [
@@ -32,12 +28,10 @@ class MessageController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      * @IsGranted("EDIT", subject="message")
-     *
-     * @return RedirectResponse|Response
      */
-    public function edit(Message $message, Request $request, MessageService $messageService): Response
+    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Message $message, Request $request, MessageService $messageService): RedirectResponse | Response
     {
         $route = $this->redirectToRoute('message.show', ['id' => $message->getId()]);
 
@@ -62,9 +56,9 @@ class MessageController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{id}/delete", name="delete", methods="GET")
      * @IsGranted("DELETE", subject="message")
      */
+    #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
     {
         $thread = $message->getThread();

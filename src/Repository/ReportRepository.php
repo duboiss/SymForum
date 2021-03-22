@@ -30,7 +30,7 @@ class ReportRepository extends ServiceEntityRepository
                 ->where('r.treatedAt is NULL')
                 ->getQuery()
                 ->getSingleScalarResult();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return 0;
         }
     }

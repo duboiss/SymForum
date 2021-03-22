@@ -13,23 +13,11 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ThreadService
 {
-    private EntityManagerInterface $em;
-
-    private MessageRepository $messageRepository;
-
     private FlashBagInterface $flashBag;
 
-    private AntispamService $antispamService;
-
-    private OptionService $optionService;
-
-    public function __construct(EntityManagerInterface $em, MessageRepository $messageRepository, SessionInterface $session, AntispamService $antispamService, OptionService $optionService)
+    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, SessionInterface $session, private AntispamService $antispamService, private OptionService $optionService)
     {
-        $this->em = $em;
-        $this->messageRepository = $messageRepository;
         $this->flashBag = $session->getFlashBag();
-        $this->antispamService = $antispamService;
-        $this->optionService = $optionService;
     }
 
     public function canPostThread(Forum $forum, User $user): bool

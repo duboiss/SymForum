@@ -12,14 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin/users", name="admin.user.")
- */
+#[Route(path: '/admin/users', name: 'admin.user.')]
 class UserAdminController extends AbstractBaseController
 {
-    /**
-     * @Route("/", name="index", methods="GET")
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
@@ -33,9 +29,7 @@ class UserAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{slug}", name="details", methods="GET")
-     */
+    #[Route(path: '/{slug}', name: 'details', methods: ['GET'])]
     public function details(User $user): Response
     {
         return $this->render('admin/user/details.html.twig', [
@@ -43,9 +37,7 @@ class UserAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{slug}/reset", name="reset", methods="GET")
-     */
+    #[Route(path: '/{slug}/reset', name: 'reset', methods: ['GET'])]
     public function reset(User $user, UserService $userService): Response
     {
         $userService->resetUser($user);
@@ -57,10 +49,9 @@ class UserAdminController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{slug}/delete", name="delete", methods="POST")
-     *
      * @throws Exception
      */
+    #[Route(path: '/{slug}/delete', name: 'delete', methods: ['POST'])]
     public function delete(User $user, UserService $userService, Request $request): Response
     {
         $submittedToken = $request->request->get('token');

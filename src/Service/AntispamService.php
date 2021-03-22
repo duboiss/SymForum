@@ -15,17 +15,8 @@ class AntispamService
 
     private const DELAY_THREAD = 90;
 
-    private ThreadRepository $threadRepository;
-
-    private MessageRepository $messageRepository;
-
-    private Security $security;
-
-    public function __construct(ThreadRepository $threadRepository, MessageRepository $messageRepository, Security $security)
+    public function __construct(private ThreadRepository $threadRepository, private MessageRepository $messageRepository, private Security $security)
     {
-        $this->threadRepository = $threadRepository;
-        $this->messageRepository = $messageRepository;
-        $this->security = $security;
     }
 
     /**

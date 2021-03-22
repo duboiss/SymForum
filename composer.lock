@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ead2fa3e5a39cbab93f46f68041230e6",
+    "content-hash": "4a6cd821c62bfc2c473ece5634615977",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -8555,25 +8555,26 @@
         },
         {
             "name": "friendsoftwig/twigcs",
-            "version": "v4.0-BETA4",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/friendsoftwig/twigcs.git",
-                "reference": "88012468d88b097e991fb8dbd4b39ed82632ec8e"
+                "reference": "d85fa2a567eb2671186558f92c53e86cdd502c3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/friendsoftwig/twigcs/zipball/88012468d88b097e991fb8dbd4b39ed82632ec8e",
-                "reference": "88012468d88b097e991fb8dbd4b39ed82632ec8e",
+                "url": "https://api.github.com/repos/friendsoftwig/twigcs/zipball/d85fa2a567eb2671186558f92c53e86cdd502c3b",
+                "reference": "d85fa2a567eb2671186558f92c53e86cdd502c3b",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0",
+                "php": "^7.2 || ^8.0",
                 "symfony/console": "^3.4 || ^4.3 || ^5.0",
+                "symfony/filesystem": "^3.4 || ^4.3 || ^5.0",
                 "symfony/finder": "^3.4 || ^4.3 || ^5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.5 || ^7.2"
+                "phpunit/phpunit": "^8.0 || ^9.0"
             },
             "bin": [
                 "bin/twigcs"
@@ -8597,9 +8598,9 @@
             "description": "Checkstyle automation for Twig",
             "support": {
                 "issues": "https://github.com/friendsoftwig/twigcs/issues",
-                "source": "https://github.com/friendsoftwig/twigcs/tree/v4.0-BETA4"
+                "source": "https://github.com/friendsoftwig/twigcs/tree/v5.0.0"
             },
-            "time": "2020-02-27T16:06:06+00:00"
+            "time": "2021-02-04T13:46:25+00:00"
         },
         {
             "name": "gitonomy/gitlib",
@@ -10696,19 +10697,17 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "friendsoftwig/twigcs": 10
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4.4",
+        "php": "^8.0.0",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.4.4"
+        "php": "8.0.0"
     },
     "plugin-api-version": "2.0.0"
 }

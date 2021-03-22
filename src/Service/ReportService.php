@@ -10,11 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ReportService
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public function createReport(Message $message, string $reason): void

@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4.4",
+        "php": "^8.0.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.1",
@@ -35,7 +35,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.13",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "friendsoftwig/twigcs": "4.0-BETA4",
+        "friendsoftwig/twigcs": "^5",
         "liip/test-fixtures-bundle": "^1.9",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpro/grumphp": "^1.0",
@@ -50,7 +50,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4.4"
+            "php": "8.0.0"
         },
         "preferred-install": {
             "*": "dist"

@@ -9,14 +9,8 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
-    private UrlGeneratorInterface $urlGenerator;
-
-    private RequestStack $request;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator, RequestStack $request)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private RequestStack $request)
     {
-        $this->urlGenerator = $urlGenerator;
-        $this->request = $request;
     }
 
     /**

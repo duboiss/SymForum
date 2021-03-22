@@ -8,22 +8,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("", name="page.")
- */
+#[Route(path: '', name: 'page.')]
 class PageController extends AbstractBaseController
 {
-    /**
-     * @Route("/", name="index", methods="GET")
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->redirectToRoute('forum.index');
     }
 
-    /**
-     * @Route("/members", name="members", methods="GET")
-     */
+    #[Route(path: '/members', name: 'members', methods: ['GET'])]
     public function members(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
@@ -37,9 +31,7 @@ class PageController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/team", name="team", methods="GET")
-     */
+    #[Route(path: '/team', name: 'team', methods: ['GET'])]
     public function team(UserRepository $userRepository): Response
     {
         return $this->render('pages/team.html.twig', [

@@ -18,16 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/forums")
- */
+#[Route(path: '/forums')]
 class ForumController extends AbstractBaseController
 {
     /**
-     * @Route("/", name="forum.index", methods="GET")
-     *
      * @throws Exception
      */
+    #[Route(path: '/', name: 'forum.index', methods: ['GET'])]
     public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
         return $this->render('pages/forums.html.twig', [
@@ -42,9 +39,7 @@ class ForumController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{slug}", name="forum.show", requirements={"id"="\d+", "slug"="[\w\-_]+?$"}, methods="GET")
-     */
+    #[Route(path: '/{slug}', name: 'forum.show', requirements: ['id' => '\d+', 'slug' => '[\w\-_]+?$'], methods: ['GET'])]
     public function show(Forum $forum, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
@@ -59,9 +54,7 @@ class ForumController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/c/{slug}", name="category.show", requirements={"slug"="^(?:[^\d])[\w\-_]+?$"}, methods="GET")
-     */
+    #[Route(path: '/c/{slug}', name: 'category.show', requirements: ['slug' => '^(?:[^\d])[\w\-_]+?$'], methods: ['GET'])]
     public function category(Category $category, ForumRepository $forumRepository): Response
     {
         return $this->render('forum/category.html.twig', [
@@ -71,9 +64,9 @@ class ForumController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{id}-{slug}/lock", name="forum.lock", methods="GET")
      * @IsGranted("LOCK", subject="forum")
      */
+    #[Route(path: '/{id}-{slug}/lock', name: 'forum.lock', methods: ['GET'])]
     public function lock(Forum $forum, ForumService $forumService): Response
     {
         $forumService->lock($forum);
@@ -85,9 +78,9 @@ class ForumController extends AbstractBaseController
     }
 
     /**
-     * @Route("/{id}-{slug}/unlock", name="forum.unlock", methods="GET")
      * @IsGranted("LOCK", subject="forum")
      */
+    #[Route(path: '/{id}-{slug}/unlock', name: 'forum.unlock', methods: ['GET'])]
     public function unlock(Forum $forum, ForumService $forumService): Response
     {
         $forumService->unlock($forum);

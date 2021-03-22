@@ -11,14 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin/reports", name="admin.report.")
- */
+#[Route(path: '/admin/reports', name: 'admin.report.')]
 class ReportAdminController extends AbstractBaseController
 {
-    /**
-     * @Route("/", name="index", methods="GET")
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(ReportRepository $reportRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
@@ -33,9 +29,7 @@ class ReportAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'show', methods: ['GET'])]
     public function show(Report $report, ReportRepository $reportRepository): Response
     {
         return $this->render('admin/report/show.html.twig', [
@@ -44,9 +38,7 @@ class ReportAdminController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/delete", name="delete", methods="GET")
-     */
+    #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
     public function delete(Report $report, ReportService $reportService): Response
     {
         $reportService->deleteReport($report);
@@ -55,9 +47,7 @@ class ReportAdminController extends AbstractBaseController
         return $this->redirectToRoute('admin.report.index');
     }
 
-    /**
-     * @Route("/{id}/close", name="close", methods="GET")
-     */
+    #[Route(path: '/{id}/close', name: 'close', methods: ['GET'])]
     public function close(Report $report, ReportService $reportService): Response
     {
         $reportService->closeReport($report);

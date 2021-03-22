@@ -134,7 +134,7 @@ phpstan: vendor ## Run phpstan
 	@$(PHP) ./vendor/bin/phpstan analyse --no-progress --xdebug
 
 twigcs: vendor ## Run twigcs
-	@$(PHP) ./vendor/bin/twigcs templates
+	#@$(PHP) ./vendor/bin/twigcs templates
 
 
 ##

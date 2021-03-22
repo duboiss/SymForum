@@ -10,14 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user", name="user.")
- */
+#[Route(path: '/user', name: 'user.')]
 class UserController extends AbstractBaseController
 {
-    /**
-     * @Route("/{slug}", name="profile", methods="GET")
-     */
+    #[Route(path: '/{slug}', name: 'profile', methods: ['GET'])]
     public function profile(User $user, ThreadRepository $threadRepository, MessageRepository $messageRepository): Response
     {
         return $this->render('user/profile.html.twig', [
@@ -27,9 +23,7 @@ class UserController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{slug}/threads", name="threads", methods="GET")
-     */
+    #[Route(path: '/{slug}/threads', name: 'threads', methods: ['GET'])]
     public function threads(User $user, ThreadRepository $threadRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
@@ -44,9 +38,7 @@ class UserController extends AbstractBaseController
         ]);
     }
 
-    /**
-     * @Route("/{slug}/messages", name="messages", methods="GET")
-     */
+    #[Route(path: '/{slug}/messages', name: 'messages', methods: ['GET'])]
     public function messages(User $user, MessageRepository $messageRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(

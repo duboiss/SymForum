@@ -13,16 +13,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @UniqueEntity("slug")
  */
+#[UniqueEntity('slug')]
 class Category
 {
     use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     private $title;
 
     /**
@@ -33,9 +33,9 @@ class Category
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank()
-     * @Assert\Positive(message="La position doit correspondre à un nombre positif.")
      */
+    #[Assert\NotBlank]
+    #[Assert\Positive(message: 'La position doit correspondre à un nombre positif.')]
     private $position;
 
     /**

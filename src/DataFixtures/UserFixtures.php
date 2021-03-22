@@ -8,11 +8,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends BaseFixtures
 {
-    private UserPasswordEncoderInterface $encoder;
-
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(private UserPasswordEncoderInterface $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     protected function loadData(ObjectManager $manager): void
