@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Traits\PrimaryKeyTrait;
@@ -48,7 +50,7 @@ class Forum
 
     /**
      * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="parent")
-     * @ORM\OrderBy({"position" = "ASC"})
+     * @ORM\OrderBy({"position": "ASC"})
      */
     private $forums;
 

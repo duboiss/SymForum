@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller;
 
 class PageControllerTest extends AbstractControllerTest
@@ -23,7 +25,7 @@ class PageControllerTest extends AbstractControllerTest
         self::assertResponseIsSuccessful();
 
         self::assertSelectorTextContains('h1', 'Membres de l\'équipe');
-        self::assertCount(2, $crawler->filter('table'));
+        static::assertCount(2, $crawler->filter('table'));
         self::assertSelectorTextContains('h4', 'Administrateurs');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Form\Type\CKEditorType;
@@ -39,6 +41,7 @@ class ThreadType extends AbstractType
                         'maxMessage' => 'Votre message doit faire au maximum {{ limit }} caractères.',
                     ]),
                 ],
-            ]);
+            ])
+        ;
     }
 }

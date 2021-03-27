@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Forum;
@@ -57,7 +59,8 @@ class MessageRepository extends ServiceEntityRepository
         $this->whereThreadQb($thread, $qb);
         $qb = $qb->orderBy('m.createdAt', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
         return $onlyId ? array_column($qb, 'id') : $qb;
     }
@@ -68,7 +71,8 @@ class MessageRepository extends ServiceEntityRepository
             ->leftJoin('m.author', 'author')
             ->leftJoin('m.likes', 'likes')
             ->addSelect('author', 'likes')
-            ->orderBy('m.createdAt', 'ASC');
+            ->orderBy('m.createdAt', 'ASC')
+        ;
     }
 
     public function findLastMessageByForum(Forum $forum): ?Message
@@ -80,7 +84,8 @@ class MessageRepository extends ServiceEntityRepository
                 ->orderBy('m.createdAt', 'DESC')
                 ->setMaxResults(1)
                 ->getQuery()
-                ->getOneOrNullResult();
+                ->getOneOrNullResult()
+            ;
         } catch (NonUniqueResultException) {
             return null;
         }
@@ -93,7 +98,8 @@ class MessageRepository extends ServiceEntityRepository
                 ->orderBy('m.createdAt', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
-                ->getSingleResult();
+                ->getSingleResult()
+            ;
         } catch (UnexpectedResultException $e) {
             throw $e;
         }
@@ -108,7 +114,8 @@ class MessageRepository extends ServiceEntityRepository
                 ->orderBy('m.createdAt', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
-                ->getOneOrNullResult();
+                ->getOneOrNullResult()
+            ;
         } catch (NonUniqueResultException) {
             return null;
         }
@@ -119,21 +126,24 @@ class MessageRepository extends ServiceEntityRepository
         return $this->joinThreadQb()
             ->where('m.author = :user')
             ->orderBy('m.createdAt', 'DESC')
-            ->setParameter('user', $user);
+            ->setParameter('user', $user)
+        ;
     }
 
     private function joinThreadQb(QueryBuilder $qb = null): QueryBuilder
     {
         return $this->getOrCreateQb($qb)
             ->join('m.thread', 'thread')
-            ->addSelect('thread');
+            ->addSelect('thread')
+        ;
     }
 
     private function whereThreadQb(Thread $thread, QueryBuilder $qb = null): QueryBuilder
     {
         return $this->getOrCreateQb($qb)
             ->andWhere('m.thread = :thread')
-            ->setParameter(':thread', $thread);
+            ->setParameter(':thread', $thread)
+        ;
     }
 
     private function getOrCreateQb(QueryBuilder $qb = null): QueryBuilder

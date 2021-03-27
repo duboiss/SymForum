@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\Forum;
@@ -16,7 +18,8 @@ class ForumTest extends WebTestCase
         return (new Forum())
             ->setTitle('Forum title')
             ->setDescription('Forum description')
-            ->setPosition(1);
+            ->setPosition(1)
+        ;
     }
 
     public function testInvalidBlankTitleEntity(): void

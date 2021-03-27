@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Message;
@@ -25,7 +27,8 @@ class MessageLikeService
         } else {
             $messageLike = (new MessageLike())
                 ->setMessage($message)
-                ->setUser($user);
+                ->setUser($user)
+            ;
 
             $this->em->persist($messageLike);
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\Message;
@@ -16,7 +18,8 @@ class MessageTest extends WebTestCase
 
         return (new Message())
             ->setContent('Message content')
-            ->setThread($thread);
+            ->setThread($thread)
+        ;
     }
 
     public function testInvalidMinLengthContentEntity(): void

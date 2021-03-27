@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Message;
@@ -12,14 +14,15 @@ class MessageFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Message::class, FixturesSettings::MESSAGES_COUNT, function (Message $message) {
+        $this->createMany(Message::class, FixturesSettings::MESSAGES_COUNT, function (Message $message): void {
             /** @var Thread $thread */
             $thread = $this->getRandomReference(Thread::class);
 
             $message->setAuthor($this->getRandomReference(User::class))
                 ->setCreatedAt($this->faker->dateTimeBetween($thread->getCreatedAt()))
-                ->setContent($this->faker->sentences(mt_rand(1, 15), true))
-                ->setThread($thread);
+                ->setContent($this->faker->sentences(random_int(1, 15), true))
+                ->setThread($thread)
+            ;
 
             if ($this->faker->boolean) {
                 $message->setUpdatedAt($this->faker->dateTimeBetween($message->getCreatedAt()));

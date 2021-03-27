@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Forum;
@@ -43,7 +45,8 @@ class ThreadRepository extends ServiceEntityRepository
             ->where('t.forum = :forum')
             ->orderBy('t.isPin', 'DESC')
             ->addOrderBy('lm.createdAt', 'DESC')
-            ->setParameter('forum', $forum);
+            ->setParameter('forum', $forum)
+        ;
     }
 
     public function findThreadsByUserQb(User $user): QueryBuilder
@@ -51,7 +54,8 @@ class ThreadRepository extends ServiceEntityRepository
         return $this->joinLastMessageQb()
             ->where('t.author = :user')
             ->orderBy('t.createdAt', 'DESC')
-            ->setParameter('user', $user);
+            ->setParameter('user', $user)
+        ;
     }
 
     public function joinLastMessageQb(QueryBuilder $qb = null): QueryBuilder
@@ -59,7 +63,8 @@ class ThreadRepository extends ServiceEntityRepository
         return $this->getOrCreateQb($qb)
             ->join('t.lastMessage', 'lm')
             ->leftJoin('lm.author', 'lmAuthor')
-            ->addSelect('lm', 'lmAuthor');
+            ->addSelect('lm', 'lmAuthor')
+        ;
     }
 
     private function getOrCreateQb(QueryBuilder $qb = null): QueryBuilder

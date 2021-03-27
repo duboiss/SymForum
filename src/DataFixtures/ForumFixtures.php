@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Category;
@@ -11,7 +13,7 @@ class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Forum::class, FixturesSettings::FORUMS_COUNT, function (Forum $forum, $count) {
+        $this->createMany(Forum::class, FixturesSettings::FORUMS_COUNT, function (Forum $forum, $count): void {
             /** @var Category $category */
             $category = $this->getRandomReference(Category::class);
 
@@ -19,7 +21,8 @@ class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setDescription($this->faker->sentence)
                 ->setCategory($category)
                 ->setParent(null)
-                ->setPosition($count);
+                ->setPosition($count)
+            ;
 
             $this->faker->boolean(20) ? $forum->setLock(true) : $forum->setLock(false);
         });

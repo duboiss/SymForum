@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security\Voter;
 
 use App\Entity\Message;
@@ -40,10 +42,13 @@ class MessageVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
                 return $this->canEdit($message, $user);
+
             case self::DELETE:
                 return $this->canDelete();
+
             case self::LIKE:
                 return true;
+
             case self::REPORT:
                 return $this->canReport($message, $user);
         }

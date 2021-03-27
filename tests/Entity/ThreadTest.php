@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\Forum;
@@ -20,7 +22,8 @@ class ThreadTest extends WebTestCase
             ->setTitle('Thread title')
             ->setForum($forum)
             ->setLock(false)
-            ->setPin(false);
+            ->setPin(false)
+        ;
     }
 
     public function testInvalidBlankTitleEntity(): void

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\Category;
@@ -15,7 +17,8 @@ class CategoryTest extends WebTestCase
     {
         return (new Category())
             ->setTitle('Category name')
-            ->setPosition(1);
+            ->setPosition(1)
+        ;
     }
 
     public function testInvalidBlankTitleEntity(): void

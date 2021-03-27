@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Traits\CreatedAtTrait;
@@ -23,8 +25,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('slug')]
 class User implements UserInterface, \Stringable
 {
-    use PrimaryKeyTrait;
     use CreatedAtTrait;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)

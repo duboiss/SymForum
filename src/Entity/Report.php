@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Traits\CreatedAtTrait;
@@ -15,8 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Report
 {
-    use PrimaryKeyTrait;
     use CreatedAtTrait;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="reports")
@@ -110,6 +112,6 @@ class Report
 
     public function isTreated(): bool
     {
-        return null !== $this->treatedAt;
+        return $this->treatedAt !== null;
     }
 }

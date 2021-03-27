@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Message;
@@ -29,7 +31,8 @@ class ReportRepository extends ServiceEntityRepository
                 ->select('COUNT(r.id)')
                 ->where('r.treatedAt is NULL')
                 ->getQuery()
-                ->getSingleScalarResult();
+                ->getSingleScalarResult()
+            ;
         } catch (Exception) {
             return 0;
         }
@@ -42,7 +45,8 @@ class ReportRepository extends ServiceEntityRepository
             ->join('r.message', 'm')
             ->leftJoin('m.author', 'mAuthor')
             ->addSelect('reportedBy', 'm', 'mAuthor')
-            ->orderBy('r.createdAt', 'DESC');
+            ->orderBy('r.createdAt', 'DESC')
+        ;
     }
 
     /**
@@ -52,15 +56,18 @@ class ReportRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('r')
             ->where('r.message = :message')
-            ->setParameter('message', $message);
+            ->setParameter('message', $message)
+        ;
 
         if ($except) {
             $qb->andWhere('r != :except')
-                ->setParameter('except', $except);
+                ->setParameter('except', $except)
+            ;
         }
 
         return $qb->orderBy('r.createdAt', 'DESC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 }

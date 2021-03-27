@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security\Voter;
 
 use App\Entity\Thread;
@@ -37,8 +39,10 @@ class ThreadVoter extends Voter
         switch ($attribute) {
             case self::LOCK:
                 return $this->canLock();
+
             case self::PIN:
                 return $this->canPin();
+
             case self::DELETE:
                 return $this->canDelete();
         }

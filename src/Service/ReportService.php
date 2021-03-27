@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Message;
@@ -18,7 +20,8 @@ class ReportService
     {
         $report = (new Report())
             ->setMessage($message)
-            ->setReason($reason);
+            ->setReason($reason)
+        ;
 
         $this->em->persist($report);
         $this->em->flush();

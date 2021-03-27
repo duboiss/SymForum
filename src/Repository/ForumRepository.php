@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -34,7 +36,8 @@ class ForumRepository extends ServiceEntityRepository
             ->setParameter(':category', $category)
             ->orderBy('f.position', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     /**
@@ -47,6 +50,7 @@ class ForumRepository extends ServiceEntityRepository
             ->addSelect('cat')
             ->orderBy('f.position', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 }

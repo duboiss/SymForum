@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Message;
@@ -12,7 +14,7 @@ class MessageLikeFixtures extends BaseFixtures implements DependentFixtureInterf
 {
     protected function loadData(ObjectManager $manager): void
     {
-        $this->createMany(MessageLike::class, FixturesSettings::MESSAGES_LIKES_COUNT, function (MessageLike $messageLike) {
+        $this->createMany(MessageLike::class, FixturesSettings::MESSAGES_LIKES_COUNT, function (MessageLike $messageLike): void {
             /** @var Message $message */
             $message = $this->getRandomReference(Message::class);
 
@@ -20,7 +22,8 @@ class MessageLikeFixtures extends BaseFixtures implements DependentFixtureInterf
             $user = $this->getRandomReference(User::class);
 
             $messageLike->setMessage($message)
-                ->setUser($user);
+                ->setUser($user)
+            ;
         });
 
         $manager->flush();

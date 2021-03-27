@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\CoreOption;
@@ -15,7 +17,8 @@ class CoreOptionTest extends WebTestCase
     {
         return (new CoreOption())
             ->setName('CoreOption name')
-            ->setValue('CoreOption value');
+            ->setValue('CoreOption value')
+        ;
     }
 
     public function testInvalidBlankNameEntity(): void

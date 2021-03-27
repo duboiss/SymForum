@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Category;
@@ -9,9 +11,10 @@ class CategoryFixtures extends BaseFixtures
 {
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Category::class, FixturesSettings::CATEGORIES_COUNT, function (Category $category, $count) {
+        $this->createMany(Category::class, FixturesSettings::CATEGORIES_COUNT, function (Category $category, $count): void {
             $category->setTitle($this->faker->words(4, true))
-                ->setPosition($count);
+                ->setPosition($count)
+            ;
         });
 
         $manager->flush();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Category;
@@ -15,7 +17,8 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('position', IntegerType::class);
+            ->add('position', IntegerType::class)
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

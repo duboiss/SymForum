@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Forum;
@@ -16,17 +18,18 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
 
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(Thread::class, FixturesSettings::THREADS_COUNT, function (Thread $thread) {
+        $this->createMany(Thread::class, FixturesSettings::THREADS_COUNT, function (Thread $thread): void {
             /** @var Forum $forum */
             $forum = $this->getRandomReference(Forum::class);
 
             /** @var User $author */
             $author = $this->getRandomReference(User::class);
 
-            $thread->setTitle($this->faker->words(rand(4, 8), true))
+            $thread->setTitle($this->faker->words(random_int(4, 8), true))
                 ->setAuthor($author)
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
-                ->setForum($forum);
+                ->setForum($forum)
+            ;
 
             $this->faker->boolean(40) ? $thread->setLock(true) : $thread->setLock(false);
             $this->faker->boolean(10) ? $thread->setPin(true) : $thread->setPin(false);
@@ -39,8 +42,9 @@ class ThreadFixtures extends BaseFixtures implements DependentFixtureInterface
             $firstMessage = new Message();
             $firstMessage->setAuthor($thread->getAuthor())
                 ->setCreatedAt($thread->getCreatedAt())
-                ->setContent($this->faker->sentences(mt_rand(1, 15), true))
-                ->setThread($thread);
+                ->setContent($this->faker->sentences(random_int(1, 15), true))
+                ->setThread($thread)
+            ;
 
             if ($this->faker->boolean) {
                 $firstMessage->setUpdatedAt($this->faker->dateTimeBetween($firstMessage->getCreatedAt()));

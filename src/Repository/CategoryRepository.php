@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -32,6 +34,7 @@ class CategoryRepository extends ServiceEntityRepository
             ->addSelect('f, lm, lmAuthor, lmThread')
             ->orderBy('c.position', 'ASC')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 }

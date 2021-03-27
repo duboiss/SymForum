@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Message;
@@ -69,7 +71,8 @@ class MessageService
     {
         $message = (new Message())
             ->setContent($content)
-            ->setThread($thread);
+            ->setThread($thread)
+        ;
 
         $this->em->persist($message);
 

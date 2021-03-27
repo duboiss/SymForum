@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\Forum;
@@ -42,7 +44,8 @@ class ThreadService
             ->setTitle($title)
             ->setForum($forum)
             ->setLock($lock)
-            ->setPin($pin);
+            ->setPin($pin)
+        ;
 
         $thread->getForum()->incrementTotalThreads();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -46,7 +48,7 @@ abstract class BaseFixtures extends Fixture
             $this->referencesIndex[$className] = [];
 
             foreach ($this->referenceRepository->getReferences() as $key => $ref) {
-                if (0 === mb_strpos($key, $className . '_')) {
+                if (str_starts_with($key, $className . '_')) {
                     $this->referencesIndex[$className][] = $key;
                 }
             }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Traits\CreatedAtTrait;
@@ -18,8 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('slug')]
 class Thread
 {
-    use PrimaryKeyTrait;
     use CreatedAtTrait;
+    use PrimaryKeyTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
