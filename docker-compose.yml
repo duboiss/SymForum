@@ -4,11 +4,11 @@ services:
   caddy:
     image: caddy:2
     container_name: symforum_caddy
-    environment:
-      SERVER_NAME: ${SERVER_NAME:-symforum.localhost, caddy:80}
     ports:
       - 80:80
       - 443:443
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-symforum.localhost, caddy:80}
     working_dir: /var/www/html
     volumes:
       - ./public:/var/www/html/public:ro
@@ -41,7 +41,18 @@ services:
     volumes:
       - database_data:/var/lib/mysql
 
+  meilisearch:
+    image: getmeili/meilisearch
+    container_name: symforum_meilisearch
+    ports:
+      - 7700:7700
+    environment:
+      MEILI_MASTER_KEY: hello
+    volumes:
+      - meilisearch:/data.ms
+
 volumes:
   caddy_data:
   caddy_config:
   database_data:
+  meilisearch:

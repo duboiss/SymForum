@@ -2,6 +2,7 @@
   "devDependencies": {
     "@ckeditor/ckeditor5-build-classic": "^26.0.0",
     "@fortawesome/fontawesome-free": "^5.15.2",
+    "@meilisearch/instant-meilisearch": "^0.4.1",
     "@symfony/stimulus-bridge": "^2.0.2",
     "@symfony/webpack-encore": "^1.0.0",
     "bootstrap": "^4.3.1",

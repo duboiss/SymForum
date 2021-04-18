@@ -10,6 +10,9 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $meiliUrl: "%env(MEILI_URL)%"
+            $meiliMasterKey: "%env(MEILI_MASTER_KEY)%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -34,3 +37,21 @@ services:
             - name: 'kernel.event_listener'
               event: 'Symfony\Component\Security\Http\Event\LogoutEvent'
               dispatcher: security.event_dispatcher.main
+
+    App\EntityListener\MessageListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'postPersist', entity: 'App\Entity\Message' }
+            - { name: 'doctrine.orm.entity_listener', event: 'postUpdate', entity: 'App\Entity\Message' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\Message' }
+
+    App\EntityListener\ThreadListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'postPersist', entity: 'App\Entity\Thread' }
+            - { name: 'doctrine.orm.entity_listener', event: 'postUpdate', entity: 'App\Entity\Thread' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\Thread' }
+
+    App\EntityListener\UserListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'postPersist', entity: 'App\Entity\User' }
+            - { name: 'doctrine.orm.entity_listener', event: 'postUpdate', entity: 'App\Entity\User' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\User' }

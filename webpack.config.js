@@ -24,6 +24,7 @@ Encore
     .addEntry('modnav', './assets/js/modnav.js')
     .addEntry('ckeditor', './assets/js/components/ckeditor.js')
     .addEntry('messageCard', './assets/js/messageCard.js')
+    .addEntry('meilisSearch', './assets/js/meilisearch.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
