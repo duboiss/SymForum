@@ -5,9 +5,9 @@
 {% block title %}Signalement de {{ reported_by_pseudo }}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
-    {% do append_breadcrumb(path('admin.report.index'), 'Signalements') %}
-    {% do set_active_label('Signalement de ' ~ reported_by_pseudo) %}
+    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
+    {% do append_breadcrumb('Signalements', path('admin.report.index')) %}
+    {% do append_breadcrumb('Signalement de ' ~ reported_by_pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

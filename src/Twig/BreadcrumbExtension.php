@@ -14,8 +14,6 @@ use Twig\TwigFunction;
 
 class BreadcrumbExtension extends AbstractExtension
 {
-    private string $activeLabel = '';
-
     private array $breadcrumbsPaths = [];
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
@@ -38,11 +36,22 @@ class BreadcrumbExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('get_active_label', [$this, 'getActiveLabel']),
-            new TwigFunction('set_active_label', [$this, 'setActiveLabel']),
-            new TwigFunction('get_breadcrumbs', [$this, 'getBreadcrumbs']),
             new TwigFunction('append_breadcrumb', [$this, 'appendBreadcrumb']),
+            new TwigFunction('get_breadcrumbs', [$this, 'getBreadcrumbs']),
         ];
+    }
+
+    public function appendBreadcrumb(string $label, ?string $path = null): void
+    {
+        $pair = [$label, $path];
+        if (!in_array($pair, $this->breadcrumbsPaths, true)) {
+            $this->breadcrumbsPaths[] = $pair;
+        }
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return $this->breadcrumbsPaths;
     }
 
     /**
@@ -65,28 +74,5 @@ class BreadcrumbExtension extends AbstractExtension
         }
 
         return $parts;
-    }
-
-    public function getActiveLabel(): string
-    {
-        return $this->activeLabel;
-    }
-
-    public function setActiveLabel(string $label): void
-    {
-        $this->activeLabel = $label;
-    }
-
-    public function getBreadcrumbs(): array
-    {
-        return $this->breadcrumbsPaths;
-    }
-
-    public function appendBreadcrumb(string $path, string $label): void
-    {
-        $pair = [$path, $label];
-        if (!in_array($pair, $this->breadcrumbsPaths, true)) {
-            $this->breadcrumbsPaths[] = $pair;
-        }
     }
 }

@@ -3,8 +3,8 @@
 {% block title %}Forums{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
-    {% do set_active_label('Forums') %}
+    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
+    {% do append_breadcrumb('Forums') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

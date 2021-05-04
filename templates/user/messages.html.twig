@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('page.members'), 'Membres') %}
-    {% do append_breadcrumb(path('user.profile', {'slug': user.slug}), user.pseudo) %}
-    {% do set_active_label('Messages publiés') %}
+    {% do append_breadcrumb('Membres', path('page.members')) %}
+    {% do append_breadcrumb(user.pseudo, path('user.profile', {'slug': user.slug})) %}
+    {% do append_breadcrumb('Messages publiés') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

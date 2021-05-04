@@ -49,11 +49,11 @@
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
 
-                {% do append_breadcrumb(path('forum.index'), 'Forums') %}
+                {% do append_breadcrumb('Forums', path('forum.index')) %}
                 {% for part in thread.forum|breadcrumb %}
-                    {% do append_breadcrumb(part.url, part.title) %}
+                    {% do append_breadcrumb(part.title, part.url) %}
                 {% endfor %}
-                {% do set_active_label(thread.title) %}
+                {% do append_breadcrumb(thread.title) %}
 
                 {{ include('partials/_breadcrumb.html.twig') }}
 

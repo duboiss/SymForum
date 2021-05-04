@@ -3,9 +3,9 @@
 {% block title %}Catégories - Ajouter{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
-    {% do append_breadcrumb(path('admin.category.index'), 'Catégories') %}
-    {% do set_active_label('Ajout') %}
+    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
+    {% do append_breadcrumb('Catégories', path('admin.category.index')) %}
+    {% do append_breadcrumb('Ajout') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

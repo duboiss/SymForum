@@ -1,10 +1,11 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         {% for breadcrumb in get_breadcrumbs() %}
-            <li class="breadcrumb-item"><a href="{{ breadcrumb[0] }}">{{ breadcrumb[1] }}</a></li>
+            {% if breadcrumb[1] %}
+                <li class="breadcrumb-item"><a href="{{ breadcrumb[1] }}">{{ breadcrumb[0] }}</a></li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb[0] }}</li>
+            {% endif %}
         {% endfor %}
-        {% if get_active_label() %}
-            <li class="breadcrumb-item active" aria-current="page">{{ get_active_label() }}</li>
-        {% endif %}
     </ol>
 </nav>

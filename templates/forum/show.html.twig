@@ -13,12 +13,12 @@
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
 
-                {% do append_breadcrumb(path('forum.index'), 'Forums') %}
+                {% do append_breadcrumb('Forums', path('forum.index')) %}
                 {% for part in forum|breadcrumb %}
                     {% if loop.last %}
-                        {% do set_active_label(part.title) %}
+                        {% do append_breadcrumb(part.title) %}
                     {% else %}
-                        {% do append_breadcrumb(part.url, part.title) %}
+                        {% do append_breadcrumb(part.title, part.url) %}
                     {% endif %}
                 {% endfor %}
 

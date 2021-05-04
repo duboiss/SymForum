@@ -13,11 +13,11 @@
 {% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('forum.index'), 'Forums') %}
+    {% do append_breadcrumb('Forums', path('forum.index')) %}
     {% for part in forum|breadcrumb %}
-        {% do append_breadcrumb(part.url, part.title) %}
+        {% do append_breadcrumb(part.title, part.url) %}
     {% endfor %}
-    {% do set_active_label('Nouveau sujet') %}
+    {% do append_breadcrumb('Nouveau sujet') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

@@ -7,8 +7,8 @@
 {% set role = user_profile_role(user) %}
 
 {% block content %}
-    {% do append_breadcrumb(path('page.members'), 'Membres') %}
-    {% do set_active_label(user.pseudo) %}
+    {% do append_breadcrumb('Membres', path('page.members')) %}
+    {% do append_breadcrumb(user.pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

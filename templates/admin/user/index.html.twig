@@ -3,8 +3,8 @@
 {% block title %}Utilisateurs{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
-    {% do set_active_label('Utilisateurs') %}
+    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
+    {% do append_breadcrumb('Utilisateurs') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

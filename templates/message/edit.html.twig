@@ -13,14 +13,14 @@
 {% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('forum.index'), 'Forums') %}
+    {% do append_breadcrumb('Forums', path('forum.index')) %}
 
     {% for part in message.thread.forum|breadcrumb %}
-        {% do append_breadcrumb(part.url, part.title) %}
+        {% do append_breadcrumb(part.title, part.url) %}
     {% endfor %}
 
-    {% do append_breadcrumb(path('thread.show', {'slug': message.thread.slug}), message.thread.title) %}
-    {% do set_active_label('Edition de votre message') %}
+    {% do append_breadcrumb(message.thread.title, path('thread.show', {'slug': message.thread.slug})) %}
+    {% do append_breadcrumb('Edition de votre message') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 

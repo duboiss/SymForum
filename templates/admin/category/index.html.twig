@@ -3,8 +3,8 @@
 {% block title %}Catégories{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb(path('admin.homepage'), 'Admin') %}
-    {% do set_active_label('Catégories') %}
+    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
+    {% do append_breadcrumb('Catégories') %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
