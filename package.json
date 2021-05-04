@@ -1,15 +1,15 @@
 {
   "devDependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^26.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^27.0.0",
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@symfony/stimulus-bridge": "^2.0.2",
     "@symfony/webpack-encore": "^1.0.0",
     "bootstrap": "^4.3.1",
     "core-js": "^3.0.0",
-    "eslint": "^7.18.0",
+    "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.6.0",
     "popper.js": "^1.16.0",
     "regenerator-runtime": "^0.13.2",
     "stimulus": "^2.0.0",
