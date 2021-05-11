@@ -26,6 +26,7 @@
         "symfony/translation": "5.2.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.2.*",
+        "symfony/web-link": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.6",
         "symfony/yaml": "5.2.*",
         "twig/intl-extra": "^3.0",
