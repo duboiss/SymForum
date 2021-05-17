@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\Report;
+use App\Repository\ReportRepository;
 use App\Service\ReportService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,20 +18,20 @@ class ReportController extends AbstractBaseController
 {
     #[IsGranted('REPORT', subject: 'message')]
     #[Route(path: '/{id}', name: 'message', methods: ['POST'])]
-    public function message(Message $message, Request $request, ReportService $reportService): Response
+    public function message(Message $message, Request $request, ReportService $reportService, ReportRepository $reportRepository): Response
     {
         $reason = $this->jsonDecodeRequestContent($request)['reason'];
 
-        if (!$reason) {
+        if ($reportRepository->findOneBy(['message' => $message, 'reportedBy' => $this->getUser()])) {
             return $this->json([
-                'message' => 'Vous devez indiquer un motif !',
-            ], 403);
+                'message' => 'Vous avez déjà signalé ce message !',
+            ], 409);
         }
 
-        if (mb_strlen($reason) < 8) {
+        if (mb_strlen($reason) < Report::REASON_MIN_LENGTH) {
             return $this->json([
                 'message' => 'Merci d\'apporter plus de précisions..',
-            ], 403);
+            ], 400);
         }
 
         if ($this->getUser() === $message->getAuthor()) {

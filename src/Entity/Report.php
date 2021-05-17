@@ -20,6 +20,8 @@ class Report
     use CreatedAtTrait;
     use PrimaryKeyTrait;
 
+    public const REASON_MIN_LENGTH = 8;
+
     /**
      * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="reports")
      * @ORM\JoinColumn(nullable=false)
