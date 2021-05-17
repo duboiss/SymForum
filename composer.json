@@ -35,7 +35,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
         "fakerphp/faker": "^1.13",
-        "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "friendsoftwig/twigcs": "^5",
         "liip/test-fixtures-bundle": "^1.9",
         "php-parallel-lint/php-parallel-lint": "^1.2",

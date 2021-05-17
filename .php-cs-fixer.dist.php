@@ -10,7 +10,7 @@ $finder = PhpCsFixer\Finder::create()
     ->notPath('tests/bootstrap.php')
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PhpCsFixer' => true,
@@ -29,5 +29,5 @@ return PhpCsFixer\Config::create()
         'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false],
     ])
     ->setFinder($finder)
-    ->setCacheFile(__DIR__.'/var/.php_cs.cache')
+    ->setCacheFile(__DIR__.'/var/.php-cs-fixer.cache')
 ;
