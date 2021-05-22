@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import axios from 'axios';
 
 const $modal = $('#reportModal');
 const $reasonTextarea = $('textarea[name="reason"]');
@@ -36,19 +37,16 @@ reportSubmitBtn.addEventListener('click', (e) => {
     const url = $modal.find('form').attr('action');
     const reason = $modal.find($reasonTextarea).val();
 
-    $.ajax({
-        method: 'POST',
-        url,
-        data: JSON.stringify({ reason }),
-        dataType: 'json',
-    }).done((response) => {
-        responseMessage = response.message;
+    axios.post(url, {
+        reason,
+    }).then((response) => {
+        responseMessage = response.data.message;
         $toastReport.find('.toast-body').text(responseMessage);
 
         $toastReport.toast('show');
         $modal.modal('hide');
-    }).fail((error) => {
-        responseMessage = error.responseJSON.message;
+    }).catch((err) => {
+        responseMessage = err.response.data.message;
         errorMessage.textContent = responseMessage;
     });
 });

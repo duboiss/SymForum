@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import axios from 'axios';
 
 function toggleIcone(icone) {
     if (icone.classList.contains('far')) {
@@ -15,19 +15,17 @@ document.querySelectorAll('.js-message-like').forEach((el) => el.addEventListene
     const icone = el.querySelector('i');
     const spanCount = el.querySelector('span.js-message-count-likes');
 
-    $.ajax({
-        method: 'POST',
-        url,
-    }).done((response) => {
-        let text = '';
+    axios.post(url)
+        .then((response) => {
+            let text = '';
 
-        if (response !== 0) {
-            text = response.toString();
-        }
+            if (response.data !== 0) {
+                text = response.data.toString();
+            }
 
-        toggleIcone(icone);
-        spanCount.textContent = text;
-    }).fail(() => {
-        window.alert('Une erreur est survenue ! Essayez d\'actualiser.');
-    });
+            toggleIcone(icone);
+            spanCount.textContent = text;
+        }).catch(() => {
+            window.alert("Une erreur est survenue ! Essayez d'actualiser.");
+        });
 }));
