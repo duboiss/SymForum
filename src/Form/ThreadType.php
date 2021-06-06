@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Entity\Message;
+use App\Entity\Thread;
 use App\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,9 +26,9 @@ class ThreadType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'Vous devez saisir un titre']),
                     new Length([
-                        'min' => 12,
+                        'min' => Thread::TITLE_MIN_LENGTH,
                         'minMessage' => 'Le titre doit faire au moins {{ limit }} caractères.',
-                        'max' => 50,
+                        'max' => Thread::TITLE_MAX_LENGTH,
                         'maxMessage' => 'Le titre doit faire au maximum {{ limit }} caractères.',
                     ]),
                 ],
@@ -35,9 +37,9 @@ class ThreadType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'Vous devez saisir un message']),
                     new Length([
-                        'min' => 10,
+                        'min' => Message::CONTENT_MIN_LENGTH,
                         'minMessage' => 'Votre message doit faire au moins 3 caractères.',
-                        'max' => 6000,
+                        'max' => Message::CONTENT_MAX_LENGTH,
                         'maxMessage' => 'Votre message doit faire au maximum {{ limit }} caractères.',
                     ]),
                 ],
