@@ -32,7 +32,7 @@ class Report
      * @ORM\Column(type="string", length=255)
      */
     #[Assert\NotBlank(message: 'Vous devez indiquer un motif.')]
-    #[Assert\Length(min: 10, max: 255, minMessage: 'Votre message doit faire au moins 10 caractères.', maxMessage: 'Votre message doit faire au maximum 255 caractères.')]
+    #[Assert\Length(min: self::REASON_MIN_LENGTH, max: 255, minMessage: 'Votre message doit faire au moins 10 caractères.', maxMessage: 'Votre message doit faire au maximum 255 caractères.')]
     private $reason;
 
     /**

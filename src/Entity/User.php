@@ -28,11 +28,14 @@ class User implements UserInterface, \Stringable
     use CreatedAtTrait;
     use PrimaryKeyTrait;
 
+    public const PSEUDO_MIN_LENGTH = 3;
+    public const PSEUDO_MAX_LENGTH = 10;
+
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
     #[Assert\Regex(pattern: '^[a-z0-9]+$/i', message: 'Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres.')]
-    #[Assert\Length(min: 3, max: 10, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
+    #[Assert\Length(min: self::PSEUDO_MIN_LENGTH, max: self::PSEUDO_MAX_LENGTH, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
     private $pseudo;
 
     /**

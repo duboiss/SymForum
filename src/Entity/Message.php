@@ -21,6 +21,9 @@ class Message
     use PrimaryKeyTrait;
     use TimestampableEntity;
 
+    public const CONTENT_MIN_LENGTH = 10;
+    public const CONTENT_MAX_LENGTH = 6000;
+
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @Gedmo\Blameable(on="create")
@@ -31,7 +34,7 @@ class Message
      * @ORM\Column(type="text")
      */
     #[Assert\NotBlank(message: 'Votre message ne peut être vide.')]
-    #[Assert\Length(min: 10, max: 6000, minMessage: 'Votre message doit faire au moins 3 caractères.', maxMessage: 'Votre message doit faire au maximum {{ limit }} caractères.')]
+    #[Assert\Length(min: self::CONTENT_MIN_LENGTH, max: self::CONTENT_MAX_LENGTH, minMessage: 'Votre message doit faire au moins 3 caractères.', maxMessage: 'Votre message doit faire au maximum {{ limit }} caractères.')]
     private $content;
 
     /**
