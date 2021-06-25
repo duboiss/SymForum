@@ -83,7 +83,7 @@ composer.lock: composer.json
 	@$(COMPOSER) update
 
 vendor: composer.lock ## Install dependencies in /vendor folder
-	@$(COMPOSER) install --no-progress
+	@$(COMPOSER) install --optimize-autoloader --no-progress
 
 
 ##
