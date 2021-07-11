@@ -1,7 +1,7 @@
 <div class="card bg-secondary mb-4 d-flex" id="{{ message.uuidBase32 }}">
     <div class="card-header">
         {{ thread.title }}
-        <div class="float-right">
+        <div class="float-end">
             <i class="far fa-clock"></i> {{ message.createdAt|format_datetime }}
         </div>
     </div>
@@ -22,7 +22,7 @@
 
         {% if displayActions|default(false) == true %}
             <div class="row">
-                <div class="col text-right">
+                <div class="col text-end">
                     {% if app.user %}
                         <a style="text-decoration: none;" href="{{ path('message.like', {'uuid': message.uuidBase32}) }}"
                            class="js-message-like" title="Liker">
@@ -45,7 +45,7 @@
                     {% endif %}
 
                     {% if is_granted('REPORT', message) %}
-                        <a style="text-decoration: none;" data-toggle="modal" data-target="#reportModal"
+                        <a style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#reportModal"
                            data-author="{{ message.author ?? 'compte supprimé' }}"
                            data-message="{{ message.uuidBase32 }}" href="#" title="Signaler">
                             <i class="far fa-flag"></i>

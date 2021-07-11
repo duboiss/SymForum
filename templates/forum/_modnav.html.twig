@@ -1,13 +1,13 @@
 {% if forum.lock %}
     <li>
-        <a href="{{ path('forum.unlock', {'slug': forum.slug}) }}" data-tooltip="tooltip"
+        <a href="{{ path('forum.unlock', {'slug': forum.slug}) }}" data-bs-toggle="tooltip" data-bs-placement="right"
            title="Ouvrir le forum">
             <i class="fas fa-lock-open rotate"></i>
         </a>
     </li>
 {% else %}
     <li>
-        <a href="{{ path('forum.lock', {'slug': forum.slug}) }}" data-tooltip="tooltip"
+        <a href="{{ path('forum.lock', {'slug': forum.slug}) }}" data-bs-toggle="tooltip" data-bs-placement="right"
            title="Fermer le forum">
             <i class="fas fa-lock rotate"></i>
         </a>

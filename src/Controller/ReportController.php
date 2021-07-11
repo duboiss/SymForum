@@ -20,7 +20,7 @@ class ReportController extends AbstractBaseController
     #[Route(path: '/{uuid}', name: 'message', methods: ['POST'])]
     public function message(Message $message, Request $request, ReportService $reportService, ReportRepository $reportRepository): Response
     {
-        $reason = $this->jsonDecodeRequestContent($request)['reason'];
+        $reason = trim($this->jsonDecodeRequestContent($request)['reason']);
 
         if ($reportRepository->findOneBy(['message' => $message, 'reportedBy' => $this->getUser()])) {
             return $this->json([

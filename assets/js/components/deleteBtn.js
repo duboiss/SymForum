@@ -17,7 +17,7 @@ document.querySelectorAll('.js-delete-button').forEach((btn) => btn.addEventList
             message = err.response.data.message;
         })
         .then(() => {
-            alert = `<div class="alert alert-dismissible alert-${type}"><button type="button" class="close" data-dismiss="alert">&times;</button>${message}</div>`;
+            alert = `<div class="alert alert-dismissible alert-${type}"><button type="button" class="btn-close" data-bs-dismiss="alert"></button>${message}</div>`;
             document.getElementById('messages').innerHTML += alert;
         });
 }));

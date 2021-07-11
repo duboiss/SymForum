@@ -1,5 +1,6 @@
-import $ from 'jquery';
+import { Toast } from 'bootstrap';
 
-for (const el of document.querySelectorAll('*[id^="toast-"]')) {
-    $(`#${el.id}`).toast('show');
-}
+const toastElList = [].slice.call(document.querySelectorAll('.toast-autoshow'));
+const toastList = toastElList.map((toastEl) => new Toast(toastEl));
+
+toastList.forEach((toast) => toast.show());

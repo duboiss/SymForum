@@ -26,19 +26,15 @@
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {% if is_granted('ROLE_MODERATOR') %}
-            <div class="form-group">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" name="lock" id="lock">
-                    <label class="custom-control-label" for="lock">Verrouiller ce sujet</label>
-                </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="lock" id="lock">
+                <label class="form-check-label" for="lock">Verrouiller ce sujet</label>
             </div>
         {% endif %}
         {% if is_granted('ROLE_MODERATOR') %}
-            <div class="form-group">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" name="pin" id="pin">
-                    <label class="custom-control-label" for="pin">Épingler ce sujet</label>
-                </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="pin" id="pin">
+                <label class="form-check-label" for="pin">Épingler ce sujet</label>
             </div>
         {% endif %}
         <button class="btn btn-primary js-submit-btn">Nouveau sujet</button>

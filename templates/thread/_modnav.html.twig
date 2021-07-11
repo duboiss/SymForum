@@ -1,15 +1,15 @@
 {% if is_granted('PIN', thread) %}
     {% if thread.pin %}
         <li>
-            <a href="{{ path('thread.unpin', {'slug': thread.slug}) }}" data-tooltip="tooltip"
-               title="Détacher le sujet">
+            <a href="{{ path('thread.unpin', {'slug': thread.slug}) }}" data-bs-toggle="tooltip"
+               data-bs-placement="right" title="Détacher le sujet">
                 <i class="fas fa-thumbtack rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
-            <a href="{{ path('thread.pin', {'slug': thread.slug}) }}" data-tooltip="tooltip"
-               title="Épingler le sujet">
+            <a href="{{ path('thread.pin', {'slug': thread.slug}) }}"  data-bs-toggle="tooltip"
+               data-bs-placement="right" title="Épingler le sujet">
                 <i class="fas fa-thumbtack rotate"></i>
             </a>
         </li>
@@ -19,15 +19,15 @@
 {% if is_granted('LOCK', thread) %}
     {% if thread.lock %}
         <li>
-            <a href="{{ path('thread.unlock', {'slug': thread.slug}) }}" data-tooltip="tooltip"
-               title="Ouvrir le sujet">
+            <a href="{{ path('thread.unlock', {'slug': thread.slug}) }}"  data-bs-toggle="tooltip"
+               data-bs-placement="right" title="Ouvrir le sujet">
                 <i class="fas fa-lock-open rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
-            <a href="{{ path('thread.lock', {'slug': thread.slug}) }}" data-tooltip="tooltip"
-               title="Fermer le sujet">
+            <a href="{{ path('thread.lock', {'slug': thread.slug}) }}"  data-bs-toggle="tooltip"
+               data-bs-placement="right" title="Fermer le sujet">
                 <i class="fas fa-lock rotate"></i>
             </a>
         </li>
@@ -36,9 +36,11 @@
 
 {% if is_granted('DELETE', thread) %}
     <li>
-        <a href="#" data-toggle="modal" data-target="#deleteModal" data-tooltip="tooltip"
-           title="Supprimer le sujet">
-            <i class="fas fa-trash-alt rotate"></i>
-        </a>
+        <span data-bs-target="#deleteModal" data-bs-toggle="modal">
+            <a href="#" data-bs-toggle="tooltip" data-bs-placement="right"
+            title="Supprimer le sujet">
+                <i class="fas fa-trash-alt rotate"></i>
+            </a>
+        </span>
     </li>
 {% endif %}

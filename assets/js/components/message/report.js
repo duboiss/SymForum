@@ -1,50 +1,49 @@
-import $ from 'jquery';
 import axios from 'axios';
+import { Modal, Toast } from 'bootstrap';
 
-const $modal = $('#reportModal');
-const $reasonTextarea = $('textarea[name="reason"]');
+const modalElement = document.getElementById('reportModal');
+const form = modalElement.querySelector('form');
+const reasonTextarea = document.getElementById('message-text');
 const reportSubmitBtn = document.getElementById('js-report-button');
 const errorMessage = document.querySelector('.error-message');
-const $toastReport = $('#toastHide-report');
+
+const modal = new Modal(modalElement);
 
 let messageAuthor; let messageUuid; let
     responseMessage;
 
-$modal.on('show.bs.modal', (event) => {
-    const button = $(event.relatedTarget); // Button that triggered the modal
+modalElement.addEventListener('show.bs.modal', (event) => {
+    const button = event.relatedTarget; // Button that triggered the modal
 
     // Extract info from data-* attributes
-    messageAuthor = button.data('author');
-    messageUuid = button.data('message');
+    messageAuthor = button.dataset.author;
+    messageUuid = button.dataset.message;
 
-    // Modal customization
-    $modal.find('.reportText').text(`Signaler le message de ${messageAuthor}`);
-    $modal.find('form').attr('action', `/forums/reports/${messageUuid}`);
+    document.getElementById('reportText').textContent = `Signaler le message de ${messageAuthor}`;
+    form.setAttribute('action', `/forums/reports/${messageUuid}`);
 });
 
-$modal.on('shown.bs.modal', () => {
-    $reasonTextarea.focus();
-});
+modalElement.addEventListener('shown.bs.modal', () => reasonTextarea.focus());
 
-$modal.on('hidden.bs.modal', () => {
-    $reasonTextarea.val('');
+modalElement.addEventListener('hidden.bs.modal', () => {
+    reasonTextarea.value = '';
     errorMessage.textContent = '';
 });
 
 reportSubmitBtn.addEventListener('click', (e) => {
     e.preventDefault();
 
-    const url = $modal.find('form').attr('action');
-    const reason = $modal.find($reasonTextarea).val();
+    const url = form.getAttribute('action');
+    const reason = reasonTextarea.value.trim();
 
     axios.post(url, {
         reason,
     }).then((response) => {
         responseMessage = response.data.message;
-        $toastReport.find('.toast-body').text(responseMessage);
+        document.getElementById('hiddenToast-report').getElementsByClassName('toast-body')[0].textContent = responseMessage;
 
-        $toastReport.toast('show');
-        $modal.modal('hide');
+        modal.hide();
+        new Toast(document.getElementById('hiddenToast-report')).show();
     }).catch((err) => {
         responseMessage = err.response.data.message;
         errorMessage.textContent = responseMessage;

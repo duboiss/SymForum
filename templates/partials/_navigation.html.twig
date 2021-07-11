@@ -1,32 +1,34 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="{{ path('forum.index') }}">SymForum</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('forum.index') }}">SymForum</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            {% set current_route = app.request.get('_route') %}
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                {% set current_route = app.request.get('_route') %}
 
-            <li class="nav-item{{ current_route|split('.', 2)|first in ['forum', 'category', 'thread'] ? ' active' }}">
-                <a class="nav-link" href="{{ path('forum.index') }}">Forums</a>
-            </li>
-
-            {{ include('partials/_nav_item.html.twig', {route: 'page.members', text: 'Liste des membres'}) }}
-
-            {% if app.user %}
-                <li class="nav-item{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}">
-                    <a class="nav-link" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
+                <li class="nav-item">
+                    <a class="nav-link{{ current_route|split('.', 2)|first in ['forum', 'category', 'thread'] ? ' active' }}" href="{{ path('forum.index') }}">Forums</a>
                 </li>
-                {% if is_granted('ROLE_MODERATOR') %}
-                    <li class="nav-item{{ current_route starts with 'admin' ? ' active' }}">
-                        <a class="nav-link" href="{{ path('admin.homepage') }}">Admin</a>
+
+                {{ include('partials/_nav_item.html.twig', {route: 'page.members', text: 'Liste des membres'}) }}
+
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link{{ app.request.get('_route') == 'user.profile' and app.user.pseudo in app.request.get('_route_params') ? ' active' }}" href="{{ path('user.profile', {'slug': app.user.slug}) }}">Mon profil</a>
                     </li>
+                    {% if is_granted('ROLE_MODERATOR') %}
+                        <li class="nav-item">
+                            <a class="nav-link{{ current_route starts with 'admin' ? ' active' }}" href="{{ path('admin.homepage') }}">Admin</a>
+                        </li>
+                    {% endif %}
+                    {{ include('partials/_nav_item.html.twig', {route: 'security.logout', text: 'Déconnexion'}) }}
+                {% else %}
+                    {{ include('partials/_nav_item.html.twig', {route: 'security.login', text: 'Connexion'}) }}
                 {% endif %}
-                {{ include('partials/_nav_item.html.twig', {route: 'security.logout', text: 'Déconnexion'}) }}
-            {% else %}
-                {{ include('partials/_nav_item.html.twig', {route: 'security.login', text: 'Connexion'}) }}
-            {% endif %}
-        </ul>
+            </ul>
+        </div>
     </div>
 </nav>
