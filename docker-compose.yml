@@ -7,8 +7,8 @@ services:
     environment:
       SERVER_NAME: ${SERVER_NAME:-symforum.localhost, caddy:80}
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     working_dir: /var/www/html
     volumes:
       - ./public:/var/www/html/public:ro
@@ -21,7 +21,7 @@ services:
   php:
     build: docker/php
     container_name: ${PROJECT_NAME}_php
-    user: '1000:1000'
+    user: "1000:1000"
     env_file:
       - .env
     working_dir: /var/www/html
@@ -34,7 +34,7 @@ services:
     container_name: ${PROJECT_NAME}_database
     command: --default-authentication-plugin=mysql_native_password
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       MYSQL_DATABASE: main
       MYSQL_ROOT_PASSWORD: password
