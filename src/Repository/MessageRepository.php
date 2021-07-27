@@ -80,7 +80,7 @@ class MessageRepository extends ServiceEntityRepository
         try {
             return $this->joinThreadQb()
                 ->where('thread.forum = :forum')
-                ->setParameter(':forum', $forum)
+                ->setParameter('forum', $forum)
                 ->orderBy('m.createdAt', 'DESC')
                 ->setMaxResults(1)
                 ->getQuery()
@@ -110,7 +110,7 @@ class MessageRepository extends ServiceEntityRepository
         try {
             return $this->whereThreadQb($message->getThread())
                 ->andWhere('m.createdAt > :message')
-                ->setParameter(':message', $message->getCreatedAt())
+                ->setParameter('message', $message->getCreatedAt())
                 ->orderBy('m.createdAt', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
@@ -142,7 +142,7 @@ class MessageRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQb($qb)
             ->andWhere('m.thread = :thread')
-            ->setParameter(':thread', $thread)
+            ->setParameter('thread', $thread)
         ;
     }
 

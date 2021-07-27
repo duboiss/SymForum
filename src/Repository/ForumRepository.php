@@ -33,7 +33,7 @@ class ForumRepository extends ServiceEntityRepository
             ->leftJoin('lm.thread', 'lmThread')
             ->addSelect('lm, lmAuthor, lmThread')
             ->where('f.category = :category')
-            ->setParameter(':category', $category)
+            ->setParameter('category', $category)
             ->orderBy('f.position', 'ASC')
             ->getQuery()
             ->getResult()
