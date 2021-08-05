@@ -14,9 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ThreadRepository::class)
- */
+#[ORM\Entity(repositoryClass: ThreadRepository::class)]
 #[UniqueEntity('slug')]
 class Thread
 {
@@ -26,57 +24,43 @@ class Thread
     public const TITLE_MIN_LENGTH = 12;
     public const TITLE_MAX_LENGTH = 50;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    private $title;
+    private ?string $title = null;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
      * @Gedmo\Slug(fields={"title"})
      */
-    private $slug;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="threads")
      * @Gedmo\Blameable(on="create")
      */
-    private $author;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'threads')]
+    private ?User $author = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="threads")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Forum::class, inversedBy: 'threads')]
+    #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull]
     private $forum;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     #[Assert\NotNull]
-    private $isLock = false;
+    private bool $isLock = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     #[Assert\NotNull]
-    private $isPin = false;
+    private bool $isPin = false;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Message::class, cascade={"persist", "remove"})
-     */
-    private $lastMessage;
+    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'])]
+    private ?Message $lastMessage = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="thread", orphanRemoval=true)
-     */
-    private $messages;
+    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: Message::class, orphanRemoval: true)]
+    private Collection $messages;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $totalMessages = 0;
+    #[ORM\Column(type: 'smallint')]
+    private int $totalMessages = 0;
 
     public function __construct()
     {

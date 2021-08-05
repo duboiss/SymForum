@@ -10,24 +10,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=CoreOptionRepository::class)
- */
+#[ORM\Entity(repositoryClass: CoreOptionRepository::class)]
 #[UniqueEntity('name')]
 class CoreOption
 {
     use PrimaryKeyTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $value;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $value = null;
 
     public function getName(): ?string
     {

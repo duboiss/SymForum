@@ -12,9 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ReportRepository::class)
- */
+#[ORM\Entity(repositoryClass: ReportRepository::class)]
 class Report
 {
     use CreatedAtTrait;
@@ -22,35 +20,29 @@ class Report
 
     public const REASON_MIN_LENGTH = 8;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="reports")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'reports')]
+    #[ORM\JoinColumn(nullable: false)]
     private $message;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Vous devez indiquer un motif.')]
     #[Assert\Length(min: self::REASON_MIN_LENGTH, max: 255, minMessage: 'Votre message doit faire au moins 10 caractères.', maxMessage: 'Votre message doit faire au maximum 255 caractères.')]
-    private $reason;
+    private ?string $reason = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @Gedmo\Blameable(on="create")
      */
-    private $reportedBy;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
+    private ?User $reportedBy = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $treatedAt = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $treatedAt;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="treatedReports")
      * @Gedmo\Blameable(on="change", field={"treatedAt"})
      */
-    private $treatedBy;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'treatedReports')]
+    private ?User $treatedBy = null;
 
     public function getMessage(): Message
     {

@@ -8,23 +8,17 @@ use App\Entity\Traits\PrimaryKeyTrait;
 use App\Repository\MessageLikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=MessageLikeRepository::class)
- */
+#[ORM\Entity(repositoryClass: MessageLikeRepository::class)]
 class MessageLike
 {
     use PrimaryKeyTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="likes")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'likes')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Message $message;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'likes')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user;
 
     public function getMessage(): ?Message

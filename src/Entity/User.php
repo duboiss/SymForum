@@ -17,9 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('pseudo')]
 #[UniqueEntity('email')]
 #[UniqueEntity('slug')]
@@ -31,69 +29,47 @@ class User implements UserInterface, \Stringable
     public const PSEUDO_MIN_LENGTH = 3;
     public const PSEUDO_MAX_LENGTH = 10;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\Regex(pattern: '^[a-z0-9]+$/i', message: 'Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres.')]
     #[Assert\Length(min: self::PSEUDO_MIN_LENGTH, max: self::PSEUDO_MAX_LENGTH, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
-    private $pseudo;
+    private ?string $pseudo = null;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
      * @Gedmo\Slug(fields={"pseudo"})
      */
-    private $slug;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $hash;
+    #[ORM\Column(length: 255)]
+    private ?string $hash = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\Email(message: 'Veuillez saisir une adresse email valide.')]
-    private $email;
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $lastActivityAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?DateTimeInterface $lastActivityAt = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Thread::class, mappedBy="author")
-     */
-    private $threads;
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Thread::class)]
+    private Collection $threads;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author")
-     */
-    private $messages;
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Message::class)]
+    private Collection $messages;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="updatedBy")
-     */
-    private $updatedMessages;
+    #[ORM\OneToMany(mappedBy: 'updatedBy', targetEntity: Message::class)]
+    private Collection $updatedMessages;
 
-    /**
-     * @ORM\OneToMany(targetEntity=MessageLike::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $likes;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MessageLike::class, orphanRemoval: true)]
+    private Collection $likes;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="reportedBy")
-     */
-    private $reports;
+    #[ORM\OneToMany(mappedBy: 'reportedBy', targetEntity: Report::class)]
+    private Collection $reports;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="treatedBy")
-     */
-    private $treatedReports;
+    #[ORM\OneToMany(mappedBy: 'treatedBy', targetEntity: Report::class)]
+    private Collection $treatedReports;
 
     public function __construct()
     {
@@ -195,7 +171,7 @@ class User implements UserInterface, \Stringable
         return null;
     }
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->email;
     }

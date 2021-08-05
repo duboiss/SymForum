@@ -13,79 +13,55 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ForumRepository::class)
- */
+#[ORM\Entity(repositoryClass: ForumRepository::class)]
 #[UniqueEntity('slug')]
 class Forum
 {
     use PrimaryKeyTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    private $title;
+    private ?string $title = null;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
      * @Gedmo\Slug(fields={"title"})
      */
-    private $slug;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="forums")
-     */
-    private $category;
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'forums')]
+    private ?Category $category;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="forums")
-     */
-    private $parent;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'forums')]
+    private ?Forum $parent = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="parent")
-     * @ORM\OrderBy({"position": "ASC"})
-     */
-    private $forums;
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
+    private Collection $forums;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
+    #[ORM\Column(type: 'smallint')]
     #[Assert\NotBlank]
     #[Assert\Positive(message: 'La position doit correspondre à un nombre positif.')]
-    private $position;
+    private ?int $position = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column]
     #[Assert\NotNull]
-    private $isLock = false;
+    private bool $isLock = false;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Message::class, cascade={"persist", "remove"})
-     */
-    private $lastMessage;
+    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'])]
+    private ?Message $lastMessage = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Thread::class, mappedBy="forum", orphanRemoval=true)
-     */
-    private $threads;
+    #[ORM\OneToMany(mappedBy: 'forum', targetEntity: Thread::class, orphanRemoval: true)]
+    private Collection $threads;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $totalThreads = 0;
+    #[ORM\Column(type: 'smallint')]
+    private int $totalThreads = 0;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $totalMessages = 0;
+    #[ORM\Column(type: 'smallint')]
+    private int $totalMessages = 0;
 
     public function __construct()
     {
