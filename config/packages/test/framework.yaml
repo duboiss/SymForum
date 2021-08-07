@@ -5,4 +5,4 @@ framework:
 
 liip_test_fixtures:
     cache_db:
-        sqlite: liip_test_fixtures.services_database_backup.sqlite
+        mysql: 'Liip\TestFixturesBundle\Services\DatabaseBackup\MysqlDatabaseBackup'
