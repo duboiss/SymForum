@@ -142,6 +142,7 @@ twigcs: vendor ## Run twigcs
 .PHONY: tests
 
 tests: vendor ## Run tests
+	@$(SYMFONY) doctrine:database:create --env=test --if-not-exists
 	@$(PHPUNIT)
 
 
