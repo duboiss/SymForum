@@ -13,7 +13,7 @@ class CategoryFixtures extends BaseFixtures
     {
         $this->createMany(Category::class, FixturesSettings::CATEGORIES_COUNT, function (Category $category, $count): void {
             $category->setTitle($this->faker->words(4, true))
-                ->setPosition($count)
+                ->setPosition($count + 1)
             ;
         });
 

@@ -41,8 +41,8 @@ class CategoryAdminController extends AbstractBaseController
             return $this->redirectToRoute('admin.category.index');
         }
 
-        return $this->render('admin/category/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('admin/category/new.html.twig', [
+            'form' => $form,
         ]);
     }
 
@@ -59,9 +59,9 @@ class CategoryAdminController extends AbstractBaseController
             return $this->redirectToRoute('admin.category.index');
         }
 
-        return $this->render('admin/category/edit.html.twig', [
+        return $this->renderForm('admin/category/edit.html.twig', [
             'category' => $category,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

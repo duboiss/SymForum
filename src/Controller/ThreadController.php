@@ -61,10 +61,10 @@ class ThreadController extends AbstractBaseController
             (int) $optionService->get('messages_per_thread', '10'),
         );
 
-        return $this->render('thread/show.html.twig', [
+        return $this->renderForm('thread/show.html.twig', [
             'thread' => $thread,
             'pagination' => $pagination,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -99,9 +99,9 @@ class ThreadController extends AbstractBaseController
             ]);
         }
 
-        return $this->render('thread/new.html.twig', [
+        return $this->renderForm('thread/new.html.twig', [
             'forum' => $forum,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

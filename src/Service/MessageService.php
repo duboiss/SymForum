@@ -40,10 +40,6 @@ class MessageService
 
     public function canEditMessage(Message $message): bool
     {
-        if ($this->security->isGranted('ROLE_MODERATOR')) {
-            return true;
-        }
-
         if ($message->getThread()->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
 

@@ -49,9 +49,9 @@ class MessageController extends AbstractBaseController
             return $route;
         }
 
-        return $this->render('message/edit.html.twig', [
+        return $this->renderForm('message/edit.html.twig', [
             'message' => $message,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
