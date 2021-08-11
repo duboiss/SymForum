@@ -109,7 +109,7 @@ class ThreadController extends AbstractBaseController
     #[Route(path: '/threads/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
     {
-        $submittedToken = $request->request->get('token');
+        $submittedToken = (string) $request->request->get('token');
 
         if ($this->isCsrfTokenValid('delete-thread', $submittedToken)) {
             $forum = $thread->getForum();

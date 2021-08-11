@@ -6,11 +6,11 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends BaseFixtures
 {
-    public function __construct(private UserPasswordEncoderInterface $encoder)
+    public function __construct(private UserPasswordHasherInterface $hasher)
     {
     }
 
@@ -18,13 +18,13 @@ class UserFixtures extends BaseFixtures
     {
         $demoUser = new User();
         $demoUser->setPseudo('demo')
-            ->setHash($this->encoder->encodePassword($demoUser, 'demo'))
+            ->setHash($this->hasher->hashPassword($demoUser, 'demo'))
             ->setEmail('demo@demo.com')
         ;
 
         $adminUser = new User();
         $adminUser->setPseudo('admin')
-            ->setHash($this->encoder->encodePassword($demoUser, 'admin'))
+            ->setHash($this->hasher->hashPassword($demoUser, 'admin'))
             ->setEmail('admin@admin.com')
             ->setRoles(['ROLE_ADMIN'])
         ;
@@ -34,7 +34,7 @@ class UserFixtures extends BaseFixtures
 
         $this->createMany(User::class, FixturesSettings::USERS_COUNT, function (User $user): void {
             $user->setPseudo($this->faker->userName)
-                ->setHash($this->encoder->encodePassword($user, 'password'))
+                ->setHash($this->hasher->hashPassword($user, 'password'))
                 ->setEmail($this->faker->email)
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 years'))
                 ->setLastActivityAt($this->faker->dateTimeBetween($user->getCreatedAt()))

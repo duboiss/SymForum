@@ -9,17 +9,17 @@ use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 
 class MessageService
 {
     private FlashBagInterface $flashBag;
 
-    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, SessionInterface $session, private AntispamService $antispamService, private Security $security)
+    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, RequestStack $requestStack, private AntispamService $antispamService, private Security $security)
     {
-        $this->flashBag = $session->getFlashBag();
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
 
     public function canPostMessage(Thread $thread, User $user): bool

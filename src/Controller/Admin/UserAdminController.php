@@ -56,7 +56,7 @@ class UserAdminController extends AbstractBaseController
     #[Route(path: '/{slug}/delete', name: 'delete', methods: ['POST'])]
     public function delete(User $user, UserService $userService, Request $request): Response
     {
-        $submittedToken = $request->request->get('token');
+        $submittedToken = (string) $request->request->get('token');
 
         if ($this->isCsrfTokenValid('delete-user', $submittedToken)) {
             $request->request->get('deleteData') ? $userService->deleteUser($user, true) : $userService->deleteUser($user);

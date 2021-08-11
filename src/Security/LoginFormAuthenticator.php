@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
+class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
@@ -31,60 +28,32 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     private FlashBagInterface $flashBag;
 
-    public function __construct(private UserRepository $userRepository, private RouterInterface $router, private CsrfTokenManagerInterface $csrfTokenManager, private UserPasswordEncoderInterface $passwordEncoder, SessionInterface $session)
+    public function __construct(private RouterInterface $router, private CsrfTokenManagerInterface $csrfTokenManager, RequestStack $requestStack)
     {
-        $this->flashBag = $session->getFlashBag();
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
 
-    public function supports(Request $request): bool
+    protected function getLoginUrl(Request $request): string
     {
-        return $request->attributes->get('_route') === self::LOGIN_ROUTE
-            && $request->isMethod('POST');
+        return $this->router->generate(self::LOGIN_ROUTE);
     }
 
-    public function getCredentials(Request $request)
+    public function authenticate(Request $request): Passport
     {
-        $credentials = [
-            'email' => $request->request->get('email'),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
-        ];
+        $email = (string) $request->request->get('email');
+        $password = (string) $request->request->get('password');
+        $csrfToken = (string) $request->request->get('_csrf_token');
 
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $credentials['email']
-        );
-
-        return $credentials;
+        return new Passport(new UserBadge($email), new PasswordCredentials($password), [
+            new RememberMeBadge(),
+            new CsrfTokenBadge('authenticate', $csrfToken),
+        ]);
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
     {
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
-        }
-
-        $user = $this->userRepository->findOneBy(['email' => $credentials['email']]);
-
-        if (!$user) {
-            throw new CustomUserMessageAuthenticationException('Cette adresse email n\'a pas pu être trouvée.');
-        }
-
-        return $user;
-    }
-
-    public function checkCredentials($credentials, UserInterface $user): bool
-    {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-    }
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
-    {
-        $this->flashBag->add('info', ['title' => 'Connexion', 'content' => 'Vous êtes désormais connecté !']);
-
-        if (($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', $targetUrl)) {
-            return new RedirectResponse($targetUrl);
+        if (($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', (string) $targetUrl)) {
+            return new RedirectResponse((string) $targetUrl);
         }
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
@@ -92,10 +61,5 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         return new RedirectResponse($this->router->generate(self::REDIRECT_AFTER_LOGIN_ROUTE));
-    }
-
-    protected function getLoginUrl(): string
-    {
-        return $this->router->generate(self::LOGIN_ROUTE);
     }
 }

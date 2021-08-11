@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('pseudo')]
 #[UniqueEntity('email')]
 #[UniqueEntity('slug')]
-class User implements UserInterface, \Stringable
+class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
 {
     use CreatedAtTrait;
     use PrimaryKeyTrait;
@@ -161,7 +162,7 @@ class User implements UserInterface, \Stringable
         return $this;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->hash;
     }
@@ -178,6 +179,11 @@ class User implements UserInterface, \Stringable
 
     public function eraseCredentials(): void
     {
+    }
+
+    public function getUserIdentifier(): ?string
+    {
+        return $this->email;
     }
 
     /**

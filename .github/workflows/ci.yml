@@ -8,7 +8,7 @@ on:
 
 jobs:
   symfony:
-    name: Symfony 5.2
+    name: Symfony
     continue-on-error: false
     runs-on: 'ubuntu-20.04'
 
