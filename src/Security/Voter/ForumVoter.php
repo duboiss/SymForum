@@ -34,12 +34,10 @@ class ForumVoter extends Voter
             return false;
         }
 
-        switch ($attribute) {
-            case self::LOCK:
-                return $this->canLock();
-        }
-
-        return false;
+        return match ($attribute) {
+            self::LOCK => $this->canLock(),
+            default => false,
+        };
     }
 
     private function canLock(): bool

@@ -36,18 +36,12 @@ class ThreadVoter extends Voter
             return false;
         }
 
-        switch ($attribute) {
-            case self::LOCK:
-                return $this->canLock();
-
-            case self::PIN:
-                return $this->canPin();
-
-            case self::DELETE:
-                return $this->canDelete();
-        }
-
-        return false;
+        return match ($attribute) {
+            self::LOCK => $this->canLock(),
+            self::PIN => $this->canPin(),
+            self::DELETE => $this->canDelete(),
+            default => false,
+        };
     }
 
     private function canLock(): bool

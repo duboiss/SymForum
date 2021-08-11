@@ -39,21 +39,13 @@ class MessageVoter extends Voter
             return false;
         }
 
-        switch ($attribute) {
-            case self::EDIT:
-                return $this->canEdit($message, $user);
-
-            case self::DELETE:
-                return $this->canDelete();
-
-            case self::LIKE:
-                return true;
-
-            case self::REPORT:
-                return $this->canReport($message, $user);
-        }
-
-        return false;
+        return match ($attribute) {
+            self::EDIT => $this->canEdit($message, $user),
+            self::DELETE => $this->canDelete(),
+            self::LIKE => true,
+            self::REPORT => $this->canReport($message, $user),
+            default => false,
+        };
     }
 
     private function canEdit(Message $message, User $user): bool
