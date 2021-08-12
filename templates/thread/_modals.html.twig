@@ -12,7 +12,7 @@
                     <p>Êtes-vous certain de vouloir supprimer ce sujet ?</p>
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ path('thread.delete', {'id': thread.id}) }}" method="POST">
+                    <form action="{{ path('thread.delete', {'slug': thread.slug}) }}" method="POST">
                         <input type="hidden" name="token" value="{{ csrf_token('delete-thread') }}"/>
                         <button type="submit" class="btn btn-primary js-submit-btn">Confirmer</button>
                     </form>
@@ -33,7 +33,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ path('report.message', {'id': 1}) }}" method="POST">
+                <form action="{{ path('report.message', {'uuid': 1}) }}" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
                             <p class="reportText"></p>

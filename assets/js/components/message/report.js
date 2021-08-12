@@ -7,7 +7,7 @@ const reportSubmitBtn = document.getElementById('js-report-button');
 const errorMessage = document.querySelector('.error-message');
 const $toastReport = $('#toastHide-report');
 
-let messageAuthor; let messageId; let
+let messageAuthor; let messageUuid; let
     responseMessage;
 
 $modal.on('show.bs.modal', (event) => {
@@ -15,11 +15,11 @@ $modal.on('show.bs.modal', (event) => {
 
     // Extract info from data-* attributes
     messageAuthor = button.data('author');
-    messageId = button.data('message');
+    messageUuid = button.data('message');
 
     // Modal customization
     $modal.find('.reportText').text(`Signaler le message de ${messageAuthor}`);
-    $modal.find('form').attr('action', `/forums/reports/${messageId}`);
+    $modal.find('form').attr('action', `/forums/reports/${messageUuid}`);
 });
 
 $modal.on('shown.bs.modal', () => {

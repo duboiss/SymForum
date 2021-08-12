@@ -1,14 +1,14 @@
 {% if is_granted('PIN', thread) %}
     {% if thread.pin %}
         <li>
-            <a href="{{ path('thread.unpin', {'id': thread.id}) }}" data-tooltip="tooltip"
+            <a href="{{ path('thread.unpin', {'slug': thread.slug}) }}" data-tooltip="tooltip"
                title="Détacher le sujet">
                 <i class="fas fa-thumbtack rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
-            <a href="{{ path('thread.pin', {'id': thread.id}) }}" data-tooltip="tooltip"
+            <a href="{{ path('thread.pin', {'slug': thread.slug}) }}" data-tooltip="tooltip"
                title="Épingler le sujet">
                 <i class="fas fa-thumbtack rotate"></i>
             </a>
@@ -19,14 +19,14 @@
 {% if is_granted('LOCK', thread) %}
     {% if thread.lock %}
         <li>
-            <a href="{{ path('thread.unlock', {'id': thread.id}) }}" data-tooltip="tooltip"
+            <a href="{{ path('thread.unlock', {'slug': thread.slug}) }}" data-tooltip="tooltip"
                title="Ouvrir le sujet">
                 <i class="fas fa-lock-open rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
-            <a href="{{ path('thread.lock', {'id': thread.id}) }}" data-tooltip="tooltip"
+            <a href="{{ path('thread.lock', {'slug': thread.slug}) }}" data-tooltip="tooltip"
                title="Fermer le sujet">
                 <i class="fas fa-lock rotate"></i>
             </a>

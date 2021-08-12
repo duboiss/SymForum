@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReportController extends AbstractBaseController
 {
     #[IsGranted('REPORT', subject: 'message')]
-    #[Route(path: '/{id}', name: 'message', methods: ['POST'])]
+    #[Route(path: '/{uuid}', name: 'message', methods: ['POST'])]
     public function message(Message $message, Request $request, ReportService $reportService, ReportRepository $reportRepository): Response
     {
         $reason = $this->jsonDecodeRequestContent($request)['reason'];

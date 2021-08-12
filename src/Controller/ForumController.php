@@ -62,7 +62,7 @@ class ForumController extends AbstractBaseController
     }
 
     #[IsGranted('LOCK', subject: 'forum')]
-    #[Route(path: '/{id}-{slug}/lock', name: 'forum.lock', methods: ['GET'])]
+    #[Route(path: '/{slug}/lock', name: 'forum.lock', methods: ['GET'])]
     public function lock(Forum $forum, ForumService $forumService): Response
     {
         $forumService->lock($forum);
@@ -74,7 +74,7 @@ class ForumController extends AbstractBaseController
     }
 
     #[IsGranted('LOCK', subject: 'forum')]
-    #[Route(path: '/{id}-{slug}/unlock', name: 'forum.unlock', methods: ['GET'])]
+    #[Route(path: '/{slug}/unlock', name: 'forum.unlock', methods: ['GET'])]
     public function unlock(Forum $forum, ForumService $forumService): Response
     {
         $forumService->unlock($forum);

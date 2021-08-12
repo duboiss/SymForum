@@ -29,7 +29,7 @@ class ThreadController extends AbstractBaseController
     {
         $form = $this->createForm(MessageType::class, null, [
             'action' => $request->getUri() . '#message',
-            'attr' => ['id' => 'message'],
+            'attr' => ['uuid' => 'message'],
         ]);
         $form->handleRequest($request);
 
@@ -42,7 +42,7 @@ class ThreadController extends AbstractBaseController
                 $lastMessage = $thread->getLastMessage();
 
                 return $this->redirectToRoute('message.show', [
-                    'id' => $lastMessage->getId(),
+                    'uuid' => $lastMessage->getUuid(),
                 ]);
             }
 
@@ -51,7 +51,7 @@ class ThreadController extends AbstractBaseController
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
 
             return $this->redirectToRoute('message.show', [
-                'id' => $message->getId(),
+                'uuid' => $message->getUuidBase32(),
             ]);
         }
 
@@ -106,7 +106,7 @@ class ThreadController extends AbstractBaseController
     }
 
     #[IsGranted('DELETE', subject: 'thread')]
-    #[Route(path: '/threads/{id}/delete', name: 'delete', methods: ['POST'])]
+    #[Route(path: '/threads/{slug}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Thread $thread, Request $request, ThreadService $threadService): Response
     {
         $submittedToken = (string) $request->request->get('token');
@@ -126,7 +126,7 @@ class ThreadController extends AbstractBaseController
     }
 
     #[IsGranted('LOCK', subject: 'thread')]
-    #[Route(path: '/threads/{id}/lock', name: 'lock', methods: ['GET'])]
+    #[Route(path: '/threads/{slug}/lock', name: 'lock', methods: ['GET'])]
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->lock($thread);
@@ -136,7 +136,7 @@ class ThreadController extends AbstractBaseController
     }
 
     #[IsGranted('LOCK', subject: 'thread')]
-    #[Route(path: '/threads/{id}/unlock', name: 'unlock', methods: ['GET'])]
+    #[Route(path: '/threads/{slug}/unlock', name: 'unlock', methods: ['GET'])]
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unlock($thread);
@@ -146,7 +146,7 @@ class ThreadController extends AbstractBaseController
     }
 
     #[IsGranted('PIN', subject: 'thread')]
-    #[Route(path: '/threads/{id}/pin', name: 'pin', methods: ['GET'])]
+    #[Route(path: '/threads/{slug}/pin', name: 'pin', methods: ['GET'])]
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->pin($thread);
@@ -156,7 +156,7 @@ class ThreadController extends AbstractBaseController
     }
 
     #[IsGranted('PIN', subject: 'thread')]
-    #[Route(path: '/threads/{id}/unpin', name: 'unpin', methods: ['GET'])]
+    #[Route(path: '/threads/{slug}/unpin', name: 'unpin', methods: ['GET'])]
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unpin($thread);

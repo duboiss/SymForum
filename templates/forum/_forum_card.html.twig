@@ -13,7 +13,7 @@
             {% if forum.lastMessage %}
                 {% set last_message = forum.lastMessage %}
 
-                <a href="{{ path('message.show', {'id': last_message.id}) }}">{{ last_message.createdAt|ago }}</a> par {{ user_profile_link(last_message.author) }}
+                <a href="{{ path('message.show', {'uuid': last_message.uuidBase32}) }}">{{ last_message.createdAt|ago }}</a> par {{ user_profile_link(last_message.author) }}
             {% else %}
                 Aucun message
             {% endif %}

@@ -6,11 +6,13 @@ namespace App\Entity;
 
 use App\Entity\Traits\PrimaryKeyTrait;
 use App\Entity\Traits\TimestampableTrait;
+use App\Entity\Traits\UuidTrait;
 use App\Repository\MessageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
@@ -18,6 +20,7 @@ class Message
 {
     use PrimaryKeyTrait;
     use TimestampableTrait;
+    use UuidTrait;
 
     public const CONTENT_MIN_LENGTH = 10;
     public const CONTENT_MAX_LENGTH = 6000;
@@ -51,6 +54,7 @@ class Message
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->likes = new ArrayCollection();
         $this->reports = new ArrayCollection();
     }

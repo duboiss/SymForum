@@ -19,21 +19,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/forums/messages', name: 'message.')]
 class MessageController extends AbstractBaseController
 {
-    #[Route(path: '/{id}', name: 'show', methods: ['GET'])]
+    #[Route(path: '/{uuid}', name: 'show', methods: ['GET'])]
     public function show(Message $message, ThreadService $threadService): Response
     {
         return $this->redirectToRoute('thread.show', [
             'slug' => $message->getThread()->getSlug(),
             'page' => $threadService->getMessagePage($message),
-            '_fragment' => $message->getId(),
+            '_fragment' => $message->getUuidBase32(),
         ]);
     }
 
     #[IsGranted('EDIT', subject: 'message')]
-    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{uuid}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Message $message, Request $request, MessageService $messageService): RedirectResponse | Response
     {
-        $route = $this->redirectToRoute('message.show', ['id' => $message->getId()]);
+        $route = $this->redirectToRoute('message.show', ['uuid' => $message->getUuidBase32()]);
 
         if (!$messageService->canEditMessage($message)) {
             return $route;
@@ -56,7 +56,7 @@ class MessageController extends AbstractBaseController
     }
 
     #[IsGranted('DELETE', subject: 'message')]
-    #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
+    #[Route(path: '/{uuid}/delete', name: 'delete', methods: ['GET'])]
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
     {
         $thread = $message->getThread();
@@ -89,7 +89,7 @@ class MessageController extends AbstractBaseController
         $nextMessage = $messageRepository->findNextMessageInThread($message);
 
         return $this->redirectToRoute('message.show', [
-            'id' => $nextMessage ? $nextMessage->getId() : $lastMessage->getId(),
+            'uuid' => $nextMessage ? $nextMessage->getUuid() : $lastMessage->getUuid(),
         ]);
     }
 }

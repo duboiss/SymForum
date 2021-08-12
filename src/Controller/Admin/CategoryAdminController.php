@@ -46,7 +46,7 @@ class CategoryAdminController extends AbstractBaseController
         ]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{uuid}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Category $category, Request $request): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
@@ -65,7 +65,7 @@ class CategoryAdminController extends AbstractBaseController
         ]);
     }
 
-    #[Route(path: '/{id}/delete', name: 'delete', methods: ['DELETE'])]
+    #[Route(path: '/{uuid}/delete', name: 'delete', methods: ['DELETE'])]
     public function delete(Category $category, EntityManagerInterface $em): Response
     {
         if (count($category->getForums()) > 0) {

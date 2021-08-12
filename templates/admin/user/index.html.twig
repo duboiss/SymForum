@@ -14,7 +14,6 @@
         <table class="table table-sm">
             <thead>
             <tr>
-                <th>#</th>
                 <th>Incrit le</th>
                 <th>Pseudo</th>
                 <th>Email</th>
@@ -25,7 +24,6 @@
             <tbody>
             {% for user in pagination %}
                 <tr>
-                    <td>{{ user.id }}</td>
                     <td>{{ user.createdAt|format_datetime('short') }}</td>
                     <td>{{ user_profile_link(user) }}</td>
                     <td>{{ user.email }}</td>

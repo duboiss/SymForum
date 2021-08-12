@@ -14,9 +14,8 @@
         <table class="table table-sm">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Message de</th>
                 <th>Reporté le</th>
+                <th>Message de</th>
                 <th>Par</th>
                 <th>Motif</th>
                 <th>Actions</th>
@@ -25,12 +24,11 @@
             <tbody>
             {% for report in pagination %}
                 <tr{{ not report.isTreated ? ' class="table-warning"' }}>
-                    <td>{{ report.id }}</td>
-                    <td>{{ user_profile_link(report.message.author) }}</td>
                     <td>{{ report.createdAt|format_datetime }}</td>
+                    <td>{{ user_profile_link(report.message.author) }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
                     <td>{{ report.reason|u.truncate(45, '...', false) }}</td>
-                    <td><a href="{{ path('admin.report.show', {'id': report.id}) }}">Détails</a></td>
+                    <td><a href="{{ path('admin.report.show', {'uuid': report.uuidBase32}) }}">Détails</a></td>
                 </tr>
             {% endfor %}
             </tbody>

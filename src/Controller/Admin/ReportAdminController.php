@@ -31,7 +31,7 @@ class ReportAdminController extends AbstractBaseController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'show', methods: ['GET'])]
+    #[Route(path: '/{uuid}', name: 'show', methods: ['GET'])]
     public function show(Report $report, ReportRepository $reportRepository): Response
     {
         return $this->render('admin/report/show.html.twig', [
@@ -40,7 +40,7 @@ class ReportAdminController extends AbstractBaseController
         ]);
     }
 
-    #[Route(path: '/{id}/delete', name: 'delete', methods: ['GET'])]
+    #[Route(path: '/{uuid}/delete', name: 'delete', methods: ['GET'])]
     public function delete(Report $report, ReportService $reportService): Response
     {
         $reportService->deleteReport($report);
@@ -49,7 +49,7 @@ class ReportAdminController extends AbstractBaseController
         return $this->redirectToRoute('admin.report.index');
     }
 
-    #[Route(path: '/{id}/close', name: 'close', methods: ['GET'])]
+    #[Route(path: '/{uuid}/close', name: 'close', methods: ['GET'])]
     public function close(Report $report, ReportService $reportService): Response
     {
         $reportService->closeReport($report);

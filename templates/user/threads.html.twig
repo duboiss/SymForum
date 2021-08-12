@@ -31,7 +31,7 @@
                             <td><a href="{{ path('thread.show', {'slug': thread.slug}) }}">{{ thread.title }}</a></td>
                             <td>{{ thread.totalAnswers }}</td>
                             <td>
-                                <a href="{{ path('message.show', {'id': thread.lastMessage.id}) }}">{{ thread.lastMessage.createdAt|ago }}</a>
+                                <a href="{{ path('message.show', {'uuid': thread.lastMessage.uuidBase32}) }}">{{ thread.lastMessage.createdAt|ago }}</a>
                                 par {{ user_profile_link(thread.lastMessage.author) }}</td>
                         </tr>
                     {% endfor %}

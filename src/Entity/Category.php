@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Traits\PrimaryKeyTrait;
+use App\Entity\Traits\UuidTrait;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -18,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Category
 {
     use PrimaryKeyTrait;
+    use UuidTrait;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
@@ -40,6 +43,7 @@ class Category
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->forums = new ArrayCollection();
     }
 
