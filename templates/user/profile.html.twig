@@ -16,9 +16,11 @@
         <div class="col col-lg-12 col-md-12 col-sm-12">
             <h3>
                 <span>{{ user }}</span>
-                <a class="btn btn-warning btn-sm" href="{{ path('admin.user.details', {'slug': user.slug}) }}" title="Admin">
-                    <i class="fas fa-user"></i> Admin
-                </a>
+                {% if is_granted('ROLE_MODERATOR') %}
+                    <a class="btn btn-warning btn-sm" href="{{ path('admin.user.details', {'slug': user.slug}) }}" title="Admin">
+                        <i class="fas fa-user"></i> Admin
+                    </a>
+                {% endif %}
             </h3>
             <p>
                 {% if role %}
