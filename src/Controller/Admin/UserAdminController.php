@@ -59,6 +59,12 @@ class UserAdminController extends AbstractBaseController
         $submittedToken = (string) $request->request->get('token');
 
         if ($this->isCsrfTokenValid('delete-user', $submittedToken)) {
+            if ($this->getUser() === $user) {
+                $this->addCustomFlash('danger', 'Utilisateurs', 'Vous ne pouvez pas vous supprimer vous-même !');
+
+                return $this->redirectToRoute('admin.user.index');
+            }
+
             $request->request->get('deleteData') ? $userService->deleteUser($user, true) : $userService->deleteUser($user);
 
             $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été supprimé !", $user->getPseudo()));
