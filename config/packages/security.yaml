@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
-
+    # https://symfony.com/doc/current/security.html#c-hashing-passwords
     password_hashers:
         App\Entity\User: 'auto'
 
@@ -44,5 +44,3 @@ security:
         - { path: ^/admin, allow_if: "is_granted('ROLE_MODERATOR') and is_fully_authenticated()" }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/user, roles: IS_AUTHENTICATED_REMEMBERED }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }

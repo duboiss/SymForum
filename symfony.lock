@@ -71,7 +71,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "2.4",
-            "ref": "dda18c8830b143bc31c0e0457fb13b9029614d76"
+            "ref": "bac5c852ff628886de2753215fe5eb1f9ce980fb"
         },
         "files": [
             "config/packages/doctrine.yaml",
@@ -396,9 +396,6 @@
             "config/packages/dev/debug.yaml"
         ]
     },
-    "symfony/debug-pack": {
-        "version": "v1.0.9"
-    },
     "symfony/dependency-injection": {
         "version": "v5.2.1"
     },
@@ -453,7 +450,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.3",
-            "ref": "772b77cfb5017644547ef7f9364c54e4eb9a6c61"
+            "ref": "414ba00ad43fa71be42c7906a551f1831716b03c"
         },
         "files": [
             "config/packages/cache.yaml",
@@ -520,7 +517,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.3",
-            "ref": "905679249e7b10f06c572917a9022a72cbfedc04"
+            "ref": "97cb3dc7b0f39c7cfc4b7553504c9d7b7795de96"
         },
         "files": [
             ".env.test",
@@ -559,9 +556,6 @@
     "symfony/process": {
         "version": "v5.2.1"
     },
-    "symfony/profiler-pack": {
-        "version": "v1.0.5"
-    },
     "symfony/property-access": {
         "version": "v5.2.1"
     },
@@ -590,7 +584,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.3",
-            "ref": "8b35bfc00a7716db4ca5a764a4b338476ca3a704"
+            "ref": "227eba5e0c7e8fc4beda3537c3d81dc23ba08182"
         },
         "files": [
             "config/packages/security.yaml"
@@ -611,9 +605,6 @@
     "symfony/serializer": {
         "version": "v5.2.1"
     },
-    "symfony/serializer-pack": {
-        "version": "v1.0.4"
-    },
     "symfony/service-contracts": {
         "version": "v2.2.0"
     },
@@ -622,9 +613,6 @@
     },
     "symfony/string": {
         "version": "v5.2.1"
-    },
-    "symfony/test-pack": {
-        "version": "v1.0.7"
     },
     "symfony/translation": {
         "version": "5.3",
@@ -657,9 +645,6 @@
             "config/packages/twig.yaml",
             "templates/base.html.twig"
         ]
-    },
-    "symfony/twig-pack": {
-        "version": "v1.0.1"
     },
     "symfony/uid": {
         "version": "v5.3.3"
@@ -706,7 +691,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "1.9",
-            "ref": "5ff15d211e3d4a9216218f6b7f1572262efd74e2"
+            "ref": "404714014dd6ff7de9aa0f9582d592147359e617"
         },
         "files": [
             "assets/app.js",

@@ -31,7 +31,7 @@ class MessageController extends AbstractBaseController
 
     #[IsGranted('EDIT', subject: 'message')]
     #[Route(path: '/{uuid}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Message $message, Request $request, MessageService $messageService): RedirectResponse | Response
+    public function edit(Message $message, Request $request, MessageService $messageService): RedirectResponse|Response
     {
         $route = $this->redirectToRoute('message.show', ['uuid' => $message->getUuidBase32()]);
 

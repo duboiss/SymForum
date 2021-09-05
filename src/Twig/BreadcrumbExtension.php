@@ -57,7 +57,7 @@ class BreadcrumbExtension extends AbstractExtension
     /**
      * @return string[]
      */
-    public function getBreadcrumbParts(Category | Forum $item, array &$parts = []): array
+    public function getBreadcrumbParts(Category|Forum $item, array &$parts = []): array
     {
         if ($item instanceof Category) {
             $url = $this->urlGenerator->generate('category.show', ['slug' => $item->getSlug()]);
