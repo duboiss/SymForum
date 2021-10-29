@@ -10,7 +10,7 @@ $ cd symforum
 Install docker containers and database volume.
 It may take a little time the first time (pull images).
 ```sh
-$ docker-compose up -d
+$ docker compose up -d
 ```
 
 ### Step 3 - Project

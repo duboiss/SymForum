@@ -1,12 +1,11 @@
 .DEFAULT_GOAL := help
 
-PHP = docker-compose exec -T php
-YARN = docker run --rm -v $(PWD):/app -w /app -u $(shell id -u):$(shell id -g) node:latest yarn
+PHP := docker compose exec php
+YARN := docker run --rm -v $(PWD):/app -w /app -u $(shell id -u):$(shell id -g) node:latest yarn
 
-COMPOSER = $(PHP) composer
-PHPUNIT = $(PHP) bin/phpunit
-SYMFONY = $(PHP) bin/console
-
+COMPOSER := $(PHP) composer
+PHPUNIT := $(PHP) bin/phpunit
+SYMFONY := $(PHP) bin/console
 
 ##
 ## Database
