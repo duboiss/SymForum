@@ -28,3 +28,13 @@ services:
             - name: 'kernel.event_listener'
               event: 'Symfony\Component\Security\Http\Event\LogoutEvent'
               dispatcher: security.event_dispatcher.main
+
+    App\EntityListener\MessageEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Message' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\Message' }
+
+    App\EntityListener\ThreadEntityListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Thread' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\Thread' }

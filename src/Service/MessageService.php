@@ -73,11 +73,9 @@ class MessageService
         $this->em->persist($message);
 
         $thread->setLastMessage($message);
-        $thread->incrementTotalMessages();
 
         $forum = $thread->getForum();
         $forum->setLastMessage($message);
-        $forum->incrementTotalMessages();
 
         $this->em->flush();
 
@@ -96,9 +94,6 @@ class MessageService
         if ($forum->getLastMessage() === $message) {
             $forum->setLastMessage(null);
         }
-
-        $thread->decrementTotalMessages();
-        $forum->decrementTotalMessages();
 
         $this->em->remove($message);
         $this->em->flush();

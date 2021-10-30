@@ -186,6 +186,11 @@ class Thread
         return $this->totalMessages;
     }
 
+    public function getTotalAnswers(): ?int
+    {
+        return $this->totalMessages - 1;
+    }
+
     public function incrementTotalMessages(): self
     {
         ++$this->totalMessages;
@@ -198,10 +203,5 @@ class Thread
         --$this->totalMessages;
 
         return $this;
-    }
-
-    public function getTotalAnswers(): ?int
-    {
-        return $this->totalMessages - 1;
     }
 }

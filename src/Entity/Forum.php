@@ -227,12 +227,20 @@ class Forum
     {
         ++$this->totalThreads;
 
+        if (null !== ($parent = $this->getParent())) {
+            return $parent->incrementTotalThreads();
+        }
+
         return $this;
     }
 
     public function decrementTotalThreads(): self
     {
         --$this->totalThreads;
+
+        if (null !== ($parent = $this->getParent())) {
+            return $parent->decrementTotalThreads();
+        }
 
         return $this;
     }

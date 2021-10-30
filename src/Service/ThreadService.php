@@ -47,8 +47,6 @@ class ThreadService
             ->setPin($pin)
         ;
 
-        $thread->getForum()->incrementTotalThreads();
-
         $this->em->persist($thread);
         $this->em->flush();
 
@@ -68,13 +66,9 @@ class ThreadService
 
         foreach ($thread->getMessages() as $message) {
             $this->em->remove($message);
-            $forum->decrementTotalMessages();
         }
 
         $this->em->flush();
-
-        $forum->decrementTotalThreads();
-
         $this->em->remove($thread);
         $this->em->flush();
 
