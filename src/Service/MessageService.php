@@ -17,7 +17,7 @@ class MessageService
 {
     private FlashBagInterface $flashBag;
 
-    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, RequestStack $requestStack, private AntispamService $antispamService, private Security $security)
+    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, RequestStack $requestStack, private AntispamService $antispamService)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }

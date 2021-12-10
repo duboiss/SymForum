@@ -2,7 +2,7 @@
 <p align="center">
 <a href="https://opensource.org/licenses/MIT"><img alt="License MIT badge" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 <a href="https://github.com/DuboisS/SymForum/actions"><img alt="CI badge" src="https://github.com/DuboisS/SymForum/workflows/CI/badge.svg"></a>
-<a href="https://insight.symfony.com/projects/2235e118-e5e6-46bf-867e-7b47ed212430"><img alt="Symfony Insight badge" src="https://insight.symfony.com/projects/2235e118-e5e6-46bf-867e-7b47ed212430/mini.svg"></a>
+<a href="https://insight.symfony.com/projects/39b38022-6788-4113-a277-3fec71115743"><img alt="Symfony Insight badge" src="https://insight.symfony.com/projects/39b38022-6788-4113-a277-3fec71115743/mini.svg"></a>
 </p>
 
 SymForum is a simple PHP forum built with the [Symfony 5](https://symfony.com/) framework.
@@ -23,7 +23,7 @@ The goal is to eventually make a bundle allowing any symfony developer to add a 
 To get a quality code, SymForum uses:
 - Linters: including [PHPLint](https://github.com/php-parallel-lint/PHP-Parallel-Lint), [TwigCs](https://github.com/friendsoftwig/twigcs), [ESLint](https://eslint.org/) and symfony linters (container, twig, xliff, yaml)
 - [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
-- [PHPStan](https://github.com/phpstan/phpstan) (level 8)
+- [PHPStan](https://github.com/phpstan/phpstan) (max level)
 - [SymfonyInsight](https://insight.symfony.com/)
 
 ## Getting Started
@@ -41,7 +41,7 @@ All steps are detailed in [INSTALLATION.md](INSTALLATION.md)
 ## Running the tests
 Create the SQLite database (located in /var folder) :
 ```sh
-$ docker-compose exec php bin/console doctrine:database:create --env=test
+$ docker compose exec php bin/console doctrine:database:create --env=test
 ```
 
 Use the following command to run tests :
