@@ -1,11 +1,9 @@
 security:
-    # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#c-hashing-passwords
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        App\Entity\User: 'auto'
-
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         in_database:
             entity: { class: App\Entity\User, property: email }
@@ -30,7 +28,7 @@ security:
                 path: security.logout
 
             # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+            # https://symfony.com/doc/current/security.html#the-firewall
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
@@ -44,3 +42,13 @@ security:
         - { path: ^/admin, allow_if: "is_granted('ROLE_MODERATOR') and is_fully_authenticated()" }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/user, roles: IS_AUTHENTICATED_REMEMBERED }
+
+when@dev:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'sha512'
+
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'sha512'
