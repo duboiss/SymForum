@@ -47,13 +47,12 @@ class CategoryAdminController extends AbstractBaseController
     }
 
     #[Route(path: '/{uuid}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Category $category, Request $request): Response
+    public function edit(Category $category, Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $em->flush();
             $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été modifiée !');
 
             return $this->redirectToRoute('admin.category.index');

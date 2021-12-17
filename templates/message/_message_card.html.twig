@@ -17,7 +17,7 @@
                     {{ role ? role }}
                 {% endif %}
             </div>
-            <div class="col-lg-10">{{ message.content|purify }}</div>
+            <div class="col-lg-10">{{ message.content }}</div>
         </div>
 
         {% if displayActions|default(false) == true %}

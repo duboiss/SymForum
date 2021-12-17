@@ -31,7 +31,7 @@ class MessageController extends AbstractBaseController
 
     #[IsGranted('EDIT', subject: 'message')]
     #[Route(path: '/{uuid}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Message $message, Request $request, MessageService $messageService): RedirectResponse|Response
+    public function edit(Message $message, Request $request, MessageService $messageService, EntityManagerInterface $em): RedirectResponse|Response
     {
         $route = $this->redirectToRoute('message.show', ['uuid' => $message->getUuidBase32()]);
 
@@ -43,7 +43,7 @@ class MessageController extends AbstractBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
 
             return $route;

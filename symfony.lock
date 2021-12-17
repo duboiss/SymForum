@@ -93,21 +93,6 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
-    "exercise/htmlpurifier-bundle": {
-        "version": "3.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "3.0",
-            "ref": "99590c5352b58fadacd5535337589aba7e44f5a7"
-        },
-        "files": [
-            "config/packages/exercise_html_purifier.yaml"
-        ]
-    },
-    "ezyang/htmlpurifier": {
-        "version": "v4.13.0"
-    },
     "fakerphp/faker": {
         "version": "v1.13.0"
     },
@@ -540,12 +525,12 @@
         "version": "v5.3.4"
     },
     "symfony/security-bundle": {
-        "version": "5.3",
+        "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "5.3",
-            "ref": "3307d76caa2d12fb10ade57975beb3d8975df396"
+            "ref": "09b5e809bd7a992061febd05b797c64a2d93b5cd"
         },
         "files": [
             "config/packages/security.yaml"
