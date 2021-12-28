@@ -30,7 +30,7 @@ class CKEditorType extends AbstractType
         $view->vars['required'] = false;
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextareaType::class;
     }

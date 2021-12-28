@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Tests\Controller\AbstractControllerTest;
-use Liip\TestFixturesBundle\Test\FixturesTrait;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
 {
-    use FixturesTrait;
+    protected AbstractDatabaseTool $databaseTool;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->loadFixtureFiles([__DIR__ . '/Fixtures/users.yaml']);
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->databaseTool->loadAliceFixture([__DIR__ . '/Fixtures/users.yaml']);
     }
 
     /**

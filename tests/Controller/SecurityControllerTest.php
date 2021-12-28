@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use Liip\TestFixturesBundle\Test\FixturesTrait;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 class SecurityControllerTest extends AbstractControllerTest
 {
-    use FixturesTrait;
+    protected AbstractDatabaseTool $databaseTool;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+    }
 
     public function testDisplayLogin(): void
     {
@@ -19,7 +26,7 @@ class SecurityControllerTest extends AbstractControllerTest
 
     public function testLoginWithBadCredentials(): void
     {
-        $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
+        $this->databaseTool->loadAliceFixture([dirname(__DIR__) . '/Fixtures/users.yaml']);
         $crawler = self::$client->request('GET', '/login');
 
         $form = $crawler->selectButton('Connexion')->form([
@@ -36,7 +43,7 @@ class SecurityControllerTest extends AbstractControllerTest
 
     public function testLoginWithRightCredentials(): void
     {
-        $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/users.yaml']);
+        $this->databaseTool->loadAliceFixture([dirname(__DIR__) . '/Fixtures/users.yaml']);
 
         $csrfToken = self::$client->getContainer()->get('security.csrf.token_manager')->getToken('authenticate');
         self::$client->request('POST', '/login', [

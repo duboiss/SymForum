@@ -43,7 +43,7 @@
         "fakerphp/faker": "^1.13",
         "friendsofphp/php-cs-fixer": "^3.0",
         "friendsoftwig/twigcs": "^5",
-        "liip/test-fixtures-bundle": "^1.9",
+        "liip/test-fixtures-bundle": "^2",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "phpstan/phpstan": "^1.2",
         "phpstan/phpstan-symfony": "^1.0",
@@ -64,7 +64,12 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true,
+            "symfony/runtime": true
+        }
     },
     "autoload": {
         "psr-4": {

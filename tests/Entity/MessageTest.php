@@ -14,11 +14,9 @@ class MessageTest extends WebTestCase
 
     public function getEntity(): Message
     {
-        $thread = new Thread();
-
         return (new Message())
             ->setContent('Message content')
-            ->setThread($thread)
+            ->setThread(new Thread())
         ;
     }
 

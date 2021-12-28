@@ -5,13 +5,21 @@ declare(strict_types=1);
 namespace App\Tests\Entity;
 
 use App\Entity\Category;
-use Liip\TestFixturesBundle\Test\FixturesTrait;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {
-    use FixturesTrait;
     use TestUtilsTrait;
+
+    protected AbstractDatabaseTool $databaseTool;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+    }
 
     public function getEntity(): Category
     {
@@ -38,7 +46,7 @@ class CategoryTest extends WebTestCase
 
     public function testInvalidUsedSlug(): void
     {
-        $this->loadFixtureFiles([dirname(__DIR__) . '/Fixtures/categories.yaml']);
+        $this->databaseTool->loadAliceFixture([dirname(__DIR__) . '/Fixtures/categories.yaml']);
         $this->assertHasErrors($this->getEntity()->setSlug('first-category'), 1);
     }
 }

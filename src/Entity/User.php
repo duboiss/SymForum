@@ -144,7 +144,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
@@ -167,7 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->hash;
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }

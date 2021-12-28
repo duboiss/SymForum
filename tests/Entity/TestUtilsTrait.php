@@ -11,7 +11,7 @@ trait TestUtilsTrait
     public function assertHasErrors(object $entity, int $number = 0): void
     {
         self::bootKernel();
-        $errors = self::getContainer()->get('validator')->validate($entity);
+        $errors = self::getContainer()->get('debug.validator')->validate($entity);
         $messages = [];
 
         /** @var ConstraintViolation $error */

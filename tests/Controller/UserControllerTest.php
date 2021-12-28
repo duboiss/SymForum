@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use Liip\TestFixturesBundle\Test\FixturesTrait;
-
 class UserControllerTest extends AbstractControllerTest
 {
-    use FixturesTrait;
-
     private function logAsDemo(): void
     {
         self::$client->loginUser($this->findUserByUsername('demo'));
