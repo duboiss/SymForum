@@ -76,7 +76,7 @@ watch: node_modules ## Recompile assets automatically when files change
 .PHONY: php
 
 php: ## Exec PHP container
-	@docker-compose exec php sh
+	@docker-compose exec -u 0 php bash
 
 composer.lock: composer.json
 	@$(COMPOSER) update
