@@ -32,18 +32,14 @@ class Report
     #[Assert\Length(min: self::REASON_MIN_LENGTH, max: 255, minMessage: 'Votre message doit faire au moins 10 caractères.', maxMessage: 'Votre message doit faire au maximum 255 caractères.')]
     private ?string $reason = null;
 
-    /**
-     * @Gedmo\Blameable(on="create")
-     */
+    #[Gedmo\Blameable(on: 'create')]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
     private ?User $reportedBy = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $treatedAt = null;
 
-    /**
-     * @Gedmo\Blameable(on="change", field={"treatedAt"})
-     */
+    #[Gedmo\Blameable(on: 'change', field: ['treatedAt'])]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'treatedReports')]
     private ?User $treatedBy = null;
 

@@ -35,9 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[Assert\Length(min: self::PSEUDO_MIN_LENGTH, max: self::PSEUDO_MAX_LENGTH, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
     private ?string $pseudo = null;
 
-    /**
-     * @Gedmo\Slug(fields={"pseudo"})
-     */
+    #[Gedmo\Slug(fields: ['pseudo'])]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
@@ -46,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\Email(message: 'Veuillez saisir une adresse email valide.')]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
@@ -167,21 +165,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->hash;
     }
 
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->email;
-    }
-
     public function eraseCredentials(): void
     {
     }
 
-    public function getUserIdentifier(): ?string
+    public function getUserIdentifier(): string
     {
         return $this->email;
     }

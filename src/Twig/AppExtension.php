@@ -27,7 +27,7 @@ class AppExtension extends AbstractExtension
 
     public function loginTargetPath(): string
     {
-        if ($masterRequest = $this->request->getMasterRequest()) {
+        if ($masterRequest = $this->request->getCurrentRequest()) {
             return $this->urlGenerator->generate('security.login', ['redirect' => $masterRequest->getRequestUri()]);
         }
 

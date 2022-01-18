@@ -25,9 +25,7 @@ class Message
     public const CONTENT_MIN_LENGTH = 10;
     public const CONTENT_MAX_LENGTH = 6000;
 
-    /**
-     * @Gedmo\Blameable(on="create")
-     */
+    #[Gedmo\Blameable(on: 'create')]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
     private ?User $author = null;
 
@@ -40,9 +38,7 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private $thread;
 
-    /**
-     * @Gedmo\Blameable(on="change", field={"content"})
-     */
+    #[Gedmo\Blameable(on: 'change', field: ['content'])]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'updatedMessages')]
     private ?User $updatedBy = null;
 

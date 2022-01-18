@@ -23,9 +23,7 @@ class Forum
     #[Assert\NotBlank]
     private ?string $title = null;
 
-    /**
-     * @Gedmo\Slug(fields={"title"})
-     */
+    #[Gedmo\Slug(fields: ['title'])]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 

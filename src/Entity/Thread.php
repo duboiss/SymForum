@@ -28,15 +28,11 @@ class Thread
     #[Assert\NotBlank]
     private ?string $title = null;
 
-    /**
-     * @Gedmo\Slug(fields={"title"})
-     */
+    #[Gedmo\Slug(fields: ['title'])]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
-    /**
-     * @Gedmo\Blameable(on="create")
-     */
+    #[Gedmo\Blameable(on: 'create')]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'threads')]
     private ?User $author = null;
 

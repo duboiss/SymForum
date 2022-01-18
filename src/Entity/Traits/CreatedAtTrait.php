@@ -10,9 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 trait CreatedAtTrait
 {
-    /**
-     * @Gedmo\Timestampable(on="create")
-     */
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $createdAt;
 
