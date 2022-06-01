@@ -10,11 +10,11 @@ class ThreadEntityListener
 {
     public function prePersist(Thread $thread): void
     {
-        $thread->getForum()->incrementTotalThreads();
+        $thread->getForum()?->incrementTotalThreads();
     }
 
     public function preRemove(Thread $thread): void
     {
-        $thread->getForum()->decrementTotalThreads();
+        $thread->getForum()?->decrementTotalThreads();
     }
 }

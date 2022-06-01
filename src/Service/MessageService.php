@@ -39,7 +39,7 @@ class MessageService
 
     public function canEditMessage(Message $message): bool
     {
-        if ($message->getThread()->isLock()) {
+        if ($message->getThread()?->isLock()) {
             $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
 
             return false;
@@ -51,6 +51,11 @@ class MessageService
     public function canDeleteMessage(Message $message): bool
     {
         $thread = $message->getThread();
+
+        if (!$thread) {
+            return true;
+        }
+
         $firstMessageInThread = $this->messageRepository->findFirstMessageInThread($thread);
 
         if ($message === $firstMessageInThread && $thread->getTotalMessages() > 1) {
@@ -73,8 +78,9 @@ class MessageService
 
         $thread->setLastMessage($message);
 
-        $forum = $thread->getForum();
-        $forum->setLastMessage($message);
+        if ($forum = $thread->getForum()) {
+            $forum->setLastMessage($message);
+        }
 
         $this->em->flush();
 
@@ -84,24 +90,28 @@ class MessageService
     public function deleteMessage(Message $message): ?Message
     {
         $thread = $message->getThread();
-        $forum = $thread->getForum();
+        $forum = $thread?->getForum();
 
-        if ($thread->getLastMessage() === $message) {
+        if ($thread && $thread->getLastMessage() === $message) {
             $thread->setLastMessage(null);
         }
 
-        if ($forum->getLastMessage() === $message) {
+        if ($forum && $forum->getLastMessage() === $message) {
             $forum->setLastMessage(null);
         }
 
         $this->em->remove($message);
         $this->em->flush();
 
-        if (!$forum->getLastMessage()) {
+        if ($forum && !$forum->getLastMessage()) {
             $forum->setLastMessage($this->messageRepository->findLastMessageByForum($forum));
         }
 
-        return $this->messageRepository->findLastMessageByThread($thread);
+        if ($thread) {
+            return $this->messageRepository->findLastMessageByThread($thread);
+        }
+
+        return null;
     }
 
     public function deleteMessagesByUser(User $user): void

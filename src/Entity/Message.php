@@ -26,7 +26,7 @@ class Message
     public const CONTENT_MAX_LENGTH = 6000;
 
     #[Gedmo\Blameable(on: 'create')]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(inversedBy: 'messages')]
     private ?User $author = null;
 
     #[ORM\Column(type: 'text')]
@@ -34,18 +34,18 @@ class Message
     #[Assert\Length(min: self::CONTENT_MIN_LENGTH, max: self::CONTENT_MAX_LENGTH, minMessage: 'Votre message doit faire au moins 3 caractères.', maxMessage: 'Votre message doit faire au maximum {{ limit }} caractères.')]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(targetEntity: Thread::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
-    private $thread;
+    private ?Thread $thread = null;
 
     #[Gedmo\Blameable(on: 'change', field: ['content'])]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'updatedMessages')]
+    #[ORM\ManyToOne(inversedBy: 'updatedMessages')]
     private ?User $updatedBy = null;
 
     #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessageLike::class, orphanRemoval: true)]
     private Collection $likes;
 
-    #[ORM\OneToMany(targetEntity: Report::class, mappedBy: 'message', orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'message', targetEntity: Report::class, orphanRemoval: true)]
     private Collection $reports;
 
     public function __construct()
@@ -79,7 +79,7 @@ class Message
         return $this;
     }
 
-    public function getThread(): Thread
+    public function getThread(): ?Thread
     {
         return $this->thread;
     }

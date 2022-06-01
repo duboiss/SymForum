@@ -16,11 +16,11 @@ class CoreOption
 {
     use PrimaryKeyTrait;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?string $value = null;
 
     public function getName(): ?string

@@ -36,7 +36,7 @@ class ReportAdminController extends AbstractBaseController
     {
         return $this->render('admin/report/show.html.twig', [
             'report' => $report,
-            'messageReports' => $reportRepository->findByMessage($report->getMessage(), $report),
+            'messageReports' => $report->getMessage() ? $reportRepository->findByMessage($report->getMessage(), $report) : null,
         ]);
     }
 

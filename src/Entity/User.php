@@ -30,27 +30,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     public const PSEUDO_MIN_LENGTH = 3;
     public const PSEUDO_MAX_LENGTH = 10;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true)]
     #[Assert\Regex(pattern: '^[a-z0-9]+$/i', message: 'Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres.')]
     #[Assert\Length(min: self::PSEUDO_MIN_LENGTH, max: self::PSEUDO_MAX_LENGTH, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
     private ?string $pseudo = null;
 
     #[Gedmo\Slug(fields: ['pseudo'])]
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true, nullable: false)]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     private ?string $hash = null;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true, nullable: false)]
     #[Assert\Email(message: 'Veuillez saisir une adresse email valide.')]
-    private string $email;
+    private ?string $email;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?DateTimeInterface $lastActivityAt = null;
+    #[ORM\Column(nullable: true)]
+    protected ?DateTime $lastActivityAt = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Thread::class)]
     private Collection $threads;
@@ -123,19 +123,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getLastActivityAt(): ?DateTimeInterface
+    public function getLastActivityAt(): ?DateTime
     {
         return $this->lastActivityAt;
     }
 
-    public function setLastActivityAt(DateTimeInterface $lastActivityAt): self
+    public function setLastActivityAt(DateTime $lastActivityAt): self
     {
         $this->lastActivityAt = $lastActivityAt;
 
@@ -171,7 +171,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return (string) $this->email;
     }
 
     /**

@@ -14,7 +14,6 @@ parameters:
   checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false
   ignoreErrors:
-      - '#Property [A-z\\_]+::\$[A-z0-9_]+ has no type specified.#'
       - '#Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface::getFlashBag\(\).#'
       - '#Property [A-z\\_]+::\$[A-z0-9_]+ is never read, only written.#'
       - '#Property [A-z\\_]+::\$[A-z0-9_]+ is never written, only read.#'

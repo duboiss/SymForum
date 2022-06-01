@@ -54,7 +54,7 @@ class MessageVoter extends Voter
             return true;
         }
 
-        return $user === $message->getAuthor() && !$message->getThread()->isLock();
+        return $user === $message->getAuthor() && !$message->getThread()?->isLock();
     }
 
     private function canDelete(): bool

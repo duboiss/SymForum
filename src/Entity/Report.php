@@ -23,24 +23,24 @@ class Report
 
     public const REASON_MIN_LENGTH = 8;
 
-    #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'reports')]
+    #[ORM\ManyToOne(inversedBy: 'reports')]
     #[ORM\JoinColumn(nullable: false)]
-    private $message;
+    private ?Message $message = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     #[Assert\NotBlank(message: 'Vous devez indiquer un motif.')]
     #[Assert\Length(min: self::REASON_MIN_LENGTH, max: 255, minMessage: 'Votre message doit faire au moins 10 caractères.', maxMessage: 'Votre message doit faire au maximum 255 caractères.')]
     private ?string $reason = null;
 
     #[Gedmo\Blameable(on: 'create')]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
+    #[ORM\ManyToOne(inversedBy: 'reports')]
     private ?User $reportedBy = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $treatedAt = null;
 
     #[Gedmo\Blameable(on: 'change', field: ['treatedAt'])]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'treatedReports')]
+    #[ORM\ManyToOne(inversedBy: 'treatedReports')]
     private ?User $treatedBy = null;
 
     public function __construct()
@@ -48,7 +48,7 @@ class Report
         $this->uuid = Uuid::v4();
     }
 
-    public function getMessage(): Message
+    public function getMessage(): ?Message
     {
         return $this->message;
     }

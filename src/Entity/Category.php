@@ -22,12 +22,12 @@ class Category
     use PrimaryKeyTrait;
     use UuidTrait;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     #[Assert\NotBlank]
     private ?string $title = null;
 
     #[Gedmo\Slug(fields: ['title'])]
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(type: 'smallint')]

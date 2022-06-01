@@ -24,22 +24,22 @@ class Thread
     public const TITLE_MIN_LENGTH = 12;
     public const TITLE_MAX_LENGTH = 50;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     #[Assert\NotBlank]
     private ?string $title = null;
 
     #[Gedmo\Slug(fields: ['title'])]
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true)]
     private ?string $slug = null;
 
     #[Gedmo\Blameable(on: 'create')]
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'threads')]
+    #[ORM\ManyToOne(inversedBy: 'threads')]
     private ?User $author = null;
 
-    #[ORM\ManyToOne(targetEntity: Forum::class, inversedBy: 'threads')]
+    #[ORM\ManyToOne(inversedBy: 'threads')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull]
-    private $forum;
+    private ?Forum $forum = null;
 
     #[ORM\Column]
     #[Assert\NotNull]
@@ -49,7 +49,7 @@ class Thread
     #[Assert\NotNull]
     private bool $isPin = false;
 
-    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Message $lastMessage = null;
 
     #[ORM\OneToMany(mappedBy: 'thread', targetEntity: Message::class, orphanRemoval: true)]
@@ -99,7 +99,7 @@ class Thread
         return $this;
     }
 
-    public function getForum(): Forum
+    public function getForum(): ?Forum
     {
         return $this->forum;
     }
