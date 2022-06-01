@@ -15,11 +15,11 @@ class MessageLike
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Message $message;
+    private ?Message $message = null;
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user;
+    private ?User $user = null;
 
     public function getMessage(): ?Message
     {

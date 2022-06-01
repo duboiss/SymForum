@@ -22,8 +22,8 @@ class Message
     use TimestampableTrait;
     use UuidTrait;
 
-    public const CONTENT_MIN_LENGTH = 10;
-    public const CONTENT_MAX_LENGTH = 6000;
+    final public const CONTENT_MIN_LENGTH = 10;
+    final public const CONTENT_MAX_LENGTH = 6000;
 
     #[Gedmo\Blameable(on: 'create')]
     #[ORM\ManyToOne(inversedBy: 'messages')]

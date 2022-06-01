@@ -27,8 +27,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     use CreatedAtTrait;
     use PrimaryKeyTrait;
 
-    public const PSEUDO_MIN_LENGTH = 3;
-    public const PSEUDO_MAX_LENGTH = 10;
+    final public const PSEUDO_MIN_LENGTH = 3;
+    final public const PSEUDO_MAX_LENGTH = 10;
 
     #[ORM\Column(unique: true)]
     #[Assert\Regex(pattern: '^[a-z0-9]+$/i', message: 'Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres.')]
@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     #[ORM\Column(unique: true, nullable: false)]
     #[Assert\Email(message: 'Veuillez saisir une adresse email valide.')]
-    private ?string $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];

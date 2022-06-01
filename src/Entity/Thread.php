@@ -21,8 +21,8 @@ class Thread
     use CreatedAtTrait;
     use PrimaryKeyTrait;
 
-    public const TITLE_MIN_LENGTH = 12;
-    public const TITLE_MAX_LENGTH = 50;
+    final public const TITLE_MIN_LENGTH = 12;
+    final public const TITLE_MAX_LENGTH = 50;
 
     #[ORM\Column]
     #[Assert\NotBlank]

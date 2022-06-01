@@ -214,6 +214,9 @@
     "psr/log": {
         "version": "3.0.0"
     },
+    "rector/rector": {
+        "version": "0.13.3"
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },

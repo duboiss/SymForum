@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Security;
 
 class UserActivitySubscriber implements EventSubscriberInterface
 {
-    public function __construct(private EntityManagerInterface $em, private Security $security, private OptionService $optionService, private UserRepository $userRepository)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly Security $security, private readonly OptionService $optionService, private readonly UserRepository $userRepository)
     {
     }
 

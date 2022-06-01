@@ -13,7 +13,7 @@ class OptionService
     /** @var CoreOption[] */
     private array $cache = [];
 
-    public function __construct(private EntityManagerInterface $em, private CoreOptionRepository $coreOptionRepository)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly CoreOptionRepository $coreOptionRepository)
     {
     }
 

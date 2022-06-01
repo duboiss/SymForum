@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class LogoutListener
 {
-    private FlashBagInterface $flashBag;
+    private readonly FlashBagInterface $flashBag;
 
     public function __construct(RequestStack $requestStack)
     {

@@ -23,12 +23,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'security.login';
-    public const REDIRECT_AFTER_LOGIN_ROUTE = 'forum.index';
+    final public const LOGIN_ROUTE = 'security.login';
+    final public const REDIRECT_AFTER_LOGIN_ROUTE = 'forum.index';
 
-    private FlashBagInterface $flashBag;
+    private readonly FlashBagInterface $flashBag;
 
-    public function __construct(private RouterInterface $router, private CsrfTokenManagerInterface $csrfTokenManager, RequestStack $requestStack)
+    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfTokenManager, RequestStack $requestStack)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }

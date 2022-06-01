@@ -17,7 +17,7 @@ class ThreadVoter extends Voter
     private const PIN = 'PIN';
     private const DELETE = 'DELETE';
 
-    public function __construct(private Security $security)
+    public function __construct(private readonly Security $security)
     {
     }
 

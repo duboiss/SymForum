@@ -17,9 +17,9 @@ use Symfony\Component\Serializer\Encoder\DecoderInterface;
  */
 abstract class AbstractBaseController extends AbstractController
 {
-    private FlashBagInterface $flashBag;
+    private readonly FlashBagInterface $flashBag;
 
-    public function __construct(RequestStack $requestStack, private DecoderInterface $decoder)
+    public function __construct(RequestStack $requestStack, private readonly DecoderInterface $decoder)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }

@@ -31,7 +31,7 @@ class Forum
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'forums')]
-    private ?Category $category;
+    private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'forums')]
     private ?Forum $parent = null;

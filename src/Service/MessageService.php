@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class MessageService
 {
-    private FlashBagInterface $flashBag;
+    private readonly FlashBagInterface $flashBag;
 
-    public function __construct(private EntityManagerInterface $em, private MessageRepository $messageRepository, RequestStack $requestStack, private AntispamService $antispamService)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }

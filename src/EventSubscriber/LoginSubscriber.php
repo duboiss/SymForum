@@ -12,9 +12,9 @@ use Symfony\Component\Security\Http\SecurityEvents;
 
 class LoginSubscriber implements EventSubscriberInterface
 {
-    private FlashBagInterface $flashBag;
+    private readonly FlashBagInterface $flashBag;
 
-    public function __construct(private RequestStack $requestStack)
+    public function __construct(private readonly RequestStack $requestStack)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
