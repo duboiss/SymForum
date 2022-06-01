@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Security;
 
 class MessageLikeService
 {
-    public function __construct(private Security $security, private EntityManagerInterface $em, private MessageLikeRepository $likeRepository)
+    public function __construct(private readonly Security $security, private readonly EntityManagerInterface $em, private readonly MessageLikeRepository $likeRepository)
     {
     }
 

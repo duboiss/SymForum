@@ -16,7 +16,7 @@ class BreadcrumbExtension extends AbstractExtension
 {
     private array $breadcrumbsPaths = [];
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
     {
     }
 

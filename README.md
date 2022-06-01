@@ -5,7 +5,7 @@
 <a href="https://insight.symfony.com/projects/39b38022-6788-4113-a277-3fec71115743"><img alt="Symfony Insight badge" src="https://insight.symfony.com/projects/39b38022-6788-4113-a277-3fec71115743/mini.svg"></a>
 </p>
 
-SymForum is a simple PHP forum built with the [Symfony 5](https://symfony.com/) framework.
+SymForum is a simple PHP forum built with the [Symfony 6](https://symfony.com/) framework.
 
 This project is under development, it is **not currently intended for the production**.
 

@@ -21,7 +21,7 @@ class Report
     use PrimaryKeyTrait;
     use UuidTrait;
 
-    public const REASON_MIN_LENGTH = 8;
+    final public const REASON_MIN_LENGTH = 8;
 
     #[ORM\ManyToOne(inversedBy: 'reports')]
     #[ORM\JoinColumn(nullable: false)]
