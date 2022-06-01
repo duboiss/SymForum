@@ -19,21 +19,21 @@ class Forum
 {
     use PrimaryKeyTrait;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     #[Assert\NotBlank]
     private ?string $title = null;
 
     #[Gedmo\Slug(fields: ['title'])]
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(unique: true)]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'forums')]
+    #[ORM\ManyToOne(inversedBy: 'forums')]
     private ?Category $category;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'forums')]
+    #[ORM\ManyToOne(inversedBy: 'forums')]
     private ?Forum $parent = null;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
@@ -49,7 +49,7 @@ class Forum
     #[Assert\NotNull]
     private bool $isLock = false;
 
-    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Message $lastMessage = null;
 
     #[ORM\OneToMany(mappedBy: 'forum', targetEntity: Thread::class, orphanRemoval: true)]

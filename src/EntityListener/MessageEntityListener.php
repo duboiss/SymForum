@@ -10,15 +10,21 @@ class MessageEntityListener
 {
     public function prePersist(Message $message): void
     {
-        $thread = $message->getThread();
+        if (!$thread = $message->getThread()) {
+            return;
+        }
+
         $thread->incrementTotalMessages();
-        $thread->getForum()->incrementTotalMessages();
+        $thread->getForum()?->incrementTotalMessages();
     }
 
     public function preRemove(Message $message): void
     {
-        $thread = $message->getThread();
+        if (!$thread = $message->getThread()) {
+            return;
+        }
+
         $thread->decrementTotalMessages();
-        $thread->getForum()->decrementTotalMessages();
+        $thread->getForum()?->decrementTotalMessages();
     }
 }

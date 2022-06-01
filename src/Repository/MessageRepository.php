@@ -107,8 +107,12 @@ class MessageRepository extends ServiceEntityRepository
 
     public function findNextMessageInThread(Message $message): ?Message
     {
+        if (!$thread = $message->getThread()) {
+            return null;
+        }
+
         try {
-            return $this->whereThreadQb($message->getThread())
+            return $this->whereThreadQb($thread)
                 ->andWhere('m.createdAt > :message')
                 ->setParameter('message', $message->getCreatedAt())
                 ->orderBy('m.createdAt', 'ASC')

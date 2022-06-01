@@ -13,11 +13,11 @@ class MessageLike
 {
     use PrimaryKeyTrait;
 
-    #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'likes')]
+    #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Message $message;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'likes')]
+    #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user;
 

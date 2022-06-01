@@ -58,7 +58,7 @@ class ThreadService
         $forum = $thread->getForum();
         $lastMessage = $thread->getLastMessage();
 
-        if ($forum->getLastMessage() === $lastMessage) {
+        if ($forum && $forum->getLastMessage() === $lastMessage) {
             $forum->setLastMessage(null);
         }
 
@@ -72,7 +72,7 @@ class ThreadService
         $this->em->remove($thread);
         $this->em->flush();
 
-        if (!$forum->getLastMessage()) {
+        if ($forum && !$forum->getLastMessage()) {
             $forum->setLastMessage($this->messageRepository->findLastMessageByForum($forum));
             $this->em->flush();
         }
@@ -122,7 +122,11 @@ class ThreadService
 
     public function getMessagePage(Message $message): int
     {
-        $messages = $this->messageRepository->findMessagesByThread($message->getThread(), true);
+        if (!$thread = $message->getThread()) {
+            throw new \Exception('No thread found');
+        }
+
+        $messages = $this->messageRepository->findMessagesByThread($thread, true);
         $key = array_search($message->getId(), $messages, true);
         $messagesPerThread = (int) $this->optionService->get('messages_per_thread', '10');
 

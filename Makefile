@@ -130,7 +130,7 @@ phpcsfixer-fix: vendor ## Run php-cs-fixer fix
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --verbose
 
 phpstan: vendor ## Run phpstan
-	@$(PHP) ./vendor/bin/phpstan analyse --no-progress --xdebug
+	@$(PHP) ./vendor/bin/phpstan analyse --memory-limit=-1 --no-progress --xdebug
 
 twigcs: vendor ## Run twigcs
 	#@$(PHP) ./vendor/bin/twigcs templates

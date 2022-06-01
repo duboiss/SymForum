@@ -22,6 +22,10 @@ class MessageController extends AbstractBaseController
     #[Route(path: '/{uuid}', name: 'show', methods: ['GET'])]
     public function show(Message $message, ThreadService $threadService): Response
     {
+        if (!$message->getThread()) {
+            throw new \RuntimeException('The message is not in a thread.');
+        }
+
         return $this->redirectToRoute('thread.show', [
             'slug' => $message->getThread()->getSlug(),
             'page' => $threadService->getMessagePage($message),
@@ -60,9 +64,13 @@ class MessageController extends AbstractBaseController
     public function delete(Message $message, EntityManagerInterface $em, MessageService $messageService, MessageRepository $messageRepository): Response
     {
         $thread = $message->getThread();
-        $forum = $thread->getForum();
+        $forum = $thread?->getForum();
 
         if (!$messageService->canDeleteMessage($message)) {
+            if (!$thread) {
+                throw new \RuntimeException('The message is not in a thread.');
+            }
+
             return $this->redirectToRoute('thread.show', [
                 'slug' => $thread->getSlug(),
             ]);
@@ -71,18 +79,26 @@ class MessageController extends AbstractBaseController
         $lastMessage = $messageService->deleteMessage($message);
 
         if (!$lastMessage) {
-            $em->remove($thread);
-            $em->flush();
+            if ($thread) {
+                $em->remove($thread);
+                $em->flush();
+            }
 
             $this->addCustomFlash('success', 'Message', 'Le message ainsi que le thread ont été supprimé !');
+
+            if (!$forum) {
+                return $this->redirectToRoute('forum.index');
+            }
 
             return $this->redirectToRoute('forum.show', [
                 'slug' => $forum->getSlug(),
             ]);
         }
 
-        $thread->setLastMessage($lastMessage);
-        $em->flush();
+        if ($thread) {
+            $thread->setLastMessage($lastMessage);
+            $em->flush();
+        }
 
         $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');
 

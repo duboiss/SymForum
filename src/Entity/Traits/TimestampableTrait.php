@@ -10,21 +10,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 trait TimestampableTrait
 {
     #[Gedmo\Timestampable(on: 'create')]
-    #[ORM\Column(type: 'datetime')]
-    protected \DateTimeInterface $createdAt;
+    #[ORM\Column]
+    protected \DateTime $createdAt;
 
     #[Gedmo\Timestampable(on: 'update')]
-    #[ORM\Column(type: 'datetime')]
-    protected \DateTimeInterface $updatedAt;
+    #[ORM\Column]
+    protected \DateTime $updatedAt;
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -36,7 +36,7 @@ trait TimestampableTrait
         return $this;
     }
 
-    public function getUpdatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
