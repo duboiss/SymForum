@@ -79,7 +79,9 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     {
         // Pages
         yield 'page_forums' => ['/forums/'];
+
         yield 'page_members' => ['/members'];
+
         yield 'page_team' => ['/team'];
 
         // Security
@@ -90,6 +92,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     {
         // Categories
         yield 'admin_categories' => ['/admin/categories/'];
+
         yield 'admin_categories_add' => ['/admin/categories/add'];
 
         // Forums
@@ -111,7 +114,9 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     {
         // User profile
         yield 'user_profile' => ['/user/demo'];
+
         yield 'user_profile_messages' => ['/user/demo/messages'];
+
         yield 'user_profile_threads' => ['/user/demo/threads'];
     }
 }

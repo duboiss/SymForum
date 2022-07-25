@@ -130,6 +130,6 @@ class ThreadService
         $key = array_search($message->getId(), $messages, true);
         $messagesPerThread = (int) $this->optionService->get('messages_per_thread', '10');
 
-        return (int) (ceil(((int) $key + 1) / $messagesPerThread));
+        return (int) ceil(((int) $key + 1) / $messagesPerThread);
     }
 }
