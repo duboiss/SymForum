@@ -13,17 +13,25 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/forums/messages', name: 'message.')]
 class MessageController extends AbstractBaseController
 {
+    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    {
+        parent::__construct($requestStack, $this->decoder);
+    }
+
     #[Route(path: '/{uuid}', name: 'show', methods: ['GET'])]
     public function show(Message $message, ThreadService $threadService): Response
     {
         if (!$message->getThread()) {
-            throw new \RuntimeException('The message is not in a thread.');
+            throw new \RuntimeException($this->translator->trans('The message is not in a thread'));
         }
 
         return $this->redirectToRoute('thread.show', [
@@ -48,7 +56,7 @@ class MessageController extends AbstractBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addCustomFlash('success', 'Message', 'Votre message a bien été modifié !');
+            $this->addCustomFlash('success', $this->translator->trans('Message'), $this->translator->trans('The message has been edited'));
 
             return $route;
         }
@@ -68,7 +76,7 @@ class MessageController extends AbstractBaseController
 
         if (!$messageService->canDeleteMessage($message)) {
             if (!$thread) {
-                throw new \RuntimeException('The message is not in a thread.');
+                throw new \RuntimeException($this->translator->trans('The message is not in a thread'));
             }
 
             return $this->redirectToRoute('thread.show', [
@@ -84,7 +92,7 @@ class MessageController extends AbstractBaseController
                 $em->flush();
             }
 
-            $this->addCustomFlash('success', 'Message', 'Le message ainsi que le thread ont été supprimé !');
+            $this->addCustomFlash('success', $this->translator->trans('Message'), $this->translator->trans('The message and the thread have been deleted'));
 
             if (!$forum) {
                 return $this->redirectToRoute('forum.index');
@@ -100,7 +108,7 @@ class MessageController extends AbstractBaseController
             $em->flush();
         }
 
-        $this->addCustomFlash('success', 'Message', 'Le message a été supprimé !');
+        $this->addCustomFlash('success', $this->translator->trans('Message'), $this->translator->trans('The message has been deleted'));
 
         $nextMessage = $messageRepository->findNextMessageInThread($message);
 

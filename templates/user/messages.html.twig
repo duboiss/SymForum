@@ -1,28 +1,26 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}
-    {{ app.user == user ? 'Mes messages' : 'Profil de ' ~ user ~ ' : messages' }}
-{% endblock %}
+{% block title %}{{ app.user == user ? 'My messages'|trans : 'Profile of %user% : messages'|trans({'%user%': user}) }}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Membres', path('page.members')) %}
+    {% do append_breadcrumb('Members'|trans, path('page.members')) %}
     {% do append_breadcrumb(user.pseudo, path('user.profile', {'slug': user.slug})) %}
-    {% do append_breadcrumb('Messages publiés') %}
+    {% do append_breadcrumb('Published messages'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">
             <h3>{{ user }}
-                - {{ user.messages|length }} {{ user.messages|length <= 1 ? 'message publié' : 'messages publiés' }}</h3>
+                - {{ user.messages|length }} {{ user.messages|length <= 1 ? 'published message'|trans : 'published messages'|trans }}</h3>
 
             {% if pagination.getTotalItemCount > 0 %}
                 <table class="table table-hover table-sm">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 20%">Publié</th>
-                        <th scope="col" style="width: 35%">Contenu</th>
-                        <th scope="col" style="width: 45%">Sujet</th>
+                        <th scope="col" style="width: 20%">{% trans %}Published on{% endtrans %}</th>
+                        <th scope="col" style="width: 35%">{% trans %}Content{% endtrans %}</th>
+                        <th scope="col" style="width: 45%">{% trans %}Thread{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -41,7 +39,7 @@
                 </table>
                 {{ knp_pagination_render(pagination) }}
             {% else %}
-                Cet utilisateur n'a pas encore créé de message
+                {% trans %}This user has not yet posted a message{% endtrans %}
             {% endif %}
         </div>
     </div>

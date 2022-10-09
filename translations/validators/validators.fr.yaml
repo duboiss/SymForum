@@ -1,0 +1,13 @@
+# Message
+Your message must be at least 3 characters: Votre message doit faire au moins 3 caractères
+
+# Message & Report
+Your message must not exceed {{ limit }} characters: Votre message doit faire au maximum {{ limit }} caractères
+
+# Report
+Your message must be at least 10 characters: Votre message doit faire au moins 10 caractères
+
+# User
+Your pseudo can only contains letters (a-z) and numbers: Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres
+Your pseudo must be at least {{ limit }} characters: Votre pseudo doit faire au moins {{ limit }} caractères
+Your pseudo must not exceed {{ limit }} characters: Votre pseudo doit faire au maximum {{ limit }} caractères

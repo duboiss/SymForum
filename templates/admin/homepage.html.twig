@@ -1,24 +1,24 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Administration{% endblock %}
+{% block title %}{% trans %}Administration{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h1>Bienvenue, {{ app.user }}</h1>
+    <h1>{% trans %}Welcome{% endtrans %}, {{ app.user }}</h1>
 
     <div class="row mt-3">
         <div class="col col-lg-6 col-md-6 col-sm-6">
             <div class="list-group">
                 <a href="{{ path('admin.report.index') }}"
-                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Signalements
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{% trans %}Reports{% endtrans %}
                     <span class="badge bg-primary rounded-pill">{{ nbUntreatedReports }}</span></a>
-                <a href="{{ path('admin.user.index') }}" class="list-group-item list-group-item-action">Utilisateurs</a>
+                <a href="{{ path('admin.user.index') }}" class="list-group-item list-group-item-action">{% trans %}Users{% endtrans %}</a>
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('admin.category.index') }}"
-                       class="list-group-item list-group-item-action">Catégories</a>
-                    <a href="{{ path('admin.forum.index') }}" class="list-group-item list-group-item-action">Forums</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Groupes</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Paramètres</a>
+                       class="list-group-item list-group-item-action">{% trans %}Categories{% endtrans %}</a>
+                    <a href="{{ path('admin.forum.index') }}" class="list-group-item list-group-item-action">{% trans %}Forums{% endtrans %}</a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">{% trans %}Groups{% endtrans %}</a>
+                    <a href="#" class="list-group-item list-group-item-action disabled">{% trans %}Settings{% endtrans %}</a>
                 {% endif %}
             </div>
         </div>

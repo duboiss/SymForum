@@ -30,8 +30,8 @@ class Message
     private ?User $author = null;
 
     #[ORM\Column(type: 'text')]
-    #[Assert\NotBlank(message: 'Votre message ne peut être vide.')]
-    #[Assert\Length(min: self::CONTENT_MIN_LENGTH, max: self::CONTENT_MAX_LENGTH, minMessage: 'Votre message doit faire au moins 3 caractères.', maxMessage: 'Votre message doit faire au maximum {{ limit }} caractères.')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: self::CONTENT_MIN_LENGTH, max: self::CONTENT_MAX_LENGTH, minMessage: 'Your message must be at least 3 characters', maxMessage: 'Your message must not exceed {{ limit }} characters')]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]

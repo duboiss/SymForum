@@ -1,0 +1,17 @@
+{% extends 'layouts/full-width.html.twig' %}
+
+{% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% do append_breadcrumb('Members'|trans, path('page.members')) %}
+    {% do append_breadcrumb(user.pseudo, path('user.profile', {'slug': user.slug})) %}
+    {% do append_breadcrumb('My settings'|trans) %}
+
+    {{ include('partials/_breadcrumb.html.twig') }}
+
+    <div class="row">
+        <div class="col col-lg-3 col-md-3 col-sm-3">
+            {{ include('partials/_simple_form.twig') }}
+        </div>
+    </div>
+{% endblock %}

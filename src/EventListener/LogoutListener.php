@@ -6,18 +6,19 @@ namespace App\EventListener;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LogoutListener
 {
     private readonly FlashBagInterface $flashBag;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, private TranslatorInterface $translator)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
 
     public function onSymfonyComponentSecurityHttpEventLogoutEvent(): void
     {
-        $this->flashBag->add('success', ['title' => 'Déconnexion', 'content' => 'Vous êtes désormais déconnecté !']);
+        $this->flashBag->add('success', ['title' => $this->translator->trans('Logout'), 'content' => $this->translator->trans('You have logged out')]);
     }
 }

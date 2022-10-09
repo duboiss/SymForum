@@ -11,12 +11,13 @@ use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MessageService
 {
     private readonly FlashBagInterface $flashBag;
 
-    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService, private readonly TranslatorInterface $translator)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
@@ -24,12 +25,18 @@ class MessageService
     public function canPostMessage(Thread $thread, User $user): bool
     {
         if ($thread->isLock()) {
-            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas ajouter votre message, le sujet est verrouillé !']);
+            $this->flashBag->add('error', [
+                'title' => $this->translator->trans('Message'),
+                'content' => $this->translator->trans("You can't add your message because the thread is locked"),
+            ]);
 
             return false;
         }
         if (!$this->antispamService->canPostMessage($user)) {
-            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous devez encore attendre un peu avant de pouvoir poster un message !']);
+            $this->flashBag->add('error', [
+                'title' => $this->translator->trans('Message'),
+                'content' => $this->translator->trans('You have to wait a while before you can post a message'),
+            ]);
 
             return false;
         }
@@ -40,7 +47,10 @@ class MessageService
     public function canEditMessage(Message $message): bool
     {
         if ($message->getThread()?->isLock()) {
-            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Vous ne pouvez pas éditer votre message, le sujet est verrouillé !']);
+            $this->flashBag->add('error', [
+                'title' => $this->translator->trans('Message'),
+                'content' => $this->translator->trans("You can't edit your message because the thread is locked"),
+            ]);
 
             return false;
         }
@@ -50,16 +60,11 @@ class MessageService
 
     public function canDeleteMessage(Message $message): bool
     {
-        $thread = $message->getThread();
-
-        if (!$thread) {
-            return true;
-        }
-
-        $firstMessageInThread = $this->messageRepository->findFirstMessageInThread($thread);
-
-        if ($message === $firstMessageInThread && $thread->getTotalMessages() > 1) {
-            $this->flashBag->add('error', ['title' => 'Message', 'content' => 'Le premier message ne peut pas être supprimé car le sujet contient des réponses !']);
+        if ($this->isTheMessageFirstOneInThreadAndThreadHasAnswers($message)) {
+            $this->flashBag->add('error', [
+                'title' => $this->translator->trans('Message'),
+                'content' => $this->translator->trans('The first message cannot be deleted because the thread contains replies'),
+            ]);
 
             return false;
         }
@@ -126,7 +131,7 @@ class MessageService
         if (count($user->getMessages()) > 0) {
             foreach ($user->getMessages() as $message) {
                 $message->setAuthor(null);
-                $message->setContent('supprimé');
+                $message->setContent($this->translator->trans('Message deleted'));
             }
 
             $this->em->flush();
@@ -142,5 +147,14 @@ class MessageService
 
             $this->em->flush();
         }
+    }
+
+    private function isTheMessageFirstOneInThreadAndThreadHasAnswers(Message $message): bool
+    {
+        if (!$thread = $message->getThread()) {
+            return true;
+        }
+
+        return $message === $this->messageRepository->findFirstMessageInThread($thread) && $thread->getTotalMessages() > 1;
     }
 }

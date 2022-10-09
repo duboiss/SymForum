@@ -13,7 +13,7 @@
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
 
-                {% do append_breadcrumb('Forums', path('forum.index')) %}
+                {% do append_breadcrumb('Forums'|trans, path('forum.index')) %}
                 {% for part in forum|breadcrumb %}
                     {% if loop.last %}
                         {% do append_breadcrumb(part.title) %}
@@ -29,13 +29,13 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">{{ forum.title }}</div>
                             {% if forum.forums|length > 0 %}
-                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">SUJETS</div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">MESSAGES</div>
-                                <div class="col-lg-3 d-none d-lg-block">DERNIER MESSAGE</div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">{% trans %}Threads{% endtrans %}</div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{% trans %}Messages{% endtrans %}</div>
+                                <div class="col-lg-3 d-none d-lg-block">{% trans %}Last message{% endtrans %}</div>
                             {% else %}
-                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">PAR</div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">REPONSES</div>
-                                <div class="col-lg-4 d-none d-lg-block">DERNIER MESSAGE</div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">{% trans %}By{% endtrans %}</div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{% trans %}Answers{% endtrans %}</div>
+                                <div class="col-lg-4 d-none d-lg-block">{% trans %}Last message{% endtrans %}</div>
                             {% endif %}
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 <a href="{{ path('message.show', {'uuid': last_message.uuidBase32}) }}">{{ last_message.createdAt|ago }}</a>
                                 par {{ user_profile_link(last_message.author) }}
                             {% else %}
-                                Aucun message
+                                {% trans %}No message{% endtrans %}
                             {% endif %}
                         </div>
                     </div>
@@ -69,13 +69,13 @@
                         <div class="row mt-3">
                             <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12"></div>
                             <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">
-                                <h5>PAR</h5>
+                                <h5>{% trans %}By{% endtrans %}</h5>
                             </div>
                             <div class="col-lg-2 col-md-3 d-none d-md-block text-center">
-                                <h5>REPONSES</h5>
+                                <h5>{% trans %}Answers{% endtrans %}</h5>
                             </div>
                             <div class="col-lg-4 d-none d-lg-block">
-                                <h5>DERNIER MESSAGE</h5>
+                                <h5>{% trans %}Last message{% endtrans %}</h5>
                             </div>
                         </div>
                     {% endif %}
@@ -95,11 +95,11 @@
                                 {% set last_message = thread.lastMessage %}
 
                                 <a href="{{ path('message.show', {'uuid': last_message.uuidBase32}) }}">{{ last_message.createdAt|ago }}</a>
-                                par {{ user_profile_link(last_message.author) }}
+                                {% trans %}by{% endtrans %} {{ user_profile_link(last_message.author) }}
                             </div>
                         </div>
                     {% else %}
-                        Ce forum ne dispose pas encore de sujets.
+                        {% trans %}This forum does not have any content yet{% endtrans %}
                     {% endfor %}
                 </div>
             </div>
@@ -107,7 +107,7 @@
                 {{ knp_pagination_render(pagination) }}
             </div>
             {% if forum.lock == false and is_granted('ROLE_USER') %}
-                <a class="mb-3 btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">Nouveau sujet</a>
+                <a class="mb-3 btn btn-primary" href="{{ path('thread.new', {'slug': forum.slug}) }}">{% trans %}New thread{% endtrans %}</a>
             {% endif %}
         </div>
     </div>

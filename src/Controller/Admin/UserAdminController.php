@@ -11,12 +11,20 @@ use App\Service\UserService;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/admin/users', name: 'admin.user.')]
 class UserAdminController extends AbstractBaseController
 {
+    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    {
+        parent::__construct($requestStack, $this->decoder);
+    }
+
     #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -43,7 +51,7 @@ class UserAdminController extends AbstractBaseController
     public function reset(User $user, UserService $userService): Response
     {
         $userService->resetUser($user);
-        $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été remis à zéro !", $user->getPseudo()));
+        $this->addCustomFlash('success', $this->translator->trans('Users'), $this->translator->trans('The user "pseudo" has been reset', ['pseudo' => $user->getPseudo()]));
 
         return $this->redirectToRoute('admin.user.details', [
             'slug' => $user->getSlug(),
@@ -60,18 +68,18 @@ class UserAdminController extends AbstractBaseController
 
         if ($this->isCsrfTokenValid('delete-user', $submittedToken)) {
             if ($this->getUser() === $user) {
-                $this->addCustomFlash('danger', 'Utilisateurs', 'Vous ne pouvez pas vous supprimer vous-même !');
+                $this->addCustomFlash('danger', $this->translator->trans('Users'), $this->translator->trans("You can't delete yourself!"));
 
                 return $this->redirectToRoute('admin.user.index');
             }
 
             $request->request->get('deleteData') ? $userService->deleteUser($user, true) : $userService->deleteUser($user);
 
-            $this->addCustomFlash('success', 'Utilisateurs', sprintf("L'utilisateur %s a été supprimé !", $user->getPseudo()));
+            $this->addCustomFlash('success', $this->translator->trans('Users'), $this->translator->trans('The user "pseudo" has been deleted', ['pseudo' => $user->getPseudo()]));
 
             return $this->redirectToRoute('admin.user.index');
         }
 
-        throw new Exception('Jeton CSRF invalide !');
+        throw new Exception($this->translator->trans('Invalid CSRF token'));
     }
 }

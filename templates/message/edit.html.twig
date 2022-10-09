@@ -1,6 +1,6 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Edition de votre message{% endblock %}
+{% block title %}{% trans %}Edition of your message{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,20 +13,20 @@
 {% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Forums', path('forum.index')) %}
+    {% do append_breadcrumb('Forums'|trans, path('forum.index')) %}
 
     {% for part in message.thread.forum|breadcrumb %}
         {% do append_breadcrumb(part.title, part.url) %}
     {% endfor %}
 
     {% do append_breadcrumb(message.thread.title, path('thread.show', {'slug': message.thread.slug})) %}
-    {% do append_breadcrumb('Edition de votre message') %}
+    {% do append_breadcrumb('Edition of your message'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <div class="mb-3">
-        <h2 class="text-center">Edition de votre message</h2>
-        <p class="text-center">Sujet {{ message.thread.title }}</p>
-        {{ include('partials/_simple_form.twig', {button_label: 'Modifier'}) }}
+        <h2 class="text-center">{% trans %}Edition of your message{% endtrans %}</h2>
+        <p class="text-center">{% trans %}Thread{% endtrans %} {{ message.thread.title }}</p>
+        {{ include('partials/_simple_form.twig', {button_label: 'Edit'|trans}) }}
     </div>
 {% endblock %}

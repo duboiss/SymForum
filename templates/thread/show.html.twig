@@ -1,6 +1,6 @@
 {% extends 'layouts/modnav.html.twig' %}
 
-{% block title %}{{ thread.title }} par {{ thread.author ?? 'Compte supprimé' }}{% endblock %}
+{% block title %}{{ thread.title }} {% trans %}by{% endtrans %} {{ thread.author ?? 'Deleted account'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -34,9 +34,9 @@
                 <div class="toast" id="hiddenToast-report" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
                     <div class="toast-header">
                         <strong class="me-auto">
-                            <i class="fas fa-check-circle"></i> Signalement
+                            <i class="fas fa-check-circle"></i> {% trans %}Report{% endtrans %}
                         </strong>
-                        <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+                        <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="{% trans %}Close{% endtrans %}">
                             <span aria-hidden="true"></span>
                         </button>
                     </div>
@@ -50,7 +50,7 @@
         <div class="row justify-content-md-center mt-5">
             <div class="col col-lg-12 col-md-12 col-sm-12">
 
-                {% do append_breadcrumb('Forums', path('forum.index')) %}
+                {% do append_breadcrumb('Forums'|trans, path('forum.index')) %}
                 {% for part in thread.forum|breadcrumb %}
                     {% do append_breadcrumb(part.title, part.url) %}
                 {% endfor %}
@@ -70,19 +70,19 @@
                     {% if app.user %}
                         <div class="mb-3">
                             <p class="text-center">
-                                Connecté en tant que {{ app.user }}, vous pouvez répondre :
+                                {% trans %}Logged in as{% endtrans %} <strong>{{ app.user }}</strong>, {% trans %}you can answer{% endtrans %} :
                             </p>
-                            {{ include('partials/_simple_form.twig', {button_label: 'Envoyer'}) }}
+                            {{ include('partials/_simple_form.twig', {button_label: 'Send'|trans}) }}
                         </div>
                     {% else %}
                         <div class="alert alert-info text-center">
-                            <a href="{{ login_target_path() }}">Connectez-vous pour répondre.</a>
+                            <a href="{{ login_target_path() }}">{% trans %}Login to reply{% endtrans %}</a>
                         </div>
                     {% endif %}
                 {% else %}
                     {% if app.user %}
-                        <div class="alert alert-warning text-center">Ce sujet est verrouillé, vous ne pouvez donc pas y
-                            répondre.
+                        <div class="alert alert-warning text-center">
+                            {% trans %}This thread is locked, so you cannot reply{% endtrans %}
                         </div>
                     {% endif %}
                 {% endif %}

@@ -1,6 +1,6 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Détails sur {{ user }}{% endblock %}
+{% block title %}{{ 'Details on %user%'|trans({'%user%': user}) }}{% endblock %}
 
 {% block content %}
     <div class="modal fade" id="deleteModal">
@@ -8,36 +8,36 @@
             <div class="modal-content">
                 <form action="{{ path('admin.user.delete', {'slug': user.slug}) }}" method="POST">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmation de suppression</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <h5 class="modal-title">{% trans %}Confirmation of deletion{% endtrans %}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans %}Close{% endtrans %}">
                             <span aria-hidden="true"></span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Êtes-vous certain de vouloir supprimer {{ user }} ?</p>
+                        <p>{% trans %}Are you sure you want to delete{% endtrans %} {{ user }} ?</p>
                         <div class="form-check mb-3">
                             <input type="checkbox" class="form-check-input" id="deleteData" name="deleteData"
                                 aria-describedby="deleteDataHelp" checked>
                             <label class="form-check-label" for="deleteData">
-                                Supprimer les données de l'utilisateur (messages, sujets...)
+                                {% trans %}Delete user data (messages, threads...){% endtrans %}
                             </label>
                             <div id="deleteDataHelp" class="form-text">
-                                Si cette case est décochée, son contenu sera remplacé par "supprimé".
+                                {% trans %}If this box is unchecked, its content will be replaced by "deleted".{% endtrans %}
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="token" value="{{ csrf_token('delete-user') }}"/>
-                        <button type="submit" class="btn btn-primary js-submit-btn">Valider</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary js-submit-btn">{% trans %}Save{% endtrans %}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Utilisateurs', path('admin.user.index')) %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Users'|trans, path('admin.user.index')) %}
     {% do append_breadcrumb(user.pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
@@ -45,29 +45,29 @@
     <h1>
         <span>{{ user }}</span>
         <a class="btn btn-warning btn-sm js-submit-link" href="{{ path('admin.user.reset', {'slug': user.slug}) }}"><i
-                    class="fas fa-undo"></i> Remettre à zéro</a>
+                    class="fas fa-undo"></i> {% trans %}Reset{% endtrans %}</a>
         <a class="btn btn-danger btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-                    class="fas fa-trash"></i> Supprimer</a>
+                    class="fas fa-trash"></i> {% trans %}Delete{% endtrans %}</a>
     </h1>
 
     <div class="row mt-3">
         <div class="col col-lg-6 col-md-6 col-sm-6">
             <h4>Général</h4>
             <p>
-                {{ user.isActiveNow ? 'En ligne' : 'Hors ligne' }} <br>
-                Email : {{ user.email }}<br>
-                Inscription : {{ user.createdAt|format_datetime('short') }}<br>
-                Dernière activité : {{ user.lastActivityAt ? user.lastActivityAt|format_datetime('short') : 'Jamais' }}
+                {{ user.isActiveNow ? 'Online'|trans : 'Offline'|trans }} <br>
+                {% trans %}Email{% endtrans %} : {{ user.email }}<br>
+                {% trans %}Registered on{% endtrans %} : {{ user.createdAt|format_datetime('short') }}<br>
+                {% trans %}Last activity{% endtrans %} : {{ user.lastActivityAt ? user.lastActivityAt|format_datetime('short') : 'Never'|trans }}
             </p>
 
         </div>
 
         <div class="col col-lg-6 col-md-6 col-sm-6">
-            <h4>Statistiques</h4>
+            <h4>{% trans %}Statistics{% endtrans %}</h4>
             <p>
-                {{ user.messages|length }} message{{ user.messages|length > 1 ? 's' }}<br>
-                {{ user.threads|length }} sujet{{ user.threads|length > 1 ? 's' }}<br>
-                {{ user.reports|length }} signalement{{ user.reports|length > 1 ? 's' }}<br>
+                {{ user.messages|length }} {% trans %}message{% endtrans %}{{ user.messages|length > 1 ? 's' }}<br>
+                {{ user.threads|length }} {% trans %}thread{% endtrans %}{{ user.threads|length > 1 ? 's' }}<br>
+                {{ user.reports|length }} {% trans %}report{% endtrans %}{{ user.reports|length > 1 ? 's' }}<br>
             </p>
         </div>
     </div>

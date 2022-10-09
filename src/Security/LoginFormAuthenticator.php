@@ -6,8 +6,6 @@ namespace App\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -25,12 +23,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     final public const LOGIN_ROUTE = 'security.login';
     final public const REDIRECT_AFTER_LOGIN_ROUTE = 'forum.index';
+    private const FORUMS_PARENT_PATH = '/forums';
 
-    private readonly FlashBagInterface $flashBag;
-
-    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfTokenManager, RequestStack $requestStack)
+    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfTokenManager)
     {
-        $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
 
     protected function getLoginUrl(Request $request): string
@@ -50,13 +46,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         ]);
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): RedirectResponse
     {
-        if (($targetUrl = $request->request->get('targetUrl')) && preg_match('@^/forums@', (string) $targetUrl)) {
-            return new RedirectResponse((string) $targetUrl);
+        if (($targetUrl = (string) $request->request->get('targetUrl')) && str_starts_with($targetUrl, self::FORUMS_PARENT_PATH)) {
+            return new RedirectResponse($targetUrl);
         }
 
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 

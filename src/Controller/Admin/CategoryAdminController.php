@@ -11,13 +11,21 @@ use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route(path: '/admin/categories', name: 'admin.category.')]
 class CategoryAdminController extends AbstractBaseController
 {
+    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    {
+        parent::__construct($requestStack, $this->decoder);
+    }
+
     #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -36,7 +44,7 @@ class CategoryAdminController extends AbstractBaseController
             $em->persist($category);
             $em->flush();
 
-            $this->addCustomFlash('success', 'Catégorie', 'La catégorie a été ajoutée !');
+            $this->addCustomFlash('success', $this->translator->trans('Category'), $this->translator->trans('The category has been added'));
 
             return $this->redirectToRoute('admin.category.index');
         }
@@ -53,7 +61,7 @@ class CategoryAdminController extends AbstractBaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addCustomFlash('success', 'Catégorie', 'La catégorie a bien été modifiée !');
+            $this->addCustomFlash('success', $this->translator->trans('Category'), $this->translator->trans('The category has been edited'));
 
             return $this->redirectToRoute('admin.category.index');
         }
@@ -69,13 +77,13 @@ class CategoryAdminController extends AbstractBaseController
     {
         if (count($category->getForums()) > 0) {
             return $this->json([
-                'message' => 'Impossible de supprimer la catégorie, elle contient des forums !',
+                'message' => $this->translator->trans('The category cannot be deleted, it contains forums'),
             ], 403);
         }
 
         $em->remove($category);
         $em->flush();
 
-        return $this->json(['message' => 'La catégorie a bien été supprimée !']);
+        return $this->json(['message' => $this->translator->trans('The category has been deleted')]);
     }
 }

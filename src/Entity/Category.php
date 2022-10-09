@@ -32,7 +32,7 @@ class Category
 
     #[ORM\Column(type: 'smallint')]
     #[Assert\NotBlank]
-    #[Assert\Positive(message: 'La position doit correspondre à un nombre positif.')]
+    #[Assert\Positive]
     private ?int $position = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Forum::class)]

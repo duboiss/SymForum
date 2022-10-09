@@ -1,17 +1,17 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Catégories - Ajouter{% endblock %}
+{% block title %}{% trans %}Categories{% endtrans %} - {% trans %}Add{% endtrans %}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Catégories', path('admin.category.index')) %}
-    {% do append_breadcrumb('Ajout') %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Categories'|trans, path('admin.category.index')) %}
+    {% do append_breadcrumb('Add'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
-    <h1>Ajouter une catégorie</h1>
+    <h1>{% trans %}Add a category{% endtrans %}</h1>
 
     <div class="mt-3">
-        {{ include('partials/_simple_form.twig', {button_label: 'Ajouter'}) }}
+        {{ include('partials/_simple_form.twig', {button_label: 'Save'|trans}) }}
     </div>
 {% endblock %}

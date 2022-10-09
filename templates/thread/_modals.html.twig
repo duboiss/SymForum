@@ -3,20 +3,20 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Confirmation de suppression</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title">{% trans %}Confirmation of deletion{% endtrans %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans %}Close{% endtrans %}">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Êtes-vous certain de vouloir supprimer ce sujet ?</p>
+                    <p>{% trans %}Are you sure you want to delete this thread?{% endtrans %}</p>
                 </div>
                 <div class="modal-footer">
                     <form action="{{ path('thread.delete', {'slug': thread.slug}) }}" method="POST">
                         <input type="hidden" name="token" value="{{ csrf_token('delete-thread') }}"/>
-                        <button type="submit" class="btn btn-primary js-submit-btn">Confirmer</button>
+                        <button type="submit" class="btn btn-primary js-submit-btn">{% trans %}Confirm{% endtrans %}</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                 </div>
             </div>
         </div>
@@ -28,8 +28,8 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Signalement</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title">{% trans %}Report{% endtrans %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans %}Close{% endtrans %}">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
@@ -37,16 +37,16 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <p id="reportText"></p>
-                            <label for="message-text" class="col-form-label">Motif :</label>
+                            <label for="message-text" class="col-form-label">{% trans %}Reason{% endtrans %} :</label>
                             <textarea class="form-control" id="message-text" name="reason"
-                                      placeholder="Décrivez ici les raisons qui vous amènent à signaler l'auteur de ce message..."
+                                      placeholder="{% trans %}Describe here the reasons that lead you to report the author of this message...{% endtrans %}"
                                       required></textarea><br>
                             <p class="error-message" style="color: red;"></p>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="js-report-button" class="btn btn-primary">Signaler</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" id="js-report-button" class="btn btn-primary">{% trans %}Report{% endtrans %}</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                     </div>
                 </form>
             </div>

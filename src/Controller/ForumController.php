@@ -16,12 +16,20 @@ use App\Service\OptionService;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/forums')]
 class ForumController extends AbstractBaseController
 {
+    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    {
+        parent::__construct($requestStack, $this->decoder);
+    }
+
     #[Route(path: '/', name: 'forum.index', methods: ['GET'])]
     public function index(CategoryRepository $categoriesRepo, UserRepository $userRepository, MessageRepository $messageRepository, ThreadRepository $threadRepository, OptionService $optionService): Response
     {
@@ -66,7 +74,7 @@ class ForumController extends AbstractBaseController
     public function lock(Forum $forum, ForumService $forumService): Response
     {
         $forumService->lock($forum);
-        $this->addCustomFlash('success', 'Forum', 'Le forum a été fermé !');
+        $this->addCustomFlash('success', $this->translator->trans('Forum'), $this->translator->trans('The forum has been locked'));
 
         return $this->redirectToRoute('forum.show', [
             'slug' => $forum->getSlug(),
@@ -78,7 +86,7 @@ class ForumController extends AbstractBaseController
     public function unlock(Forum $forum, ForumService $forumService): Response
     {
         $forumService->unlock($forum);
-        $this->addCustomFlash('success', 'Forum', 'Le forum a été ouvert !');
+        $this->addCustomFlash('success', $this->translator->trans('Forum'), $this->translator->trans('The forum has been unlocked'));
 
         return $this->redirectToRoute('forum.show', [
             'slug' => $forum->getSlug(),

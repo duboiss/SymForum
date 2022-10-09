@@ -1,11 +1,3 @@
-{
-    servers {
-        protocol {
-            experimental_http3
-        }
-    }
-}
-
 {$SERVER_NAME}
 
 log
@@ -14,6 +6,6 @@ route {
     root * /var/www/html/public
     push
     php_fastcgi php:9000
-    encode gzip
+    encode zstd gzip
     file_server
 }

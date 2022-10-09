@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\ValueObject\Locales;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -22,6 +23,13 @@ class UserFixtures extends BaseFixtures
             ->setEmail('demo@demo.com')
         ;
 
+        $demofrUser = new User();
+        $demofrUser->setPseudo('demofr')
+            ->setHash($this->hasher->hashPassword($demoUser, 'demo'))
+            ->setEmail('demofr@demo.com')
+            ->setLocale(Locales::FRENCH)
+        ;
+
         $adminUser = new User();
         $adminUser->setPseudo('admin')
             ->setHash($this->hasher->hashPassword($demoUser, 'admin'))
@@ -30,6 +38,7 @@ class UserFixtures extends BaseFixtures
         ;
 
         $manager->persist($demoUser);
+        $manager->persist($demofrUser);
         $manager->persist($adminUser);
 
         $this->createMany(User::class, FixturesSettings::USERS_COUNT, function (User $user): void {

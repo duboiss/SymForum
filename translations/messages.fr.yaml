@@ -1,0 +1,205 @@
+# General
+Admin: Admin
+Administration: Administration
+Invalid CSRF token: Token CSRF invalide
+Please provide more details: Merci de donner plus d'informations
+Login: Connexion
+Logout: Déconnexion
+You have logged in: Vous vous êtes connecté
+You have logged out: Vous vous êtes déconnecté
+Category: Catégorie
+Forum: Forum
+Forums: Forums
+Thread: Sujet
+thread: sujet
+Threads: Sujets
+threads: sujets
+Message: Message
+message: message
+Messages: Messages
+Report: Signalement
+report: signalement
+Settings: Paramètres
+Users: Utilisateurs
+
+# Controllers
+The forum has been locked: Le forum a été verrouillé
+The forum has been unlocked: Le forum a été dévérrouillé
+
+The message has been deleted: Le message a été supprimé
+The message has been edited: Le message a été édité
+Your message has been posted: Votre message a été publié
+The message has been reported: Le message a bien été signalé
+The message is not in a thread: Le message n'est pas dans un sujet
+The message and the thread have been deleted: Le message et le sujet ont été supprimés
+You have already reported this message: Vous avez déjà signalé ce message
+You can't report yourself!: Vous ne pouvez pas vous signaler vous-même!
+
+Your thread has been created: Votre sujet a été créé
+The thread has been deleted: Le sujet a été supprimé
+The thread has been unlocked: Le sujet a été déverrouillé
+The thread has been unpinned: Le sujet a été détaché
+The thread has been locked: Le sujet a été verrouillé
+The thread has been pinned: Le sujet a été épinglé
+
+# Forms
+Thread title: Titre du sujet
+Language: Langage
+You must enter a title: Vous devez saisir un titre
+The title must be at least {{ limit }} characters: Le titre doit faire au moins {{ limit }} caractères
+The title must not exceed {{ limit }} characters: Le titre doit faire au maximum {{ limit }} caractères
+You must enter a message: Vous devez saisir un message
+The message must be at least 3 characters: Le message doit faire au moins 3 caractères
+The message must not exceed {{ limit }} characters: Le message doit faire au maximum {{ limit }} caractères
+
+# Services
+You can't add your message because the thread is locked: Vous ne pouvez pas ajouter votre message parce que le sujet est verrouillé
+You have to wait a while before you can post a message: Vous devez patienter avant de pouvoir poster un message
+You can't edit your message because the thread is locked: Vous ne pouvez pas éditer votre message parce que le sujet est verrouillé
+The first message cannot be deleted because the thread contains replies: Le premier message ne peut pas être supprimé parce que le sujet contient des réponses
+
+You have to wait a while before you can post a thread: Vous devez patienter avant de pouvoir créer un sujet
+You can't create a thread because the forum is locked: Vous ne pouvez pas créer un sujet parce que le forum est fermé
+
+# Admin
+The category has been added: La catégorie a été ajoutée
+The category cannot be deleted, it contains forums: La catégorie ne peut pas être supprimée, elle contient des forums
+The category has been deleted: La catégorie a été supprimée
+The category has been edited: La catégorie a été éditée
+
+The report has been deleted: Le signalement a été supt:primé
+The report has been closed: Le signalement a été clôturé
+
+The request is not complete: La requête n'est pas complète
+
+The user "pseudo" has been deleted: L'utilisateur "pseudo" a été supprimé
+The user "pseudo" has been reset: L'utilisateur "pseudo" a été remis à zéro
+You can't delete yourself!: Vous ne pouvez pas vous supprimer vous-même !
+
+# Roles
+Administrators: Administrateurs
+Moderators: Modérateurs
+
+# Templates
+Actions: Actions
+Add: Ajouter
+Add a category: Ajouter une catégorie
+Answers: Réponses
+Are you sure you want to delete: Etes-vous sûr de vouloir supprimer
+Are you sure you want to delete this thread?: Etes-vous sûr de vouloir supprimer ce sujet ?
+Author: Auteur
+By: Par
+by: par
+Cancel: Annuler
+Categories: Catégories
+Close: Fermer
+Close the forum: Fermer le forum
+Confirm: Confirmer
+Confirmation of deletion: Confirmation de suppression
+Content: Contenu
+created thread: sujet créé
+Created threads: Sujets créés
+created threads: sujets créés
+Date: Date
+Delete: Supprimer
+Delete the thread: Supprimer le sujet
+Delete user data (messages, threads...): Supprimer les données utilisateur (messages, sujets...)
+Deleted account: Compte supprimé
+Describe here the reasons that lead you to report the author of this message...: Décrivez ici les raisons qui vous amènent à signaler l'auteur de ce message...
+Details: Détails
+Details on %user%: Détails sur %user%
+Edit: Modifier
+Edit of: Modification de
+Edit the category: Modifier la catégorie
+Edition of your message: Edition de votre message
+Email: Email
+Homepage: Page d'accueil
+If this box is unchecked, its content will be replaced by "deleted".: Si cette case est décochée, tout le contenu sera remplacé par "supprimé".
+Last activity: Dernière activité
+Last created threads: Derniers sujets créés
+Last participations: Dernières participations
+Last message: Dernier message
+Latest threads created: Derniers sujets créés
+Lock the thread: Verrouiller le sujet
+Logged in as: Connecté en tant que
+Login to reply: Connectez-vous pour répondre.
+Members: Membres
+Members list: Liste des membres
+Message deleted: Message supprimé
+Message of: Message de
+Messages number: Nombre de messages
+My messages: Mes messages
+My profile: Mon profil
+My threads: Mes sujets
+My settings: Mes paramètres
+Never: Jamais
+New thread: Nouveau sujet
+No message: Aucun message
+of: de
+Offline: Hors ligne
+Online: En ligne
+Online users: Membres en ligne
+Open the forum: Ouvrir le forum
+Open the thread: Ouvrir le sujet
+Other reports on the same message: D'autres signalements sur le même message...
+Password: Mot de passe
+pending: en attente
+Pin the subject: Épingler le sujet
+Position: Position
+Profile of %user%: Profil de %user%
+"Profile of %user% : messages": "Profil de %user% : messages"
+"Profile of %user% : threads": "Profil de %user% : sujets"
+Pseudo: Pseudo
+Published messages: Messages publiés
+published message: messages publié
+published messages: messages publiés
+Published on: Publié le
+Reason: Raison
+Registration date: Date d'inscription
+Registered on: Inscrit le
+Remember me: Se souvenir de moi
+Report of: Signalement de
+Report of %pseudo%: Signalement de %pseudo%
+Reported by: Signalé par
+Reported on: Reporté le
+Reports: Signalements
+Reset: Remettre à zéro
+Save: Sauvegarder
+See all the participations of %user%: Voir toutes les participations de %user%
+See all the threads created by %user%: Voir tous les sujets créés par %user%
+See my threads: Voir mes sujets
+See my participations: Voir mes participations
+Send: Envoyer
+Statistics: Statistiques
+Status: Statut
+Team members: Membre de l'équipe
+Title: Titre
+the: le
+the last registered user is: le dernier utilisateur inscrit est
+The record number of online users is of: Le record du nombre d'utilisateurs en ligne est de
+This forum does not have a topic yet: Ce forum ne contient pas encore de sujets
+This thread is locked, so you cannot reply: Ce sujet est verrouillé, vous ne pouvez pas répondre
+This user has not yet created a thread: Cet utilisateur n'a pas encore créé de sujet
+This user has not yet posted a message: Cet utilisateur n'a pas encore posté de message
+Total answers: Nombre de réponses
+Total messages: Nombre de messages
+Treated by: Traité par
+Treaty: Traité
+users: users
+Unpin the thread: Détacher le sujet
+Waiting for treatment: En attente de traitement
+Welcome: Bienvenue
+you can answer: vous pouvez répondre
+Your email: Votre email
+Your password: Votre mot de passe
+
+## Errors
+You can: Vous pouvez
+return to the homepage: retourner sur l'accueil
+
+Page not found: Page non trouvée
+The page you requested was not found: La page que vous demandez n'a pas été trouvée
+Access forbidden: Accès interdit
+You do not have the necessary permissions to access this page.: Vous ne disposez pas des autorisations nécessaires pour accéder à cette page.
+Unexpected error: Erreur inattendue
+An unexpected error has occurred: Une erreur inattendue s'est produite.

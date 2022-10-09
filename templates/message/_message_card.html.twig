@@ -39,22 +39,22 @@
 
                     {% if is_granted('EDIT', message) %}
                         <a style="text-decoration: none;" href="{{ path('message.edit', {'uuid': message.uuidBase32}) }}"
-                           title="Editer">
+                           title="{% trans %}Edit{% endtrans %}">
                             <i class="far fa-edit"></i>
                         </a>
                     {% endif %}
 
                     {% if is_granted('REPORT', message) %}
                         <a style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#reportModal"
-                           data-author="{{ message.author ?? 'compte supprimé' }}"
-                           data-message="{{ message.uuidBase32 }}" href="#" title="Signaler">
+                           data-author="{{ message.author ?? 'Deleted account'|trans }}"
+                           data-message="{{ message.uuidBase32 }}" href="#" title="{% trans %}Report{% endtrans %}">
                             <i class="far fa-flag"></i>
                         </a>
                     {% endif %}
 
                     {% if is_granted('DELETE', message) %}
                         <a style="text-decoration: none;" href="{{ path('message.delete', {'uuid': message.uuidBase32}) }}"
-                           title="Supprimer">
+                           title="{% trans %}Delete{% endtrans %}">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     {% endif %}

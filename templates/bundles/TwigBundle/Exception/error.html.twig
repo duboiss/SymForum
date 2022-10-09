@@ -1,13 +1,13 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Erreur innatendue{% endblock %}
+{% block title %}{% trans %}Unexpected error{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h1>Erreur inatendue</h1>
+    <h1>{% trans %}Unexpected error{% endtrans %}</h1>
 
     <div class="mt-3">
         <p>
-            Une erreur innatendue s'est produite. Vous pouvez <a href="{{ path('forum.index') }}">retourner sur l'accueil</a>.
+            {% trans %}An unexpected error has occurred{% endtrans %}. {% trans %}You can{% endtrans %} <a href="{{ path('forum.index') }}">{% trans %}return to the homepage{% endtrans %}</a>.
         </p>
     </div>
 {% endblock %}

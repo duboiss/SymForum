@@ -10,6 +10,7 @@ This project is under development, it is **not currently intended for the produc
 The goal is to eventually make a bundle allowing any symfony developer to add a forum on his existing site.
 
 ### Features
+- English and French language support for everyone
 - Forums with sub-forums in categories
 - Breadcrumbs, antispam, reports...
 - Threads and forums locked/unlocked
@@ -52,7 +53,7 @@ $ make tests
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Acknowledgment
-- Gux : OptionService, breadcrumb twig filter, help for docker
+- Gux : OptionService, breadcrumb twig filter, help for docker implementation
 - [Capuchon](https://github.com/rampinflorian) : prototypes testings and suggestions
 
 ## License
