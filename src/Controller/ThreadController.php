@@ -16,6 +16,7 @@ use App\Service\OptionService;
 use App\Service\ThreadService;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
+use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +47,9 @@ class ThreadController extends AbstractBaseController
                 ]);
             }
 
+            if (!$form['content']) {
+                throw new RuntimeException('The request is not complete.');
+            }
             $message = $messageService->createMessage($form['content']->getData(), $thread);
 
             $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
@@ -87,6 +91,9 @@ class ThreadController extends AbstractBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $lock = (bool) $request->request->get('lock');
             $pin = (bool) $request->request->get('pin');
+            if (!$form['title'] || !$form['message']) {
+                throw new \RuntimeException('The request is not complete.');
+            }
 
             $thread = $threadService->createThread($form['title']->getData(), $forum, $lock, $pin);
 
