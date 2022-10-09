@@ -1,4 +1,4 @@
 App\Entity\Category:
     category1:
-        title: First category
+        name: First category
         position: 1

@@ -30,7 +30,7 @@
             {% for category in categories %}
                 <tr class="d-flex">
                     <td class="col-2">{{ category.position }}</td>
-                    <td class="col-8">{{ category.title }}</td>
+                    <td class="col-8">{{ category.name }}</td>
                     <td class="col-2">
                         <a class="btn btn-primary btn-sm" href="{{ path('admin.category.edit', {'uuid': category.uuidBase32}) }}" title="Modifier">
                             <i class="fas fa-edit"></i>

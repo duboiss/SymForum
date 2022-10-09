@@ -33,12 +33,3 @@ RUN apt update && \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_MEMORY_LIMIT -1
-ENV PATH "/root/.config/composer/vendor/bin:${PATH}"
-
-# Install Volta and use the latest LTS node version by default
-# needed by volta() function
-ENV VOLTA_HOME /root/.volta
-# make sure packages managed by volta will be in PATH
-ENV PATH $VOLTA_HOME/bin:$PATH
-
-RUN curl https://get.volta.sh | bash && volta install node yarn

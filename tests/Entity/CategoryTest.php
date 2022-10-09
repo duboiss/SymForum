@@ -24,14 +24,14 @@ class CategoryTest extends WebTestCase
     public function getEntity(): Category
     {
         return (new Category())
-            ->setTitle('Category name')
+            ->setName('Category name')
             ->setPosition(1)
         ;
     }
 
     public function testInvalidBlankTitleEntity(): void
     {
-        $invalidCategory = $this->getEntity()->setTitle('');
+        $invalidCategory = $this->getEntity()->setName('');
         $this->assertHasErrors($invalidCategory, 1);
     }
 

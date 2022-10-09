@@ -1,6 +1,6 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% set reported_by_pseudo = report.reportedBy ?? 'Compte supprimé' %}
+{% set reported_by_pseudo = report.reportedBy ?? ('user.deleted') | trans %}
 
 {% block title %}Signalement de {{ reported_by_pseudo }}{% endblock %}
 

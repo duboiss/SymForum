@@ -1,10 +1,10 @@
 .DEFAULT_GOAL := help
+SHELL := /bin/bash
 
 PHP := docker compose exec php
 YARN := docker run --rm -v $(PWD):/app -w /app -u $(shell id -u):$(shell id -g) node:latest yarn
 
 COMPOSER := $(PHP) composer
-PHPUNIT := $(PHP) bin/phpunit
 SYMFONY := $(PHP) bin/console
 
 ##
@@ -123,16 +123,16 @@ eslint-audit: node_modules
 eslint-fix: node_modules
 	@$(YARN) run eslint assets --quiet --fix
 
-phpcsfixer-audit: vendor ## Run php-cs-fixer audit
+phpcsfixer-audit: ## Run php-cs-fixer audit
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --diff --dry-run --no-interaction --ansi --verbose
 
-phpcsfixer-fix: vendor ## Run php-cs-fixer fix
+phpcsfixer-fix: ## Run php-cs-fixer fix
 	@$(PHP) ./vendor/bin/php-cs-fixer fix --verbose
 
-phpstan: vendor ## Run phpstan
+phpstan: ## Run phpstan
 	@$(PHP) ./vendor/bin/phpstan analyse --memory-limit=-1 --no-progress --xdebug
 
-twigcs: vendor ## Run twigcs
+twigcs: ## Run twigcs
 	#@$(PHP) ./vendor/bin/twigcs templates
 
 
@@ -140,9 +140,9 @@ twigcs: vendor ## Run twigcs
 ## Tests
 .PHONY: tests
 
-tests: vendor ## Run tests
+tests: ## Run tests
 	@$(SYMFONY) doctrine:database:create --env=test --if-not-exists
-	@$(PHPUNIT)
+	@APP_ENV=test $(PHP) bin/phpunit
 
 
 ##

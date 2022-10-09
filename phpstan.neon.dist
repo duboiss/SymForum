@@ -6,6 +6,7 @@ parameters:
   level: 8
   paths:
     - src
+    - tests/Unit
   excludePaths:
     - src/DataFixtures/*
     - src/Migrations/*

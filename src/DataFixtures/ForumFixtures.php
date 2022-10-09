@@ -17,7 +17,7 @@ class ForumFixtures extends BaseFixtures implements DependentFixtureInterface
             /** @var Category $category */
             $category = $this->getRandomReference(Category::class);
 
-            $forum->setTitle($this->faker->words(4, true))
+            $forum->setName($this->faker->words(4, true))
                 ->setDescription($this->faker->sentence)
                 ->setCategory($category)
                 ->setParent(null)

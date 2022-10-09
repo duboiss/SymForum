@@ -15,7 +15,7 @@
 {% block content %}
     {% do append_breadcrumb('Forums', path('forum.index')) %}
     {% for part in forum|breadcrumb %}
-        {% do append_breadcrumb(part.title, part.url) %}
+        {% do append_breadcrumb(part.name, part.url) %}
     {% endfor %}
     {% do append_breadcrumb('Nouveau sujet') %}
 
