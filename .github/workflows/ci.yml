@@ -35,8 +35,8 @@ jobs:
         run: bin/console -V
 
       ## —— Tests ✅ ———————————————————————————————————————————————————————————
-      - name: Run functionnal and unit tests
-        run: make tests
+      #- name: Run functionnal and unit tests
+      #  run: make tests
 
       ## —— Doctrine schema ———————————————————————————————————————————————————
       - name: Check doctrine schema
