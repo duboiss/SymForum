@@ -1,6 +1,6 @@
 {% extends 'layouts/modnav.html.twig' %}
 
-{% block title %}{{ thread.title }} par {{ thread.author ?? 'Compte supprimé' }}{% endblock %}
+{% block title %}{{ thread.title }} par {{ thread.author ?? ('user.deleted') | trans | lower }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -52,7 +52,7 @@
 
                 {% do append_breadcrumb('Forums', path('forum.index')) %}
                 {% for part in thread.forum|breadcrumb %}
-                    {% do append_breadcrumb(part.title, part.url) %}
+                    {% do append_breadcrumb(part.name, part.url) %}
                 {% endfor %}
                 {% do append_breadcrumb(thread.title) %}
 

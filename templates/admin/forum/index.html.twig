@@ -29,8 +29,8 @@
                 {% for forum in forums %}
                     <tr class="d-flex">
                         <td class="col-2">{{ forum.position }}</td>
-                        <td class="col-5">{{ forum.title }}</td>
-                        <td class="col-3">{{ forum.category.title }}</td>
+                        <td class="col-5">{{ forum.name }}</td>
+                        <td class="col-3">{{ forum.category.name }}</td>
                         <td class="col-3">
                             <a class="btn btn-primary btn-sm disabled" href="#" title="Modifier">
                                 <i class="fas fa-edit"></i>

@@ -21,9 +21,9 @@ class Forum
 
     #[ORM\Column]
     #[Assert\NotBlank]
-    private ?string $title = null;
+    private ?string $name = null;
 
-    #[Gedmo\Slug(fields: ['title'])]
+    #[Gedmo\Slug(fields: ['name'])]
     #[ORM\Column(unique: true)]
     private ?string $slug = null;
 
@@ -76,14 +76,14 @@ class Forum
         return $this->getCategory();
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): self
+    public function setName(string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }

@@ -4,7 +4,7 @@
     {{ app.user == user ? 'Mon profil' : 'Profil de ' ~ user }}
 {% endblock %}
 
-{% set role = user_profile_role(user) %}
+{% set role = ('user.' ~ (user.roles | first)) | trans %}
 
 {% block content %}
     {% do append_breadcrumb('Membres', path('page.members')) %}

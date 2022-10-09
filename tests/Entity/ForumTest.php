@@ -24,7 +24,7 @@ class ForumTest extends WebTestCase
     public function getEntity(): Forum
     {
         return (new Forum())
-            ->setTitle('Forum title')
+            ->setName('Forum title')
             ->setDescription('Forum description')
             ->setPosition(1)
         ;
@@ -32,7 +32,7 @@ class ForumTest extends WebTestCase
 
     public function testInvalidBlankTitleEntity(): void
     {
-        $invalidForum = $this->getEntity()->setTitle('');
+        $invalidForum = $this->getEntity()->setName('');
         $this->assertHasErrors($invalidForum, 1);
     }
 

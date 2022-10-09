@@ -1,0 +1,5 @@
+user:
+  deleted: Compte supprimé
+  ROLE_USER: Utilisateur
+  ROLE_MODERATEUR: Modérateur
+  ROLE_ADMIN: Administrateur

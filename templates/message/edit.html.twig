@@ -16,7 +16,7 @@
     {% do append_breadcrumb('Forums', path('forum.index')) %}
 
     {% for part in message.thread.forum|breadcrumb %}
-        {% do append_breadcrumb(part.title, part.url) %}
+        {% do append_breadcrumb(part.name, part.url) %}
     {% endfor %}
 
     {% do append_breadcrumb(message.thread.title, path('thread.show', {'slug': message.thread.slug})) %}

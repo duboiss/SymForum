@@ -7,7 +7,7 @@ namespace App\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class AppExtension extends AbstractExtension
+class UserExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -15,7 +15,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('login_target_path', [AppRuntime::class, 'loginTargetPath']),
+            new TwigFunction('user_profile_link', [UserRuntime::class, 'getUserProfileLink'], ['is_safe' => ['html']]),
         ];
     }
 }

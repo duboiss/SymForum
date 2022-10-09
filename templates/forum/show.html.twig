@@ -1,6 +1,6 @@
 {% extends 'layouts/modnav.html.twig' %}
 
-{% block title %}{{ forum.title }}{% endblock %}
+{% block title %}{{ forum.name }}{% endblock %}
 
 {% block modnav_elements %}
     {{ include('forum/_modnav.html.twig') }}
@@ -16,9 +16,9 @@
                 {% do append_breadcrumb('Forums', path('forum.index')) %}
                 {% for part in forum|breadcrumb %}
                     {% if loop.last %}
-                        {% do append_breadcrumb(part.title) %}
+                        {% do append_breadcrumb(part.name) %}
                     {% else %}
-                        {% do append_breadcrumb(part.title, part.url) %}
+                        {% do append_breadcrumb(part.name, part.url) %}
                     {% endif %}
                 {% endfor %}
 
@@ -27,7 +27,7 @@
                 <div class="card bg-secondary mb-4">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">{{ forum.title }}</div>
+                            <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">{{ forum.name }}</div>
                             {% if forum.forums|length > 0 %}
                                 <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">SUJETS</div>
                                 <div class="col-lg-2 col-md-3 d-none d-md-block text-center">MESSAGES</div>
@@ -45,7 +45,7 @@
                         {{ loop.first ? '<div class="row">' : '<div class="row mt-4">' }}
                         <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
                             <h5 class="card-title">
-                                <a href="{{ path('forum.show', {'slug': subforum.slug}) }}">{{ subforum.title }}</a>
+                                <a href="{{ path('forum.show', {'slug': subforum.slug}) }}">{{ subforum.name }}</a>
                             </h5>
                             <p class="card-text">{{ subforum.description }}</p>
                         </div>

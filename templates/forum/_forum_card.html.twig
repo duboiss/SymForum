@@ -3,7 +3,7 @@
         <div class="col-lg-5 col-md-6 col-sm-8">
             <h5 class="card-title">
                 {{ forum.lock ? '<i class="fas fa-lock"></i>' }}
-                <a href="{{ path('forum.show', {'slug': forum.slug}) }}">{{ forum.title }}</a>
+                <a href="{{ path('forum.show', {'slug': forum.slug}) }}">{{ forum.name }}</a>
             </h5>
             <p class="card-text">{{ forum.description }}</p>
         </div>

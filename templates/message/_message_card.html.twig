@@ -13,8 +13,8 @@
 
                 {% if author is not null %}
                     <br>
-                    {% set role = user_profile_role(author) %}
-                    {{ role ? role }}
+                    {% set role = author.roles | first %}
+                    {{ role != 'ROLE_USER' ? ('user.' ~ (role)) | trans }}
                 {% endif %}
             </div>
             <div class="col-lg-10">{{ message.content }}</div>
@@ -46,7 +46,7 @@
 
                     {% if is_granted('REPORT', message) %}
                         <a style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#reportModal"
-                           data-author="{{ message.author ?? 'compte supprimé' }}"
+                           data-author="{{ message.author ?? ('user.deleted') | trans | lower }}"
                            data-message="{{ message.uuidBase32 }}" href="#" title="Signaler">
                             <i class="far fa-flag"></i>
                         </a>
