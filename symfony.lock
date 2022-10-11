@@ -40,12 +40,12 @@
         "version": "v1.0.0"
     },
     "doctrine/doctrine-bundle": {
-        "version": "2.6",
+        "version": "2.7",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.4",
-            "ref": "ddddd8249dd55bbda16fa7a45bb7499ef6f8e90e"
+            "ref": "da713d006953b90d1c085c1be480ecdd6c4a95e0"
         },
         "files": [
             "config/packages/doctrine.yaml",
@@ -146,9 +146,6 @@
     "phar-io/version": {
         "version": "3.2.1"
     },
-    "php-cs-fixer/diff": {
-        "version": "v2.0.2"
-    },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.2"
     },
@@ -160,9 +157,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.6.1"
-    },
-    "phpspec/prophecy": {
-        "version": "v1.15.0"
     },
     "phpstan/phpstan": {
         "version": "1.7.8"
