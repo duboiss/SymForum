@@ -28,8 +28,8 @@ class Report
     private ?Message $message = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Vous devez indiquer un motif.')]
-    #[Assert\Length(min: self::REASON_MIN_LENGTH, max: 255, minMessage: 'Votre message doit faire au moins 10 caractères.', maxMessage: 'Votre message doit faire au maximum 255 caractères.')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: self::REASON_MIN_LENGTH, max: 255, minMessage: 'Your message must be at least 10 characters', maxMessage: 'Your message must not exceed {{ limit }} characters')]
     private ?string $reason = null;
 
     #[Gedmo\Blameable(on: 'create')]

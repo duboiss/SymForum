@@ -10,12 +10,20 @@ use App\Repository\ReportRepository;
 use App\Service\ReportService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/admin/reports', name: 'admin.report.')]
 class ReportAdminController extends AbstractBaseController
 {
+    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    {
+        parent::__construct($requestStack, $this->decoder);
+    }
+
     #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(ReportRepository $reportRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -44,7 +52,7 @@ class ReportAdminController extends AbstractBaseController
     public function delete(Report $report, ReportService $reportService): Response
     {
         $reportService->deleteReport($report);
-        $this->addCustomFlash('success', 'Signalement', 'Le signalement a été supprimé !');
+        $this->addCustomFlash('success', $this->translator->trans('Report'), $this->translator->trans('The report has been deleted'));
 
         return $this->redirectToRoute('admin.report.index');
     }
@@ -53,7 +61,7 @@ class ReportAdminController extends AbstractBaseController
     public function close(Report $report, ReportService $reportService): Response
     {
         $reportService->closeReport($report);
-        $this->addCustomFlash('success', 'Signalement', 'Le signalement a été clôturé !');
+        $this->addCustomFlash('success', $this->translator->trans('Report'), $this->translator->trans('The report has been closed'));
 
         return $this->redirectToRoute('admin.report.index');
     }

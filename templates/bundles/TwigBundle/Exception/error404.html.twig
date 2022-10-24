@@ -1,13 +1,13 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Page non trouvée{% endblock %}
+{% block title %}{% trans %}Page not found{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h1>Page non trouvée</h1>
+    <h1>{% trans %}Page not found{% endtrans %}</h1>
 
     <div class="mt-3">
         <p>
-            La page que vous demandez n'a pas été trouvée. Vous pouvez <a href="{{ path('forum.index') }}">retourner sur l'accueil</a>.
+            {% trans %}The page you requested was not found.{% endtrans %} You can <a href="{{ path('forum.index') }}">{% trans %}return to the homepage{% endtrans %}</a>.
         </p>
     </div>
 {% endblock %}

@@ -1,64 +1,64 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% set reported_by_pseudo = report.reportedBy ?? 'Compte supprimé' %}
+{% set reported_by_pseudo = report.reportedBy ?? 'Deleted account'|trans %}
 
-{% block title %}Signalement de {{ reported_by_pseudo }}{% endblock %}
+{% block title %}{{ 'Report of %pseudo%'|trans({'%pseudo%': reported_by_pseudo}) }}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Signalements', path('admin.report.index')) %}
-    {% do append_breadcrumb('Signalement de ' ~ reported_by_pseudo) %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Reports'|trans, path('admin.report.index')) %}
+    {% do append_breadcrumb('Report of %pseudo%'|trans({'%pseudo%': reported_by_pseudo})) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
-    <h1><span>Signalement de {{ reported_by_pseudo }}</span>
+    <h1><span>{{ 'Report of %pseudo%'|trans({'%pseudo%': reported_by_pseudo}) }}</span>
         {% if not report.isTreated %}
             <a class="btn btn-primary btn-sm js-submit-link" href="{{ path('admin.report.close', {'uuid': report.uuidBase32}) }}">
-                <i class="fas fa-check"></i> Clôturer
+                <i class="fas fa-check"></i> {% trans %}Close{% endtrans %}
             </a>
         {% endif %}
         <a class="btn btn-danger btn-sm js-submit-link" href="{{ path('admin.report.delete', {'uuid': report.uuidBase32}) }}">
-            <i class="fas fa-trash"></i> Supprimer
+            <i class="fas fa-trash"></i> {% trans %}Delete{% endtrans %}
         </a>
     </h1>
 
     <div class="row mt-3">
         <div class="col col-lg-6 col-md-6 col-sm-6">
-            <h4>Signalement</h4>
+            <h4>{% trans %}Report{% endtrans %}</h4>
             <p>
-                Statut : {{ report.isTreated ? 'Traité' : 'En attente de traitement' }}<br>
-                Date : {{ report.createdAt|format_datetime }}<br>
-                Signalé par : {{ user_profile_link(report.reportedBy) }}<br>
-                Raison : {{ report.reason }}
+                {% trans %}Status{% endtrans %} : {{ report.isTreated ? 'Treaty'|trans : 'Waiting for treatment'|trans }}<br>
+                {% trans %}Date{% endtrans %} : {{ report.createdAt|format_datetime }}<br>
+                {% trans %}Reported by{% endtrans %} : {{ user_profile_link(report.reportedBy) }}<br>
+                {% trans %}Reason{% endtrans %} : {{ report.reason }}
                 {% if report.isTreated %}
-                    <br>Traité par : {{ user_profile_link(report.treatedBy) }} le {{ report.treatedAt|format_datetime }}
+                    <br>{% trans %}Treated by{% endtrans %} : {{ user_profile_link(report.treatedBy) }} le {{ report.treatedAt|format_datetime }}
                 {% endif %}
             </p>
         </div>
 
         <div class="col col-lg-6 col-md-6 col-sm-6">
-            <h4>Message</h4>
-            <p>Auteur : {{ user_profile_link(report.message.author) }}<br>
-                Date de publication : {{ report.message.createdAt|format_datetime }}<br>
-                Sujet : <a
+            <h4>{% trans %}Message{% endtrans %}</h4>
+            <p>{% trans %}Author{% endtrans %} : {{ user_profile_link(report.message.author) }}<br>
+                {% trans %}Published on{% endtrans %} : {{ report.message.createdAt|format_datetime }}<br>
+                {% trans %}Thread{% endtrans %} : <a
                         href="{{ path('thread.show', {'slug': report.message.thread.slug}) }}">{{ report.message.thread.title }}</a><br>
-                Contenu : <a
+                {% trans %}Content{% endtrans %} : <a
                         href="{{ path('message.show', {'uuid': report.message.uuidBase32}) }}">{{ report.message.content|striptags|u.truncate(50, '...', false) }}</a>
             </p>
         </div>
     </div>
 
     {% if report.message.reports|length > 1 %}
-        <h4 class="mt-3">D'autres signalements sur le même message...</h4>
+        <h4 class="mt-3">{% trans %}Other reports on the same message{% endtrans %}</h4>
         <table class="table table-sm">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Message de</th>
-                <th>Reporté le</th>
-                <th>Par</th>
-                <th>Motif</th>
-                <th>Actions</th>
+                <th>{% trans %}Message of{% endtrans %}</th>
+                <th>{% trans %}Reported on{% endtrans %}</th>
+                <th>{% trans %}By{% endtrans %}</th>
+                <th>{% trans %}Reason{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
@@ -68,7 +68,7 @@
                     <td>{{ user_profile_link(report.message.author) }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
                     <td>{{ report.reason|u.truncate(50, '...', false) }}</td>
-                    <td><a href="{{ path('admin.report.show', {'uuid': report.uuidBase32}) }}">Détails</a></td>
+                    <td><a href="{{ path('admin.report.show', {'uuid': report.uuidBase32}) }}">{% trans %}Details{% endtrans %}</a></td>
                 </tr>
             {% endfor %}
             </tbody>

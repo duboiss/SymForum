@@ -14,17 +14,24 @@ use App\Repository\MessageRepository;
 use App\Service\MessageService;
 use App\Service\OptionService;
 use App\Service\ThreadService;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/forums', name: 'thread.')]
 class ThreadController extends AbstractBaseController
 {
+    public function __construct(private readonly RequestStack $requestStack, private readonly DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    {
+        parent::__construct($requestStack, $this->decoder);
+    }
+
     #[Route(path: '/threads/{slug}', name: 'show', methods: ['GET', 'POST'])]
     public function show(Thread $thread, MessageRepository $messageRepository, Request $request, MessageService $messageService, PaginatorInterface $paginator, OptionService $optionService): Response
     {
@@ -48,11 +55,11 @@ class ThreadController extends AbstractBaseController
             }
 
             if (!$form['content']) {
-                throw new RuntimeException('The request is not complete.');
+                throw new RuntimeException($this->translator->trans('The request is not complete'));
             }
             $message = $messageService->createMessage($form['content']->getData(), $thread);
 
-            $this->addCustomFlash('success', 'Message', 'Votre message a bien été posté !');
+            $this->addCustomFlash('success', $this->translator->trans('Message'), $this->translator->trans('Your message has been posted'));
 
             return $this->redirectToRoute('message.show', [
                 'uuid' => $message->getUuidBase32(),
@@ -92,14 +99,14 @@ class ThreadController extends AbstractBaseController
             $lock = (bool) $request->request->get('lock');
             $pin = (bool) $request->request->get('pin');
             if (!$form['title'] || !$form['message']) {
-                throw new \RuntimeException('The request is not complete.');
+                throw new \RuntimeException($this->translator->trans('The request is not complete'));
             }
 
             $thread = $threadService->createThread($form['title']->getData(), $forum, $lock, $pin);
 
             $messageService->createMessage($form['message']->getData(), $thread);
 
-            $this->addCustomFlash('success', 'Sujet', 'Votre sujet a bien été crée !');
+            $this->addCustomFlash('success', $this->translator->trans('Thread'), $this->translator->trans('Your thread has been created'));
 
             return $this->redirectToRoute('thread.show', [
                 'slug' => $thread->getSlug(),
@@ -122,14 +129,14 @@ class ThreadController extends AbstractBaseController
             $forum = $thread->getForum();
             $threadService->deleteThread($thread);
 
-            $this->addCustomFlash('success', 'Sujet', 'Le sujet a été supprimé !');
+            $this->addCustomFlash('success', $this->translator->trans('Thread'), $this->translator->trans('The thread has been deleted'));
 
             return $this->redirectToRoute('forum.show', [
                 'slug' => $forum?->getSlug(),
             ]);
         }
 
-        throw new Exception('Jeton CSRF invalide !');
+        throw new RuntimeException($this->translator->trans('Invalid CSRF token'));
     }
 
     #[IsGranted('LOCK', subject: 'thread')]
@@ -137,7 +144,7 @@ class ThreadController extends AbstractBaseController
     public function lock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->lock($thread);
-        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été fermé !');
+        $this->addCustomFlash('success', $this->translator->trans('Thread'), $this->translator->trans('The thread has been locked'));
 
         return $this->redirectToReferer($request);
     }
@@ -147,7 +154,7 @@ class ThreadController extends AbstractBaseController
     public function unlock(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unlock($thread);
-        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été ouvert !');
+        $this->addCustomFlash('success', $this->translator->trans('Thread'), $this->translator->trans('The thread has been unlocked'));
 
         return $this->redirectToReferer($request);
     }
@@ -157,7 +164,7 @@ class ThreadController extends AbstractBaseController
     public function pin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->pin($thread);
-        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été épinglé !');
+        $this->addCustomFlash('success', $this->translator->trans('Thread'), $this->translator->trans('The thread has been pinned'));
 
         return $this->redirectToReferer($request);
     }
@@ -167,7 +174,7 @@ class ThreadController extends AbstractBaseController
     public function unpin(Thread $thread, ThreadService $threadService, Request $request): Response
     {
         $threadService->unpin($thread);
-        $this->addCustomFlash('success', 'Sujet', 'Le sujet a été détaché !');
+        $this->addCustomFlash('success', $this->translator->trans('Thread'), $this->translator->trans('The thread has been unpinned'));
 
         return $this->redirectToReferer($request);
     }

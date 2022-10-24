@@ -12,12 +12,13 @@ use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ThreadService
 {
     private readonly FlashBagInterface $flashBag;
 
-    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService, private readonly OptionService $optionService)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService, private readonly OptionService $optionService, private TranslatorInterface $translator)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
@@ -25,12 +26,18 @@ class ThreadService
     public function canPostThread(Forum $forum, User $user): bool
     {
         if ($forum->isLock()) {
-            $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous ne pouvez pas ajouter de sujet, le forum est verrouillé !']);
+            $this->flashBag->add('error', [
+                'title' => $this->translator->trans('Thread'),
+                'content' => $this->translator->trans("You can't create a thread because the forum is locked"),
+            ]);
 
             return false;
         }
         if (!$this->antispamService->canPostThread($user)) {
-            $this->flashBag->add('error', ['title' => 'Sujet', 'content' => 'Vous devez encore attendre un peu avant de pouvoir créer un sujet !']);
+            $this->flashBag->add('error', [
+                'title' => $this->translator->trans('Thread'),
+                'content' => $this->translator->trans('You have to wait a while before you can post a thread'),
+            ]);
 
             return false;
         }

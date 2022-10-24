@@ -1,4 +1,4 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-primary js-submit-btn" type="submit">{{ button_label|default('Valider') }}</button>
+    <button class="btn btn-primary js-submit-btn" type="submit">{{ button_label|default('Save'|trans) }}</button>
 {{ form_end(form) }}

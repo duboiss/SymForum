@@ -1,24 +1,24 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Signalements{% endblock %}
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Signalements') %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Reports'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
-    <h1>Signalements ({{ nbUntreatedReports }} en attente)</h1>
+    <h1>{% trans %}Reports{% endtrans %} ({{ nbUntreatedReports }} {% trans %}pending{% endtrans %})</h1>
 
     <div class="mt-3">
         <table class="table table-sm">
             <thead>
             <tr>
-                <th>Reporté le</th>
-                <th>Message de</th>
-                <th>Par</th>
-                <th>Motif</th>
-                <th>Actions</th>
+                <th>{% trans %}Reported on{% endtrans %}</th>
+                <th>{% trans %}Message of{% endtrans %}</th>
+                <th>{% trans %}By{% endtrans %}</th>
+                <th>{% trans %}Reason{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                     <td>{{ user_profile_link(report.message.author) }}</td>
                     <td>{{ user_profile_link(report.reportedBy) }}</td>
                     <td>{{ report.reason|u.truncate(45, '...', false) }}</td>
-                    <td><a href="{{ path('admin.report.show', {'uuid': report.uuidBase32}) }}">Détails</a></td>
+                    <td><a href="{{ path('admin.report.show', {'uuid': report.uuidBase32}) }}">{% trans %}Details{% endtrans %}</a></td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Accueil' %}
+{% block title %}{% trans %}Homepage{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -13,9 +13,9 @@
                                 <div class="col-lg-5 col-md-6 col-sm-8">
                                     <a href="{{ path('category.show', {'slug': category.slug}) }}">{{ category.title }}</a>
                                 </div>
-                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">SUJETS</div>
-                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">MESSAGES</div>
-                                <div class="col-lg-3 d-none d-lg-block">DERNIER MESSAGE</div>
+                                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">{% trans %}Threads{% endtrans %}</div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{% trans %}Messages{% endtrans %}</div>
+                                <div class="col-lg-3 d-none d-lg-block">{% trans %}Last activity{% endtrans %}</div>
                             </div>
                         </div>
 
@@ -30,10 +30,10 @@
         <div class="row{{ categories|length == 0 ? ' mt-5' }}">
             <div class="col col-lg-12 col-md-12 col-sm-12">
                 <div class="card bg-secondary mb-4">
-                    <div class="card-header">Statistiques</div>
+                    <div class="card-header">{% trans %}Statistics{% endtrans %}</div>
                     <div class="card-body">
                         {% if onlineUsers|length > 0 %}
-                            Membres connectés :
+                            {% trans %}Online users{% endtrans %} :
                             {% for user in onlineUsers %}
                                 {{ user_profile_link(user) }}{{ not loop.last ? ',' }}
                             {% endfor %}
@@ -41,18 +41,18 @@
                         {% endif %}
 
                         {% if maxOnlineUsersDate is not null %}
-                            Le record du nombre d'utilisateurs en ligne est de {{ maxOnlineUsers }} le {{ maxOnlineUsersDate }}.
+                            {% trans %}The record number of online users is of{% endtrans %} {{ maxOnlineUsers }} {% trans %}the{% endtrans %} {{ maxOnlineUsersDate }}.
                             <br>
                         {% endif %}
 
                         {% if lastRegistered is null %}
-                            {{ nbThreads }} sujets, {{ nbUsers }} membres.
+                            {{ nbThreads }} {% trans %}threads{% endtrans %}, {{ nbUsers }} {% trans %}users{% endtrans %}.
                         {% else %}
-                            {{ nbMessages }} messages, {{ nbThreads }} sujets, {{ nbUsers }} membres, le dernier membre inscrit est
+                            {{ nbMessages }} {% trans %}messages{% endtrans %}, {{ nbThreads }} {% trans %}threads{% endtrans %}, {{ nbUsers }} {% trans %}users{% endtrans %}, {% trans %}the last registered user is{% endtrans %}
                             {{ user_profile_link(lastRegistered) }}.
                         {% endif %}
 
-                        <br><a class="float-end" href="{{ path('page.team') }}">Équipe du forum</a>
+                        <br><a class="float-end" href="{{ path('page.team') }}">{% trans %}Team members{% endtrans %}</a>
                     </div>
                 </div>
             </div>

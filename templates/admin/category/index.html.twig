@@ -1,16 +1,16 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Catégories{% endblock %}
+{% block title %}{% trans %}Categories{% endtrans %}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Catégories') %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Categories'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>
-        <span>Catégories</span>
-        <a class="btn btn-primary btn-sm" href="{{ path('admin.category.add') }}" title="Ajouter">
+        <span>{% trans %}Categories{% endtrans %}</span>
+        <a class="btn btn-primary btn-sm" href="{{ path('admin.category.add') }}" title="{% trans %}Add{% endtrans %}">
             <i class="fas fa-plus"></i>
         </a>
     </h1>
@@ -21,9 +21,9 @@
         <table class="table table-sm">
             <thead>
             <tr class="d-flex">
-                <th class="col-2">Position</th>
-                <th class="col-8">Titre</th>
-                <th class="col-2">Actions</th>
+                <th class="col-2">{% trans %}Position{% endtrans %}</th>
+                <th class="col-8">{% trans %}Title{% endtrans %}</th>
+                <th class="col-2">{% trans %}Actions{% endtrans %}</th>
             </tr>
             </thead>
             <tbody class="thead-light">
@@ -32,11 +32,10 @@
                     <td class="col-2">{{ category.position }}</td>
                     <td class="col-8">{{ category.title }}</td>
                     <td class="col-2">
-                        <a class="btn btn-primary btn-sm" href="{{ path('admin.category.edit', {'uuid': category.uuidBase32}) }}" title="Modifier">
+                        <a class="btn btn-primary btn-sm" href="{{ path('admin.category.edit', {'uuid': category.uuidBase32}) }}" title="{% trans %}Edit{% endtrans %}">
                             <i class="fas fa-edit"></i>
                         </a>
-                        -
-                        <button class="btn btn-danger btn-sm js-delete-button" data-delete-url="{{ path('admin.category.delete', {'uuid': category.uuidBase32}) }}" title="Supprimer">
+                        <button class="btn btn-danger btn-sm js-delete-button" data-delete-url="{{ path('admin.category.delete', {'uuid': category.uuidBase32}) }}" title="{% trans %}Delete{% endtrans %}">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>

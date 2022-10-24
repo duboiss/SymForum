@@ -21,7 +21,7 @@ class ForumVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [self::LOCK], true)
+        return $attribute === self::LOCK
             && $subject instanceof Forum;
     }
 

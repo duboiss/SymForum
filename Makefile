@@ -115,7 +115,7 @@ reset: clean install ## Reset project
 .PHONY: quality eslint-fix phpcsfixer-audit phpcsfixer-fix phpstan twigcs
 
 quality: ## Run linters and others quality tools
-	make -j lint phpcsfixer-audit phpstan twigcs
+	make lint phpcsfixer-audit phpstan twigcs
 
 eslint-audit: node_modules
 	@$(YARN) run eslint assets --quiet

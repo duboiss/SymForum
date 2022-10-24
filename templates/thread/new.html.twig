@@ -1,6 +1,6 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Nouveau sujet{% endblock %}
+{% block title %}{% trans %}New thread{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,32 +13,31 @@
 {% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Forums', path('forum.index')) %}
+    {% do append_breadcrumb('Forums'|trans, path('forum.index')) %}
     {% for part in forum|breadcrumb %}
         {% do append_breadcrumb(part.title, part.url) %}
     {% endfor %}
-    {% do append_breadcrumb('Nouveau sujet') %}
+    {% do append_breadcrumb('New thread'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <div class="mb-3">
-        <h2 class="text-center">Nouveau sujet</h2>
+        <h2 class="text-center">{% trans %}New thread{% endtrans %}</h2>
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {% if is_granted('ROLE_MODERATOR') %}
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" name="lock" id="lock">
-                <label class="form-check-label" for="lock">Verrouiller ce sujet</label>
+                <label class="form-check-label" for="lock">{% trans %}Lock this thread{% endtrans %}</label>
             </div>
         {% endif %}
         {% if is_granted('ROLE_MODERATOR') %}
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" name="pin" id="pin">
-                <label class="form-check-label" for="pin">Épingler ce sujet</label>
+                <label class="form-check-label" for="pin">{% trans %}Pin this subject{% endtrans %}</label>
             </div>
         {% endif %}
-        <button class="btn btn-primary js-submit-btn">Nouveau sujet</button>
+        <button class="btn btn-primary js-submit-btn">{% trans %}New thread{% endtrans %}</button>
         {{ form_end(form) }}
-
     </div>
 {% endblock %}

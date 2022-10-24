@@ -1,16 +1,16 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Forums{% endblock %}
+{% block title %}{% trans %}Forums{% endtrans %}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Forums') %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Forums'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <h1>
-        <span>Forums</span>
-        <button class="pull-right btn btn-primary btn-sm disabled" title="Ajouter">
+        <span>{% trans %}Forums{% endtrans %}</span>
+        <button class="pull-right btn btn-primary btn-sm disabled" title="{% trans %}Add{% endtrans %}">
             <i class="fas fa-plus"></i>
         </button>
     </h1>
@@ -19,10 +19,10 @@
         <table class="table table-sm">
             <thead>
             <tr class="d-flex">
-                <th class="col-2">Position</th>
-                <th class="col-5">Titre</th>
-                <th class="col-3">Catégorie</th>
-                <th class="col-2">Actions</th>
+                <th class="col-2">{% trans %}Position{% endtrans %}</th>
+                <th class="col-5">{% trans %}Title{% endtrans %}</th>
+                <th class="col-3">{% trans %}Category{% endtrans %}</th>
+                <th class="col-2">{% trans %}Actions{% endtrans %}</th>
             </tr>
             </thead>
             <tbody class="thead-light">
@@ -32,11 +32,10 @@
                         <td class="col-5">{{ forum.title }}</td>
                         <td class="col-3">{{ forum.category.title }}</td>
                         <td class="col-3">
-                            <a class="btn btn-primary btn-sm disabled" href="#" title="Modifier">
+                            <a class="btn btn-primary btn-sm disabled" href="#" title="{% trans %}Edit{% endtrans %}">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            -
-                            <button class="btn btn-danger btn-sm disabled" title="Supprimer">
+                            <button class="btn btn-danger btn-sm disabled" title="{% trans %}Delete{% endtrans %}">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>

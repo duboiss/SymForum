@@ -1,17 +1,17 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Catégories - Modification de {{ category.title }}{% endblock %}
+{% block title %}{% trans %}Categories{% endtrans %} - {% trans %}Edit of{% endtrans %} {{ category.title }}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Catégories', path('admin.category.index')) %}
-    {% do append_breadcrumb('Modification') %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Categories'|trans, path('admin.category.index')) %}
+    {% do append_breadcrumb('Edit'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
-    <h1>Modifier la catégorie</h1>
+    <h1>{% trans %}Edit the category{% endtrans %}</h1>
 
     <div class="mt-3">
-        {{ include('partials/_simple_form.twig', {button_label: 'Modifier'}) }}
+        {{ include('partials/_simple_form.twig', {button_label: 'Save'|trans}) }}
     </div>
 {% endblock %}

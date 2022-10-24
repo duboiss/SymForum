@@ -2,14 +2,14 @@
     {% if thread.pin %}
         <li>
             <a href="{{ path('thread.unpin', {'slug': thread.slug}) }}" data-bs-toggle="tooltip"
-               data-bs-placement="right" title="Détacher le sujet">
+               data-bs-placement="right" title="{% trans %}Unpin the thread{% endtrans %}">
                 <i class="fas fa-thumbtack rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
             <a href="{{ path('thread.pin', {'slug': thread.slug}) }}"  data-bs-toggle="tooltip"
-               data-bs-placement="right" title="Épingler le sujet">
+               data-bs-placement="right" title="{% trans %}Pin the thread{% endtrans %}">
                 <i class="fas fa-thumbtack rotate"></i>
             </a>
         </li>
@@ -20,14 +20,14 @@
     {% if thread.lock %}
         <li>
             <a href="{{ path('thread.unlock', {'slug': thread.slug}) }}"  data-bs-toggle="tooltip"
-               data-bs-placement="right" title="Ouvrir le sujet">
+               data-bs-placement="right" title="{% trans %}Open the thread{% endtrans %}">
                 <i class="fas fa-lock-open rotate"></i>
             </a>
         </li>
     {% else %}
         <li>
             <a href="{{ path('thread.lock', {'slug': thread.slug}) }}"  data-bs-toggle="tooltip"
-               data-bs-placement="right" title="Fermer le sujet">
+               data-bs-placement="right" title="{% trans %}Lock the thread{% endtrans %}">
                 <i class="fas fa-lock rotate"></i>
             </a>
         </li>
@@ -38,7 +38,7 @@
     <li>
         <span data-bs-target="#deleteModal" data-bs-toggle="modal">
             <a href="#" data-bs-toggle="tooltip" data-bs-placement="right"
-            title="Supprimer le sujet">
+            title="{% trans %}Delete the thread{% endtrans %}">
                 <i class="fas fa-trash-alt rotate"></i>
             </a>
         </span>

@@ -1,24 +1,24 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Utilisateurs{% endblock %}
+{% block title %}{% trans %}Users{% endtrans %}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Admin', path('admin.homepage')) %}
-    {% do append_breadcrumb('Utilisateurs') %}
+    {% do append_breadcrumb('Admin'|trans, path('admin.homepage')) %}
+    {% do append_breadcrumb('Users'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
-    <h1>Utilisateurs ({{ pagination.getTotalItemCount }})</h1>
+    <h1>{% trans %}Users{% endtrans %} ({{ pagination.getTotalItemCount }})</h1>
 
     <div class="mt-3">
         <table class="table table-sm">
             <thead>
             <tr>
-                <th>Incrit le</th>
-                <th>Pseudo</th>
-                <th>Email</th>
-                <th>Dernière activité</th>
-                <th>Actions</th>
+                <th>{% trans %}Registered on{% endtrans %}</th>
+                <th>{% trans %}Pseudo{% endtrans %}</th>
+                <th>{% trans %}Email{% endtrans %}</th>
+                <th>{% trans %}Last activity{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>

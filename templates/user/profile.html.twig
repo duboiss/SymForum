@@ -1,13 +1,11 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}
-    {{ app.user == user ? 'Mon profil' : 'Profil de ' ~ user }}
-{% endblock %}
+{% block title %}{{ app.user == user ? 'My profile'|trans : 'Profile of %user%'|trans({'%user%': user}) }}{% endblock %}
 
 {% set role = user_profile_role(user) %}
 
 {% block content %}
-    {% do append_breadcrumb('Membres', path('page.members')) %}
+    {% do append_breadcrumb('Members'|trans, path('page.members')) %}
     {% do append_breadcrumb(user.pseudo) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
@@ -17,8 +15,8 @@
             <h3>
                 <span>{{ user }}</span>
                 {% if is_granted('ROLE_MODERATOR') %}
-                    <a class="btn btn-warning btn-sm" href="{{ path('admin.user.details', {'slug': user.slug}) }}" title="Admin">
-                        <i class="fas fa-user"></i> Admin
+                    <a class="btn btn-warning btn-sm" href="{{ path('admin.user.details', {'slug': user.slug}) }}" title="{% trans %}Admin{% endtrans %}">
+                        <i class="fas fa-user"></i> {% trans %}Admin{% endtrans %}
                     </a>
                 {% endif %}
             </h3>
@@ -27,18 +25,18 @@
                     <strong class="text-danger">{{ role }}</strong><br>
                 {% endif %}
 
-                Date d'inscription : {{ user.createdAt|format_datetime('medium', 'none') }}
+                {% trans %}Registration date{% endtrans %} : {{ user.createdAt|format_datetime('medium', 'none') }}
                 {% if user.lastActivityAt %}
-                    <br>Dernière activité : {{ user.lastActivityAt|format_datetime }}
+                    <br>{% trans %}Last activity{% endtrans %} : {{ user.lastActivityAt|format_datetime }}
                 {% endif %}
-                <br> Nombre de messages : {{ user.messages|length }}
+                <br> {% trans %}Total messages{% endtrans %} : {{ user.messages|length }}
             </p>
         </div>
     </div>
 
     <div class="row mt-3">
         <div class="col col-lg-6 col-md-6 col-sm-6">
-            <h4>Derniers sujets créés</h4>
+            <h4>{% trans %}Latest threads created{% endtrans %}</h4>
             {% if lastThreads|length > 0 %}
                 <ul>
                     {% for thread in lastThreads %}
@@ -47,14 +45,14 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a href="{{ path('user.threads', {'slug': user.slug}) }}">{{ app.user == user ? 'Voir mes sujets' : 'Voir tous les sujets crées par ' ~ user }}</a>
+                <a href="{{ path('user.threads', {'slug': user.slug}) }}">{{ app.user == user ? 'See my threads'|trans : 'See all the threads created by %user%'|trans({'%user%': user}) }}</a>
             {% else %}
-                Cet utilisateur n'a pas encore crée de sujet
+                {% trans %}This user has not yet created a thread{% endtrans %}
             {% endif %}
         </div>
 
         <div class="col col-lg-6 col-md-6 col-sm-6">
-            <h4>Dernières participations</h4>
+            <h4>{% trans %}Last participations{% endtrans %}</h4>
             {% if lastMessages|length > 0 %}
                 <ul>
                     {% for message in lastMessages %}
@@ -63,9 +61,9 @@
                         </li>
                     {% endfor %}
                 </ul>
-                <a href="{{ path('user.messages', {'slug': user.slug}) }}">{{ app.user == user ? 'Voir mes participations' : 'Voir toutes les participations de ' ~ user }}</a>
+                <a href="{{ path('user.messages', {'slug': user.slug}) }}">{{ app.user == user ? 'See my participations'|trans : 'See all the participations of %user%'|trans({'%user%': user}) }}</a>
             {% else %}
-                Cet utilisateur n'a pas encore publié de message
+                {% trans %}This user has not yet posted a message{% endtrans %}
             {% endif %}
         </div>
     </div>

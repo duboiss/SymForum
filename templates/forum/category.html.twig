@@ -3,7 +3,7 @@
 {% block title %}{{ category.title }}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Forums', path('forum.index')) %}
+    {% do append_breadcrumb('Forums'|trans, path('forum.index')) %}
     {% do append_breadcrumb(category.title) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
@@ -12,9 +12,9 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-lg-5 col-md-6 col-sm-8">{{ category.title }}</div>
-                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">SUJETS</div>
-                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">MESSAGES</div>
-                <div class="col-lg-3 d-none d-lg-block">DERNIER MESSAGE</div>
+                <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block text-center">{% trans %}Threads{% endtrans %}</div>
+                <div class="col-lg-2 col-md-3 d-none d-md-block text-center">{% trans %}Messages{% endtrans %}</div>
+                <div class="col-lg-3 d-none d-lg-block">{% trans %}Last message{% endtrans %}</div>
             </div>
         </div>
 

@@ -1,9 +1,9 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Connexion</h1>
+    <h1 class="text-center">{% trans %}Login{% endtrans %}</h1>
 
     <form action="{{ path('security.login') }}" method="post">
         {% if error %}
@@ -11,18 +11,18 @@
         {% endif %}
 
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Votre email" value="{{ last_username }}" autofocus required>
+            <label for="email" class="form-label">{% trans %}Email{% endtrans %}</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="{% trans %}Your email{% endtrans %}" value="{{ last_username }}" autofocus required>
         </div>
 
         <div class="mb-3">
-            <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de passe" required>
+            <label for="password" class="form-label">{% trans %}Password{% endtrans %}</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="{% trans %}Your password{% endtrans %}" required>
         </div>
 
         <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="_remember_me" name="_remember_me">
-            <label class="form-check-label" for="_remember_me">Se souvenir de moi</label>
+            <label class="form-check-label" for="_remember_me">{% trans %}Remember me{% endtrans %}</label>
         </div>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -31,7 +31,7 @@
         {% endif %}
 
         <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Connexion</button>
+            <button type="submit" class="btn btn-primary">{% trans %}Login{% endtrans %}</button>
         </div>
     </form>
 {% endblock %}

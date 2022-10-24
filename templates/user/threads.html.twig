@@ -1,28 +1,26 @@
 {% extends 'layouts/full-width.html.twig' %}
 
-{% block title %}
-    {{ app.user == user ? 'Mes sujets' : 'Profil de ' ~ user ~ ' : sujets' }}
-{% endblock %}
+{% block title %}{{ app.user == user ? 'My threads'|trans : 'Profile of %user% : threads'|trans({'%user%': user}) }}{% endblock %}
 
 {% block content %}
-    {% do append_breadcrumb('Membres', path('page.members')) %}
+    {% do append_breadcrumb('Members'|trans, path('page.members')) %}
     {% do append_breadcrumb(user.pseudo, path('user.profile', {'slug': user.slug})) %}
-    {% do append_breadcrumb('Sujets créés') %}
+    {% do append_breadcrumb('Created threads'|trans) %}
 
     {{ include('partials/_breadcrumb.html.twig') }}
 
     <div class="row">
         <div class="col col-lg-12 col-md-12 col-sm-12">
             <h3>{{ user }}
-                - {{ user.threads|length }} {{ user.threads|length <= 1 ? 'sujet crée' : 'sujets créés' }}</h3>
+                - {{ user.threads|length }} {{ user.threads|length <= 1 ? 'created thread'|trans : 'created threads'|trans }}</h3>
 
             {% if pagination.getTotalItemCount > 0 %}
                 <table class="table table-hover table-sm">
                     <thead>
                     <tr>
-                        <th scope="col">Sujet</th>
-                        <th scope="col">Nombre de réponses</th>
-                        <th scope="col">Dernier message</th>
+                        <th scope="col">{% trans %}Thread{% endtrans %}</th>
+                        <th scope="col">{% trans %}Total answers{% endtrans %}</th>
+                        <th scope="col">{% trans %}Last message{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,14 +30,14 @@
                             <td>{{ thread.totalAnswers }}</td>
                             <td>
                                 <a href="{{ path('message.show', {'uuid': thread.lastMessage.uuidBase32}) }}">{{ thread.lastMessage.createdAt|ago }}</a>
-                                par {{ user_profile_link(thread.lastMessage.author) }}</td>
+                                {% trans %}by{% endtrans %} {{ user_profile_link(thread.lastMessage.author) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
                 {{ knp_pagination_render(pagination) }}
             {% else %}
-                Cet utilisateur n'a pas encore créé de sujet
+                This user has not yet created a thread
             {% endif %}
         </div>
     </div>

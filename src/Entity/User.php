@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\PrimaryKeyTrait;
 use App\Repository\UserRepository;
+use App\ValueObject\Locales;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,8 +31,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     final public const PSEUDO_MAX_LENGTH = 10;
 
     #[ORM\Column(unique: true)]
-    #[Assert\Regex(pattern: '^[a-z0-9]+$/i', message: 'Votre pseudo ne peut comporter que des lettres (a-z) ainsi que des chiffres.')]
-    #[Assert\Length(min: self::PSEUDO_MIN_LENGTH, max: self::PSEUDO_MAX_LENGTH, minMessage: 'Votre pseudo doit faire au moins {{ limit }} caractères.', maxMessage: 'Votre pseudo doit faire au plus {{ limit }} caractères.')]
+    #[Assert\Regex(pattern: '#^[a-z0-9]+$#i', message: 'Your pseudo can only contains letters (a-z) and numbers.')]
+    #[Assert\Length(min: self::PSEUDO_MIN_LENGTH, max: self::PSEUDO_MAX_LENGTH, minMessage: 'Your pseudo must be at least {{ limit }} characters', maxMessage: 'Your pseudo must not exceed {{ limit }} characters')]
     private ?string $pseudo = null;
 
     #[Gedmo\Slug(fields: ['pseudo'])]
@@ -42,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     private ?string $hash = null;
 
     #[ORM\Column(unique: true, nullable: false)]
-    #[Assert\Email(message: 'Veuillez saisir une adresse email valide.')]
+    #[Assert\Email]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
@@ -69,6 +70,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     #[ORM\OneToMany(mappedBy: 'treatedBy', targetEntity: Report::class)]
     private Collection $treatedReports;
 
+    #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\Choice(callback: 'getLocales')]
+    #[Assert\Language]
+    private ?string $locale = Locales::DEFAULT;
+
     public function __construct()
     {
         $this->threads = new ArrayCollection();
@@ -83,9 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function isActiveNow(): bool
     {
-        $delay = new DateTime('5 minutes ago');
-
-        return $this->getLastActivityAt() > $delay;
+        return $this->getLastActivityAt() > new DateTime('5 minutes ago');
     }
 
     public function getPseudo(): ?string
@@ -285,5 +290,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     public function getTreatedReports(): Collection
     {
         return $this->treatedReports;
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public static function getLocales(): array
+    {
+        return array_keys(Locales::AVAILABLE);
     }
 }
