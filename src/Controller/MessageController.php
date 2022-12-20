@@ -10,6 +10,7 @@ use App\Repository\MessageRepository;
 use App\Service\MessageService;
 use App\Service\ThreadService;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class MessageController extends AbstractBaseController
     public function show(Message $message, ThreadService $threadService): Response
     {
         if (!$message->getThread()) {
-            throw new \RuntimeException($this->translator->trans('The message is not in a thread'));
+            throw new RuntimeException($this->translator->trans('The message is not in a thread'));
         }
 
         return $this->redirectToRoute('thread.show', [
@@ -76,7 +77,7 @@ class MessageController extends AbstractBaseController
 
         if (!$messageService->canDeleteMessage($message)) {
             if (!$thread) {
-                throw new \RuntimeException($this->translator->trans('The message is not in a thread'));
+                throw new RuntimeException($this->translator->trans('The message is not in a thread'));
             }
 
             return $this->redirectToRoute('thread.show', [

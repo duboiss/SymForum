@@ -20,6 +20,7 @@ return (new PhpCsFixer\Config())
         '@DoctrineAnnotation' => true,
         'concat_space' => ['spacing' => 'one'],
         'declare_strict_types' => true,
+        'global_namespace_import' => true,
         'mb_str_functions' => true,
         'native_function_invocation' => [],
         'ordered_class_elements' => ['order' => ['use_trait']],
