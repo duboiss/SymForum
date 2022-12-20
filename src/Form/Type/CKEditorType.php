@@ -21,13 +21,12 @@ class CKEditorType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $attr = $view->vars['attr'];
-        $class = isset($attr['class']) ? $attr['class'] . ' ' : '';
-        $class .= 'editor';
-
-        $attr['class'] = $class;
-        $view->vars['attr'] = $attr;
-        $view->vars['required'] = false;
+        $view->vars = array_merge($view->vars, [
+            'attr' => [
+                'class' => isset($view->vars['attr']['class']) ? $view->vars['attr']['class'] . ' editor' : 'editor',
+            ],
+            'required' => false,
+        ]);
     }
 
     public function getParent(): ?string

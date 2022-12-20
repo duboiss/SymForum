@@ -10,6 +10,7 @@ use App\Entity\Thread;
 use App\Entity\User;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -130,7 +131,7 @@ class ThreadService
     public function getMessagePage(Message $message): int
     {
         if (!$thread = $message->getThread()) {
-            throw new \Exception('No thread found');
+            throw new Exception('No thread found');
         }
 
         $messages = $this->messageRepository->findMessagesByThread($thread, true);

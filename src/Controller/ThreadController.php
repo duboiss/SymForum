@@ -99,7 +99,7 @@ class ThreadController extends AbstractBaseController
             $lock = (bool) $request->request->get('lock');
             $pin = (bool) $request->request->get('pin');
             if (!$form['title'] || !$form['message']) {
-                throw new \RuntimeException($this->translator->trans('The request is not complete'));
+                throw new RuntimeException($this->translator->trans('The request is not complete'));
             }
 
             $thread = $threadService->createThread($form['title']->getData(), $forum, $lock, $pin);
