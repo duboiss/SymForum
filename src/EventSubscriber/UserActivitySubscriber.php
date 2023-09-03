@@ -9,9 +9,9 @@ use App\Repository\UserRepository;
 use App\Service\OptionService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Security;
 
 class UserActivitySubscriber implements EventSubscriberInterface
 {

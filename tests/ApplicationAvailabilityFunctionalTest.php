@@ -21,7 +21,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
     }
 
     /**
-     * @dataProvider urlPublicProvider
+     * @dataProvider providePageIsSuccessfulCases
      */
     public function testPageIsSuccessful(string $url): void
     {
@@ -75,7 +75,7 @@ class ApplicationAvailabilityFunctionalTest extends AbstractControllerTest
         $this->checkStatusUrl($url, 'demo', Response::HTTP_FORBIDDEN);
     }
 
-    public function urlPublicProvider(): iterable
+    public function providePageIsSuccessfulCases(): iterable
     {
         // Pages
         yield 'page_forums' => ['/forums/'];

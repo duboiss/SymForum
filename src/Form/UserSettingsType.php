@@ -24,7 +24,7 @@ class UserSettingsType extends AbstractType
             ->add('locale', ChoiceType::class, [
                 'label' => $this->translator->trans('Language'),
                 'choices' => array_keys(Locales::AVAILABLE),
-                'choice_label' => fn ($choice) => Locales::AVAILABLE[$choice],
+                'choice_label' => static fn ($choice) => Locales::AVAILABLE[$choice],
             ])
         ;
     }

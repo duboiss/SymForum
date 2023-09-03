@@ -25,7 +25,7 @@ class PageControllerTest extends AbstractControllerTest
         self::assertResponseIsSuccessful();
 
         self::assertSelectorTextContains('h1', 'Membres de l\'équipe');
-        static::assertCount(2, $crawler->filter('table'));
+        self::assertCount(2, $crawler->filter('table'));
         self::assertSelectorTextContains('h4', 'Administrateurs');
     }
 }
