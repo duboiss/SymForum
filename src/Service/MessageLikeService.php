@@ -9,7 +9,7 @@ use App\Entity\MessageLike;
 use App\Entity\User;
 use App\Repository\MessageLikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class MessageLikeService
 {

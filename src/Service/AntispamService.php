@@ -9,7 +9,7 @@ use App\Repository\MessageRepository;
 use App\Repository\ThreadRepository;
 use DateTime;
 use Exception;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class AntispamService
 {
