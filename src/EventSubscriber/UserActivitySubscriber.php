@@ -15,9 +15,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class UserActivitySubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly Security $security, private readonly OptionService $optionService, private readonly UserRepository $userRepository)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $em, private readonly Security $security, private readonly OptionService $optionService, private readonly UserRepository $userRepository) {}
 
     public function onTerminate(): void
     {

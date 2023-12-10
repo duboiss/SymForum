@@ -16,9 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ThreadType extends AbstractType
 {
-    public function __construct(private TranslatorInterface $translator)
-    {
-    }
+    public function __construct(private readonly TranslatorInterface $translator) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

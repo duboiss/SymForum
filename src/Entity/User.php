@@ -170,9 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Stringa
         return $this->hash;
     }
 
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 
     public function getUserIdentifier(): string
     {

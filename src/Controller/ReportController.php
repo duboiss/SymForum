@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route(path: '/forums/reports', name: 'report.')]
 class ReportController extends AbstractBaseController
 {
-    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly RequestStack $requestStack, private readonly DecoderInterface $decoder, private readonly TranslatorInterface $translator)
     {
         parent::__construct($requestStack, $this->decoder);
     }
@@ -28,7 +28,7 @@ class ReportController extends AbstractBaseController
     #[Route(path: '/{uuid}', name: 'message', methods: ['POST'])]
     public function message(Message $message, Request $request, ReportService $reportService, ReportRepository $reportRepository): Response
     {
-        $reason = trim($this->jsonDecodeRequestContent($request)['reason']);
+        $reason = trim((string) $this->jsonDecodeRequestContent($request)['reason']);
 
         if ($reportRepository->findOneBy(['message' => $message, 'reportedBy' => $this->getUser()])) {
             return $this->json([

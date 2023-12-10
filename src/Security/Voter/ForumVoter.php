@@ -15,9 +15,7 @@ class ForumVoter extends Voter
 {
     private const LOCK = 'LOCK';
 
-    public function __construct(private readonly Security $security)
-    {
-    }
+    public function __construct(private readonly Security $security) {}
 
     protected function supports(string $attribute, mixed $subject): bool
     {

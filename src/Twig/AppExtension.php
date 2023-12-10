@@ -11,9 +11,7 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly RequestStack $request)
-    {
-    }
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly RequestStack $request) {}
 
     /**
      * @return array|TwigFunction[]

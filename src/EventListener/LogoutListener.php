@@ -15,7 +15,7 @@ class LogoutListener
 {
     private readonly FlashBagInterface $flashBag;
 
-    public function __construct(RequestStack $requestStack, private TranslatorInterface $translator)
+    public function __construct(RequestStack $requestStack, private readonly TranslatorInterface $translator)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }

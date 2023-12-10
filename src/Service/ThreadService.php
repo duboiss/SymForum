@@ -19,7 +19,7 @@ class ThreadService
 {
     private readonly FlashBagInterface $flashBag;
 
-    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService, private readonly OptionService $optionService, private TranslatorInterface $translator)
+    public function __construct(private readonly EntityManagerInterface $em, private readonly MessageRepository $messageRepository, RequestStack $requestStack, private readonly AntispamService $antispamService, private readonly OptionService $optionService, private readonly TranslatorInterface $translator)
     {
         $this->flashBag = $requestStack->getSession()->getFlashBag();
     }

@@ -23,7 +23,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route(path: '/forums/messages', name: 'message.')]
 class MessageController extends AbstractBaseController
 {
-    public function __construct(private readonly RequestStack $requestStack, private DecoderInterface $decoder, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly RequestStack $requestStack, private readonly DecoderInterface $decoder, private readonly TranslatorInterface $translator)
     {
         parent::__construct($requestStack, $this->decoder);
     }
