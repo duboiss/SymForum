@@ -16,9 +16,7 @@ class UserExtenion extends AbstractExtension
         'ROLE_MODERATOR' => 'Modérateur',
     ];
 
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
-    {
-    }
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator) {}
 
     /**
      * @return array|TwigFunction[]

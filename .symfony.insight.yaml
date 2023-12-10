@@ -1,4 +1,4 @@
-php_version: 8.1
+php_version: 8.2
 
 rules:
     composer.invalid_file:

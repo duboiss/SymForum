@@ -9,9 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserService
 {
-    public function __construct(private readonly EntityManagerInterface $em, private readonly ThreadService $threadService, private readonly MessageService $messageService, private readonly ReportService $reportService)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $em, private readonly ThreadService $threadService, private readonly MessageService $messageService, private readonly ReportService $reportService) {}
 
     public function deleteUser(User $user, bool $deleteContent = false): void
     {

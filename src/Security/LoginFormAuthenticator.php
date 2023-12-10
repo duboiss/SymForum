@@ -25,9 +25,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     final public const REDIRECT_AFTER_LOGIN_ROUTE = 'forum.index';
     private const FORUMS_PARENT_PATH = '/forums';
 
-    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfTokenManager)
-    {
-    }
+    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfTokenManager) {}
 
     protected function getLoginUrl(Request $request): string
     {
